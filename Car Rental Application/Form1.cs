@@ -15,6 +15,12 @@ namespace Car_Rental_Application
         public Form1()
         {
             InitializeComponent();
+            label1.Text = "Git test";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
