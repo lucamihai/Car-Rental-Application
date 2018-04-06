@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Car_Rental_Application.User_Controls
 {
-    public partial class MinivanUserControl : UserControl
+    public partial class MinivanUserControl : VehicleUserControl
     {
         public MinivanUserControl()
         {

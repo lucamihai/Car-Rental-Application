@@ -13,9 +13,9 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class VehicleUserControl : UserControl
     {
-        public string vehicleName { get; }
-        protected float damagePercent;
-        protected float gasFillPercent;
+        protected string vehicleName;
+        protected short damagePercent;
+        protected short fuelPercentage;
         protected Customer owner;
         public virtual void GetDetails() { }
         public VehicleUserControl()

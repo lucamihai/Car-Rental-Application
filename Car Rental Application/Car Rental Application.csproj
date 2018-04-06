@@ -47,9 +47,6 @@
   <ItemGroup>
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\AvailableCars.cs" />
-    <Compile Include="Classes\Minivan.cs" />
-    <Compile Include="Classes\Sedan.cs" />
-    <Compile Include="Classes\Vehicle.cs" />
     <Compile Include="Interfaces\ISort.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -59,6 +56,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User Controls\AddVehicleUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\AddVehicleUserControl.Designer.cs">
+      <DependentUpon>AddVehicleUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\AvailableMinivanUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,6 +116,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="User Controls\AddVehicleUserControl.resx">
+      <DependentUpon>AddVehicleUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\AvailableMinivanUserControl.resx">
+      <DependentUpon>AvailableMinivanUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="User Controls\AvailableSedanUserControl.resx">
       <DependentUpon>AvailableSedanUserControl.cs</DependentUpon>
     </EmbeddedResource>

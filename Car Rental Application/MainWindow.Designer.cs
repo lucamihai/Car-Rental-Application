@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.AvailableCarsPanel = new System.Windows.Forms.Panel();
+            this.buttonAddVehicle = new System.Windows.Forms.Button();
+            this.availableCarsElementsPanel = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.RentedCarsPanel = new System.Windows.Forms.Panel();
             this.rentedCarsGridView = new System.Windows.Forms.DataGridView();
             this.RentedVehicleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,10 +42,7 @@
             this.ReturnDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.availableCarsElementsPanel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rentedCarsGridView)).BeginInit();
@@ -49,18 +50,57 @@
             // 
             // AvailableCarsPanel
             // 
-            this.AvailableCarsPanel.AutoScroll = true;
-            this.AvailableCarsPanel.Controls.Add(this.label4);
+            this.AvailableCarsPanel.Controls.Add(this.buttonAddVehicle);
             this.AvailableCarsPanel.Controls.Add(this.availableCarsElementsPanel);
-            this.AvailableCarsPanel.Location = new System.Drawing.Point(46, 40);
+            this.AvailableCarsPanel.Controls.Add(this.button2);
+            this.AvailableCarsPanel.Controls.Add(this.button1);
+            this.AvailableCarsPanel.Location = new System.Drawing.Point(12, 25);
             this.AvailableCarsPanel.Name = "AvailableCarsPanel";
-            this.AvailableCarsPanel.Size = new System.Drawing.Size(487, 611);
+            this.AvailableCarsPanel.Size = new System.Drawing.Size(521, 632);
             this.AvailableCarsPanel.TabIndex = 0;
+            // 
+            // buttonAddVehicle
+            // 
+            this.buttonAddVehicle.Location = new System.Drawing.Point(111, 587);
+            this.buttonAddVehicle.Name = "buttonAddVehicle";
+            this.buttonAddVehicle.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddVehicle.TabIndex = 6;
+            this.buttonAddVehicle.Text = "Add...";
+            this.buttonAddVehicle.UseVisualStyleBackColor = true;
+            // 
+            // availableCarsElementsPanel
+            // 
+            this.availableCarsElementsPanel.AutoScroll = true;
+            this.availableCarsElementsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.availableCarsElementsPanel.Location = new System.Drawing.Point(0, 31);
+            this.availableCarsElementsPanel.Name = "availableCarsElementsPanel";
+            this.availableCarsElementsPanel.Size = new System.Drawing.Size(512, 529);
+            this.availableCarsElementsPanel.TabIndex = 0;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(3, 585);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 37);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Add Minivan";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(437, 584);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 38);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Remove";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // RentedCarsPanel
             // 
             this.RentedCarsPanel.Controls.Add(this.rentedCarsGridView);
-            this.RentedCarsPanel.Location = new System.Drawing.Point(617, 40);
+            this.RentedCarsPanel.Location = new System.Drawing.Point(617, 25);
             this.RentedCarsPanel.Name = "RentedCarsPanel";
             this.RentedCarsPanel.Size = new System.Drawing.Size(635, 611);
             this.RentedCarsPanel.TabIndex = 1;
@@ -107,7 +147,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(215, 24);
+            this.label1.Location = new System.Drawing.Point(215, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 0;
@@ -116,21 +156,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(888, 24);
+            this.label2.Location = new System.Drawing.Point(890, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Rented cars";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(540, 238);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Debug";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label3
             // 
@@ -141,23 +171,6 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "debugging label";
             // 
-            // availableCarsElementsPanel
-            // 
-            this.availableCarsElementsPanel.AutoScroll = true;
-            this.availableCarsElementsPanel.Location = new System.Drawing.Point(3, 110);
-            this.availableCarsElementsPanel.Name = "availableCarsElementsPanel";
-            this.availableCarsElementsPanel.Size = new System.Drawing.Size(481, 501);
-            this.availableCarsElementsPanel.TabIndex = 0;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(145, 51);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(129, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Press the \"Debug\" button";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,7 +178,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RentedCarsPanel);
@@ -174,7 +186,6 @@
             this.Text = "Car rental";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.AvailableCarsPanel.ResumeLayout(false);
-            this.AvailableCarsPanel.PerformLayout();
             this.RentedCarsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.rentedCarsGridView)).EndInit();
             this.ResumeLayout(false);
@@ -197,7 +208,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel availableCarsElementsPanel;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonAddVehicle;
     }
 }
 
