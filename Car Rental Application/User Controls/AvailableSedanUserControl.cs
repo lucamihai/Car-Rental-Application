@@ -66,14 +66,23 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
+        
+
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
             if (selectCheckBox.Checked == true)
             {
-                mainWindow.indexesOfSelectedAvailableCars.Add(id);
+                mainWindow.indexesOfSelectedAvailableCars.Add(indexOfCurrentVehicle);
                 return;
             }
-            mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+            mainWindow.indexesOfSelectedAvailableCars.Remove(indexOfCurrentVehicle);
+        }
+
+        private void buttonRent_Click(object sender, EventArgs e)
+        {
+            rentVehicleUserControl.SelectVehicleToBeRent(this);
+            mainWindow.RentMenu();
         }
     }
 }

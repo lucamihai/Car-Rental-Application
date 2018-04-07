@@ -44,7 +44,7 @@
             // IDValueLabel
             // 
             this.IDValueLabel.AutoSize = true;
-            this.IDValueLabel.Location = new System.Drawing.Point(5, 40);
+            this.IDValueLabel.Location = new System.Drawing.Point(4, 37);
             this.IDValueLabel.Name = "IDValueLabel";
             this.IDValueLabel.Size = new System.Drawing.Size(13, 13);
             this.IDValueLabel.TabIndex = 21;
@@ -54,7 +54,7 @@
             // 
             this.IDLabel.AutoSize = true;
             this.IDLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IDLabel.Location = new System.Drawing.Point(4, 21);
+            this.IDLabel.Location = new System.Drawing.Point(3, 18);
             this.IDLabel.Name = "IDLabel";
             this.IDLabel.Size = new System.Drawing.Size(27, 19);
             this.IDLabel.TabIndex = 20;
@@ -63,7 +63,7 @@
             // selectCheckBox
             // 
             this.selectCheckBox.AutoSize = true;
-            this.selectCheckBox.Location = new System.Drawing.Point(492, 36);
+            this.selectCheckBox.Location = new System.Drawing.Point(480, 40);
             this.selectCheckBox.Name = "selectCheckBox";
             this.selectCheckBox.Size = new System.Drawing.Size(56, 17);
             this.selectCheckBox.TabIndex = 19;
@@ -74,7 +74,7 @@
             // fuelPercentValueLabel
             // 
             this.fuelPercentValueLabel.AutoSize = true;
-            this.fuelPercentValueLabel.Location = new System.Drawing.Point(408, 40);
+            this.fuelPercentValueLabel.Location = new System.Drawing.Point(407, 37);
             this.fuelPercentValueLabel.Name = "fuelPercentValueLabel";
             this.fuelPercentValueLabel.Size = new System.Drawing.Size(42, 13);
             this.fuelPercentValueLabel.TabIndex = 18;
@@ -83,7 +83,7 @@
             // damagePercentValueLabel
             // 
             this.damagePercentValueLabel.AutoSize = true;
-            this.damagePercentValueLabel.Location = new System.Drawing.Point(290, 40);
+            this.damagePercentValueLabel.Location = new System.Drawing.Point(289, 37);
             this.damagePercentValueLabel.Name = "damagePercentValueLabel";
             this.damagePercentValueLabel.Size = new System.Drawing.Size(42, 13);
             this.damagePercentValueLabel.TabIndex = 17;
@@ -92,7 +92,7 @@
             // vehicleTypeValueLabel
             // 
             this.vehicleTypeValueLabel.AutoSize = true;
-            this.vehicleTypeValueLabel.Location = new System.Drawing.Point(160, 40);
+            this.vehicleTypeValueLabel.Location = new System.Drawing.Point(159, 37);
             this.vehicleTypeValueLabel.Name = "vehicleTypeValueLabel";
             this.vehicleTypeValueLabel.Size = new System.Drawing.Size(44, 13);
             this.vehicleTypeValueLabel.TabIndex = 16;
@@ -101,7 +101,7 @@
             // vehicleNameValueLabel
             // 
             this.vehicleNameValueLabel.AutoSize = true;
-            this.vehicleNameValueLabel.Location = new System.Drawing.Point(56, 40);
+            this.vehicleNameValueLabel.Location = new System.Drawing.Point(55, 37);
             this.vehicleNameValueLabel.Name = "vehicleNameValueLabel";
             this.vehicleNameValueLabel.Size = new System.Drawing.Size(35, 13);
             this.vehicleNameValueLabel.TabIndex = 15;
@@ -111,7 +111,7 @@
             // 
             this.fuelPercentLabel.AutoSize = true;
             this.fuelPercentLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fuelPercentLabel.Location = new System.Drawing.Point(390, 21);
+            this.fuelPercentLabel.Location = new System.Drawing.Point(389, 18);
             this.fuelPercentLabel.Name = "fuelPercentLabel";
             this.fuelPercentLabel.Size = new System.Drawing.Size(92, 19);
             this.fuelPercentLabel.TabIndex = 14;
@@ -121,7 +121,7 @@
             // 
             this.damagePercentLabel.AutoSize = true;
             this.damagePercentLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damagePercentLabel.Location = new System.Drawing.Point(256, 21);
+            this.damagePercentLabel.Location = new System.Drawing.Point(255, 18);
             this.damagePercentLabel.Name = "damagePercentLabel";
             this.damagePercentLabel.Size = new System.Drawing.Size(119, 19);
             this.damagePercentLabel.TabIndex = 13;
@@ -131,7 +131,7 @@
             // 
             this.vehicleTypeLabel.AutoSize = true;
             this.vehicleTypeLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleTypeLabel.Location = new System.Drawing.Point(159, 21);
+            this.vehicleTypeLabel.Location = new System.Drawing.Point(158, 18);
             this.vehicleTypeLabel.Name = "vehicleTypeLabel";
             this.vehicleTypeLabel.Size = new System.Drawing.Size(91, 19);
             this.vehicleTypeLabel.TabIndex = 12;
@@ -141,7 +141,7 @@
             // 
             this.vehicleNameLabel.AutoSize = true;
             this.vehicleNameLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleNameLabel.Location = new System.Drawing.Point(55, 21);
+            this.vehicleNameLabel.Location = new System.Drawing.Point(54, 18);
             this.vehicleNameLabel.Name = "vehicleNameLabel";
             this.vehicleNameLabel.Size = new System.Drawing.Size(98, 19);
             this.vehicleNameLabel.TabIndex = 11;

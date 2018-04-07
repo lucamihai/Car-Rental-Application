@@ -9,14 +9,23 @@ using Car_Rental_Application.User_Controls;
 
 namespace Car_Rental_Application.Classes
 {
-    class RentedCars: ISort
+    public class RentedCarsManager: ISort
     {
-        public Panel rentedCarsPanel, rentedCarsPanelElements;
-        public RentedCars(Panel availableCarsPanel, Panel rentedCarsPanel)
+        public Panel rentedCarsPanel, rentedCarsElementsPanel;
+        public MainWindow mainWindow;
+        public RentedCarsManager(Panel rentedCarsPanel, Panel rentedCarsElementsPanel)
         {
-            this.rentedCarsPanel = availableCarsPanel;
-            this.rentedCarsPanelElements = rentedCarsPanel;
+            this.rentedCarsPanel = rentedCarsPanel;
+            this.rentedCarsElementsPanel = rentedCarsElementsPanel;
         }
+        public void RentVehicle(VehicleUserControl vehicle)
+        {
+            rentedCarsElementsPanel.VerticalScroll.Value = 0;
+            mainWindow.AddToRentedCarsList(vehicle);
+            mainWindow.PopulateRentedVehiclesPanel();
+        }
+        public void Link(MainWindow m) { mainWindow = m; }
+
         #region ISort methods
         public List<VehicleUserControl> SortListByID(List<VehicleUserControl> vehicles)
         {

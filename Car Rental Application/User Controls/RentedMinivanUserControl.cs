@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Car_Rental_Application.Classes;
 
 namespace Car_Rental_Application.User_Controls
 {
     public partial class RentedMinivanUserControl : MinivanUserControl
     {
+
         public RentedMinivanUserControl()
         {
             InitializeComponent();
@@ -45,11 +47,17 @@ namespace Car_Rental_Application.User_Controls
         {
             this.damagePercent = damagePercentage;
         }
-        public string GetVehicleName() { return vehicleName; }
-        public short GetFuelPercentage() { return fuelPercentage; }
-        public short GetDamagePercentage() { return damagePercent; }
-
 
         #endregion
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (selectCheckBox.Checked == true)
+            {
+                mainWindow.indexesOfSelectedAvailableCars.Add(id);
+                return;
+            }
+            mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+        }
     }
 }

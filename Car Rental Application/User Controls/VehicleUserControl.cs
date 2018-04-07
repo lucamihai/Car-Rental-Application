@@ -13,11 +13,11 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class VehicleUserControl : UserControl
     {
+        protected RentVehicleUserControl rentVehicleUserControl;
         protected MainWindow mainWindow;
         protected string vehicleName;
         protected short damagePercent;
         protected short fuelPercentage;
-        protected Customer owner;
         protected short id;
         public virtual void GetDetails() { }
         public VehicleUserControl()
@@ -28,6 +28,7 @@ namespace Car_Rental_Application.User_Controls
         {
             this.mainWindow = mainWindow;
         }
+        public void LinkToRentMenu(RentVehicleUserControl rentVehicleUserControl) { this.rentVehicleUserControl = rentVehicleUserControl; }
         public string GetVehicleName() { return vehicleName; }
         public short GetFuelPercentage() { return fuelPercentage; }
         public short GetDamagePercentage() { return damagePercent; }

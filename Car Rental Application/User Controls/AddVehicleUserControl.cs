@@ -60,18 +60,19 @@ namespace Car_Rental_Application.User_Controls
             if (sedanTypeCheckBox.Checked == true)
             {
                 AvailableSedanUserControl sedan = new AvailableSedanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
-                mainWindow.AddAvailableVehicle(sedan);
+                mainWindow.availableCarsManager.AddAvailableVehicle(sedan);
                 errorLabel.Text = "";
                 return;
             }
             AvailableMinivanUserControl minivan=new AvailableMinivanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
-            mainWindow.AddAvailableVehicle(minivan);
+            mainWindow.availableCarsManager.AddAvailableVehicle(minivan);
             errorLabel.Text = "";
         }
 
         private void buttonCancelAdd_Click(object sender, EventArgs e)
         {
             mainWindow.HideAddVehiclePanel();
+            Hide();
         }
 
         #endregion

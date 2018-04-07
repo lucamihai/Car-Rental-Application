@@ -17,9 +17,11 @@ namespace Car_Rental_Application
 
         public static int availableCarsCounter = 0;
         List <VehicleUserControl> lista;
-        AvailableCars pr;
-
+        List<VehicleUserControl> rentedVehicles;
+        public AvailableCarsManager availableCarsManager;
+        public RentedCarsManager rentedCarsManager;
         AddVehicleUserControl addVehicleUserControl;
+        RentVehicleUserControl rentVehicleUserControl;
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
             
         public MainWindow()
@@ -27,10 +29,20 @@ namespace Car_Rental_Application
             InitializeComponent();
             
             lista = new List<VehicleUserControl>();
-            pr = new AvailableCars(AvailableCarsPanel, availableCarsElementsPanel);
-            pr.availableCarsPanel.Controls.Add(availableCarsElementsPanel);
+            rentedVehicles = new List<VehicleUserControl>();
+            availableCarsManager = new AvailableCarsManager(AvailableCarsPanel, availableCarsElementsPanel);
+            availableCarsManager.availableCarsPanel.Controls.Add(availableCarsElementsPanel);
+            availableCarsManager.Link(this);
+
+            rentedCarsManager = new RentedCarsManager(RentedCarsPanel, rentedCarsElementsPanel);
+            rentedCarsManager.rentedCarsPanel.Controls.Add(rentedCarsElementsPanel);
+
             addVehicleUserControl = new AddVehicleUserControl(this);
+            rentVehicleUserControl = new RentVehicleUserControl(this);
             panelAddVehicles.Controls.Add(addVehicleUserControl);
+            panelAddVehicles.Controls.Add(rentVehicleUserControl);
+            addVehicleUserControl.Hide();
+            rentVehicleUserControl.Hide();
             SortSelectionComboBox.SelectedIndex = SortSelectionComboBox.FindStringExact("By ID");
 
             for (int i = 0; i < IDManagement.availableIndexes.Length; i++) IDManagement.availableIndexes[i] = true;
@@ -42,10 +54,15 @@ namespace Car_Rental_Application
             //  lista.Add(sedan);
             //}
         }
-
+        public void AddToAvailableCarsList(VehicleUserControl vehicle) { lista.Add(vehicle); }
+        public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
         public void HideAddVehiclePanel()
         {
             panelAddVehicles.Hide();
+        }
+        public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle)
+        {
+            return lista.IndexOf(vehicle);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -64,28 +81,37 @@ namespace Car_Rental_Application
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
             lista.RemoveAt(lista.Count-1);
             availableCarsElementsPanel.VerticalScroll.Value = 0;
-            pr.availableCarsPanelElements.Controls.Clear();
+            availableCarsManager.availableCarsElementsPanel.Controls.Clear();
             foreach (VehicleUserControl sedan in lista)
-                pr.availableCarsPanelElements.Controls.Add(sedan);
+                availableCarsManager.availableCarsElementsPanel.Controls.Add(sedan);
             label3.Text = lista.Count.ToString();
 
         }
         #endregion
-        public void AddAvailableVehicle(VehicleUserControl vehicle)
-        {
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
-            lista.Add(vehicle);
-            PopulateAvailableVehiclesPanel();
-        }
+        
 
         public void PopulateAvailableVehiclesPanel()
         {
-            pr.availableCarsPanelElements.Controls.Clear();
+            availableCarsManager.availableCarsElementsPanel.Controls.Clear();
             short counter = 0;
             foreach (VehicleUserControl vehicle in lista)
             {
                 vehicle.LinkToMainWindow(this);
-                pr.availableCarsPanelElements.Controls.Add(vehicle);
+                vehicle.LinkToRentMenu(rentVehicleUserControl);
+                availableCarsManager.availableCarsElementsPanel.Controls.Add(vehicle);
+                vehicle.Location = new Point(0, counter++ * 100);
+            }
+            label3.Text = lista.Count.ToString();
+        }
+        public void PopulateRentedVehiclesPanel()
+        {
+            rentedCarsManager.rentedCarsElementsPanel.Controls.Clear();
+            short counter = 0;
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+            {
+                vehicle.LinkToMainWindow(this);
+
+                rentedCarsManager.rentedCarsElementsPanel.Controls.Add(vehicle);
                 vehicle.Location = new Point(0, counter++ * 100);
             }
             label3.Text = lista.Count.ToString();
@@ -99,10 +125,10 @@ namespace Car_Rental_Application
             minivan.Location = new Point(0, (lista.Count) * 100);
             lista.Add(minivan);
 
-            pr.availableCarsPanelElements.Controls.Clear();
-            pr.availableCarsPanelElements.Controls.Add(new AvailableMinivanUserControl());
+            availableCarsManager.availableCarsElementsPanel.Controls.Clear();
+            availableCarsManager.availableCarsElementsPanel.Controls.Add(new AvailableMinivanUserControl());
             foreach (VehicleUserControl sedan in lista)
-                pr.availableCarsPanelElements.Controls.Add(sedan);
+                availableCarsManager.availableCarsElementsPanel.Controls.Add(sedan);
             label3.Text = lista.Count.ToString();
 
         }
@@ -110,8 +136,9 @@ namespace Car_Rental_Application
         private void buttonAddVehicle_Click(object sender, EventArgs e)
         {
             panelAddVehicles.Show();
+            addVehicleUserControl.Show();
         }
-
+        public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); }
 
         private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
         {
@@ -134,11 +161,11 @@ namespace Car_Rental_Application
 
         private void buttonSort_Click(object sender, EventArgs e)
         {
-            if (SortSelectionComboBox.SelectedIndex == 0) lista = pr.SortListByID(lista); 
-            if (SortSelectionComboBox.SelectedIndex == 1) lista = pr.SortListByName(lista);
-            if (SortSelectionComboBox.SelectedIndex == 2) lista = pr.SortListByType(lista);
-            if (SortSelectionComboBox.SelectedIndex == 3) lista = pr.SortListByFuelPercent(lista);
-            if (SortSelectionComboBox.SelectedIndex == 4) lista = pr.SortListByDamagePercent(lista);
+            if (SortSelectionComboBox.SelectedIndex == 0) lista = availableCarsManager.SortListByID(lista); 
+            if (SortSelectionComboBox.SelectedIndex == 1) lista = availableCarsManager.SortListByName(lista);
+            if (SortSelectionComboBox.SelectedIndex == 2) lista = availableCarsManager.SortListByType(lista);
+            if (SortSelectionComboBox.SelectedIndex == 3) lista = availableCarsManager.SortListByFuelPercent(lista);
+            if (SortSelectionComboBox.SelectedIndex == 4) lista = availableCarsManager.SortListByDamagePercent(lista);
             PopulateAvailableVehiclesPanel();
         }
     }
