@@ -31,6 +31,7 @@ namespace Car_Rental_Application
             pr.availableCarsPanel.Controls.Add(availableCarsElementsPanel);
             addVehicleUserControl = new AddVehicleUserControl(this);
             panelAddVehicles.Controls.Add(addVehicleUserControl);
+            SortSelectionComboBox.SelectedIndex = SortSelectionComboBox.FindStringExact("By ID");
 
             for (int i = 0; i < IDManagement.availableIndexes.Length; i++) IDManagement.availableIndexes[i] = true;
 
@@ -59,7 +60,6 @@ namespace Car_Rental_Application
         private void button1_Click(object sender, EventArgs e)
         {
             if (lista.Count < 1) { label3.Text = "There's nothing" + Environment.NewLine + " to remove"; return; }
-            //list = list.OrderBy(o => o.vehicleName).ToList();  <- used to order objects by a property
             short idToBeMarkedAsAvailable = (short)(lista.Count - 1);
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
             lista.RemoveAt(lista.Count-1);
@@ -130,6 +130,16 @@ namespace Car_Rental_Application
                 lista.Remove(vehicle);
             PopulateAvailableVehiclesPanel();
             indexesOfSelectedAvailableCars.Clear();
+        }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            if (SortSelectionComboBox.SelectedIndex == 0) lista = pr.SortListByID(lista); 
+            if (SortSelectionComboBox.SelectedIndex == 1) lista = pr.SortListByName(lista);
+            if (SortSelectionComboBox.SelectedIndex == 2) lista = pr.SortListByType(lista);
+            if (SortSelectionComboBox.SelectedIndex == 3) lista = pr.SortListByFuelPercent(lista);
+            if (SortSelectionComboBox.SelectedIndex == 4) lista = pr.SortListByDamagePercent(lista);
+            PopulateAvailableVehiclesPanel();
         }
     }
 }

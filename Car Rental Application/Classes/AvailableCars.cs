@@ -18,34 +18,40 @@ namespace Car_Rental_Application.Classes
             this.availableCarsPanelElements = rentedCarsPanel;
         }
         #region ISort methods
-        public void SortListByName(List <VehicleUserControl> vehicles)
-        {
 
-        }
-        public void SortListByType(List <VehicleUserControl> vehicles)
+        public List<VehicleUserControl> SortListByID(List <VehicleUserControl> vehicles)
         {
-
+            return vehicles.OrderBy(o => o.GetVehicleID()).ToList();
         }
-        public void SortListByReturnDate(List <VehicleUserControl> vehicles)
+        public List<VehicleUserControl> SortListByName(List <VehicleUserControl> vehicles)
         {
-
+            return vehicles.OrderBy(o => o.GetVehicleName()).ToList();
         }
-        public void SortListByOwnerPhoneNumber(List <VehicleUserControl> vehicles)
+        public List<VehicleUserControl> SortListByType(List <VehicleUserControl> vehicles)
         {
-
+            return vehicles;
         }
-        public void SortListByOwnerName(List <VehicleUserControl> vehicles)
+        public List<VehicleUserControl> SortListByReturnDate(List <VehicleUserControl> vehicles)
         {
-
+            return vehicles;
         }
-        public void SortListByFuelPercent(List <VehicleUserControl> vehicles)
+        public List<VehicleUserControl> SortListByOwnerPhoneNumber(List <VehicleUserControl> vehicles)
         {
-
+            return vehicles;
         }
-        public void SortListByDamagePercent(List <VehicleUserControl> vehicles)
+        public List<VehicleUserControl> SortListByOwnerName(List <VehicleUserControl> vehicles)
         {
-
+            return vehicles;
         }
+        public List<VehicleUserControl> SortListByFuelPercent(List <VehicleUserControl> vehicles)
+        {
+            return vehicles.OrderBy(o => o.GetFuelPercentage()).ToList();
+        }
+        public List<VehicleUserControl> SortListByDamagePercent(List <VehicleUserControl> vehicles)
+        {
+            return vehicles.OrderBy(o => o.GetDamagePercentage()).ToList();
+        }
+
         #endregion
     }
 }

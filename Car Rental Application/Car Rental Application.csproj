@@ -48,6 +48,7 @@
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\AvailableCars.cs" />
     <Compile Include="Classes\IDManagement.cs" />
+    <Compile Include="Classes\RentedCars.cs" />
     <Compile Include="Interfaces\ISort.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>

@@ -41,12 +41,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panelAddVehicles = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
+            this.buttonSort = new System.Windows.Forms.Button();
+            this.SortSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // AvailableCarsPanel
             // 
+            this.AvailableCarsPanel.Controls.Add(this.SortSelectionComboBox);
+            this.AvailableCarsPanel.Controls.Add(this.buttonSort);
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveSelectedAvailableCars);
             this.AvailableCarsPanel.Controls.Add(this.buttonAddVehicle);
             this.AvailableCarsPanel.Controls.Add(this.availableCarsElementsPanel);
@@ -168,6 +172,31 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "debugging label";
             // 
+            // buttonSort
+            // 
+            this.buttonSort.Location = new System.Drawing.Point(61, 4);
+            this.buttonSort.Name = "buttonSort";
+            this.buttonSort.Size = new System.Drawing.Size(75, 23);
+            this.buttonSort.TabIndex = 8;
+            this.buttonSort.Text = "Sort";
+            this.buttonSort.UseVisualStyleBackColor = true;
+            this.buttonSort.Click += new System.EventHandler(this.buttonSort_Click);
+            // 
+            // SortSelectionComboBox
+            // 
+            this.SortSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SortSelectionComboBox.FormattingEnabled = true;
+            this.SortSelectionComboBox.Items.AddRange(new object[] {
+            "By ID",
+            "By name",
+            "By type",
+            "By fuel percentage",
+            "By damage percentage"});
+            this.SortSelectionComboBox.Location = new System.Drawing.Point(142, 6);
+            this.SortSelectionComboBox.Name = "SortSelectionComboBox";
+            this.SortSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.SortSelectionComboBox.TabIndex = 9;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -206,6 +235,8 @@
         private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
         private System.Windows.Forms.Panel rentedCarsElementsPanel;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonSort;
+        private System.Windows.Forms.ComboBox SortSelectionComboBox;
     }
 }
 

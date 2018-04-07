@@ -41,7 +41,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(damagePercent);
             IDManagement.MarkIDAsUnavailable(id);
         }
-        #region Set and Get methods
+        #region Set methods
 
         public void SetVehicleID(short id)
         {
@@ -63,10 +63,6 @@ namespace Car_Rental_Application.User_Controls
             this.damagePercent = damagePercentage;
             damagePercentValueLabel.Text = damagePercentage.ToString();
         }
-        public string GetVehicleName() { return vehicleName; }
-        public short GetFuelPercentage() { return fuelPercentage; }
-        public short GetDamagePercentage() { return damagePercent; }
-        public short GetVehicleID() { return id; }
 
         #endregion
 

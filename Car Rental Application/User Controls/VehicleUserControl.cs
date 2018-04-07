@@ -28,6 +28,10 @@ namespace Car_Rental_Application.User_Controls
         {
             this.mainWindow = mainWindow;
         }
+        public string GetVehicleName() { return vehicleName; }
+        public short GetFuelPercentage() { return fuelPercentage; }
+        public short GetDamagePercentage() { return damagePercent; }
+        public short GetVehicleID() { return id; }
 
     }
 }

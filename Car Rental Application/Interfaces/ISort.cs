@@ -9,12 +9,13 @@ namespace Car_Rental_Application.Interfaces
 {
     interface ISort
     {
-        void SortListByName(List <VehicleUserControl> vehicles);
-        void SortListByType(List <VehicleUserControl> vehicles);
-        void SortListByDamagePercent(List <VehicleUserControl> vehicles);
-        void SortListByFuelPercent(List <VehicleUserControl> vehicles);
-        void SortListByOwnerName(List <VehicleUserControl> vehicles);
-        void SortListByOwnerPhoneNumber(List <VehicleUserControl> vehicles);
-        void SortListByReturnDate(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByID(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByName(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByType(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByDamagePercent(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByFuelPercent(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByOwnerName(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByOwnerPhoneNumber(List <VehicleUserControl> vehicles);
+        List<VehicleUserControl> SortListByReturnDate(List <VehicleUserControl> vehicles);
     }
 }

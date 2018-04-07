@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Car_Rental_Application.Interfaces;
+using Car_Rental_Application.Classes;
 
 namespace Car_Rental_Application.User_Controls
 {
@@ -20,19 +21,32 @@ namespace Car_Rental_Application.User_Controls
         public AvailableMinivanUserControl(string vehicleName)
         {
             InitializeComponent();
+            short id = (short)IDManagement.GetLowestAvailableID();
+
+            SetVehicleID(id);
             SetVehicleName(vehicleName);
             SetVehicleFuelPercentage(100);
             SetVehicleDamagePercentage(0);
+            IDManagement.MarkIDAsUnavailable(id);
         }
         public AvailableMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();
+            short id = (short)IDManagement.GetLowestAvailableID();
+
+            SetVehicleID(id);
             SetVehicleName(vehicleName);
             SetVehicleFuelPercentage(fuelPercent);
             SetVehicleDamagePercentage(damagePercent);
+            IDManagement.MarkIDAsUnavailable(id);
         }
-        #region Set and Get methods
+        #region Set  methods
 
+        public void SetVehicleID(short id)
+        {
+            this.id = id;
+            IDValueLabel.Text = id.ToString();
+        }
         public void SetVehicleName(string vehicleName)
         {
             this.vehicleName = vehicleName;
@@ -48,10 +62,17 @@ namespace Car_Rental_Application.User_Controls
             this.damagePercent = damagePercentage;
             damagePercentValueLabel.Text = damagePercentage.ToString();
         }
-        public string GetVehicleName() { return vehicleName; }
-        public short GetFuelPercentage() { return fuelPercentage; }
-        public short GetDamagePercentage() { return damagePercent; }
 
         #endregion
+
+        private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (selectCheckBox.Checked == true)
+            {
+                mainWindow.indexesOfSelectedAvailableCars.Add(id);
+                return;
+            }
+            mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+        }
     }
 }
