@@ -13,6 +13,7 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class VehicleUserControl : UserControl
     {
+        protected MainWindow mainWindow;
         protected string vehicleName;
         protected short damagePercent;
         protected short fuelPercentage;
@@ -21,6 +22,10 @@ namespace Car_Rental_Application.User_Controls
         public VehicleUserControl()
         {
             InitializeComponent();
+        }
+        public void LinkToMainWindow(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
         }
     }
 }

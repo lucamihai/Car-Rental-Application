@@ -14,23 +14,35 @@ namespace Car_Rental_Application
 {
     public partial class MainWindow : Form
     {
+
         public static int availableCarsCounter = 0;
-        List<VehicleUserControl> lista;
+        List <VehicleUserControl> lista;
         AvailableCars pr;
+        AddVehicleUserControl addVehicleUserControl;
+        public List<int> indexesOfSelectedAvailableCars = new List<int>();
+            
         public MainWindow()
         {
             InitializeComponent();
             lista = new List<VehicleUserControl>();
             pr = new AvailableCars(AvailableCarsPanel, availableCarsElementsPanel);
             pr.availableCarsPanel.Controls.Add(availableCarsElementsPanel);
+            addVehicleUserControl = new AddVehicleUserControl(this);
+            panelAddVehicles.Controls.Add(addVehicleUserControl);
+            addVehicleUserControl.TabIndex = 5;
+
+
             //for (int i = 0; i < 15; i++)
-           // {
+            // {
             //    AvailableSedanUserControl sedan = new AvailableSedanUserControl();
             //    sedan.Location = new Point(0, i*100);
-              //  lista.Add(sedan);
+            //  lista.Add(sedan);
             //}
         }
-
+        public void HideAddVehiclePanel()
+        {
+            panelAddVehicles.Hide();
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -53,6 +65,29 @@ namespace Car_Rental_Application
             label3.Text = lista.Count.ToString();
         }
 
+        public void AddAvailableVehicle(VehicleUserControl vehicle)
+        {
+            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            
+            vehicle.Location = new Point(0, (lista.Count) * 100);
+            lista.Add(vehicle);
+
+            PopulateAvailableVehiclesPanel();
+
+        }
+
+        public void PopulateAvailableVehiclesPanel()
+        {
+            pr.availableCarsPanelElements.Controls.Clear();
+            foreach (VehicleUserControl vehicle in lista)
+            {
+                vehicle.LinkToMainWindow(this);
+                pr.availableCarsPanelElements.Controls.Add(vehicle);
+                
+            }
+            label3.Text = lista.Count.ToString();
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
 
@@ -69,6 +104,20 @@ namespace Car_Rental_Application
 
         }
 
+        private void buttonAddVehicle_Click(object sender, EventArgs e)
+        {
+            panelAddVehicles.Show();
+        }
 
+
+        private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
+        {
+            foreach(int index in indexesOfSelectedAvailableCars)
+            {
+                lista.RemoveAt(index);
+            }
+            PopulateAvailableVehiclesPanel();
+            indexesOfSelectedAvailableCars.Clear();
+        }
     }
 }

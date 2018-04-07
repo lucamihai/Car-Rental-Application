@@ -39,6 +39,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonAddVehicle = new System.Windows.Forms.Button();
             this.buttonCancelAdd = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fuelPercentNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.damagePercentNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -53,6 +54,8 @@
             // sedanTypeCheckBox
             // 
             this.sedanTypeCheckBox.AutoSize = true;
+            this.sedanTypeCheckBox.Checked = true;
+            this.sedanTypeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.sedanTypeCheckBox.Location = new System.Drawing.Point(146, 103);
             this.sedanTypeCheckBox.Name = "sedanTypeCheckBox";
             this.sedanTypeCheckBox.Size = new System.Drawing.Size(57, 17);
@@ -78,6 +81,11 @@
             this.fuelPercentNumericUpDown.Name = "fuelPercentNumericUpDown";
             this.fuelPercentNumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.fuelPercentNumericUpDown.TabIndex = 3;
+            this.fuelPercentNumericUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.fuelPercentNumericUpDown.ValueChanged += new System.EventHandler(this.fuelPercentNumericUpDown_ValueChanged);
             // 
             // damagePercentNumericUpDown
@@ -144,11 +152,21 @@
             this.buttonCancelAdd.UseVisualStyleBackColor = true;
             this.buttonCancelAdd.Click += new System.EventHandler(this.buttonCancelAdd_Click);
             // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(121, 46);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorLabel.TabIndex = 11;
+            // 
             // AddVehicleUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.buttonCancelAdd);
             this.Controls.Add(this.buttonAddVehicle);
             this.Controls.Add(this.label4);
@@ -161,7 +179,7 @@
             this.Controls.Add(this.sedanTypeCheckBox);
             this.Controls.Add(this.vehicleNameTextBox);
             this.Name = "AddVehicleUserControl";
-            this.Size = new System.Drawing.Size(329, 253);
+            this.Size = new System.Drawing.Size(325, 250);
             ((System.ComponentModel.ISupportInitialize)(this.fuelPercentNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.damagePercentNumericUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -182,5 +200,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button buttonAddVehicle;
         private System.Windows.Forms.Button buttonCancelAdd;
+        private System.Windows.Forms.Label errorLabel;
     }
 }

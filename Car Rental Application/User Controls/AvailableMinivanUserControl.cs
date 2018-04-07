@@ -17,5 +17,41 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
         }
+        public AvailableMinivanUserControl(string vehicleName)
+        {
+            InitializeComponent();
+            SetVehicleName(vehicleName);
+            SetVehicleFuelPercentage(100);
+            SetVehicleDamagePercentage(0);
+        }
+        public AvailableMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
+        {
+            InitializeComponent();
+            SetVehicleName(vehicleName);
+            SetVehicleFuelPercentage(fuelPercent);
+            SetVehicleDamagePercentage(damagePercent);
+        }
+        #region Set and Get methods
+
+        public void SetVehicleName(string vehicleName)
+        {
+            this.vehicleName = vehicleName;
+            vehicleNameValueLabel.Text = vehicleName;
+        }
+        public void SetVehicleFuelPercentage(short fuelPercentage)
+        {
+            this.fuelPercentage = fuelPercentage;
+            fuelPercentValueLabel.Text = fuelPercentage.ToString();
+        }
+        public void SetVehicleDamagePercentage(short damagePercentage)
+        {
+            this.damagePercent = damagePercentage;
+            damagePercentValueLabel.Text = damagePercentage.ToString();
+        }
+        public string GetVehicleName() { return vehicleName; }
+        public short GetFuelPercentage() { return fuelPercentage; }
+        public short GetDamagePercentage() { return damagePercent; }
+
+        #endregion
     }
 }

@@ -12,11 +12,13 @@ using Car_Rental_Application.Classes;
 namespace Car_Rental_Application.User_Controls
 {
     public partial class AvailableSedanUserControl : SedanUserControl
-    {       
+    {
+
         public AvailableSedanUserControl()
         {
             InitializeComponent();
         }
+
         public AvailableSedanUserControl(string vehicleName)
         {
             InitializeComponent();
@@ -52,6 +54,17 @@ namespace Car_Rental_Application.User_Controls
         public short GetFuelPercentage() { return fuelPercentage; }
         public short GetDamagePercentage() { return damagePercent; }
 
+
         #endregion
+
+        private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (selectCheckBox.Checked == true)
+            {
+                mainWindow.indexesOfSelectedAvailableCars.Add(Location.Y / 100);
+                return;
+            }
+            mainWindow.indexesOfSelectedAvailableCars.Remove(Location.Y / 100);
+        }
     }
 }

@@ -43,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.panelAddVehicles = new System.Windows.Forms.Panel();
+            this.buttonRemoveSelectedAvailableCars = new System.Windows.Forms.Button();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rentedCarsGridView)).BeginInit();
@@ -50,6 +52,7 @@
             // 
             // AvailableCarsPanel
             // 
+            this.AvailableCarsPanel.Controls.Add(this.buttonRemoveSelectedAvailableCars);
             this.AvailableCarsPanel.Controls.Add(this.buttonAddVehicle);
             this.AvailableCarsPanel.Controls.Add(this.availableCarsElementsPanel);
             this.AvailableCarsPanel.Controls.Add(this.button2);
@@ -67,6 +70,7 @@
             this.buttonAddVehicle.TabIndex = 6;
             this.buttonAddVehicle.Text = "Add...";
             this.buttonAddVehicle.UseVisualStyleBackColor = true;
+            this.buttonAddVehicle.Click += new System.EventHandler(this.buttonAddVehicle_Click);
             // 
             // availableCarsElementsPanel
             // 
@@ -171,12 +175,32 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "debugging label";
             // 
+            // panelAddVehicles
+            // 
+            this.panelAddVehicles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelAddVehicles.Location = new System.Drawing.Point(415, 238);
+            this.panelAddVehicles.Name = "panelAddVehicles";
+            this.panelAddVehicles.Size = new System.Drawing.Size(325, 250);
+            this.panelAddVehicles.TabIndex = 5;
+            this.panelAddVehicles.Visible = false;
+            // 
+            // buttonRemoveSelectedAvailableCars
+            // 
+            this.buttonRemoveSelectedAvailableCars.Location = new System.Drawing.Point(334, 584);
+            this.buttonRemoveSelectedAvailableCars.Name = "buttonRemoveSelectedAvailableCars";
+            this.buttonRemoveSelectedAvailableCars.Size = new System.Drawing.Size(84, 38);
+            this.buttonRemoveSelectedAvailableCars.TabIndex = 7;
+            this.buttonRemoveSelectedAvailableCars.Text = "Remove Selected";
+            this.buttonRemoveSelectedAvailableCars.UseVisualStyleBackColor = true;
+            this.buttonRemoveSelectedAvailableCars.Click += new System.EventHandler(this.buttonRemoveSelectedAvailableCars_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.panelAddVehicles);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -210,6 +234,8 @@
         private System.Windows.Forms.Panel availableCarsElementsPanel;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonAddVehicle;
+        private System.Windows.Forms.Panel panelAddVehicles;
+        private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
     }
 }
 

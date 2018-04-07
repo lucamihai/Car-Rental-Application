@@ -12,15 +12,15 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class AddVehicleUserControl : UserControl
     {
-        Panel availableCarsElementsPanel;
+        MainWindow mainWindow;
         public AddVehicleUserControl()
         {
             InitializeComponent();
         }
-        public AddVehicleUserControl(Panel availableCarsElementsPanel)
+        public AddVehicleUserControl(MainWindow mainWindow)
         {
             InitializeComponent();
-            this.availableCarsElementsPanel = availableCarsElementsPanel;
+            this.mainWindow = mainWindow;
         }
         #region Fuel and damage percentage control
 
@@ -42,11 +42,13 @@ namespace Car_Rental_Application.User_Controls
         private void sedanTypeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (sedanTypeCheckBox.Checked == true && minivanTypeCheckBox.Checked == true) minivanTypeCheckBox.Checked = false;
+            if (sedanTypeCheckBox.Checked == false && minivanTypeCheckBox.Checked == false) sedanTypeCheckBox.Checked = true;
         }
 
         private void minivanTypeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (sedanTypeCheckBox.Checked == true && minivanTypeCheckBox.Checked == true) sedanTypeCheckBox.Checked = false;
+            if (sedanTypeCheckBox.Checked == false && minivanTypeCheckBox.Checked == false) minivanTypeCheckBox.Checked = true;
         }
 
         #endregion
@@ -54,17 +56,22 @@ namespace Car_Rental_Application.User_Controls
 
         private void buttonAddVehicle_Click(object sender, EventArgs e)
         {
+            if (vehicleNameTextBox.Text == "") { errorLabel.Text = "Insert vehicle name";return; }
             if (sedanTypeCheckBox.Checked == true)
             {
                 AvailableSedanUserControl sedan = new AvailableSedanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
-
+                mainWindow.AddAvailableVehicle(sedan);
+                errorLabel.Text = "";
+                return;
             }
-
+            AvailableMinivanUserControl minivan=new AvailableMinivanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
+            mainWindow.AddAvailableVehicle(minivan);
+            errorLabel.Text = "";
         }
 
         private void buttonCancelAdd_Click(object sender, EventArgs e)
         {
-
+            mainWindow.HideAddVehiclePanel();
         }
 
         #endregion
