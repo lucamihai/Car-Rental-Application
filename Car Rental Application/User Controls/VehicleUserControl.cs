@@ -18,6 +18,7 @@ namespace Car_Rental_Application.User_Controls
         protected short damagePercent;
         protected short fuelPercentage;
         protected Customer owner;
+        protected short id;
         public virtual void GetDetails() { }
         public VehicleUserControl()
         {
@@ -27,5 +28,6 @@ namespace Car_Rental_Application.User_Controls
         {
             this.mainWindow = mainWindow;
         }
+
     }
 }

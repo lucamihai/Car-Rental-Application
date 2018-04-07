@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\AvailableCars.cs" />
+    <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Interfaces\ISort.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -124,6 +125,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\AvailableSedanUserControl.resx">
       <DependentUpon>AvailableSedanUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\RentedMinivanUserControl.resx">
+      <DependentUpon>RentedMinivanUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\RentedSedanUserControl.resx">
+      <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\SedanUserControl.resx">
       <DependentUpon>SedanUserControl.cs</DependentUpon>

@@ -22,19 +22,32 @@ namespace Car_Rental_Application.User_Controls
         public AvailableSedanUserControl(string vehicleName)
         {
             InitializeComponent();
+            short id = (short)IDManagement.GetLowestAvailableID();
+
+            SetVehicleID(id);
             SetVehicleName(vehicleName);
             SetVehicleFuelPercentage(100);
             SetVehicleDamagePercentage(0);
+            IDManagement.MarkIDAsUnavailable(id);
         }
         public AvailableSedanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();
+            short id = (short)IDManagement.GetLowestAvailableID();
+
+            SetVehicleID(id);
             SetVehicleName(vehicleName);
             SetVehicleFuelPercentage(fuelPercent);
             SetVehicleDamagePercentage(damagePercent);
+            IDManagement.MarkIDAsUnavailable(id);
         }
         #region Set and Get methods
 
+        public void SetVehicleID(short id)
+        {
+            this.id = id;
+            IDValueLabel.Text = id.ToString();
+        }
         public void SetVehicleName(string vehicleName)
         {
             this.vehicleName = vehicleName;
@@ -53,7 +66,7 @@ namespace Car_Rental_Application.User_Controls
         public string GetVehicleName() { return vehicleName; }
         public short GetFuelPercentage() { return fuelPercentage; }
         public short GetDamagePercentage() { return damagePercent; }
-
+        public short GetVehicleID() { return id; }
 
         #endregion
 
@@ -61,10 +74,10 @@ namespace Car_Rental_Application.User_Controls
         {
             if (selectCheckBox.Checked == true)
             {
-                mainWindow.indexesOfSelectedAvailableCars.Add(Location.Y / 100);
+                mainWindow.indexesOfSelectedAvailableCars.Add(id);
                 return;
             }
-            mainWindow.indexesOfSelectedAvailableCars.Remove(Location.Y / 100);
+            mainWindow.indexesOfSelectedAvailableCars.Remove(id);
         }
     }
 }
