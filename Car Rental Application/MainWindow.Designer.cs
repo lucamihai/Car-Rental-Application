@@ -52,6 +52,8 @@
             this.loadFromLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelProgramDate = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -224,13 +226,13 @@
             // loadFromDatabaseToolStripMenuItem
             // 
             this.loadFromDatabaseToolStripMenuItem.Name = "loadFromDatabaseToolStripMenuItem";
-            this.loadFromDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFromDatabaseToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.loadFromDatabaseToolStripMenuItem.Text = "Load from database";
             // 
             // saveToDatabaseToolStripMenuItem
             // 
             this.saveToDatabaseToolStripMenuItem.Name = "saveToDatabaseToolStripMenuItem";
-            this.saveToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.saveToDatabaseToolStripMenuItem.Text = "Save to database";
             // 
             // localFileToolStripMenuItem
@@ -245,14 +247,16 @@
             // loadFromLocalFileToolStripMenuItem
             // 
             this.loadFromLocalFileToolStripMenuItem.Name = "loadFromLocalFileToolStripMenuItem";
-            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadFromLocalFileToolStripMenuItem.Text = "Load from local file";
+            this.loadFromLocalFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromLocalFileToolStripMenuItem_Click);
             // 
             // saveToLocalFileToolStripMenuItem
             // 
             this.saveToLocalFileToolStripMenuItem.Name = "saveToLocalFileToolStripMenuItem";
-            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
+            this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
             // 
             // labelProgramDate
             // 
@@ -263,6 +267,10 @@
             this.labelProgramDate.Size = new System.Drawing.Size(91, 19);
             this.labelProgramDate.TabIndex = 9;
             this.labelProgramDate.Text = "Program date";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // MainWindow
             // 
@@ -317,6 +325,8 @@
         private System.Windows.Forms.ToolStripMenuItem loadFromLocalFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToLocalFileToolStripMenuItem;
         private System.Windows.Forms.Label labelProgramDate;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

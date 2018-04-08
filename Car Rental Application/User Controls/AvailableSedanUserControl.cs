@@ -30,6 +30,15 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(0);
             IDManagement.MarkIDAsUnavailable(id);
         }
+        public AvailableSedanUserControl(VehicleUserControl sedan)
+        {
+            InitializeComponent();
+            SetVehicleID(sedan.GetVehicleID());
+            SetVehicleName(sedan.GetVehicleName());
+            SetVehicleFuelPercentage(sedan.GetFuelPercentage());
+            SetVehicleDamagePercentage(sedan.GetDamagePercentage());
+            IDManagement.MarkIDAsUnavailable(id);
+        }
         public AvailableSedanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();

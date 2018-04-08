@@ -5,10 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Car_Rental_Application.Classes;
 using Car_Rental_Application.User_Controls;
+using System.Xml.Serialization;
 
 namespace Car_Rental_Application
 {
@@ -24,6 +26,8 @@ namespace Car_Rental_Application
         RentVehicleUserControl rentVehicleUserControl;
         ReturnFromRentUserControl returnFromRentUserControl;
         DateTime programTime;
+
+
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
             
         public MainWindow()
@@ -58,6 +62,28 @@ namespace Car_Rental_Application
                 IDManagement.rentedIndexes[i] = true;
 
         }
+        public void ToXML(List<VehicleUserControl> list, string filePath)
+        {
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<VehicleUserControl>));
+            if (File.Exists(filePath)) File.Delete(filePath); 
+            
+            using (FileStream stream = File.OpenWrite(filePath))
+            {
+
+                serializer.Serialize(stream, list);
+            }
+        }
+        public List<VehicleUserControl> Read(string filePath)
+        {
+            if (!File.Exists(filePath)) { return new List<VehicleUserControl>(); }
+            XmlSerializer serializer = new XmlSerializer(typeof(List<VehicleUserControl>));
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                List<VehicleUserControl> dezerializedList = (List<VehicleUserControl>)serializer.Deserialize(stream);
+                return dezerializedList;
+            }
+        }
         public void AddToAvailableCarsList(VehicleUserControl vehicle) { lista.Add(vehicle); }
         public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
         public void HideAddVehiclePanel()
@@ -77,7 +103,6 @@ namespace Car_Rental_Application
         {
 
         }
-        public DateTime GetProgramDate() { return programTime; }
         #region Remove Button
         private void button1_Click(object sender, EventArgs e)
         {
@@ -107,6 +132,7 @@ namespace Car_Rental_Application
                 vehicle.LinkToRentMenu(rentVehicleUserControl);
                 availableCarsManager.availableCarsElementsPanel.Controls.Add(vehicle);
                 vehicle.Location = new Point(0, counter++ * 100);
+
             }
             label3.Text = lista.Count.ToString();
         }
@@ -183,6 +209,25 @@ namespace Car_Rental_Application
             programTime = DateTime.Now;
         }
 
-        
+        private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToXML(lista, "availableVehiclesList.xml");          
+        }
+
+        private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lista.Clear();
+            List<VehicleUserControl> listOfImportedVehicles = Read("availableVehiclesList.xml");
+            foreach (VehicleUserControl vehicle in listOfImportedVehicles)
+            {
+                if (vehicle.Name == "AvailableSedanUserControl")
+                    lista.Add(new AvailableSedanUserControl(vehicle));
+                if (vehicle.Name == "AvailableMinivanUserControl")
+                    lista.Add(new AvailableMinivanUserControl(vehicle));
+            }
+                
+            PopulateAvailableVehiclesPanel();
+            //label4.Text = lista[4].Name;+++
+        }
     }
 }
