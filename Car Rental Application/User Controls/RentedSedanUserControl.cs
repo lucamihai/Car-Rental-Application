@@ -37,7 +37,7 @@ namespace Car_Rental_Application.User_Controls
             ownerNameValueLabel.Text = owner.GetName();
             ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
             this.returnDate = returnDate;
-            returnDateValueLabel.Text = returnDate.ToShortDateString();
+            returnDateValueLabel.Text = returnDate.ToShortDateString();           
         }
 
         #region Set and Get methods
@@ -53,14 +53,6 @@ namespace Car_Rental_Application.User_Controls
             this.vehicleName = vehicleName;
             vehicleNameValueLabel.Text = vehicleName;
         }
-        public void SetVehicleFuelPercentage(short fuelPercentage)
-        {
-            this.fuelPercentage = fuelPercentage;           
-        }
-        public void SetVehicleDamagePercentage(short damagePercentage)
-        {
-            this.damagePercent = damagePercentage;
-        }
         public void SetOwner(Customer owner)
         {
             this.owner = owner;
@@ -72,15 +64,15 @@ namespace Car_Rental_Application.User_Controls
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
+        public Customer GetOwner() { return owner; }
+        public DateTime GetReturnDate() { return returnDate; }
 
         #endregion
 
         private void buttonReturn_Click(object sender, EventArgs e)
         {
-            
-            AvailableSedanUserControl sedan = new AvailableSedanUserControl(this);
-            mainWindow.ReturnVehicleFromRent(sedan);
-            mainWindow.RemoveRentedCarFromList(this);
+            returnFromRentUserControl.SelectVehicleToBeReturned(this);
+            mainWindow.ReturnMenu();
         }
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)

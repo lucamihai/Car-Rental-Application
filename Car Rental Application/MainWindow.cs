@@ -22,6 +22,8 @@ namespace Car_Rental_Application
         public RentedCarsManager rentedCarsManager;
         AddVehicleUserControl addVehicleUserControl;
         RentVehicleUserControl rentVehicleUserControl;
+        ReturnFromRentUserControl returnFromRentUserControl;
+        DateTime programTime;
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
             
         public MainWindow()
@@ -40,22 +42,21 @@ namespace Car_Rental_Application
 
             addVehicleUserControl = new AddVehicleUserControl(this);
             rentVehicleUserControl = new RentVehicleUserControl(this);
+            returnFromRentUserControl = new ReturnFromRentUserControl(this);
             panelAddVehicles.Controls.Add(addVehicleUserControl);
             panelAddVehicles.Controls.Add(rentVehicleUserControl);
+            panelAddVehicles.Controls.Add(returnFromRentUserControl);
             addVehicleUserControl.Hide();
             rentVehicleUserControl.Hide();
+            programTime = new DateTime();
             SortSelectionComboBox.SelectedIndex = SortSelectionComboBox.FindStringExact("By ID");
+            timer1.Start();
 
             for (int i = 0; i < IDManagement.availableIndexes.Length; i++)
                 IDManagement.availableIndexes[i] = true;
             for (int i = 0; i < IDManagement.rentedIndexes.Length; i++)
                 IDManagement.rentedIndexes[i] = true;
-            //for (int i = 0; i < 15; i++)
-            // {
-            //    AvailableSedanUserControl sedan = new AvailableSedanUserControl();
-            //    sedan.Location = new Point(0, i*100);
-            //  lista.Add(sedan);
-            //}
+
         }
         public void AddToAvailableCarsList(VehicleUserControl vehicle) { lista.Add(vehicle); }
         public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
@@ -76,6 +77,7 @@ namespace Car_Rental_Application
         {
 
         }
+        public DateTime GetProgramDate() { return programTime; }
         #region Remove Button
         private void button1_Click(object sender, EventArgs e)
         {
@@ -115,7 +117,7 @@ namespace Car_Rental_Application
             foreach (VehicleUserControl vehicle in rentedVehicles)
             {
                 vehicle.LinkToMainWindow(this);
-
+                vehicle.LinkToReturnMenu(returnFromRentUserControl);
                 rentedCarsManager.rentedCarsElementsPanel.Controls.Add(vehicle);
                 vehicle.Location = new Point(0, counter++ * 100);
             }
@@ -144,6 +146,7 @@ namespace Car_Rental_Application
             addVehicleUserControl.Show();
         }
         public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); }
+        public void ReturnMenu() { panelAddVehicles.Show(); returnFromRentUserControl.Show(); }
 
         private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
         {
@@ -173,5 +176,13 @@ namespace Car_Rental_Application
             if (SortSelectionComboBox.SelectedIndex == 4) lista = availableCarsManager.SortListByDamagePercent(lista);
             PopulateAvailableVehiclesPanel();
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            labelProgramDate.Text = "Program date" + Environment.NewLine + DateTime.Now.ToShortDateString();
+            programTime = DateTime.Now;
+        }
+
+        
     }
 }

@@ -67,12 +67,12 @@ namespace Car_Rental_Application.User_Controls
             this.vehicleName = vehicleName;
             vehicleNameValueLabel.Text = vehicleName;
         }
-        public void SetVehicleFuelPercentage(short fuelPercentage)
+        public override void SetVehicleFuelPercentage(short fuelPercentage)
         {
             this.fuelPercentage = fuelPercentage;
             fuelPercentValueLabel.Text = fuelPercentage.ToString();
         }
-        public void SetVehicleDamagePercentage(short damagePercentage)
+        public override void SetVehicleDamagePercentage(short damagePercentage)
         {
             this.damagePercent = damagePercentage;
             damagePercentValueLabel.Text = damagePercentage.ToString();

@@ -42,6 +42,15 @@ namespace Car_Rental_Application.User_Controls
                 mainWindow.HideAddVehiclePanel();
                 return;
             }
+            if (availableVehicle.GetType() == (new AvailableMinivanUserControl()).GetType())
+            {
+                RentedMinivanUserControl minivan = new RentedMinivanUserControl(availableVehicle, owner, returnDateDateTimePicker.Value);
+                mainWindow.rentedCarsManager.RentVehicle(minivan);
+                mainWindow.RemoveAvailableCarFromList(availableVehicle);
+                Hide();
+                mainWindow.HideAddVehiclePanel();
+                return;
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

@@ -100,6 +100,12 @@
     <Compile Include="User Controls\RentVehicleUserControl.Designer.cs">
       <DependentUpon>RentVehicleUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\ReturnFromRentUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\ReturnFromRentUserControl.Designer.cs">
+      <DependentUpon>ReturnFromRentUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\SedanUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\RentVehicleUserControl.resx">
       <DependentUpon>RentVehicleUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\ReturnFromRentUserControl.resx">
+      <DependentUpon>ReturnFromRentUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\SedanUserControl.resx">
       <DependentUpon>SedanUserControl.cs</DependentUpon>

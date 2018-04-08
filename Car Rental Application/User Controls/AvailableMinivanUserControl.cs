@@ -40,6 +40,20 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(damagePercent);
             IDManagement.MarkIDAsUnavailable(id);
         }
+        public AvailableMinivanUserControl(RentedMinivanUserControl minivan)
+        {
+            InitializeComponent();
+
+            short returnedVehicleID = minivan.GetVehicleID();
+            string returnedVehicleName = minivan.GetVehicleName();
+            short returnedVehicleFuelPercentage = minivan.GetFuelPercentage();
+            short returnedVehicleDamagePercentage = minivan.GetDamagePercentage();
+
+            SetVehicleID(returnedVehicleID);
+            SetVehicleName(returnedVehicleName);
+            SetVehicleFuelPercentage(returnedVehicleFuelPercentage);
+            SetVehicleDamagePercentage(returnedVehicleDamagePercentage);
+        }
         #region Set  methods
 
         public void SetVehicleID(short id)
@@ -52,15 +66,15 @@ namespace Car_Rental_Application.User_Controls
             this.vehicleName = vehicleName;
             vehicleNameValueLabel.Text = vehicleName;
         }
-        public void SetVehicleFuelPercentage(short fuelPercentage)
+        public override void SetVehicleFuelPercentage(short fuelPercentage)
         {
             this.fuelPercentage = fuelPercentage;
             fuelPercentValueLabel.Text = fuelPercentage.ToString();
         }
-        public void SetVehicleDamagePercentage(short damagePercentage)
+        public override void SetVehicleDamagePercentage(short damagePercent)
         {
-            this.damagePercent = damagePercentage;
-            damagePercentValueLabel.Text = damagePercentage.ToString();
+            this.damagePercent = damagePercent;
+            damagePercentValueLabel.Text = damagePercent.ToString();
         }
 
         #endregion
@@ -73,6 +87,12 @@ namespace Car_Rental_Application.User_Controls
                 return;
             }
             mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+        }
+
+        private void buttonRent_Click(object sender, EventArgs e)
+        {
+            rentVehicleUserControl.SelectVehicleToBeRent(this);
+            mainWindow.RentMenu();
         }
     }
 }

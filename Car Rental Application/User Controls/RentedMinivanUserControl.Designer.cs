@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.vehicleIDValueLabel = new System.Windows.Forms.Label();
+            this.rentIDValueLabel = new System.Windows.Forms.Label();
             this.vehicleIDLabel = new System.Windows.Forms.Label();
             this.buttonReturn = new System.Windows.Forms.Button();
             this.returnDateValueLabel = new System.Windows.Forms.Label();
@@ -44,14 +44,14 @@
             this.selectCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // vehicleIDValueLabel
+            // rentIDValueLabel
             // 
-            this.vehicleIDValueLabel.AutoSize = true;
-            this.vehicleIDValueLabel.Location = new System.Drawing.Point(4, 37);
-            this.vehicleIDValueLabel.Name = "vehicleIDValueLabel";
-            this.vehicleIDValueLabel.Size = new System.Drawing.Size(13, 13);
-            this.vehicleIDValueLabel.TabIndex = 39;
-            this.vehicleIDValueLabel.Text = "1";
+            this.rentIDValueLabel.AutoSize = true;
+            this.rentIDValueLabel.Location = new System.Drawing.Point(4, 37);
+            this.rentIDValueLabel.Name = "rentIDValueLabel";
+            this.rentIDValueLabel.Size = new System.Drawing.Size(13, 13);
+            this.rentIDValueLabel.TabIndex = 39;
+            this.rentIDValueLabel.Text = "1";
             // 
             // vehicleIDLabel
             // 
@@ -71,6 +71,7 @@
             this.buttonReturn.TabIndex = 37;
             this.buttonReturn.Text = "Return";
             this.buttonReturn.UseVisualStyleBackColor = true;
+            this.buttonReturn.Click += new System.EventHandler(this.buttonReturn_Click);
             // 
             // returnDateValueLabel
             // 
@@ -184,7 +185,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.selectCheckBox);
-            this.Controls.Add(this.vehicleIDValueLabel);
+            this.Controls.Add(this.rentIDValueLabel);
             this.Controls.Add(this.vehicleIDLabel);
             this.Controls.Add(this.buttonReturn);
             this.Controls.Add(this.returnDateValueLabel);
@@ -206,7 +207,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label vehicleIDValueLabel;
+        private System.Windows.Forms.Label rentIDValueLabel;
         private System.Windows.Forms.Label vehicleIDLabel;
         private System.Windows.Forms.Button buttonReturn;
         private System.Windows.Forms.Label returnDateValueLabel;

@@ -39,6 +39,7 @@
             this.damagePercentLabel = new System.Windows.Forms.Label();
             this.vehicleTypeLabel = new System.Windows.Forms.Label();
             this.vehicleNameLabel = new System.Windows.Forms.Label();
+            this.buttonRent = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // IDValueLabel
@@ -63,7 +64,7 @@
             // selectCheckBox
             // 
             this.selectCheckBox.AutoSize = true;
-            this.selectCheckBox.Location = new System.Drawing.Point(480, 40);
+            this.selectCheckBox.Location = new System.Drawing.Point(487, 20);
             this.selectCheckBox.Name = "selectCheckBox";
             this.selectCheckBox.Size = new System.Drawing.Size(56, 17);
             this.selectCheckBox.TabIndex = 19;
@@ -147,11 +148,22 @@
             this.vehicleNameLabel.TabIndex = 11;
             this.vehicleNameLabel.Text = "Vehicle name";
             // 
+            // buttonRent
+            // 
+            this.buttonRent.Location = new System.Drawing.Point(472, 49);
+            this.buttonRent.Name = "buttonRent";
+            this.buttonRent.Size = new System.Drawing.Size(75, 23);
+            this.buttonRent.TabIndex = 22;
+            this.buttonRent.Text = "Rent";
+            this.buttonRent.UseVisualStyleBackColor = true;
+            this.buttonRent.Click += new System.EventHandler(this.buttonRent_Click);
+            // 
             // AvailableMinivanUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Controls.Add(this.buttonRent);
             this.Controls.Add(this.IDValueLabel);
             this.Controls.Add(this.IDLabel);
             this.Controls.Add(this.selectCheckBox);
@@ -183,5 +195,6 @@
         private System.Windows.Forms.Label damagePercentLabel;
         private System.Windows.Forms.Label vehicleTypeLabel;
         private System.Windows.Forms.Label vehicleNameLabel;
+        private System.Windows.Forms.Button buttonRent;
     }
 }

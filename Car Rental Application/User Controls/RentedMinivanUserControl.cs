@@ -13,40 +13,57 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class RentedMinivanUserControl : MinivanUserControl
     {
-
+        short rentID;
+        Customer owner;
+        DateTime returnDate;
         public RentedMinivanUserControl()
         {
             InitializeComponent();
         }
-        public RentedMinivanUserControl(string vehicleName)
+        public RentedMinivanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
         {
             InitializeComponent();
-            SetVehicleName(vehicleName);
-            SetVehicleFuelPercentage(100);
-            SetVehicleDamagePercentage(0);
-        }
-        public RentedMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
-        {
-            InitializeComponent();
-            SetVehicleName(vehicleName);
-            SetVehicleFuelPercentage(fuelPercent);
-            SetVehicleDamagePercentage(damagePercent);
+            SetRentID((short)IDManagement.GetLowestAvailableRentedID());
+            SetID(availableVehicle.GetVehicleID());
+            IDManagement.MarkRentIDAsUnavailable(rentID);
+            string availableVehicleName = availableVehicle.GetVehicleName();
+            short availableVehicleFuelPercentage = availableVehicle.GetFuelPercentage();
+            short avaiableVehicleDamagePercentage = availableVehicle.GetDamagePercentage();
+            SetVehicleName(availableVehicleName);
+            SetVehicleFuelPercentage(availableVehicleFuelPercentage);
+            SetVehicleDamagePercentage(avaiableVehicleDamagePercentage);
+            this.owner = owner;
+            ownerNameValueLabel.Text = owner.GetName();
+            ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
+            this.returnDate = returnDate;
+            returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
         #region Set and Get methods
 
+        public void SetID(short id) { this.id = id; }
+        public void SetRentID(short id)
+        {
+            rentID = id;
+            rentIDValueLabel.Text = id.ToString();
+        }
         public void SetVehicleName(string vehicleName)
         {
             this.vehicleName = vehicleName;
             vehicleNameValueLabel.Text = vehicleName;
         }
-        public void SetVehicleFuelPercentage(short fuelPercentage)
+        public void SetOwner(Customer owner)
         {
-            this.fuelPercentage = fuelPercentage;
+            this.owner = owner;
+            ownerNameValueLabel.Text = owner.GetName();
+            ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
         }
-        public void SetVehicleDamagePercentage(short damagePercentage)
+        public void SetDateTime(DateTime returnDate)
         {
-            this.damagePercent = damagePercentage;
+            this.returnDate = returnDate;
+            returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
+        public Customer GetOwner() { return owner; }
+        public DateTime GetReturnDate() { return returnDate; }
 
         #endregion
 
@@ -58,6 +75,12 @@ namespace Car_Rental_Application.User_Controls
                 return;
             }
             mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+        }
+
+        private void buttonReturn_Click(object sender, EventArgs e)
+        {
+            returnFromRentUserControl.SelectVehicleToBeReturned(this);
+            mainWindow.ReturnMenu();
         }
     }
 }
