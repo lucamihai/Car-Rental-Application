@@ -20,6 +20,17 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
         }
+        public RentedMinivanUserControl(VehicleUserControl minivan)
+        {
+            InitializeComponent();
+            id = minivan.GetVehicleID();
+            vehicleName = minivan.GetVehicleName();
+            fuelPercentage = minivan.GetFuelPercentage();
+            damagePercent = minivan.GetDamagePercentage();
+            SetRentID(minivan.GetSpecialRentID());
+            owner = minivan.GetOwner();
+            returnDate = minivan.GetReturnDate();
+        }
         public RentedMinivanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
         {
             InitializeComponent();

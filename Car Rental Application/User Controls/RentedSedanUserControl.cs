@@ -21,6 +21,17 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
         }
 
+        public RentedSedanUserControl(VehicleUserControl sedan)
+        {
+            InitializeComponent();
+            id = sedan.GetVehicleID();
+            vehicleName = sedan.GetVehicleName();
+            fuelPercentage = sedan.GetFuelPercentage();
+            damagePercent = sedan.GetDamagePercentage();
+            SetRentID(sedan.GetSpecialRentID());
+            owner = sedan.GetOwner();
+            returnDate = sedan.GetReturnDate();
+        }
         public RentedSedanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
         {
             InitializeComponent();
@@ -43,7 +54,7 @@ namespace Car_Rental_Application.User_Controls
         #region Set and Get methods
 
         public void SetID(short id) { this.id = id; }
-        public void SetRentID(short id)
+        public override void SetRentID(short id)
         {
             rentID = id;
             rentIDValueLabel.Text = id.ToString();
@@ -53,19 +64,20 @@ namespace Car_Rental_Application.User_Controls
             this.vehicleName = vehicleName;
             vehicleNameValueLabel.Text = vehicleName;
         }
-        public void SetOwner(Customer owner)
+        public override void SetOwner(Customer owner)
         {
             this.owner = owner;
             ownerNameValueLabel.Text = owner.GetName();
             ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
         }
-        public void SetDateTime(DateTime returnDate)
+        public override void SetReturnDate(DateTime returnDate)
         {
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
-        public Customer GetOwner() { return owner; }
-        public DateTime GetReturnDate() { return returnDate; }
+        public override Customer GetOwner() { return owner; }
+        public override DateTime GetReturnDate() { return returnDate; }
+        public override short GetRentID() { return rentID; }
 
         #endregion
 

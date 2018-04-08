@@ -22,35 +22,83 @@ namespace Car_Rental_Application.User_Controls
         protected short damagePercent;
         protected short fuelPercentage;
         protected short id;
+        protected short specialRentID;
         public virtual void GetDetails() { }
-        public void WriteXml(System.Xml.XmlWriter writer)
+
+        public virtual void WriteXml(System.Xml.XmlWriter writer)
         {
             writer.WriteAttributeString("Name", Name);
-            //writer.WriteAttributeString("Type", GetType().ToString());
             writer.WriteElementString("id", id.ToString());
             writer.WriteElementString("vehicleName", vehicleName);
             writer.WriteElementString("damagePercent", damagePercent.ToString());
             writer.WriteElementString("fuelPercentage", fuelPercentage.ToString());
+            short rentID = GetRentID();
+            if (rentID > -1)
+                writer.WriteElementString("rentID", rentID.ToString());
+            Customer owner = GetOwner();
+            if (owner.GetName() != "")
+            {
+                writer.WriteElementString("ownerName", owner.GetName());
+                writer.WriteElementString("ownerPhone", owner.GetPhoneNumber());
+            }
+            DateTime returnDate = GetReturnDate();
+            if (returnDate.ToShortDateString() != (new DateTime(1, 1, 1)).ToShortDateString())
+                writer.WriteElementString("returnDate", returnDate.ToString());
         }
+
         public System.Xml.Schema.XmlSchema GetSchema() { return null; }
-        public void ReadXml(System.Xml.XmlReader reader)
+
+        public virtual void ReadXml(System.Xml.XmlReader reader)
         {
             reader.MoveToContent();
             Name = reader.GetAttribute("Name");
             
-            Boolean isEmptyElement = reader.IsEmptyElement; // (1)
-            reader.ReadStartElement();
-            if (!isEmptyElement) // (1)
+            Boolean isEmptyElement = reader.IsEmptyElement; 
+            reader.ReadStartElement();           
+            if (!isEmptyElement) 
             {
-                int intID = Convert.ToInt32(reader.ReadElementString("id"));
-                id = (short)intID;
-                vehicleName = reader.ReadElementString("vehicleName");
+                if (Name == "AvailableSedanUserControl" || Name == "AvailableMinivanUserControl")
+                {
+                    int intID = Convert.ToInt32(reader.ReadElementString("id"));
+                    id = (short)intID;
+                    vehicleName = reader.ReadElementString("vehicleName");
 
-                int intDamage = Convert.ToInt32(reader.ReadElementString("damagePercent"));
-                damagePercent = (short)intDamage;
-                int intFuel = Convert.ToInt32(reader.ReadElementString("fuelPercentage"));
-                fuelPercentage = (short)intFuel;
-                reader.ReadEndElement();
+                    int intDamage = Convert.ToInt32(reader.ReadElementString("damagePercent"));
+                    damagePercent = (short)intDamage;
+
+                    int intFuel = Convert.ToInt32(reader.ReadElementString("fuelPercentage"));
+                    fuelPercentage = (short)intFuel;
+
+
+                    //int rentIDInt = Convert.ToInt32(reader.ReadElementString("rentID"));+
+
+                    reader.ReadEndElement();
+                }
+                if (Name == "RentedSedanUserControl" || Name == "RentedMinivanUserControl")
+                {
+                    int intID = Convert.ToInt32(reader.ReadElementString("id"));
+                    id = (short)intID;
+                    vehicleName = reader.ReadElementString("vehicleName");
+
+                    int intDamage = Convert.ToInt32(reader.ReadElementString("damagePercent"));
+                    damagePercent = (short)intDamage;
+
+                    int intFuel = Convert.ToInt32(reader.ReadElementString("fuelPercentage"));
+                    fuelPercentage = (short)intFuel;
+
+                    int rentIDInt = Convert.ToInt32(reader.ReadElementString("rentID"));
+                    SetRentID((short)rentIDInt);
+
+                    string ownerName = reader.ReadElementString("ownerName");
+                    string ownerPhone = reader.ReadElementString("ownerPhone");
+                    Customer owner = new Customer(ownerName, ownerPhone);
+                    SetOwner(owner);
+
+                    string returnDateString = reader.ReadElementString("returnDate");
+                    SetReturnDate(DateTime.Parse(returnDateString));
+
+                    reader.ReadEndElement();
+                }
             }
         }
         public VehicleUserControl()
@@ -63,13 +111,22 @@ namespace Car_Rental_Application.User_Controls
         }
         public void LinkToRentMenu(RentVehicleUserControl rentVehicleUserControl) { this.rentVehicleUserControl = rentVehicleUserControl; }
         public void LinkToReturnMenu(ReturnFromRentUserControl returnFromRentUserControl) { this.returnFromRentUserControl = returnFromRentUserControl; }
-
+        #region virtual methods to be redefined in the available cars classes in order to set the label values as well, else just set the short variables
         public virtual void SetVehicleFuelPercentage(short fuelPercentage) { this.fuelPercentage = fuelPercentage; }
         public virtual void SetVehicleDamagePercentage(short damagePercent) { this.damagePercent = damagePercent; }
+        #endregion
         public string GetVehicleName() { return vehicleName; }
         public short GetFuelPercentage() { return fuelPercentage; }
         public short GetDamagePercentage() { return damagePercent; }
         public short GetVehicleID() { return id; }
-
+        #region virtual methods to be redefined in the rented cars classes
+        public virtual void SetRentID(short id) { specialRentID = id; }
+        public virtual short GetSpecialRentID() { return specialRentID; }
+        public virtual void SetOwner(Customer owner) { }
+        public virtual void SetReturnDate(DateTime returnDate) { }
+        public virtual short GetRentID() { return -1; }
+        public virtual Customer GetOwner(){ return new Customer("", ""); }
+        public virtual DateTime GetReturnDate() { return new DateTime(1, 1, 1); }
+        #endregion
     }
 }

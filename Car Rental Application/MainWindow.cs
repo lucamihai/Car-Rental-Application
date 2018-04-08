@@ -211,13 +211,15 @@ namespace Car_Rental_Application
 
         private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ToXML(lista, "availableVehiclesList.xml");          
+            ToXML(lista, "availableVehiclesList.xml");
+            ToXML(rentedVehicles, "rentedVehiclesList.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lista.Clear();
             List<VehicleUserControl> listOfImportedVehicles = Read("availableVehiclesList.xml");
+            List<VehicleUserControl> listOfImportedRentedVehicles = Read("rentedVehiclesList.xml");
             foreach (VehicleUserControl vehicle in listOfImportedVehicles)
             {
                 if (vehicle.Name == "AvailableSedanUserControl")
@@ -225,9 +227,17 @@ namespace Car_Rental_Application
                 if (vehicle.Name == "AvailableMinivanUserControl")
                     lista.Add(new AvailableMinivanUserControl(vehicle));
             }
-                
+            foreach (VehicleUserControl vehicle in listOfImportedRentedVehicles)
+            {
+                if (vehicle.Name == "RentedSedanUserControl")
+                    rentedVehicles.Add(new RentedSedanUserControl(vehicle));
+                if (vehicle.Name == "RentedMinivanUserControl") { }
+                    rentedVehicles.Add(new RentedMinivanUserControl(vehicle));
+            }
+
             PopulateAvailableVehiclesPanel();
-            //label4.Text = lista[4].Name;+++
+            PopulateRentedVehiclesPanel();
+            label4.Text = rentedVehicles.Count.ToString();
         }
     }
 }
