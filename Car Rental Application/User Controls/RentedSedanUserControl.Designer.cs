@@ -39,8 +39,8 @@
             this.ownerPhoneNumberValueLabel = new System.Windows.Forms.Label();
             this.returnDateValueLabel = new System.Windows.Forms.Label();
             this.buttonReturn = new System.Windows.Forms.Button();
-            this.vehicleIDValueLabel = new System.Windows.Forms.Label();
-            this.vehicleIDLabel = new System.Windows.Forms.Label();
+            this.rentIDValueLabel = new System.Windows.Forms.Label();
+            this.rentIDLabel = new System.Windows.Forms.Label();
             this.selectCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -149,24 +149,24 @@
             this.buttonReturn.UseVisualStyleBackColor = true;
             this.buttonReturn.Click += new System.EventHandler(this.buttonReturn_Click);
             // 
-            // vehicleIDValueLabel
+            // rentIDValueLabel
             // 
-            this.vehicleIDValueLabel.AutoSize = true;
-            this.vehicleIDValueLabel.Location = new System.Drawing.Point(4, 37);
-            this.vehicleIDValueLabel.Name = "vehicleIDValueLabel";
-            this.vehicleIDValueLabel.Size = new System.Drawing.Size(13, 13);
-            this.vehicleIDValueLabel.TabIndex = 26;
-            this.vehicleIDValueLabel.Text = "1";
+            this.rentIDValueLabel.AutoSize = true;
+            this.rentIDValueLabel.Location = new System.Drawing.Point(4, 37);
+            this.rentIDValueLabel.Name = "rentIDValueLabel";
+            this.rentIDValueLabel.Size = new System.Drawing.Size(13, 13);
+            this.rentIDValueLabel.TabIndex = 26;
+            this.rentIDValueLabel.Text = "1";
             // 
-            // vehicleIDLabel
+            // rentIDLabel
             // 
-            this.vehicleIDLabel.AutoSize = true;
-            this.vehicleIDLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleIDLabel.Location = new System.Drawing.Point(3, 18);
-            this.vehicleIDLabel.Name = "vehicleIDLabel";
-            this.vehicleIDLabel.Size = new System.Drawing.Size(27, 19);
-            this.vehicleIDLabel.TabIndex = 25;
-            this.vehicleIDLabel.Text = "ID";
+            this.rentIDLabel.AutoSize = true;
+            this.rentIDLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rentIDLabel.Location = new System.Drawing.Point(3, 18);
+            this.rentIDLabel.Name = "rentIDLabel";
+            this.rentIDLabel.Size = new System.Drawing.Size(27, 19);
+            this.rentIDLabel.TabIndex = 25;
+            this.rentIDLabel.Text = "ID";
             // 
             // selectCheckBox
             // 
@@ -185,8 +185,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.selectCheckBox);
-            this.Controls.Add(this.vehicleIDValueLabel);
-            this.Controls.Add(this.vehicleIDLabel);
+            this.Controls.Add(this.rentIDValueLabel);
+            this.Controls.Add(this.rentIDLabel);
             this.Controls.Add(this.buttonReturn);
             this.Controls.Add(this.returnDateValueLabel);
             this.Controls.Add(this.ownerPhoneNumberValueLabel);
@@ -218,8 +218,8 @@
         private System.Windows.Forms.Label ownerPhoneNumberValueLabel;
         private System.Windows.Forms.Label returnDateValueLabel;
         private System.Windows.Forms.Button buttonReturn;
-        private System.Windows.Forms.Label vehicleIDValueLabel;
-        private System.Windows.Forms.Label vehicleIDLabel;
+        private System.Windows.Forms.Label rentIDValueLabel;
+        private System.Windows.Forms.Label rentIDLabel;
         private System.Windows.Forms.CheckBox selectCheckBox;
     }
 }

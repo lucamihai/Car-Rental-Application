@@ -33,17 +33,21 @@ namespace Car_Rental_Application.User_Controls
             string ownerName = ownerNameTextBox.Text;
             string ownerPhoneNumber = ownerPhoneNumberTextBox.Text;
             Customer owner = new Customer(ownerName, ownerPhoneNumber);
-            if (availableVehicle.GetType().ToString() == "AvailableSedanUserControl")
+            if(availableVehicle.GetType()==(new AvailableSedanUserControl()).GetType())
             {
                 RentedSedanUserControl sedan = new RentedSedanUserControl(availableVehicle, owner, returnDateDateTimePicker.Value);
                 mainWindow.rentedCarsManager.RentVehicle(sedan);
+                mainWindow.RemoveAvailableCarFromList(availableVehicle);
+                Hide();
+                mainWindow.HideAddVehiclePanel();
                 return;
             }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-
+            Hide();
+            mainWindow.HideAddVehiclePanel();
         }
 
         private void RentVehicleUserControl_Load(object sender, EventArgs e)

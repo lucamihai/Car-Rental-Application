@@ -9,7 +9,8 @@ namespace Car_Rental_Application.Classes
     public static class IDManagement
     {
         public static bool[] availableIndexes = new bool[short.MaxValue];
-        #region ID selection
+        public static bool[] rentedIndexes = new bool[short.MaxValue];
+        #region Available ID selection
 
         public static int GetLowestAvailableID()
         {
@@ -23,5 +24,21 @@ namespace Car_Rental_Application.Classes
         public static void MarkIDAsAvailable(short id) { availableIndexes[id] = true; }
 
         #endregion
+
+        #region Available ID selection
+
+        public static int GetLowestAvailableRentedID()
+        {
+            for (int i = 0; i < short.MaxValue; i++)
+                if (rentedIndexes[i])
+                    return i;
+            throw (new Exception());
+        }
+        public static void MarkRentIDAsUnavailable(short id) { rentedIndexes[id] = false; }
+
+        public static void MarkRentIDAsAvailable(short id) { rentedIndexes[id] = true; }
+
+        #endregion
+
     }
 }

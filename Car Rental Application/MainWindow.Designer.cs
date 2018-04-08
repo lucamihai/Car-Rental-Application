@@ -126,9 +126,9 @@
             // RentedCarsPanel
             // 
             this.RentedCarsPanel.Controls.Add(this.rentedCarsElementsPanel);
-            this.RentedCarsPanel.Location = new System.Drawing.Point(627, 44);
+            this.RentedCarsPanel.Location = new System.Drawing.Point(607, 44);
             this.RentedCarsPanel.Name = "RentedCarsPanel";
-            this.RentedCarsPanel.Size = new System.Drawing.Size(648, 632);
+            this.RentedCarsPanel.Size = new System.Drawing.Size(668, 632);
             this.RentedCarsPanel.TabIndex = 1;
             // 
             // rentedCarsElementsPanel
@@ -137,7 +137,7 @@
             this.rentedCarsElementsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.rentedCarsElementsPanel.Location = new System.Drawing.Point(0, 68);
             this.rentedCarsElementsPanel.Name = "rentedCarsElementsPanel";
-            this.rentedCarsElementsPanel.Size = new System.Drawing.Size(635, 529);
+            this.rentedCarsElementsPanel.Size = new System.Drawing.Size(654, 529);
             this.rentedCarsElementsPanel.TabIndex = 1;
             // 
             // label1
@@ -161,7 +161,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(591, 488);
+            this.label3.Location = new System.Drawing.Point(571, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 13);
             this.label3.TabIndex = 4;
@@ -179,7 +179,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(591, 520);
+            this.label4.Location = new System.Drawing.Point(571, 49);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 13);
             this.label4.TabIndex = 6;

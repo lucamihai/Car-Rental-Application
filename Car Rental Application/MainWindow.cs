@@ -36,6 +36,7 @@ namespace Car_Rental_Application
 
             rentedCarsManager = new RentedCarsManager(RentedCarsPanel, rentedCarsElementsPanel);
             rentedCarsManager.rentedCarsPanel.Controls.Add(rentedCarsElementsPanel);
+            rentedCarsManager.Link(this);
 
             addVehicleUserControl = new AddVehicleUserControl(this);
             rentVehicleUserControl = new RentVehicleUserControl(this);
@@ -45,8 +46,10 @@ namespace Car_Rental_Application
             rentVehicleUserControl.Hide();
             SortSelectionComboBox.SelectedIndex = SortSelectionComboBox.FindStringExact("By ID");
 
-            for (int i = 0; i < IDManagement.availableIndexes.Length; i++) IDManagement.availableIndexes[i] = true;
-
+            for (int i = 0; i < IDManagement.availableIndexes.Length; i++)
+                IDManagement.availableIndexes[i] = true;
+            for (int i = 0; i < IDManagement.rentedIndexes.Length; i++)
+                IDManagement.rentedIndexes[i] = true;
             //for (int i = 0; i < 15; i++)
             // {
             //    AvailableSedanUserControl sedan = new AvailableSedanUserControl();
@@ -89,7 +92,9 @@ namespace Car_Rental_Application
         }
         #endregion
         
-
+        public void RemoveAvailableCarFromList(VehicleUserControl vehicle) { lista.Remove(vehicle); PopulateAvailableVehiclesPanel(); }
+        public void RemoveRentedCarFromList(VehicleUserControl vehicle) { rentedVehicles.Remove(vehicle); PopulateRentedVehiclesPanel(); }
+        public void ReturnVehicleFromRent(VehicleUserControl vehicle) { lista.Add(vehicle); PopulateAvailableVehiclesPanel(); }
         public void PopulateAvailableVehiclesPanel()
         {
             availableCarsManager.availableCarsElementsPanel.Controls.Clear();
