@@ -16,17 +16,14 @@ namespace Car_Rental_Application
 {
     public partial class MainWindow : Form
     {
-
-        public static int availableCarsCounter = 0;
-        List <VehicleUserControl> lista;
+        List <VehicleUserControl> availableVehicles;
         List<VehicleUserControl> rentedVehicles;
-        public AvailableCarsSorter availableCarsManager;
-        public RentedCarsSorter rentedCarsManager;
+        AvailableCarsSorter availableCarsSorter;
+        RentedCarsSorter rentedCarsSorter;
         AddVehicleUserControl addVehicleUserControl;
         RentVehicleUserControl rentVehicleUserControl;
         ReturnFromRentUserControl returnFromRentUserControl;
         DateTime programTime;
-
 
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
             
@@ -34,10 +31,10 @@ namespace Car_Rental_Application
         {
             InitializeComponent();
             
-            lista = new List<VehicleUserControl>();
+            availableVehicles = new List<VehicleUserControl>();
             rentedVehicles = new List<VehicleUserControl>();
-            availableCarsManager = new AvailableCarsSorter();
-            rentedCarsManager = new RentedCarsSorter();
+            availableCarsSorter = new AvailableCarsSorter();
+            rentedCarsSorter = new RentedCarsSorter();
 
 
             addVehicleUserControl = new AddVehicleUserControl(this);
@@ -48,21 +45,129 @@ namespace Car_Rental_Application
             panelAddVehicles.Controls.Add(returnFromRentUserControl);
             addVehicleUserControl.Hide();
             rentVehicleUserControl.Hide();
+            InitializeComboBoxSelections();
+            timerProgramDateUpdater.Start();
+            InitializeAvailableIndexes();          
+        }
+        void InitializeComboBoxSelections()
+        {
             sortAvailableSelectionComboBox.SelectedIndex = sortAvailableSelectionComboBox.FindStringExact("By ID");
-            timer1.Start();
-            
-
+            sortRentedSelectionComboBox.SelectedIndex = sortRentedSelectionComboBox.FindStringExact("By ID");
+        }
+        void InitializeAvailableIndexes()
+        {
             for (int i = 0; i < IDManagement.availableIndexes.Length; i++)
                 IDManagement.availableIndexes[i] = true;
             for (int i = 0; i < IDManagement.rentedIndexes.Length; i++)
                 IDManagement.rentedIndexes[i] = true;
         }
+        public void AddToAvailableCarsList(VehicleUserControl vehicle) { availableVehicles.Add(vehicle); }
+        public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
+        public void HideAddVehiclePanel() { panelAddVehicles.Hide(); }
+        public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle) { return availableVehicles.IndexOf(vehicle); }
+        
+
+        
+
+        #region Remove buttons
+
+        /* Remove last element */
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (availableVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Start(); return; }
+            short idToBeMarkedAsAvailable = (short)(availableVehicles.Count - 1);
+            IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
+            availableVehicles.RemoveAt(availableVehicles.Count-1);
+            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            availableCarsElementsPanel.Controls.Clear();
+            foreach (VehicleUserControl sedan in availableVehicles)
+                availableCarsElementsPanel.Controls.Add(sedan);
+            errorLabel.Text = "";
+        }
+
+        private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
+        {
+            string output = "Contents of available indexes before remove: " + Environment.NewLine;
+            foreach (int index in indexesOfSelectedAvailableCars) output += index.ToString() + Environment.NewLine;
+            List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
+            foreach (int index in indexesOfSelectedAvailableCars)
+            {
+                IDManagement.MarkIDAsAvailable((short)index);
+                vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
+            }
+            foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
+                availableVehicles.Remove(vehicle);
+            PopulateAvailableVehiclesPanel();
+            indexesOfSelectedAvailableCars.Clear();
+        }
+
+        #endregion
+
+        public void RemoveAvailableCarFromList(VehicleUserControl vehicle) { availableVehicles.Remove(vehicle); PopulateAvailableVehiclesPanel(); }
+        public void RemoveRentedCarFromList(VehicleUserControl vehicle) { rentedVehicles.Remove(vehicle); PopulateRentedVehiclesPanel(); }
+        public void ReturnVehicleFromRent(VehicleUserControl vehicle) { availableVehicles.Add(vehicle); PopulateAvailableVehiclesPanel(); }
+
+        #region Available and rented vehicles list update
+
+        public void PopulateAvailableVehiclesPanel()
+        {
+            availableCarsElementsPanel.Controls.Clear();
+            short counter = 0;
+            foreach (VehicleUserControl vehicle in availableVehicles)
+            {
+                vehicle.LinkToMainWindow(this);
+                vehicle.LinkToRentMenu(rentVehicleUserControl);
+                availableCarsElementsPanel.Controls.Add(vehicle);
+                vehicle.Location = new Point(0, counter++ * 100);
+
+            }
+        }
+        public void PopulateRentedVehiclesPanel()
+        {
+            rentedCarsElementsPanel.Controls.Clear();
+            short counter = 0;
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+            {
+                vehicle.LinkToMainWindow(this);
+                vehicle.LinkToReturnMenu(returnFromRentUserControl);
+                rentedCarsElementsPanel.Controls.Add(vehicle);
+                vehicle.Location = new Point(0, counter++ * 100);
+            }
+        }
+
+        #endregion
+
+        
+
+        public void AddAvailableVehicle(VehicleUserControl vehicle)
+        {
+            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            AddToAvailableCarsList(vehicle);
+            PopulateAvailableVehiclesPanel();
+        }
+        public void RentVehicle(VehicleUserControl vehicle)
+        {
+            rentedCarsElementsPanel.VerticalScroll.Value = 0;
+            AddToRentedCarsList(vehicle);
+            PopulateRentedVehiclesPanel();
+        }
+
+        private void buttonAddVehicle_Click(object sender, EventArgs e)
+        {
+            panelAddVehicles.Show();
+            addVehicleUserControl.Show();
+        }
+        public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); }
+        public void ReturnMenu() { panelAddVehicles.Show(); returnFromRentUserControl.Show(); }
+
+        #region XML save and load
+
         public void ToXML(List<VehicleUserControl> list, string filePath)
         {
 
             XmlSerializer serializer = new XmlSerializer(typeof(List<VehicleUserControl>));
-            if (File.Exists(filePath)) File.Delete(filePath); 
-            
+            if (File.Exists(filePath)) File.Delete(filePath);
+
             using (FileStream stream = File.OpenWrite(filePath))
             {
 
@@ -79,153 +184,23 @@ namespace Car_Rental_Application
                 return dezerializedList;
             }
         }
-        public void AddToAvailableCarsList(VehicleUserControl vehicle) { lista.Add(vehicle); }
-        public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
-        public void HideAddVehiclePanel()
-        {
-            panelAddVehicles.Hide();
-        }
-        public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle)
-        {
-            return lista.IndexOf(vehicle);
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-        #region Remove Button
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (lista.Count < 1) { label3.Text = "There's nothing" + Environment.NewLine + " to remove"; return; }
-            short idToBeMarkedAsAvailable = (short)(lista.Count - 1);
-            IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
-            lista.RemoveAt(lista.Count-1);
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
-            availableCarsElementsPanel.Controls.Clear();
-            foreach (VehicleUserControl sedan in lista)
-                availableCarsElementsPanel.Controls.Add(sedan);
-            label3.Text = lista.Count.ToString();
-
-        }
-        #endregion
-        
-        public void RemoveAvailableCarFromList(VehicleUserControl vehicle) { lista.Remove(vehicle); PopulateAvailableVehiclesPanel(); }
-        public void RemoveRentedCarFromList(VehicleUserControl vehicle) { rentedVehicles.Remove(vehicle); PopulateRentedVehiclesPanel(); }
-        public void ReturnVehicleFromRent(VehicleUserControl vehicle) { lista.Add(vehicle); PopulateAvailableVehiclesPanel(); }
-        public void PopulateAvailableVehiclesPanel()
-        {
-            availableCarsElementsPanel.Controls.Clear();
-            short counter = 0;
-            foreach (VehicleUserControl vehicle in lista)
-            {
-                vehicle.LinkToMainWindow(this);
-                vehicle.LinkToRentMenu(rentVehicleUserControl);
-                availableCarsElementsPanel.Controls.Add(vehicle);
-                vehicle.Location = new Point(0, counter++ * 100);
-
-            }
-            label3.Text = lista.Count.ToString();
-        }
-        public void AddAvailableVehicle(VehicleUserControl vehicle)
-        {
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
-            AddToAvailableCarsList(vehicle);
-            PopulateAvailableVehiclesPanel();
-        }
-        public void RentVehicle(VehicleUserControl vehicle)
-        {
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            AddToRentedCarsList(vehicle);
-            PopulateRentedVehiclesPanel();
-        }
-        public void PopulateRentedVehiclesPanel()
-        {
-            rentedCarsElementsPanel.Controls.Clear();
-            short counter = 0;
-            foreach (VehicleUserControl vehicle in rentedVehicles)
-            {
-                vehicle.LinkToMainWindow(this);
-                vehicle.LinkToReturnMenu(returnFromRentUserControl);
-                rentedCarsElementsPanel.Controls.Add(vehicle);
-                vehicle.Location = new Point(0, counter++ * 100);
-            }
-            label3.Text = lista.Count.ToString();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
-            AvailableMinivanUserControl minivan = new AvailableMinivanUserControl();
-            minivan.Location = new Point(0, (lista.Count) * 100);
-            lista.Add(minivan);
-
-            availableCarsElementsPanel.Controls.Clear();
-            availableCarsElementsPanel.Controls.Add(new AvailableMinivanUserControl());
-            foreach (VehicleUserControl sedan in lista)
-                availableCarsElementsPanel.Controls.Add(sedan);
-            label3.Text = lista.Count.ToString();
-
-        }
-
-        private void buttonAddVehicle_Click(object sender, EventArgs e)
-        {
-            panelAddVehicles.Show();
-            addVehicleUserControl.Show();
-        }
-        public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); }
-        public void ReturnMenu() { panelAddVehicles.Show(); returnFromRentUserControl.Show(); }
-
-        private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
-        {
-            string output = "Contents of available indexes before remove: "+Environment.NewLine;
-            foreach (int index in indexesOfSelectedAvailableCars) output += index.ToString() + Environment.NewLine;
-            label4.Text = (output);
-            label4.Text += Environment.NewLine;
-            List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
-            foreach(int index in indexesOfSelectedAvailableCars)
-            {
-                IDManagement.MarkIDAsAvailable((short)index);
-                label4.Text += index.ToString() + " is now available" + Environment.NewLine;
-                vehiclesToBeRemoved.Add(lista.ElementAt(index));
-            }
-            foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
-                lista.Remove(vehicle);
-            PopulateAvailableVehiclesPanel();
-            indexesOfSelectedAvailableCars.Clear();
-        }
-
-
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            labelProgramDate.Text = "Program date" + Environment.NewLine + DateTime.Now.ToShortDateString();
-            programTime = DateTime.Now;
-        }
-
         private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ToXML(lista, "availableVehiclesList.xml");
+            ToXML(availableVehicles, "availableVehiclesList.xml");
             ToXML(rentedVehicles, "rentedVehiclesList.xml");
         }
-        public void WriteToLabel(string ceva) { label4.Text = ceva; }
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            lista.Clear();
+            availableVehicles.Clear();
             rentedVehicles.Clear();
             List<VehicleUserControl> listOfImportedVehicles = Read("availableVehiclesList.xml");
             List<VehicleUserControl> listOfImportedRentedVehicles = Read("rentedVehiclesList.xml");
             foreach (VehicleUserControl vehicle in listOfImportedVehicles)
             {
                 if (vehicle.Name == "AvailableSedanUserControl")
-                    lista.Add(new AvailableSedanUserControl(vehicle));
+                    availableVehicles.Add(new AvailableSedanUserControl(vehicle));
                 if (vehicle.Name == "AvailableMinivanUserControl")
-                    lista.Add(new AvailableMinivanUserControl(vehicle));
+                    availableVehicles.Add(new AvailableMinivanUserControl(vehicle));
             }
             foreach (VehicleUserControl vehicle in listOfImportedRentedVehicles)
             {
@@ -233,39 +208,50 @@ namespace Car_Rental_Application
                 if (vehicle.Name == "RentedSedanUserControl")
                     rentedVehicles.Add(new RentedSedanUserControl(vehicle));
                 if (vehicle.Name == "RentedMinivanUserControl") 
-                    rentedVehicles.Add(new RentedMinivanUserControl(vehicle));
-                
+                    rentedVehicles.Add(new RentedMinivanUserControl(vehicle));        
             }
             foreach(VehicleUserControl vehicle in rentedVehicles)
-            {
-                
+            {               
                 vehicle.configureRentedVehicle(RentVehicleConfiguration.GetRentConfiguration());
                 IDManagement.MarkRentIDAsUnavailable(vehicle.GetRentID());
             }
             PopulateAvailableVehiclesPanel();
             PopulateRentedVehiclesPanel();
-            label1.Text = rentedVehicles.Count.ToString();
         }
+        #endregion
+
         #region Sorting
         private void buttonSort_Click(object sender, EventArgs e)
         {
-            if (sortAvailableSelectionComboBox.SelectedIndex == 0) lista = availableCarsManager.SortListByID(lista);
-            if (sortAvailableSelectionComboBox.SelectedIndex == 1) lista = availableCarsManager.SortListByName(lista);
-            if (sortAvailableSelectionComboBox.SelectedIndex == 2) lista = availableCarsManager.SortListByType(lista);
-            if (sortAvailableSelectionComboBox.SelectedIndex == 3) lista = availableCarsManager.SortListByFuelPercent(lista);
-            if (sortAvailableSelectionComboBox.SelectedIndex == 4) lista = availableCarsManager.SortListByDamagePercent(lista);
+            if (sortAvailableSelectionComboBox.SelectedIndex == 0) availableVehicles = availableCarsSorter.SortListByID(availableVehicles);
+            if (sortAvailableSelectionComboBox.SelectedIndex == 1) availableVehicles = availableCarsSorter.SortListByName(availableVehicles);
+            if (sortAvailableSelectionComboBox.SelectedIndex == 2) availableVehicles = availableCarsSorter.SortListByType(availableVehicles);
+            if (sortAvailableSelectionComboBox.SelectedIndex == 3) availableVehicles = availableCarsSorter.SortListByFuelPercent(availableVehicles);
+            if (sortAvailableSelectionComboBox.SelectedIndex == 4) availableVehicles = availableCarsSorter.SortListByDamagePercent(availableVehicles);
             PopulateAvailableVehiclesPanel();
         }
         private void buttonSortRentedVehicles_Click(object sender, EventArgs e)
         {
-            if (sortRentedSelectionComboBox.SelectedIndex == 0) rentedVehicles = rentedCarsManager.SortListByID(rentedVehicles);
-            if (sortRentedSelectionComboBox.SelectedIndex == 1) rentedVehicles = rentedCarsManager.SortListByName(rentedVehicles);
-            if (sortRentedSelectionComboBox.SelectedIndex == 2) rentedVehicles = rentedCarsManager.SortListByType(rentedVehicles);
-            if (sortRentedSelectionComboBox.SelectedIndex == 3) rentedVehicles = rentedCarsManager.SortListByOwnerName(rentedVehicles);
-            if (sortRentedSelectionComboBox.SelectedIndex == 4) rentedVehicles = rentedCarsManager.SortListByOwnerPhoneNumber(rentedVehicles);
-            if (sortRentedSelectionComboBox.SelectedIndex == 5) rentedVehicles = rentedCarsManager.SortListByReturnDate(rentedVehicles);
+            if (sortRentedSelectionComboBox.SelectedIndex == 0) rentedVehicles = rentedCarsSorter.SortListByID(rentedVehicles);
+            if (sortRentedSelectionComboBox.SelectedIndex == 1) rentedVehicles = rentedCarsSorter.SortListByName(rentedVehicles);
+            if (sortRentedSelectionComboBox.SelectedIndex == 2) rentedVehicles = rentedCarsSorter.SortListByType(rentedVehicles);
+            if (sortRentedSelectionComboBox.SelectedIndex == 3) rentedVehicles = rentedCarsSorter.SortListByOwnerName(rentedVehicles);
+            if (sortRentedSelectionComboBox.SelectedIndex == 4) rentedVehicles = rentedCarsSorter.SortListByOwnerPhoneNumber(rentedVehicles);
+            if (sortRentedSelectionComboBox.SelectedIndex == 5) rentedVehicles = rentedCarsSorter.SortListByReturnDate(rentedVehicles);
             PopulateRentedVehiclesPanel();
         }
         #endregion
+
+        private void timerProgramDateUpdater_Tick(object sender, EventArgs e)
+        {
+            labelProgramDate.Text = "Program date" + Environment.NewLine + DateTime.Now.ToShortDateString();
+            programTime = DateTime.Now;
+        }
+
+        private void timerClearErrors_Tick(object sender, EventArgs e)
+        {
+            errorLabel.Text = "";
+            timerClearErrors.Stop();
+        }
     }
 }

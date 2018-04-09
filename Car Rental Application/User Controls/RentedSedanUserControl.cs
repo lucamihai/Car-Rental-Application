@@ -113,7 +113,6 @@ namespace Car_Rental_Application.User_Controls
         {
             returnFromRentUserControl.SelectVehicleToBeReturned(this);
             mainWindow.ReturnMenu();
-            mainWindow.WriteToLabel("rentID: "+rentID+Environment.NewLine+"ownerName: "+owner.GetName()+" ownerPhone: "+owner.GetPhoneNumber());
         }
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
