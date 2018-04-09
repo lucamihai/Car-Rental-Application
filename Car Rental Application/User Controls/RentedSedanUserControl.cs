@@ -24,13 +24,13 @@ namespace Car_Rental_Application.User_Controls
         public RentedSedanUserControl(VehicleUserControl sedan)
         {
             InitializeComponent();
-            id = sedan.GetVehicleID();
-            vehicleName = sedan.GetVehicleName();
-            fuelPercentage = sedan.GetFuelPercentage();
-            damagePercent = sedan.GetDamagePercentage();
+            SetID(id = sedan.GetVehicleID());
+            SetVehicleName(sedan.GetVehicleName());
+            SetVehicleFuelPercentage(sedan.GetFuelPercentage());
+            SetVehicleDamagePercentage(sedan.GetDamagePercentage());
             SetRentID(sedan.GetSpecialRentID());
-            owner = sedan.GetOwner();
-            returnDate = sedan.GetReturnDate();
+            SetOwner(sedan.GetOwner());
+            SetReturnDate(sedan.GetReturnDate());
         }
         public RentedSedanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
         {
@@ -50,7 +50,35 @@ namespace Car_Rental_Application.User_Controls
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();           
         }
+        public override void configureRentedVehicle(string config)
+        {
+            //rentConfiguration = intID + "#" + vehicleName + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;
+            string[] configurations = new string[8];
+            configurations = config.Split('#');
+            foreach (string a in configurations) Console.WriteLine(a);
 
+            int IDInt = Convert.ToInt32(configurations[0]);
+            SetID((short)IDInt);
+
+            string name = configurations[1];
+            SetVehicleName(name);
+
+            int damageInt = Convert.ToInt32(configurations[2]);
+            SetVehicleDamagePercentage((short)damageInt);
+
+            int fuelInt = Convert.ToInt32(configurations[3]);
+            SetVehicleFuelPercentage((short)fuelInt);
+
+            int rentIDInt = Convert.ToInt32(configurations[4]);
+            SetRentID((short)rentIDInt);
+
+            string ownerName = configurations[5]; string ownerPhone = configurations[6];
+            Customer newOwner = new Customer(ownerName, ownerPhone);
+            SetOwner(newOwner);
+
+            string returnDateString = configurations[7];
+            SetReturnDate(DateTime.Parse(returnDateString));
+        }
         #region Set and Get methods
 
         public void SetID(short id) { this.id = id; }
@@ -85,6 +113,7 @@ namespace Car_Rental_Application.User_Controls
         {
             returnFromRentUserControl.SelectVehicleToBeReturned(this);
             mainWindow.ReturnMenu();
+            mainWindow.WriteToLabel("rentID: "+rentID+Environment.NewLine+"ownerName: "+owner.GetName()+" ownerPhone: "+owner.GetPhoneNumber());
         }
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)

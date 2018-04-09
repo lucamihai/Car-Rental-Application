@@ -60,7 +60,6 @@ namespace Car_Rental_Application
                 IDManagement.availableIndexes[i] = true;
             for (int i = 0; i < IDManagement.rentedIndexes.Length; i++)
                 IDManagement.rentedIndexes[i] = true;
-
         }
         public void ToXML(List<VehicleUserControl> list, string filePath)
         {
@@ -214,10 +213,11 @@ namespace Car_Rental_Application
             ToXML(lista, "availableVehiclesList.xml");
             ToXML(rentedVehicles, "rentedVehiclesList.xml");
         }
-
+        public void WriteToLabel(string ceva) { label4.Text = ceva; }
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lista.Clear();
+            rentedVehicles.Clear();
             List<VehicleUserControl> listOfImportedVehicles = Read("availableVehiclesList.xml");
             List<VehicleUserControl> listOfImportedRentedVehicles = Read("rentedVehiclesList.xml");
             foreach (VehicleUserControl vehicle in listOfImportedVehicles)
@@ -229,15 +229,22 @@ namespace Car_Rental_Application
             }
             foreach (VehicleUserControl vehicle in listOfImportedRentedVehicles)
             {
+                
                 if (vehicle.Name == "RentedSedanUserControl")
                     rentedVehicles.Add(new RentedSedanUserControl(vehicle));
-                if (vehicle.Name == "RentedMinivanUserControl") { }
+                if (vehicle.Name == "RentedMinivanUserControl") 
                     rentedVehicles.Add(new RentedMinivanUserControl(vehicle));
+                
             }
-
+            foreach(VehicleUserControl vehicle in rentedVehicles)
+            {
+                
+                vehicle.configureRentedVehicle(RentedCarsManager.GetRentConfiguration());
+            }
+            //+
             PopulateAvailableVehiclesPanel();
             PopulateRentedVehiclesPanel();
-            label4.Text = rentedVehicles.Count.ToString();
+            label1.Text = rentedVehicles.Count.ToString();
         }
     }
 }

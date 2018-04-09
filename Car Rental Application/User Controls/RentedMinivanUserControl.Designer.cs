@@ -135,9 +135,9 @@
             this.vehicleTypeValueLabel.AutoSize = true;
             this.vehicleTypeValueLabel.Location = new System.Drawing.Point(163, 37);
             this.vehicleTypeValueLabel.Name = "vehicleTypeValueLabel";
-            this.vehicleTypeValueLabel.Size = new System.Drawing.Size(38, 13);
+            this.vehicleTypeValueLabel.Size = new System.Drawing.Size(44, 13);
             this.vehicleTypeValueLabel.TabIndex = 30;
-            this.vehicleTypeValueLabel.Text = "Sedan";
+            this.vehicleTypeValueLabel.Text = "Minivan";
             // 
             // vehicleNameValueLabel
             // 
