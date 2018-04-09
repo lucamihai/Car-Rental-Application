@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AvailableCarsPanel = new System.Windows.Forms.Panel();
-            this.SortSelectionComboBox = new System.Windows.Forms.ComboBox();
-            this.buttonSort = new System.Windows.Forms.Button();
+            this.sortAvailableSelectionComboBox = new System.Windows.Forms.ComboBox();
+            this.buttonSortAvailableVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedAvailableCars = new System.Windows.Forms.Button();
             this.buttonAddVehicle = new System.Windows.Forms.Button();
             this.availableCarsElementsPanel = new System.Windows.Forms.Panel();
@@ -54,6 +54,8 @@
             this.labelProgramDate = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.sortRentedSelectionComboBox = new System.Windows.Forms.ComboBox();
+            this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -61,8 +63,8 @@
             // 
             // AvailableCarsPanel
             // 
-            this.AvailableCarsPanel.Controls.Add(this.SortSelectionComboBox);
-            this.AvailableCarsPanel.Controls.Add(this.buttonSort);
+            this.AvailableCarsPanel.Controls.Add(this.sortAvailableSelectionComboBox);
+            this.AvailableCarsPanel.Controls.Add(this.buttonSortAvailableVehicles);
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveSelectedAvailableCars);
             this.AvailableCarsPanel.Controls.Add(this.buttonAddVehicle);
             this.AvailableCarsPanel.Controls.Add(this.availableCarsElementsPanel);
@@ -72,30 +74,30 @@
             this.AvailableCarsPanel.Size = new System.Drawing.Size(573, 611);
             this.AvailableCarsPanel.TabIndex = 0;
             // 
-            // SortSelectionComboBox
+            // sortAvailableSelectionComboBox
             // 
-            this.SortSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SortSelectionComboBox.FormattingEnabled = true;
-            this.SortSelectionComboBox.Items.AddRange(new object[] {
+            this.sortAvailableSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortAvailableSelectionComboBox.FormattingEnabled = true;
+            this.sortAvailableSelectionComboBox.Items.AddRange(new object[] {
             "By ID",
             "By name",
             "By type",
             "By fuel percentage",
             "By damage percentage"});
-            this.SortSelectionComboBox.Location = new System.Drawing.Point(142, 6);
-            this.SortSelectionComboBox.Name = "SortSelectionComboBox";
-            this.SortSelectionComboBox.Size = new System.Drawing.Size(121, 21);
-            this.SortSelectionComboBox.TabIndex = 9;
+            this.sortAvailableSelectionComboBox.Location = new System.Drawing.Point(142, 6);
+            this.sortAvailableSelectionComboBox.Name = "sortAvailableSelectionComboBox";
+            this.sortAvailableSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sortAvailableSelectionComboBox.TabIndex = 9;
             // 
-            // buttonSort
+            // buttonSortAvailableVehicles
             // 
-            this.buttonSort.Location = new System.Drawing.Point(61, 4);
-            this.buttonSort.Name = "buttonSort";
-            this.buttonSort.Size = new System.Drawing.Size(75, 23);
-            this.buttonSort.TabIndex = 8;
-            this.buttonSort.Text = "Sort";
-            this.buttonSort.UseVisualStyleBackColor = true;
-            this.buttonSort.Click += new System.EventHandler(this.buttonSort_Click);
+            this.buttonSortAvailableVehicles.Location = new System.Drawing.Point(61, 4);
+            this.buttonSortAvailableVehicles.Name = "buttonSortAvailableVehicles";
+            this.buttonSortAvailableVehicles.Size = new System.Drawing.Size(75, 23);
+            this.buttonSortAvailableVehicles.TabIndex = 8;
+            this.buttonSortAvailableVehicles.Text = "Sort";
+            this.buttonSortAvailableVehicles.UseVisualStyleBackColor = true;
+            this.buttonSortAvailableVehicles.Click += new System.EventHandler(this.buttonSort_Click);
             // 
             // buttonRemoveSelectedAvailableCars
             // 
@@ -138,6 +140,8 @@
             // 
             // RentedCarsPanel
             // 
+            this.RentedCarsPanel.Controls.Add(this.sortRentedSelectionComboBox);
+            this.RentedCarsPanel.Controls.Add(this.buttonSortRentedVehicles);
             this.RentedCarsPanel.Controls.Add(this.rentedCarsElementsPanel);
             this.RentedCarsPanel.Location = new System.Drawing.Point(607, 65);
             this.RentedCarsPanel.Name = "RentedCarsPanel";
@@ -247,14 +251,14 @@
             // loadFromLocalFileToolStripMenuItem
             // 
             this.loadFromLocalFileToolStripMenuItem.Name = "loadFromLocalFileToolStripMenuItem";
-            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.loadFromLocalFileToolStripMenuItem.Text = "Load from local file";
             this.loadFromLocalFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromLocalFileToolStripMenuItem_Click);
             // 
             // saveToLocalFileToolStripMenuItem
             // 
             this.saveToLocalFileToolStripMenuItem.Name = "saveToLocalFileToolStripMenuItem";
-            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
             this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
             // 
@@ -271,6 +275,32 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // sortRentedSelectionComboBox
+            // 
+            this.sortRentedSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortRentedSelectionComboBox.FormattingEnabled = true;
+            this.sortRentedSelectionComboBox.Items.AddRange(new object[] {
+            "By ID",
+            "By name",
+            "By type",
+            "By owner name",
+            "By owner phone number",
+            "By return date"});
+            this.sortRentedSelectionComboBox.Location = new System.Drawing.Point(92, 6);
+            this.sortRentedSelectionComboBox.Name = "sortRentedSelectionComboBox";
+            this.sortRentedSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sortRentedSelectionComboBox.TabIndex = 11;
+            // 
+            // buttonSortRentedVehicles
+            // 
+            this.buttonSortRentedVehicles.Location = new System.Drawing.Point(11, 4);
+            this.buttonSortRentedVehicles.Name = "buttonSortRentedVehicles";
+            this.buttonSortRentedVehicles.Size = new System.Drawing.Size(75, 23);
+            this.buttonSortRentedVehicles.TabIndex = 10;
+            this.buttonSortRentedVehicles.Text = "Sort";
+            this.buttonSortRentedVehicles.UseVisualStyleBackColor = true;
+            this.buttonSortRentedVehicles.Click += new System.EventHandler(this.buttonSortRentedVehicles_Click);
             // 
             // MainWindow
             // 
@@ -314,8 +344,8 @@
         private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
         private System.Windows.Forms.Panel rentedCarsElementsPanel;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button buttonSort;
-        private System.Windows.Forms.ComboBox SortSelectionComboBox;
+        private System.Windows.Forms.Button buttonSortAvailableVehicles;
+        private System.Windows.Forms.ComboBox sortAvailableSelectionComboBox;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
@@ -327,6 +357,8 @@
         private System.Windows.Forms.Label labelProgramDate;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ComboBox sortRentedSelectionComboBox;
+        private System.Windows.Forms.Button buttonSortRentedVehicles;
     }
 }
 

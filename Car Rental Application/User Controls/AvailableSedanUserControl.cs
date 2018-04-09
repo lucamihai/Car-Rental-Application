@@ -13,7 +13,7 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class AvailableSedanUserControl : SedanUserControl
     {
-
+        AvailableCarsSorter availableCarsManager;
         public AvailableSedanUserControl()
         {
             InitializeComponent();
@@ -64,6 +64,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleFuelPercentage(returnedVehicleFuelPercentage);
             SetVehicleDamagePercentage(returnedVehicleDamagePercentage);
         }
+
         #region Set methods
 
         public void SetVehicleID(short id)

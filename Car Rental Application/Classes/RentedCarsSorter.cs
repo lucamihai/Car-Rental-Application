@@ -9,38 +9,12 @@ using Car_Rental_Application.User_Controls;
 
 namespace Car_Rental_Application.Classes
 {
-    public class RentedCarsManager: ISort
+    public class RentedCarsSorter: ISort
     {
-        static List<string> rentConfigurations;
-        public static void AddRentConfiguration(string config) { rentConfigurations.Add(config); }
-        public static string GetRentConfiguration()
-        {
-            string config = rentConfigurations.First();
-            rentConfigurations.RemoveAt(0);
-            return config;
-        }
-        public static void ClearRentConfiguration() { rentConfigurations.Clear(); }
-        public Panel rentedCarsPanel, rentedCarsElementsPanel;
-        public MainWindow mainWindow;
-        public RentedCarsManager(Panel rentedCarsPanel, Panel rentedCarsElementsPanel)
-        {
-            this.rentedCarsPanel = rentedCarsPanel;
-            this.rentedCarsElementsPanel = rentedCarsElementsPanel;
-            rentConfigurations = new List<string>();
-        }
-        public void RentVehicle(VehicleUserControl vehicle)
-        {
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            mainWindow.AddToRentedCarsList(vehicle);
-            mainWindow.PopulateRentedVehiclesPanel();
-        }
-        public void Link(MainWindow m) { mainWindow = m; }
-        
-
         #region ISort methods
         public List<VehicleUserControl> SortListByID(List<VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy(o => o.GetVehicleID()).ToList();
+            return vehicles.OrderBy(o => o.GetRentID()).ToList();
         }
         public List<VehicleUserControl> SortListByName(List<VehicleUserControl> vehicles)
         {
@@ -48,19 +22,19 @@ namespace Car_Rental_Application.Classes
         }
         public List<VehicleUserControl> SortListByType(List<VehicleUserControl> vehicles)
         {
-            return vehicles;
+            return vehicles.OrderBy(o => o.GetType().ToString()).ToList();
         }
         public List<VehicleUserControl> SortListByReturnDate(List<VehicleUserControl> vehicles)
         {
-            return vehicles;
+            return vehicles.OrderBy(o => o.GetReturnDate().ToShortDateString()).ToList();
         }
         public List<VehicleUserControl> SortListByOwnerPhoneNumber(List<VehicleUserControl> vehicles)
         {
-            return vehicles;
+            return vehicles.OrderBy(o => o.GetOwner().GetPhoneNumber()).ToList();
         }
         public List<VehicleUserControl> SortListByOwnerName(List<VehicleUserControl> vehicles)
         {
-            return vehicles;
+            return vehicles.OrderBy(o => o.GetOwner().GetName()).ToList();
         }
         public List<VehicleUserControl> SortListByFuelPercent(List<VehicleUserControl> vehicles)
         {

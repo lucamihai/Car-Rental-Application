@@ -91,11 +91,10 @@ namespace Car_Rental_Application.User_Controls
                     string ownerName = reader.ReadElementString("ownerName");
                     string ownerPhone = reader.ReadElementString("ownerPhone");
 
-                    string returnDateString = reader.ReadElementString("returnDate");
-                    //SetReturnDate(DateTime.Parse(returnDateString));
+                    string returnDateString = reader.ReadElementString("returnDate");                   
 
                     string rentConfiguration = intID + "#" + name + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;
-                    RentedCarsManager.AddRentConfiguration(rentConfiguration);
+                    RentVehicleConfiguration.AddRentConfiguration(rentConfiguration);
 
                     reader.ReadEndElement();
                 }

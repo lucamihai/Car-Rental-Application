@@ -36,7 +36,7 @@ namespace Car_Rental_Application.User_Controls
             if(availableVehicle.GetType()==(new AvailableSedanUserControl()).GetType())
             {
                 RentedSedanUserControl sedan = new RentedSedanUserControl(availableVehicle, owner, returnDateDateTimePicker.Value);
-                mainWindow.rentedCarsManager.RentVehicle(sedan);
+                mainWindow.RentVehicle(sedan);
                 mainWindow.RemoveAvailableCarFromList(availableVehicle);
                 Hide();
                 mainWindow.HideAddVehiclePanel();
@@ -45,7 +45,7 @@ namespace Car_Rental_Application.User_Controls
             if (availableVehicle.GetType() == (new AvailableMinivanUserControl()).GetType())
             {
                 RentedMinivanUserControl minivan = new RentedMinivanUserControl(availableVehicle, owner, returnDateDateTimePicker.Value);
-                mainWindow.rentedCarsManager.RentVehicle(minivan);
+                mainWindow.RentVehicle(minivan);
                 mainWindow.RemoveAvailableCarFromList(availableVehicle);
                 Hide();
                 mainWindow.HideAddVehiclePanel();
