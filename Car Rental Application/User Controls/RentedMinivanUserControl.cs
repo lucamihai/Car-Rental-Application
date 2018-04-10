@@ -20,6 +20,7 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
         }
+
         public RentedMinivanUserControl(VehicleUserControl minivan)
         {
             InitializeComponent();
@@ -31,6 +32,7 @@ namespace Car_Rental_Application.User_Controls
             SetOwner(minivan.GetOwner());
             SetReturnDate(minivan.GetReturnDate());
         }
+
         public RentedMinivanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
         {
             InitializeComponent();
@@ -49,6 +51,18 @@ namespace Car_Rental_Application.User_Controls
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
+
+        public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
+        {
+            SetID(id);
+            SetVehicleName(name);
+            SetVehicleFuelPercentage(fuel);
+            SetVehicleDamagePercentage(damage);
+            SetRentID(rentID);
+            SetOwner(owner);
+            SetReturnDate(DateTime.Parse(returnDate));
+        }
+
         public override void configureRentedVehicle(string config)
         {
             //rentConfiguration = intID + "#" + vehicleName + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;
@@ -79,13 +93,15 @@ namespace Car_Rental_Application.User_Controls
             string returnDateString = configurations[7];
             SetReturnDate(DateTime.Parse(returnDateString));
         }
+
         #region Set and Get methods
 
-        public void SetID(short id) { this.id = id; }
+        public void SetID(short id) { this.id = id; IDManagement.MarkIDAsUnavailable(id); }
         public override void SetRentID(short id)
         {
             rentID = id;
             rentIDValueLabel.Text = id.ToString();
+            IDManagement.MarkRentIDAsUnavailable(rentID);
         }
         public void SetVehicleName(string vehicleName)
         {

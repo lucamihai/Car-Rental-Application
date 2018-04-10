@@ -13,7 +13,6 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class AvailableSedanUserControl : SedanUserControl
     {
-        AvailableCarsSorter availableCarsManager;
         public AvailableSedanUserControl()
         {
             InitializeComponent();
@@ -30,6 +29,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(0);
             IDManagement.MarkIDAsUnavailable(id);
         }
+
         public AvailableSedanUserControl(VehicleUserControl sedan)
         {
             InitializeComponent();
@@ -39,6 +39,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(sedan.GetDamagePercentage());
             IDManagement.MarkIDAsUnavailable(id);
         }
+
         public AvailableSedanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();
@@ -50,6 +51,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(damagePercent);
             IDManagement.MarkIDAsUnavailable(id);
         }
+
         public AvailableSedanUserControl(RentedSedanUserControl sedan)
         {
             InitializeComponent();
@@ -65,12 +67,21 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(returnedVehicleDamagePercentage);
         }
 
+        public void FromDatabase(short id, string name, short fuel, short damage)
+        {
+            SetVehicleID(id);
+            SetVehicleName(name);
+            SetVehicleFuelPercentage(fuel);
+            SetVehicleDamagePercentage(damage);
+        }
+
         #region Set methods
 
         public void SetVehicleID(short id)
         {
             this.id = id;
             IDValueLabel.Text = id.ToString();
+            IDManagement.MarkIDAsUnavailable(id);
         }
         public void SetVehicleName(string vehicleName)
         {
@@ -89,8 +100,6 @@ namespace Car_Rental_Application.User_Controls
         }
 
         #endregion
-
-        
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {

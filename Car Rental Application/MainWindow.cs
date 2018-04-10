@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Car_Rental_Application.Classes;
 using Car_Rental_Application.User_Controls;
 using System.Xml.Serialization;
+using System.Data.SqlClient;
 
 namespace Car_Rental_Application
 {
@@ -37,6 +38,8 @@ namespace Car_Rental_Application
             availableCarsSorter = new AvailableCarsSorter();
             rentedCarsSorter = new RentedCarsSorter();
 
+            saveToDatabaseToolStripMenuItem.Available = false;
+            loadFromDatabaseToolStripMenuItem.Available = false;
 
             addVehicleUserControl = new AddVehicleUserControl(this);
             rentVehicleUserControl = new RentVehicleUserControl(this);
@@ -55,13 +58,214 @@ namespace Car_Rental_Application
             sortAvailableSelectionComboBox.SelectedIndex = sortAvailableSelectionComboBox.FindStringExact("By ID");
             sortRentedSelectionComboBox.SelectedIndex = sortRentedSelectionComboBox.FindStringExact("By ID");
         }       
+
         public void AddToAvailableCarsList(VehicleUserControl vehicle) { availableVehicles.Add(vehicle); }
         public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
         public void HideAddVehiclePanel() { panelAddVehicles.Hide(); }
         public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle) { return availableVehicles.IndexOf(vehicle); }
-        
 
-        
+
+        #region SQL
+
+        SqlConnection sqlConnection;
+
+        void ConnectToSQL()
+        {
+            try
+            {
+                Console.WriteLine("Connecting to SQL SERVER");
+                sqlConnection = new SqlConnection(SQLConnectionString()); 
+                sqlConnection.Open();
+                Console.WriteLine("Connected!");
+                sqlConnection.Close();
+                saveToDatabaseToolStripMenuItem.Available = true;
+                loadFromDatabaseToolStripMenuItem.Available = true;
+                connectToDatabaseToolStripMenuItem.Available = false;
+            }
+            catch(Exception a) {  }
+        }
+
+        void ClearAvailableVehiclesDatabase()
+        {
+            sqlConnection.Open();
+
+            string query = "DELETE FROM availableVehicles";
+            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            myCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        void ClearRentedVehiclesDatabase()
+        {
+            sqlConnection.Open();
+
+            string query = "DELETE FROM rentedVehicles";
+            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            myCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        void SaveAvailableVehicleToSQLDatabase(VehicleUserControl vehicle)
+        {
+            sqlConnection.Open();
+
+            string query = "INSERT INTO availableVehicles (id, name, type, fuel, damage)";
+            query += " VALUES (@id, @name, @type, @fuel, @damage)";
+            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            myCommand.Parameters.AddWithValue("@id", vehicle.GetVehicleID());
+            myCommand.Parameters.AddWithValue("@name", vehicle.GetVehicleName());
+            string type = "";
+            if (vehicle.GetType() == (new AvailableSedanUserControl()).GetType())
+                type = "sedan";
+            if (vehicle.GetType() == (new AvailableMinivanUserControl()).GetType())
+                type = "minivan";
+            myCommand.Parameters.AddWithValue("@type", type);
+            myCommand.Parameters.AddWithValue("@fuel", vehicle.GetFuelPercentage());
+            myCommand.Parameters.AddWithValue("@damage", vehicle.GetDamagePercentage());
+            myCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        void SaveRentedVehicleToSQLDatabase(VehicleUserControl vehicle)
+        {
+            sqlConnection.Open();
+
+            string query = "INSERT INTO rentedVehicles (id, name, type, fuel, damage, rentID, ownerName, ownerPhone, returnDate)";
+            query += " VALUES (@id, @name, @type, @fuel, @damage, @rentID, @ownerName, @ownerPhone, @returnDate)";
+
+            string type = "";
+            if (vehicle.GetType() == (new RentedSedanUserControl()).GetType())
+                type = "sedan";
+            if (vehicle.GetType() == (new RentedMinivanUserControl()).GetType())
+                type = "minivan";
+
+            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            myCommand.Parameters.AddWithValue("@id", vehicle.GetVehicleID());
+            myCommand.Parameters.AddWithValue("@name", vehicle.GetVehicleName());
+            myCommand.Parameters.AddWithValue("@type", type);
+            myCommand.Parameters.AddWithValue("@fuel", vehicle.GetFuelPercentage());
+            myCommand.Parameters.AddWithValue("@damage", vehicle.GetDamagePercentage());
+            myCommand.Parameters.AddWithValue("@rentID", vehicle.GetRentID());
+            myCommand.Parameters.AddWithValue("@ownerName", vehicle.GetOwner().GetName());
+            myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.GetOwner().GetPhoneNumber());
+            myCommand.Parameters.AddWithValue("@returnDate", vehicle.GetReturnDate().ToShortDateString());
+            myCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        void GetAvailableVehiclesFromSQLDatabase()
+        {
+            string sqlQuery = "SELECT id, name, type, fuel, damage FROM availableVehicles";
+            SqlCommand command = new SqlCommand(sqlQuery, sqlConnection);
+            try
+            {
+                sqlConnection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                short id; string name = ""; string type = ""; short fuel; short damage;
+                availableVehicles.Clear();
+                while (reader.Read())
+                {
+                    id = reader.GetInt16(reader.GetOrdinal("id"));
+                    name = reader["name"].ToString();
+                    type = reader["type"].ToString();
+                    fuel = reader.GetInt16(reader.GetOrdinal("fuel"));
+                    damage = reader.GetInt16(reader.GetOrdinal("damage"));
+                    if (type == "sedan")
+                    {
+                        AvailableSedanUserControl sedan = new AvailableSedanUserControl();
+                        sedan.FromDatabase(id, name, fuel, damage);
+                        availableVehicles.Add(sedan);
+                    }
+                    if (type == "minivan")
+                    {
+                        AvailableMinivanUserControl minivan = new AvailableMinivanUserControl();
+                        minivan.FromDatabase(id, name, fuel, damage);
+                        availableVehicles.Add(minivan);
+                    }
+                }
+                reader.Close();
+                PopulateAvailableVehiclesPanel();
+            }
+            catch (Exception ex)
+            {
+                //If an exception occurs, write it to the console
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+        void GetRentedVehiclesFromSQLDatabase()
+        {
+            string sqlQuery = "SELECT id, name, type, fuel, damage, rentID, ownerName, ownerPhone, returnDate FROM rentedVehicles";
+            SqlCommand command = new SqlCommand(sqlQuery, sqlConnection);
+            try
+            {
+                sqlConnection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                short id; string name = ""; string type = ""; short fuel; short damage; short rentID; string ownerName=""; string ownerPhone=""; string returnDate="";
+                rentedVehicles.Clear();
+                while (reader.Read())
+                {
+                    id = reader.GetInt16(reader.GetOrdinal("id"));
+                    name = reader["name"].ToString();
+                    type = reader["type"].ToString();
+                    fuel = reader.GetInt16(reader.GetOrdinal("fuel"));
+                    damage = reader.GetInt16(reader.GetOrdinal("damage"));
+                    rentID = reader.GetInt16(reader.GetOrdinal("rentID"));
+                    ownerName = reader["ownerName"].ToString();
+                    ownerPhone = reader["ownerPhone"].ToString();
+                    returnDate = reader["returnDate"].ToString();
+
+                    Customer owner = new Customer(ownerName, ownerPhone);
+                    Console.WriteLine(type);
+                    if (type == "sedan")
+                    {
+                        RentedSedanUserControl sedan = new RentedSedanUserControl();
+                        sedan.FromDatabase(id, name, fuel, damage, rentID, owner, returnDate);
+                        rentedVehicles.Add(sedan);
+                    }
+                    if (type == "minivan")
+                    {
+                        RentedMinivanUserControl minivan = new RentedMinivanUserControl();
+                        minivan.FromDatabase(id, name, fuel, damage, rentID, owner, returnDate);
+                        rentedVehicles.Add(minivan);
+                    }
+                }
+                reader.Close();
+                PopulateAvailableVehiclesPanel();
+                PopulateRentedVehiclesPanel();
+            }
+            catch (Exception ex)
+            {
+                //If an exception occurs, write it to the console
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+        public String SQLConnectionString()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "tcp:carrentals.database.windows.net,1433";
+            builder.UserID = "mihai";
+            builder.Password = "Luca123456789";
+            builder.InitialCatalog = "carrentals";
+
+            Console.WriteLine("Conecting to SQL server.....");
+            return builder.ConnectionString;
+        }
+
+        #endregion
 
         #region Remove buttons
 
@@ -69,7 +273,7 @@ namespace Car_Rental_Application
         private void button1_Click(object sender, EventArgs e)
         {
             if (availableVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Start(); return; }
-            short idToBeMarkedAsAvailable = (short)(availableVehicles.Count - 1);
+            short idToBeMarkedAsAvailable = availableVehicles[availableVehicles.Count - 1].GetVehicleID();
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
             availableVehicles.RemoveAt(availableVehicles.Count-1);
             availableCarsElementsPanel.VerticalScroll.Value = 0;
@@ -81,12 +285,13 @@ namespace Car_Rental_Application
 
         private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
         {
-            string output = "Contents of available indexes before remove: " + Environment.NewLine;
-            foreach (int index in indexesOfSelectedAvailableCars) output += index.ToString() + Environment.NewLine;
             List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
             foreach (int index in indexesOfSelectedAvailableCars)
             {
-                IDManagement.MarkIDAsAvailable((short)index);
+                foreach(VehicleUserControl vehicle in availableVehicles) { Console.WriteLine(availableVehicles.IndexOf(vehicle)); }
+                Console.WriteLine("index is: " + index);
+                short idToBeMarkedAsAvailable = availableVehicles[index].GetVehicleID();
+                IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
                 vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
             }
             foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
@@ -94,9 +299,22 @@ namespace Car_Rental_Application
             PopulateAvailableVehiclesPanel();
             indexesOfSelectedAvailableCars.Clear();
         }
+
         private void buttonRemoveSelectedRentedCars_Click(object sender, EventArgs e)
         {
-           
+            List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
+            foreach (int index in indexesOfSelectedRentedCars)
+            {
+                short idToBeMarkedAsAvailable = rentedVehicles[index].GetVehicleID();
+                IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
+                short rentIDToBeMarkedAsAvailable = rentedVehicles[index].GetRentID();
+                IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
+                vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
+            }
+            foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
+                availableVehicles.Remove(vehicle);
+            PopulateAvailableVehiclesPanel();
+            indexesOfSelectedAvailableCars.Clear();
         }
 
         private void buttonRemoveLastRentedCar_Click(object sender, EventArgs e)
@@ -187,6 +405,7 @@ namespace Car_Rental_Application
                 serializer.Serialize(stream, list);
             }
         }
+
         public List<VehicleUserControl> Read(string filePath)
         {
             if (!File.Exists(filePath)) { return new List<VehicleUserControl>(); }
@@ -197,11 +416,13 @@ namespace Car_Rental_Application
                 return dezerializedList;
             }
         }
+
         private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToXML(availableVehicles, "availableVehiclesList.xml");
             ToXML(rentedVehicles, "rentedVehiclesList.xml");
         }
+
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             availableVehicles.Clear();
@@ -266,6 +487,25 @@ namespace Car_Rental_Application
             timerClearErrors.Stop();
         }
 
+        private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConnectToSQL();
+        }
 
+        private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetAvailableVehiclesFromSQLDatabase();
+            GetRentedVehiclesFromSQLDatabase();
+        }
+
+        private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearAvailableVehiclesDatabase();
+            ClearRentedVehiclesDatabase();
+            foreach(VehicleUserControl vehicle in availableVehicles)
+                SaveAvailableVehicleToSQLDatabase(vehicle);
+            foreach(VehicleUserControl vehicle in rentedVehicles)
+                SaveRentedVehicleToSQLDatabase(vehicle);
+        }
     }
 }

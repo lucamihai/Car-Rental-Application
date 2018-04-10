@@ -18,6 +18,7 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
         }
+
         public AvailableMinivanUserControl(string vehicleName)
         {
             InitializeComponent();
@@ -29,6 +30,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(0);
             IDManagement.MarkIDAsUnavailable(id);
         }
+
         public AvailableMinivanUserControl(VehicleUserControl sedan)
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(sedan.GetDamagePercentage());
             IDManagement.MarkIDAsUnavailable(id);
         }
+
         public AvailableMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();
@@ -49,6 +52,7 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(damagePercent);
             IDManagement.MarkIDAsUnavailable(id);
         }
+
         public AvailableMinivanUserControl(RentedMinivanUserControl minivan)
         {
             InitializeComponent();
@@ -63,12 +67,22 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleFuelPercentage(returnedVehicleFuelPercentage);
             SetVehicleDamagePercentage(returnedVehicleDamagePercentage);
         }
+
+        public void FromDatabase(short id, string name, short fuel, short damage)
+        {
+            SetVehicleID(id);
+            SetVehicleName(name);
+            SetVehicleFuelPercentage(fuel);
+            SetVehicleDamagePercentage(damage);
+        }
+
         #region Set  methods
 
         public void SetVehicleID(short id)
         {
             this.id = id;
             IDValueLabel.Text = id.ToString();
+            IDManagement.MarkIDAsUnavailable(id);
         }
         public void SetVehicleName(string vehicleName)
         {
@@ -90,12 +104,13 @@ namespace Car_Rental_Application.User_Controls
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
             if (selectCheckBox.Checked == true)
             {
-                mainWindow.indexesOfSelectedAvailableCars.Add(id);
+                mainWindow.indexesOfSelectedAvailableCars.Add(indexOfCurrentVehicle);
                 return;
             }
-            mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+            mainWindow.indexesOfSelectedAvailableCars.Remove(indexOfCurrentVehicle);
         }
 
         private void buttonRent_Click(object sender, EventArgs e)

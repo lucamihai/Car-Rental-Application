@@ -58,6 +58,7 @@
             this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
             this.buttonRemoveSelectedRentedCars = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
+            this.connectToDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -229,7 +230,8 @@
             // 
             this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFromDatabaseToolStripMenuItem,
-            this.saveToDatabaseToolStripMenuItem});
+            this.saveToDatabaseToolStripMenuItem,
+            this.connectToDatabaseToolStripMenuItem});
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
             this.databaseToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.databaseToolStripMenuItem.Text = "Database";
@@ -237,14 +239,16 @@
             // loadFromDatabaseToolStripMenuItem
             // 
             this.loadFromDatabaseToolStripMenuItem.Name = "loadFromDatabaseToolStripMenuItem";
-            this.loadFromDatabaseToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.loadFromDatabaseToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.loadFromDatabaseToolStripMenuItem.Text = "Load from database";
+            this.loadFromDatabaseToolStripMenuItem.Click += new System.EventHandler(this.loadFromDatabaseToolStripMenuItem_Click);
             // 
             // saveToDatabaseToolStripMenuItem
             // 
             this.saveToDatabaseToolStripMenuItem.Name = "saveToDatabaseToolStripMenuItem";
-            this.saveToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.saveToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.saveToDatabaseToolStripMenuItem.Text = "Save to database";
+            this.saveToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.saveToDatabaseToolStripMenuItem_Click);
             // 
             // localFileToolStripMenuItem
             // 
@@ -324,6 +328,13 @@
             this.buttonRemoveLastRentedCar.UseVisualStyleBackColor = true;
             this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.buttonRemoveLastRentedCar_Click);
             // 
+            // connectToDatabaseToolStripMenuItem
+            // 
+            this.connectToDatabaseToolStripMenuItem.Name = "connectToDatabaseToolStripMenuItem";
+            this.connectToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.connectToDatabaseToolStripMenuItem.Text = "Connect to database";
+            this.connectToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.connectToDatabaseToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -381,6 +392,7 @@
         private System.Windows.Forms.Timer timerClearErrors;
         private System.Windows.Forms.Button buttonRemoveSelectedRentedCars;
         private System.Windows.Forms.Button buttonRemoveLastRentedCar;
+        private System.Windows.Forms.ToolStripMenuItem connectToDatabaseToolStripMenuItem;
     }
 }
 
