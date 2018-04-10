@@ -56,6 +56,8 @@
             this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
             this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
+            this.buttonRemoveSelectedRentedCars = new System.Windows.Forms.Button();
+            this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -140,8 +142,10 @@
             // 
             // RentedCarsPanel
             // 
+            this.RentedCarsPanel.Controls.Add(this.buttonRemoveSelectedRentedCars);
             this.RentedCarsPanel.Controls.Add(this.sortRentedSelectionComboBox);
             this.RentedCarsPanel.Controls.Add(this.buttonSortRentedVehicles);
+            this.RentedCarsPanel.Controls.Add(this.buttonRemoveLastRentedCar);
             this.RentedCarsPanel.Controls.Add(this.rentedCarsElementsPanel);
             this.RentedCarsPanel.Location = new System.Drawing.Point(607, 65);
             this.RentedCarsPanel.Name = "RentedCarsPanel";
@@ -300,6 +304,26 @@
             this.timerClearErrors.Interval = 3000;
             this.timerClearErrors.Tick += new System.EventHandler(this.timerClearErrors_Tick);
             // 
+            // buttonRemoveSelectedRentedCars
+            // 
+            this.buttonRemoveSelectedRentedCars.Location = new System.Drawing.Point(141, 577);
+            this.buttonRemoveSelectedRentedCars.Name = "buttonRemoveSelectedRentedCars";
+            this.buttonRemoveSelectedRentedCars.Size = new System.Drawing.Size(103, 25);
+            this.buttonRemoveSelectedRentedCars.TabIndex = 12;
+            this.buttonRemoveSelectedRentedCars.Text = "Remove Selected";
+            this.buttonRemoveSelectedRentedCars.UseVisualStyleBackColor = true;
+            this.buttonRemoveSelectedRentedCars.Click += new System.EventHandler(this.buttonRemoveSelectedRentedCars_Click);
+            // 
+            // buttonRemoveLastRentedCar
+            // 
+            this.buttonRemoveLastRentedCar.Location = new System.Drawing.Point(262, 577);
+            this.buttonRemoveLastRentedCar.Name = "buttonRemoveLastRentedCar";
+            this.buttonRemoveLastRentedCar.Size = new System.Drawing.Size(98, 25);
+            this.buttonRemoveLastRentedCar.TabIndex = 10;
+            this.buttonRemoveLastRentedCar.Text = "Remove last";
+            this.buttonRemoveLastRentedCar.UseVisualStyleBackColor = true;
+            this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.buttonRemoveLastRentedCar_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,6 +379,8 @@
         private System.Windows.Forms.Timer timerProgramDateUpdater;
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.Timer timerClearErrors;
+        private System.Windows.Forms.Button buttonRemoveSelectedRentedCars;
+        private System.Windows.Forms.Button buttonRemoveLastRentedCar;
     }
 }
 

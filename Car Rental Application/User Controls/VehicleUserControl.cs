@@ -23,9 +23,17 @@ namespace Car_Rental_Application.User_Controls
         protected short fuelPercentage;
         protected short id;
         protected short specialRentID;
+
+        public VehicleUserControl()
+        {
+            InitializeComponent();
+        }
         public virtual void GetDetails() { }
-        public virtual void configureRentedVehicle(string config) { }
-        public virtual void WriteXml(System.Xml.XmlWriter writer)
+        public virtual void configureRentedVehicle(string config) {/*used to properly initialize a rented sedan/minivan, used virtual so line 227 from MainWindow.cs would work*/ }
+
+        #region Methods from IXmlSerializable
+
+        public void WriteXml(System.Xml.XmlWriter writer)
         {
             writer.WriteAttributeString("Name", Name);
             writer.WriteElementString("id", id.ToString());
@@ -50,7 +58,7 @@ namespace Car_Rental_Application.User_Controls
 
         public System.Xml.Schema.XmlSchema GetSchema() { return null; }
 
-        public virtual void ReadXml(System.Xml.XmlReader reader)
+        public void ReadXml(System.Xml.XmlReader reader)
         {
             reader.MoveToContent();
             Name = reader.GetAttribute("Name");
@@ -100,24 +108,29 @@ namespace Car_Rental_Application.User_Controls
                 }
             }
         }
-        public VehicleUserControl()
-        {
-            InitializeComponent();
-        }
-        public void LinkToMainWindow(MainWindow mainWindow)
-        {
-            this.mainWindow = mainWindow;
-        }
+
+        #endregion
+
+        #region Linking to menus
+
+        public void LinkToMainWindow(MainWindow mainWindow) { this.mainWindow = mainWindow; }
         public void LinkToRentMenu(RentVehicleUserControl rentVehicleUserControl) { this.rentVehicleUserControl = rentVehicleUserControl; }
         public void LinkToReturnMenu(ReturnFromRentUserControl returnFromRentUserControl) { this.returnFromRentUserControl = returnFromRentUserControl; }
-        #region virtual methods to be redefined in the available cars classes in order to set the label values as well, else just set the short variables
-        public virtual void SetVehicleFuelPercentage(short fuelPercentage) { this.fuelPercentage = fuelPercentage; }
-        public virtual void SetVehicleDamagePercentage(short damagePercent) { this.damagePercent = damagePercent; }
+
         #endregion
+
+        #region Get and Set
+
         public string GetVehicleName() { return vehicleName; }
         public short GetFuelPercentage() { return fuelPercentage; }
         public short GetDamagePercentage() { return damagePercent; }
         public short GetVehicleID() { return id; }
+
+        #region virtual methods to be redefined in the available cars classes in order to set the label values as well, else just set members
+        public virtual void SetVehicleFuelPercentage(short fuelPercentage) { this.fuelPercentage = fuelPercentage; }
+        public virtual void SetVehicleDamagePercentage(short damagePercent) { this.damagePercent = damagePercent; }
+        #endregion
+
         #region virtual methods to be redefined in the rented cars classes
         public virtual void SetRentID(short id) { specialRentID = id; }
         public virtual short GetSpecialRentID() { return specialRentID; }
@@ -126,6 +139,8 @@ namespace Car_Rental_Application.User_Controls
         public virtual short GetRentID() { return -1; }
         public virtual Customer GetOwner(){ return new Customer("-", ""); }
         public virtual DateTime GetReturnDate() { return new DateTime(1, 1, 1); }
+        #endregion
+
         #endregion
     }
 }

@@ -58,6 +58,7 @@ namespace Car_Rental_Application.User_Controls
 
             int IDInt = Convert.ToInt32(configurations[0]);
             SetID((short)IDInt);
+            IDManagement.MarkIDAsUnavailable(id);
 
             string name = configurations[1];
             SetVehicleName(name);
@@ -113,10 +114,10 @@ namespace Car_Rental_Application.User_Controls
         {
             if (selectCheckBox.Checked == true)
             {
-                mainWindow.indexesOfSelectedAvailableCars.Add(id);
+                mainWindow.indexesOfSelectedRentedCars.Add(id);
                 return;
             }
-            mainWindow.indexesOfSelectedAvailableCars.Remove(id);
+            mainWindow.indexesOfSelectedRentedCars.Remove(id);
         }
 
         private void buttonReturn_Click(object sender, EventArgs e)
