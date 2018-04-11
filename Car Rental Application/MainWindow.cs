@@ -12,6 +12,7 @@ using Car_Rental_Application.Classes;
 using Car_Rental_Application.User_Controls;
 using System.Xml.Serialization;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace Car_Rental_Application
 {
@@ -19,11 +20,14 @@ namespace Car_Rental_Application
     {
         List <VehicleUserControl> availableVehicles;
         List<VehicleUserControl> rentedVehicles;
+
         AvailableCarsSorter availableCarsSorter;
         RentedCarsSorter rentedCarsSorter;
+
         AddVehicleUserControl addVehicleUserControl;
         RentVehicleUserControl rentVehicleUserControl;
         ReturnFromRentUserControl returnFromRentUserControl;
+
         DateTime programTime;
 
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
@@ -32,9 +36,10 @@ namespace Car_Rental_Application
         public MainWindow()
         {
             InitializeComponent();
-            
+
             availableVehicles = new List<VehicleUserControl>();
             rentedVehicles = new List<VehicleUserControl>();
+
             availableCarsSorter = new AvailableCarsSorter();
             rentedCarsSorter = new RentedCarsSorter();
 
@@ -44,15 +49,20 @@ namespace Car_Rental_Application
             addVehicleUserControl = new AddVehicleUserControl(this);
             rentVehicleUserControl = new RentVehicleUserControl(this);
             returnFromRentUserControl = new ReturnFromRentUserControl(this);
+
             panelAddVehicles.Controls.Add(addVehicleUserControl);
             panelAddVehicles.Controls.Add(rentVehicleUserControl);
             panelAddVehicles.Controls.Add(returnFromRentUserControl);
+
             addVehicleUserControl.Hide();
-            rentVehicleUserControl.Hide();
+
             InitializeComboBoxSelections();
+
             timerProgramDateUpdater.Start();
+
             IDManagement.InitializeIndexes();          
         }
+
         void InitializeComboBoxSelections()
         {
             sortAvailableSelectionComboBox.SelectedIndex = sortAvailableSelectionComboBox.FindStringExact("By ID");
@@ -63,7 +73,7 @@ namespace Car_Rental_Application
         public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
         public void HideAddVehiclePanel() { panelAddVehicles.Hide(); }
         public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle) { return availableVehicles.IndexOf(vehicle); }
-
+        public int GetIndexOfRentedVehicle(VehicleUserControl vehicle) { return rentedVehicles.IndexOf(vehicle); }
 
         #region SQL
 
@@ -82,7 +92,7 @@ namespace Car_Rental_Application
                 loadFromDatabaseToolStripMenuItem.Available = true;
                 connectToDatabaseToolStripMenuItem.Available = false;
             }
-            catch(Exception a) {  }
+            catch(SqlException s) { errorLabel.Text = s.Message; }
         }
 
         void ClearAvailableVehiclesDatabase()
@@ -267,9 +277,30 @@ namespace Car_Rental_Application
 
         #endregion
 
+        #region SQL ToolStripMenu
+
+        private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e) { ConnectToSQL(); }
+
+        private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetAvailableVehiclesFromSQLDatabase();
+            GetRentedVehiclesFromSQLDatabase();
+        }
+
+        private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearAvailableVehiclesDatabase();
+            ClearRentedVehiclesDatabase();
+            foreach (VehicleUserControl vehicle in availableVehicles)
+                SaveAvailableVehicleToSQLDatabase(vehicle);
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+                SaveRentedVehicleToSQLDatabase(vehicle);
+        }
+
+        #endregion
+
         #region Remove buttons
 
-        /* Remove last available car */
         private void button1_Click(object sender, EventArgs e)
         {
             if (availableVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Start(); return; }
@@ -281,15 +312,13 @@ namespace Car_Rental_Application
             foreach (VehicleUserControl sedan in availableVehicles)
                 availableCarsElementsPanel.Controls.Add(sedan);
             errorLabel.Text = "";
-        }
+        }        /* Remove last available car */
 
         private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
         {
             List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
             foreach (int index in indexesOfSelectedAvailableCars)
             {
-                foreach(VehicleUserControl vehicle in availableVehicles) { Console.WriteLine(availableVehicles.IndexOf(vehicle)); }
-                Console.WriteLine("index is: " + index);
                 short idToBeMarkedAsAvailable = availableVehicles[index].GetVehicleID();
                 IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
                 vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
@@ -309,12 +338,12 @@ namespace Car_Rental_Application
                 IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
                 short rentIDToBeMarkedAsAvailable = rentedVehicles[index].GetRentID();
                 IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
-                vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
+                vehiclesToBeRemoved.Add(rentedVehicles.ElementAt(index));
             }
             foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
-                availableVehicles.Remove(vehicle);
-            PopulateAvailableVehiclesPanel();
-            indexesOfSelectedAvailableCars.Clear();
+                rentedVehicles.Remove(vehicle);
+            PopulateRentedVehiclesPanel();
+            indexesOfSelectedRentedCars.Clear();
         }
 
         private void buttonRemoveLastRentedCar_Click(object sender, EventArgs e)
@@ -334,9 +363,13 @@ namespace Car_Rental_Application
 
         #endregion
 
+        #region Transition between available and rented cars zones
+
         public void RemoveAvailableCarFromList(VehicleUserControl vehicle) { availableVehicles.Remove(vehicle); PopulateAvailableVehiclesPanel(); }
         public void RemoveRentedCarFromList(VehicleUserControl vehicle) { rentedVehicles.Remove(vehicle); IDManagement.MarkRentIDAsAvailable(vehicle.GetRentID()); PopulateRentedVehiclesPanel(); }
         public void ReturnVehicleFromRent(VehicleUserControl vehicle) { availableVehicles.Add(vehicle); PopulateAvailableVehiclesPanel(); }
+
+        #endregion
 
         #region Available and rented vehicles list update
 
@@ -367,7 +400,6 @@ namespace Car_Rental_Application
         }
 
         #endregion
-
         
 
         public void AddAvailableVehicle(VehicleUserControl vehicle)
@@ -376,6 +408,7 @@ namespace Car_Rental_Application
             AddToAvailableCarsList(vehicle);
             PopulateAvailableVehiclesPanel();
         }
+
         public void RentVehicle(VehicleUserControl vehicle)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
@@ -388,7 +421,9 @@ namespace Car_Rental_Application
             panelAddVehicles.Show();
             addVehicleUserControl.Show();
         }
+
         public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); }
+
         public void ReturnMenu() { panelAddVehicles.Show(); returnFromRentUserControl.Show(); }
 
         #region XML save and load
@@ -477,7 +512,10 @@ namespace Car_Rental_Application
 
         private void timerProgramDateUpdater_Tick(object sender, EventArgs e)
         {
-            labelProgramDate.Text = "Program date" + Environment.NewLine + DateTime.Now.ToShortDateString();
+            DateTime currentTime = DateTime.Now;
+            string currentTimeString = currentTime.Day.ToString() + "/" + currentTime.Month.ToString() + "/" + currentTime.Year.ToString() +
+                 " " + currentTime.ToShortTimeString();
+            labelProgramDate.Text = "Program date" + Environment.NewLine + currentTimeString;
             programTime = DateTime.Now;
         }
 
@@ -487,25 +525,7 @@ namespace Car_Rental_Application
             timerClearErrors.Stop();
         }
 
-        private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConnectToSQL();
-        }
 
-        private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetAvailableVehiclesFromSQLDatabase();
-            GetRentedVehiclesFromSQLDatabase();
-        }
 
-        private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ClearAvailableVehiclesDatabase();
-            ClearRentedVehiclesDatabase();
-            foreach(VehicleUserControl vehicle in availableVehicles)
-                SaveAvailableVehicleToSQLDatabase(vehicle);
-            foreach(VehicleUserControl vehicle in rentedVehicles)
-                SaveRentedVehicleToSQLDatabase(vehicle);
-        }
     }
 }

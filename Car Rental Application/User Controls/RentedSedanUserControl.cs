@@ -133,12 +133,13 @@ namespace Car_Rental_Application.User_Controls
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            int indexOfCurrentVehicle = mainWindow.GetIndexOfRentedVehicle(this);
             if (selectCheckBox.Checked == true)
             {
-                mainWindow.indexesOfSelectedRentedCars.Add(id);
+                mainWindow.indexesOfSelectedRentedCars.Add(indexOfCurrentVehicle);
                 return;
             }
-            mainWindow.indexesOfSelectedRentedCars.Remove(id);
+            mainWindow.indexesOfSelectedRentedCars.Remove(indexOfCurrentVehicle);
         }
     }
 }

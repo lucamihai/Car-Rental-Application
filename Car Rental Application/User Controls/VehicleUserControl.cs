@@ -24,10 +24,7 @@ namespace Car_Rental_Application.User_Controls
         protected short id;
         protected short specialRentID;
 
-        public VehicleUserControl()
-        {
-            InitializeComponent();
-        }
+        public VehicleUserControl() { InitializeComponent(); }
         public virtual void GetDetails() { }
         public virtual void configureRentedVehicle(string config) {/*used to properly initialize a rented sedan/minivan, used virtual so line 227 from MainWindow.cs would work*/ }
 
