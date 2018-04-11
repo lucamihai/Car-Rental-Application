@@ -76,6 +76,23 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(damage);
         }
 
+        public override void SelectVehicle()
+        {
+            selectCheckBox.Checked = true;
+        }
+
+        public override void DeselectVehicle()
+        {
+            selectCheckBox.Checked = false;
+        }
+
+        public override bool IsSelected()
+        {
+            if (selectCheckBox.Checked)
+                return true;
+            return false;
+        }
+
         #region Set  methods
 
         public void SetVehicleID(short id)

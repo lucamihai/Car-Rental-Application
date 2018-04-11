@@ -63,6 +63,23 @@ namespace Car_Rental_Application.User_Controls
             SetReturnDate(DateTime.Parse(returnDate));
         }
 
+        public override void SelectVehicle()
+        {
+            selectCheckBox.Checked = true;
+        }
+
+        public override void DeselectVehicle()
+        {
+            selectCheckBox.Checked = false;
+        }
+
+        public override bool IsSelected()
+        {
+            if (selectCheckBox.Checked)
+                return true;
+            return false;
+        }
+
         public override void configureRentedVehicle(string config)
         {
             //rentConfiguration = intID + "#" + vehicleName + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;

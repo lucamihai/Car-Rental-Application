@@ -26,6 +26,9 @@ namespace Car_Rental_Application.User_Controls
 
         public VehicleUserControl() { InitializeComponent(); }
         public virtual void GetDetails() { }
+        public virtual void SelectVehicle() { }
+        public virtual void DeselectVehicle() { }
+        public virtual bool IsSelected() { return false; }
         public virtual void configureRentedVehicle(string config) {/*used to properly initialize a rented sedan/minivan, used virtual so line 227 from MainWindow.cs would work*/ }
 
         #region Methods from IXmlSerializable

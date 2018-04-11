@@ -26,7 +26,7 @@ namespace Car_Rental_Application.Classes
         }
         public List<VehicleUserControl> SortListByReturnDate(List<VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy(o => o.GetReturnDate().ToShortDateString()).ToList();
+            return vehicles.OrderBy(o => o.GetReturnDate()).ToList();
         }
         public List<VehicleUserControl> SortListByOwnerPhoneNumber(List<VehicleUserControl> vehicles)
         {

@@ -94,6 +94,23 @@ namespace Car_Rental_Application.User_Controls
             SetReturnDate(DateTime.Parse(returnDate));
         }
 
+        public override void SelectVehicle()
+        {
+            selectCheckBox.Checked = true;
+        }
+
+        public override void DeselectVehicle()
+        {
+            selectCheckBox.Checked = false;
+        }
+
+        public override bool IsSelected()
+        {
+            if (selectCheckBox.Checked)
+                return true;
+            return false;
+        }
+
         #region Set and Get methods
 
         public void SetID(short id) { this.id = id; IDManagement.MarkIDAsUnavailable(id); }

@@ -37,6 +37,8 @@ namespace Car_Rental_Application
         {
             InitializeComponent();
 
+            errorLabel.Text = "";
+
             availableVehicles = new List<VehicleUserControl>();
             rentedVehicles = new List<VehicleUserControl>();
 
@@ -84,7 +86,7 @@ namespace Car_Rental_Application
             try
             {
                 Console.WriteLine("Connecting to SQL SERVER");
-                sqlConnection = new SqlConnection(SQLConnectionString()); 
+                sqlConnection = new SqlConnection(SQLConnectionString());
                 sqlConnection.Open();
                 Console.WriteLine("Connected!");
                 sqlConnection.Close();
@@ -92,7 +94,19 @@ namespace Car_Rental_Application
                 loadFromDatabaseToolStripMenuItem.Available = true;
                 connectToDatabaseToolStripMenuItem.Available = false;
             }
-            catch(SqlException s) { errorLabel.Text = s.Message; }
+            catch (SqlException s)
+            {
+                if (s.Number == 40615)
+                {
+                    errorLabel.Text = "Error 40615" + Environment.NewLine + "This IP isn't allowed to access the database." + 
+                        Environment.NewLine + "Contact the database owner";
+                }
+                else
+                {
+                    errorLabel.Text = "Error " + s.Number.ToString();
+                }
+                timerClearErrors.Start();
+            }
         }
 
         void ClearAvailableVehiclesDatabase()
@@ -303,7 +317,8 @@ namespace Car_Rental_Application
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (availableVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Start(); return; }
+            if (availableVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Stop(); timerClearErrors.Start(); return; }
+            availableVehicles[availableVehicles.Count - 1].DeselectVehicle();
             short idToBeMarkedAsAvailable = availableVehicles[availableVehicles.Count - 1].GetVehicleID();
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
             availableVehicles.RemoveAt(availableVehicles.Count-1);
@@ -316,39 +331,56 @@ namespace Car_Rental_Application
 
         private void buttonRemoveSelectedAvailableCars_Click(object sender, EventArgs e)
         {
-            List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
-            foreach (int index in indexesOfSelectedAvailableCars)
+            if (indexesOfSelectedAvailableCars.Count > 0)
             {
-                short idToBeMarkedAsAvailable = availableVehicles[index].GetVehicleID();
-                IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
-                vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
+                errorLabel.Text = "";
+                List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
+                foreach (int index in indexesOfSelectedAvailableCars)
+                {
+                    short idToBeMarkedAsAvailable = availableVehicles[index].GetVehicleID();
+                    IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
+                    vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
+                }
+                foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
+                    availableVehicles.Remove(vehicle);
+                PopulateAvailableVehiclesPanel();
+                indexesOfSelectedAvailableCars.Clear();
+                return;
             }
-            foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
-                availableVehicles.Remove(vehicle);
-            PopulateAvailableVehiclesPanel();
-            indexesOfSelectedAvailableCars.Clear();
+            errorLabel.Text = "You didn't select any vehicles to remove";
+            timerClearErrors.Stop();
+            timerClearErrors.Start();
         }
 
         private void buttonRemoveSelectedRentedCars_Click(object sender, EventArgs e)
         {
-            List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
-            foreach (int index in indexesOfSelectedRentedCars)
+            if (indexesOfSelectedRentedCars.Count > 0)
             {
-                short idToBeMarkedAsAvailable = rentedVehicles[index].GetVehicleID();
-                IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
-                short rentIDToBeMarkedAsAvailable = rentedVehicles[index].GetRentID();
-                IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
-                vehiclesToBeRemoved.Add(rentedVehicles.ElementAt(index));
+                errorLabel.Text = "";
+                List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
+                foreach (int index in indexesOfSelectedRentedCars)
+                {
+                    short idToBeMarkedAsAvailable = rentedVehicles[index].GetVehicleID();
+                    IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
+                    short rentIDToBeMarkedAsAvailable = rentedVehicles[index].GetRentID();
+                    IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
+                    vehiclesToBeRemoved.Add(rentedVehicles.ElementAt(index));
+                }
+                foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
+                    rentedVehicles.Remove(vehicle);
+                PopulateRentedVehiclesPanel();
+                indexesOfSelectedRentedCars.Clear();
+                return;
             }
-            foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
-                rentedVehicles.Remove(vehicle);
-            PopulateRentedVehiclesPanel();
-            indexesOfSelectedRentedCars.Clear();
+            errorLabel.Text = "You didn't select any vehicle to remove";
+            timerClearErrors.Stop();
+            timerClearErrors.Start();
         }
 
         private void buttonRemoveLastRentedCar_Click(object sender, EventArgs e)
         {
-            if (rentedVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Start(); return; }
+            if (rentedVehicles.Count < 1) { errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove"; timerClearErrors.Stop(); timerClearErrors.Start(); return; }
+            rentedVehicles[rentedVehicles.Count - 1].DeselectVehicle();
             short idToBeMarkedAsAvailable = rentedVehicles[rentedVehicles.Count - 1].GetVehicleID();
             short rentIDToBeMarkedAsAvailable = rentedVehicles[rentedVehicles.Count - 1].GetRentID();
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
@@ -525,7 +557,54 @@ namespace Car_Rental_Application
             timerClearErrors.Stop();
         }
 
+        private void buttonSelectAllAvailable_Click(object sender, EventArgs e)
+        {
+            if (availableVehicles.Count < 1)
+            {
+                errorLabel.Text = "There are no vehicles to select";
+                timerClearErrors.Start();
+                return;
+            }
+            bool areAllSelected = true;
+            foreach (VehicleUserControl vehicle in availableVehicles)
+            {
+                if (!vehicle.IsSelected())
+                {
+                    areAllSelected = false;
+                }
+                vehicle.SelectVehicle();
+            }
+            if (areAllSelected)
+            {
+                foreach (VehicleUserControl vehicle in availableVehicles)
+                    vehicle.DeselectVehicle();
+            }
+            errorLabel.Text = "";
+        }
 
-
+        private void buttonSelectAllRented_Click(object sender, EventArgs e)
+        {
+            if (rentedVehicles.Count < 1)
+            {
+                errorLabel.Text = "There are no vehicles to select";
+                timerClearErrors.Start();
+                return;
+            }
+            bool areAllSelected = true;
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+            {
+                if (!vehicle.IsSelected())
+                {
+                    areAllSelected = false;
+                }
+                vehicle.SelectVehicle();
+            }
+            if (areAllSelected)
+            {
+                foreach (VehicleUserControl vehicle in rentedVehicles)
+                    vehicle.DeselectVehicle();
+            }
+            errorLabel.Text = "";
+        }
     }
 }
