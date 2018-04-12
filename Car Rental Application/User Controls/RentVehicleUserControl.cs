@@ -30,6 +30,11 @@ namespace Car_Rental_Application.User_Controls
         }
         private void buttonRent_Click(object sender, EventArgs e)
         {
+            if (ownerNameTextBox.Text == "" || ownerPhoneNumberTextBox.Text == "")
+            {
+                errorLabel.Text = "Owner's name and phone fields can't be empty";
+                return;
+            }
             string ownerName = ownerNameTextBox.Text;
             string ownerPhoneNumber = ownerPhoneNumberTextBox.Text;
             Customer owner = new Customer(ownerName, ownerPhoneNumber);
@@ -40,6 +45,7 @@ namespace Car_Rental_Application.User_Controls
                 mainWindow.RemoveAvailableCarFromList(availableVehicle);
                 Hide();
                 mainWindow.HideAddVehiclePanel();
+                errorLabel.Text = "";
                 return;
             }
             if (availableVehicle.GetType() == (new AvailableMinivanUserControl()).GetType())
@@ -49,6 +55,7 @@ namespace Car_Rental_Application.User_Controls
                 mainWindow.RemoveAvailableCarFromList(availableVehicle);
                 Hide();
                 mainWindow.HideAddVehiclePanel();
+                errorLabel.Text = "";
                 return;
             }
         }

@@ -52,6 +52,14 @@ namespace Car_Rental_Application.User_Controls
             returnDateValueLabel.Text = returnDate.ToShortDateString();           
         }
 
+        public override string GetDetails()
+        {
+            string details = "";
+            details += "Sedan, id " + GetVehicleID() + ", has " + GetFuelPercentage() + "% fuel, is " + GetDamagePercentage() + "% damaged, owned by: "
+                + GetOwner().GetName() + ", phone number: " + GetOwner().GetPhoneNumber() + ", return date: " + GetReturnDate().ToShortDateString();
+            return details;
+        }
+
         public override void configureRentedVehicle(string config)
         {
             //rentConfiguration = intID + "#" + vehicleName + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;

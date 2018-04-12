@@ -57,16 +57,20 @@ namespace Car_Rental_Application.User_Controls
         private void buttonAddVehicle_Click(object sender, EventArgs e)
         {
             if (vehicleNameTextBox.Text == "") { errorLabel.Text = "Insert vehicle name"; return; }
-            if (sedanTypeCheckBox.Checked == true)
+            if (sedanTypeCheckBox.Checked)
             {
                 AvailableSedanUserControl sedan = new AvailableSedanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
                 mainWindow.AddAvailableVehicle(sedan);
-                errorLabel.Text = "";
-                return;
+                errorLabel.Text = "";               
             }
-            AvailableMinivanUserControl minivan=new AvailableMinivanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
-            mainWindow.AddAvailableVehicle(minivan);
-            errorLabel.Text = "";
+            if (minivanTypeCheckBox.Checked)
+            {
+                AvailableMinivanUserControl minivan = new AvailableMinivanUserControl(vehicleNameTextBox.Text, (short)fuelPercentNumericUpDown.Value, (short)damagePercentNumericUpDown.Value);
+                mainWindow.AddAvailableVehicle(minivan);
+                errorLabel.Text = "";
+            }
+            mainWindow.HideAddVehiclePanel();
+            Hide();
         }
 
         private void buttonCancelAdd_Click(object sender, EventArgs e)

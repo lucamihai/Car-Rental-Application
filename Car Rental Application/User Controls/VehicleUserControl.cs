@@ -25,7 +25,7 @@ namespace Car_Rental_Application.User_Controls
         protected short specialRentID;
 
         public VehicleUserControl() { InitializeComponent(); }
-        public virtual void GetDetails() { }
+        public virtual string GetDetails() { return ""; }
         public virtual void SelectVehicle() { }
         public virtual void DeselectVehicle() { }
         public virtual bool IsSelected() { return false; }

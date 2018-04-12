@@ -34,6 +34,7 @@
             this.sortAvailableSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.buttonSortAvailableVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedAvailableCars = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.buttonAddVehicle = new System.Windows.Forms.Button();
             this.availableCarsElementsPanel = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
@@ -41,11 +42,10 @@
             this.buttonSelectAllRented = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedRentedCars = new System.Windows.Forms.Button();
             this.sortRentedSelectionComboBox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
             this.rentedCarsElementsPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.panelAddVehicles = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,11 +56,13 @@
             this.loadFromLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.labelProgramDate = new System.Windows.Forms.Label();
             this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
             this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
+            this.orderLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -125,6 +127,16 @@
             this.buttonRemoveSelectedAvailableCars.Text = "Remove Selected";
             this.buttonRemoveSelectedAvailableCars.UseVisualStyleBackColor = true;
             this.buttonRemoveSelectedAvailableCars.Click += new System.EventHandler(this.buttonRemoveSelectedAvailableCars_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(189, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(172, 33);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Availbale Cars";
             // 
             // buttonAddVehicle
             // 
@@ -205,6 +217,16 @@
             this.sortRentedSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.sortRentedSelectionComboBox.TabIndex = 11;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(270, 2);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(146, 33);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Rented cars";
+            // 
             // buttonSortRentedVehicles
             // 
             this.buttonSortRentedVehicles.Location = new System.Drawing.Point(17, 66);
@@ -234,26 +256,6 @@
             this.rentedCarsElementsPanel.Size = new System.Drawing.Size(722, 501);
             this.rentedCarsElementsPanel.TabIndex = 1;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(189, 2);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 33);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Availbale Cars";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(214, 2);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(146, 33);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Rented cars";
-            // 
             // panelAddVehicles
             // 
             this.panelAddVehicles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -267,7 +269,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.databaseToolStripMenuItem,
-            this.localFileToolStripMenuItem});
+            this.localFileToolStripMenuItem,
+            this.orderLogsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1392, 24);
@@ -328,10 +331,6 @@
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
             this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // labelProgramDate
             // 
             this.labelProgramDate.AutoSize = true;
@@ -363,6 +362,29 @@
             // 
             this.timerClearErrors.Interval = 5000;
             this.timerClearErrors.Tick += new System.EventHandler(this.timerClearErrors_Tick);
+            // 
+            // orderLogsToolStripMenuItem
+            // 
+            this.orderLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.orderLogsToolStripMenuItem.Name = "orderLogsToolStripMenuItem";
+            this.orderLogsToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
+            this.orderLogsToolStripMenuItem.Text = "Order logs";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -412,7 +434,6 @@
         private System.Windows.Forms.ToolStripMenuItem loadFromLocalFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToLocalFileToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ComboBox sortRentedSelectionComboBox;
         private System.Windows.Forms.Button buttonSortRentedVehicles;
         private System.Windows.Forms.Label labelProgramDate;
@@ -424,6 +445,9 @@
         private System.Windows.Forms.ToolStripMenuItem connectToDatabaseToolStripMenuItem;
         private System.Windows.Forms.Button buttonSelectAllAvailable;
         private System.Windows.Forms.Button buttonSelectAllRented;
+        private System.Windows.Forms.ToolStripMenuItem orderLogsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
 

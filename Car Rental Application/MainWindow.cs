@@ -13,6 +13,7 @@ using Car_Rental_Application.User_Controls;
 using System.Xml.Serialization;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Car_Rental_Application
 {
@@ -30,6 +31,8 @@ namespace Car_Rental_Application
 
         DateTime programTime;
 
+        LogMaganer logMaganer;
+
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
         public List<int> indexesOfSelectedRentedCars = new List<int>();
             
@@ -38,6 +41,9 @@ namespace Car_Rental_Application
             InitializeComponent();
 
             errorLabel.Text = "";
+
+            logMaganer = new LogMaganer();
+            logMaganer.SetPath("log.txt");
 
             availableVehicles = new List<VehicleUserControl>();
             rentedVehicles = new List<VehicleUserControl>();
@@ -69,13 +75,56 @@ namespace Car_Rental_Application
         {
             sortAvailableSelectionComboBox.SelectedIndex = sortAvailableSelectionComboBox.FindStringExact("By ID");
             sortRentedSelectionComboBox.SelectedIndex = sortRentedSelectionComboBox.FindStringExact("By ID");
-        }       
+        }
 
         public void AddToAvailableCarsList(VehicleUserControl vehicle) { availableVehicles.Add(vehicle); }
+
         public void AddToRentedCarsList(VehicleUserControl vehicle) { rentedVehicles.Add(vehicle); }
+
         public void HideAddVehiclePanel() { panelAddVehicles.Hide(); }
+
         public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle) { return availableVehicles.IndexOf(vehicle); }
+
         public int GetIndexOfRentedVehicle(VehicleUserControl vehicle) { return rentedVehicles.IndexOf(vehicle); }
+
+        public void AddAvailableVehicle(VehicleUserControl vehicle)
+        {
+            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            AddToAvailableCarsList(vehicle);
+            PopulateAvailableVehiclesPanel();
+        }
+
+        public void RentVehicle(VehicleUserControl vehicle)
+        {
+            rentedCarsElementsPanel.VerticalScroll.Value = 0;
+            AddToRentedCarsList(vehicle);
+            PopulateRentedVehiclesPanel();
+        }
+
+        private void buttonAddVehicle_Click(object sender, EventArgs e)
+        {
+            panelAddVehicles.Show();
+            addVehicleUserControl.Show();
+        }
+
+        public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); returnFromRentUserControl.Hide(); addVehicleUserControl.Hide(); }
+
+        public void ReturnMenu() { panelAddVehicles.Show(); returnFromRentUserControl.Show(); rentVehicleUserControl.Hide(); addVehicleUserControl.Hide(); }
+
+        private void timerProgramDateUpdater_Tick(object sender, EventArgs e)
+        {
+            DateTime currentTime = DateTime.Now;
+            string currentTimeString = currentTime.Day.ToString() + "/" + currentTime.Month.ToString() + "/" + currentTime.Year.ToString() +
+                 " " + currentTime.ToShortTimeString();
+            labelProgramDate.Text = "Program date" + Environment.NewLine + currentTimeString;
+            programTime = DateTime.Now;
+        }
+
+        private void timerClearErrors_Tick(object sender, EventArgs e)
+        {
+            errorLabel.Text = "";
+            timerClearErrors.Stop();
+        }
 
         #region SQL
 
@@ -433,31 +482,6 @@ namespace Car_Rental_Application
 
         #endregion
         
-
-        public void AddAvailableVehicle(VehicleUserControl vehicle)
-        {
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
-            AddToAvailableCarsList(vehicle);
-            PopulateAvailableVehiclesPanel();
-        }
-
-        public void RentVehicle(VehicleUserControl vehicle)
-        {
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            AddToRentedCarsList(vehicle);
-            PopulateRentedVehiclesPanel();
-        }
-
-        private void buttonAddVehicle_Click(object sender, EventArgs e)
-        {
-            panelAddVehicles.Show();
-            addVehicleUserControl.Show();
-        }
-
-        public void RentMenu() { panelAddVehicles.Show(); rentVehicleUserControl.Show(); }
-
-        public void ReturnMenu() { panelAddVehicles.Show(); returnFromRentUserControl.Show(); }
-
         #region XML save and load
 
         public void ToXML(List<VehicleUserControl> list, string filePath)
@@ -542,20 +566,7 @@ namespace Car_Rental_Application
         }
         #endregion
 
-        private void timerProgramDateUpdater_Tick(object sender, EventArgs e)
-        {
-            DateTime currentTime = DateTime.Now;
-            string currentTimeString = currentTime.Day.ToString() + "/" + currentTime.Month.ToString() + "/" + currentTime.Year.ToString() +
-                 " " + currentTime.ToShortTimeString();
-            labelProgramDate.Text = "Program date" + Environment.NewLine + currentTimeString;
-            programTime = DateTime.Now;
-        }
-
-        private void timerClearErrors_Tick(object sender, EventArgs e)
-        {
-            errorLabel.Text = "";
-            timerClearErrors.Stop();
-        }
+        #region Select all available/rented vehicles
 
         private void buttonSelectAllAvailable_Click(object sender, EventArgs e)
         {
@@ -606,5 +617,42 @@ namespace Car_Rental_Application
             }
             errorLabel.Text = "";
         }
+
+        #endregion
+
+        #region Log writing
+
+        public void WriteLog(string data) { logMaganer.WriteToLog(data); }
+
+        public void SetLogID(int id) { logMaganer.SetCounter(id); }
+
+        public int GetLastLog()
+        {
+            if (!File.Exists(logMaganer.GetPath()) || new FileInfo(logMaganer.GetPath()).Length == 0 ) 
+            {
+                return 0;
+            }
+            string last = File.ReadLines(logMaganer.GetPath()).Last();
+            string counterString = last.Split(' ')[1];
+            Console.WriteLine(counterString);
+            return Convert.ToInt32(counterString);
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(logMaganer.GetPath());
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists(logMaganer.GetPath()) ||new FileInfo(logMaganer.GetPath()).Length == 0)
+            {
+                return;
+            }
+            logMaganer.ReinitiateCounter();           
+            if (File.Exists(logMaganer.GetPath())) File.Delete(logMaganer.GetPath());
+        }
+
+        #endregion
     }
 }

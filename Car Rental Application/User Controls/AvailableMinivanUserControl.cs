@@ -68,6 +68,14 @@ namespace Car_Rental_Application.User_Controls
             SetVehicleDamagePercentage(returnedVehicleDamagePercentage);
         }
 
+        public override string GetDetails()
+        {
+            string details = "";
+            details += "Minivan " + GetVehicleName() + ", registered with the id " + GetVehicleID().ToString() + ", has " + GetFuelPercentage().ToString() + " % fuel"
+                + "and is " + GetDamagePercentage().ToString() + " % damaged";
+            return details;
+        }
+
         public void FromDatabase(short id, string name, short fuel, short damage)
         {
             SetVehicleID(id);
