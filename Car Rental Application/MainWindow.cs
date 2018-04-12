@@ -640,6 +640,13 @@ namespace Car_Rental_Application
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(logMaganer.GetPath()) || new FileInfo(logMaganer.GetPath()).Length == 0)
+            {
+                errorLabel.Text = "There is no log created";
+                timerClearErrors.Start();
+                return;
+            }
+            errorLabel.Text = "";
             Process.Start(logMaganer.GetPath());
         }
 
