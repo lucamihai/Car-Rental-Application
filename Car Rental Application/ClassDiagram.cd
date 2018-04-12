@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Car_Rental_Application.Classes.AvailableCarsSorter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAABAAAAMIAAAAAAAAAAAQAAACAQAA=</HashCode>
+      <FileName>Classes\AvailableCarsSorter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Car_Rental_Application.Classes.Customer" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAABAAAAAAAAAAAAAAAAEAEAAAAAAAAQAAABAA=</HashCode>
+      <FileName>Classes\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.Classes.IDManagement" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAEAAAAAAQAAAACAAAQAAIAAAQAABAAAA=</HashCode>
+      <FileName>Classes\IDManagement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.Classes.LogMaganer" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAECAAAAAAACIAEAAAABAAAAABA=</HashCode>
+      <FileName>Classes\LogMaganer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.Classes.RentedCarsSorter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAABAAAAMIAAAAAAAAAAAQAAACAQAA=</HashCode>
+      <FileName>Classes\RentedCarsSorter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Car_Rental_Application.Classes.RentVehicleConfiguration" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAEAAAAIAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Classes\RentVehicleConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.AddVehicleUserControl" Collapsed="true">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAhiAAACQACACBAQAEAAGAQAAAABgAQA=</HashCode>
+      <FileName>User Controls\AddVehicleUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.AvailableMinivanUserControl" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBQAAAkCAGAAEgAAEAiAAABCiAAAAAEAAAABAIAABgg=</HashCode>
+      <FileName>User Controls\AvailableMinivanUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.AvailableSedanUserControl" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBQAAAkCAGAAEgAAEAiAAABCiAAAAAEAAAABAIAABgg=</HashCode>
+      <FileName>User Controls\AvailableSedanUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.MinivanUserControl" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>User Controls\MinivanUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.RentedMinivanUserControl" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BFAIAIELAOAIkgEQFAiAAIBCCgAAAAEAARABAAAAQgI=</HashCode>
+      <FileName>User Controls\RentedMinivanUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.RentedSedanUserControl" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BFQIAIELAOAIkgAQFAiAAIBCCgAAAAEAARABQAAAQgA=</HashCode>
+      <FileName>User Controls\RentedSedanUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.RentVehicleUserControl" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAiAAABEBAACQBCAClEAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>User Controls\RentVehicleUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.ReturnFromRentUserControl" Collapsed="true">
+    <Position X="7.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAIQBAAACAAAhAVBACABCACFAAAAAAQAAAAAAAAQAE=</HashCode>
+      <FileName>User Controls\ReturnFromRentUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.SedanUserControl" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>User Controls\SedanUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Car_Rental_Application.User_Controls.VehicleUserControl" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>REBAAAAIAOAAmAIUEACEAgADDCBABEEAARAAiAAAAig=</HashCode>
+      <FileName>User Controls\VehicleUserControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

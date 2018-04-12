@@ -175,6 +175,7 @@
     <EmbeddedResource Include="User Controls\SedanUserControl.resx">
       <DependentUpon>SedanUserControl.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
