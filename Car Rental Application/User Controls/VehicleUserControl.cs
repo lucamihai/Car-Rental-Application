@@ -24,87 +24,104 @@ namespace Car_Rental_Application.User_Controls
         protected short id;
         protected short specialRentID;
 
-        public VehicleUserControl() { InitializeComponent(); }
-        public virtual string GetDetails() { return ""; }
+        public VehicleUserControl()
+        {
+            InitializeComponent();
+        }
+
+        public virtual string GetDetails()
+        {
+            return "";
+        }
+
+        public virtual bool IsSelected()
+        {
+            return false;
+        }
+
         public virtual void SelectVehicle() { }
         public virtual void DeselectVehicle() { }
-        public virtual bool IsSelected() { return false; }
-        public virtual void configureRentedVehicle(string config) {/*used to properly initialize a rented sedan/minivan, used virtual so line 227 from MainWindow.cs would work*/ }
+        public virtual void configureRentedVehicle(string config) { }
 
         #region Methods from IXmlSerializable
 
-        public void WriteXml(System.Xml.XmlWriter writer)
+        public System.Xml.Schema.XmlSchema GetSchema()
         {
-            writer.WriteAttributeString("Name", Name);
-            writer.WriteElementString("id", id.ToString());
-            writer.WriteElementString("vehicleName", vehicleName);
-            writer.WriteElementString("damagePercent", damagePercent.ToString());
-            writer.WriteElementString("fuelPercentage", fuelPercentage.ToString());
+            return null;
+        }
+
+        public void WriteXml(System.Xml.XmlWriter xmlWriter)
+        {
+            xmlWriter.WriteAttributeString("Name", Name);
+            xmlWriter.WriteElementString("id", id.ToString() );
+            xmlWriter.WriteElementString("vehicleName", vehicleName);
+            xmlWriter.WriteElementString("damagePercent", damagePercent.ToString() );
+            xmlWriter.WriteElementString("fuelPercentage", fuelPercentage.ToString() );
+
             short rentID = GetRentID();
             if (rentID > -1)
             {
-                writer.WriteElementString("rentID", rentID.ToString());
+                xmlWriter.WriteElementString("rentID", rentID.ToString() );
+
                 Customer owner = GetOwner();
-               
-                {
-                    writer.WriteElementString("ownerName", owner.GetName());
-                    writer.WriteElementString("ownerPhone", owner.GetPhoneNumber());
-                }
-                DateTime returnDate = GetReturnDate();
+                xmlWriter.WriteElementString("ownerName", owner.GetName() );
+                xmlWriter.WriteElementString("ownerPhone", owner.GetPhoneNumber() );
                 
-                    writer.WriteElementString("returnDate", returnDate.ToString());
+                DateTime returnDate = GetReturnDate();
+                xmlWriter.WriteElementString("returnDate", returnDate.ToString());
             }
         }
 
-        public System.Xml.Schema.XmlSchema GetSchema() { return null; }
-
-        public void ReadXml(System.Xml.XmlReader reader)
+        public void ReadXml(System.Xml.XmlReader xmlReader)
         {
-            reader.MoveToContent();
-            Name = reader.GetAttribute("Name");
+            xmlReader.MoveToContent();
+            Name = xmlReader.GetAttribute("Name");
             
-            Boolean isEmptyElement = reader.IsEmptyElement; 
-            reader.ReadStartElement();           
-            if (!isEmptyElement) 
+            Boolean isEmptyElement = xmlReader.IsEmptyElement;
+            xmlReader.ReadStartElement();
+            
+            if ( !isEmptyElement ) 
             {
                 if (Name == "AvailableSedanUserControl" || Name == "AvailableMinivanUserControl")
                 {
-                    int intID = Convert.ToInt32(reader.ReadElementString("id"));
+                    int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
                     id = (short)intID;
-                    vehicleName = reader.ReadElementString("vehicleName");
+                    vehicleName = xmlReader.ReadElementString("vehicleName");
 
-                    int intDamage = Convert.ToInt32(reader.ReadElementString("damagePercent"));
+                    int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercent"));
                     damagePercent = (short)intDamage;
 
-                    int intFuel = Convert.ToInt32(reader.ReadElementString("fuelPercentage"));
+                    int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
                     fuelPercentage = (short)intFuel;
 
-
-                    //int rentIDInt = Convert.ToInt32(reader.ReadElementString("rentID"));+
-
-                    reader.ReadEndElement();
+                    xmlReader.ReadEndElement();
                 }
+
                 if (Name == "RentedSedanUserControl" || Name == "RentedMinivanUserControl")
                 {
-                    int intID = Convert.ToInt32(reader.ReadElementString("id"));
+                    int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
+                    int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercent"));
+                    int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
+                    int rentIDInt = Convert.ToInt32(xmlReader.ReadElementString("rentID"));
 
-                    string name = reader.ReadElementString("vehicleName");
+                    string vehicleName = xmlReader.ReadElementString("vehicleName");
+                    string ownerName = xmlReader.ReadElementString("ownerName");
+                    string ownerPhone = xmlReader.ReadElementString("ownerPhone");
+                    string returnDateString = xmlReader.ReadElementString("returnDate");
 
-                    int intDamage = Convert.ToInt32(reader.ReadElementString("damagePercent"));
+                    string rentConfiguration = "";
+                    rentConfiguration += intID + "#";
+                    rentConfiguration += vehicleName + "#";
+                    rentConfiguration += intDamage + "#";
+                    rentConfiguration += intFuel + "#";
+                    rentConfiguration += rentIDInt + "#";
+                    rentConfiguration += ownerName + "#";
+                    rentConfiguration += ownerPhone + "#";
+                    rentConfiguration += returnDateString;
 
-                    int intFuel = Convert.ToInt32(reader.ReadElementString("fuelPercentage"));
-
-                    int rentIDInt = Convert.ToInt32(reader.ReadElementString("rentID"));
-
-                    string ownerName = reader.ReadElementString("ownerName");
-                    string ownerPhone = reader.ReadElementString("ownerPhone");
-
-                    string returnDateString = reader.ReadElementString("returnDate");                   
-
-                    string rentConfiguration = intID + "#" + name + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;
                     RentVehicleConfiguration.AddRentConfiguration(rentConfiguration);
 
-                    reader.ReadEndElement();
+                    xmlReader.ReadEndElement();
                 }
             }
         }
@@ -113,9 +130,20 @@ namespace Car_Rental_Application.User_Controls
 
         #region Linking to menus
 
-        public void LinkToMainWindow(MainWindow mainWindow) { this.mainWindow = mainWindow; }
-        public void LinkToRentMenu(RentVehicleUserControl rentVehicleUserControl) { this.rentVehicleUserControl = rentVehicleUserControl; }
-        public void LinkToReturnMenu(ReturnFromRentUserControl returnFromRentUserControl) { this.returnFromRentUserControl = returnFromRentUserControl; }
+        public void LinkToMainWindow(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
+
+        public void LinkToRentMenu(RentVehicleUserControl rentVehicleUserControl)
+        {
+            this.rentVehicleUserControl = rentVehicleUserControl;
+        }
+
+        public void LinkToReturnMenu(ReturnFromRentUserControl returnFromRentUserControl)
+        {
+            this.returnFromRentUserControl = returnFromRentUserControl;
+        }
 
         #endregion
 

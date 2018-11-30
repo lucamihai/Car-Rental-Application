@@ -55,14 +55,14 @@
             this.localFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFromLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToLocalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.orderLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.labelProgramDate = new System.Windows.Forms.Label();
             this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
             this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
-            this.orderLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -116,7 +116,7 @@
             this.buttonSortAvailableVehicles.TabIndex = 8;
             this.buttonSortAvailableVehicles.Text = "Sort";
             this.buttonSortAvailableVehicles.UseVisualStyleBackColor = true;
-            this.buttonSortAvailableVehicles.Click += new System.EventHandler(this.buttonSort_Click);
+            this.buttonSortAvailableVehicles.Click += new System.EventHandler(this.SortAvailableVehicles);
             // 
             // buttonRemoveSelectedAvailableCars
             // 
@@ -126,7 +126,7 @@
             this.buttonRemoveSelectedAvailableCars.TabIndex = 7;
             this.buttonRemoveSelectedAvailableCars.Text = "Remove Selected";
             this.buttonRemoveSelectedAvailableCars.UseVisualStyleBackColor = true;
-            this.buttonRemoveSelectedAvailableCars.Click += new System.EventHandler(this.buttonRemoveSelectedAvailableCars_Click);
+            this.buttonRemoveSelectedAvailableCars.Click += new System.EventHandler(this.RemoveSelectedAvailableVehicles);
             // 
             // label1
             // 
@@ -165,7 +165,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "Remove last";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.RemoveLastAvailableVehicle);
             // 
             // RentedCarsPanel
             // 
@@ -199,7 +199,7 @@
             this.buttonRemoveSelectedRentedCars.TabIndex = 12;
             this.buttonRemoveSelectedRentedCars.Text = "Remove Selected";
             this.buttonRemoveSelectedRentedCars.UseVisualStyleBackColor = true;
-            this.buttonRemoveSelectedRentedCars.Click += new System.EventHandler(this.buttonRemoveSelectedRentedCars_Click);
+            this.buttonRemoveSelectedRentedCars.Click += new System.EventHandler(this.RemoveSelectedRentedVehicles);
             // 
             // sortRentedSelectionComboBox
             // 
@@ -235,7 +235,7 @@
             this.buttonSortRentedVehicles.TabIndex = 10;
             this.buttonSortRentedVehicles.Text = "Sort";
             this.buttonSortRentedVehicles.UseVisualStyleBackColor = true;
-            this.buttonSortRentedVehicles.Click += new System.EventHandler(this.buttonSortRentedVehicles_Click);
+            this.buttonSortRentedVehicles.Click += new System.EventHandler(this.SortRentedVehicles);
             // 
             // buttonRemoveLastRentedCar
             // 
@@ -245,7 +245,7 @@
             this.buttonRemoveLastRentedCar.TabIndex = 10;
             this.buttonRemoveLastRentedCar.Text = "Remove last";
             this.buttonRemoveLastRentedCar.UseVisualStyleBackColor = true;
-            this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.buttonRemoveLastRentedCar_Click);
+            this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.RemoveLastRentedVehicle);
             // 
             // rentedCarsElementsPanel
             // 
@@ -331,6 +331,29 @@
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
             this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
             // 
+            // orderLogsToolStripMenuItem
+            // 
+            this.orderLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.orderLogsToolStripMenuItem.Name = "orderLogsToolStripMenuItem";
+            this.orderLogsToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
+            this.orderLogsToolStripMenuItem.Text = "Order logs";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // labelProgramDate
             // 
             this.labelProgramDate.AutoSize = true;
@@ -362,29 +385,6 @@
             // 
             this.timerClearErrors.Interval = 5000;
             this.timerClearErrors.Tick += new System.EventHandler(this.timerClearErrors_Tick);
-            // 
-            // orderLogsToolStripMenuItem
-            // 
-            this.orderLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.deleteToolStripMenuItem});
-            this.orderLogsToolStripMenuItem.Name = "orderLogsToolStripMenuItem";
-            this.orderLogsToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
-            this.orderLogsToolStripMenuItem.Text = "Order logs";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

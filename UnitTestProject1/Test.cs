@@ -16,37 +16,40 @@ namespace UnitTestProject1
         #region Available vehicles sorting
 
         [TestMethod]
-        public void TestTest()
-        {
-            int a = 10;
-            Assert.AreEqual(a, 10);
-            Assert.AreEqual(10, a);
-        }
-
-        [TestMethod]
         public void SortByIDTest()
         {
             IDManagement.InitializeIndexes();
 
             List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
 
-            AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
-            AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
-            AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
+            // Create some vehicles
+            AvailableSedanUserControl availableSedan1     = new AvailableSedanUserControl("z", 50, 15);       //id = 0
+            AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50);     //id = 1
+            AvailableSedanUserControl availableSedan2     = new AvailableSedanUserControl("a", 25, 0);        //id = 2
 
-            vehicles.Add(availableSedan2); vehicles.Add(availableSedan1); vehicles.Add(availableMinivan1); //added id 2, 0 then 1
 
+            // Add them to a list
+            vehicles.Add(availableSedan2);
+            vehicles.Add(availableSedan1);
+            vehicles.Add(availableMinivan1);
+
+
+            // Perform sorting by ID
             AvailableCarsSorter sorter = new AvailableCarsSorter();
             vehicles = sorter.SortListByID(vehicles);
 
-            short IDFromFirst = vehicles[0].GetVehicleID(); string nameFromFirst = vehicles[0].GetVehicleName();
-            short IDFromSecond = vehicles[1].GetVehicleID(); string nameFromSecond = vehicles[1].GetVehicleName();
-            short IDFromThird = vehicles[2].GetVehicleID(); string nameFromThird = vehicles[2].GetVehicleName();
 
-            Assert.AreEqual(IDFromFirst, 0);    Assert.AreEqual(nameFromFirst, "z");
-            Assert.AreEqual(IDFromSecond, 1);   Assert.AreEqual(nameFromSecond, "y");
-            Assert.AreEqual(IDFromThird, 2);    Assert.AreEqual(nameFromThird, "a");
+            // Check if the sorting is correct
+            short IDFromFirst = vehicles[0].GetVehicleID();
+            short IDFromSecond = vehicles[1].GetVehicleID();
+            short IDFromThird = vehicles[2].GetVehicleID();
 
+            Assert.AreEqual(IDFromFirst, 0);
+            Assert.AreEqual(IDFromSecond, 1);
+            Assert.AreEqual(IDFromThird, 2);
+
+
+            // Restore indexes
             IDManagement.InitializeIndexes();
         }
 

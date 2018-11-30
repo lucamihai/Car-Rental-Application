@@ -11,31 +11,53 @@ namespace Car_Rental_Application.Classes
         static bool[] availableIndexes = new bool[short.MaxValue];
         static bool[] rentedIndexes = new bool[short.MaxValue];
 
+        /// <summary>
+        /// Restores the indexes for available and rented vehicles
+        /// </summary>
         public static void InitializeIndexes()
         {
             for (int i = 0; i < IDManagement.availableIndexes.Length; i++)
                 IDManagement.availableIndexes[i] = true;
+
             for (int i = 0; i < IDManagement.rentedIndexes.Length; i++)
                 IDManagement.rentedIndexes[i] = true;
         }
 
         #region Available ID selection
 
+        /// <summary>
+        /// Returns the lowest available ID for available vehicles.
+        /// </summary>
+        /// <returns></returns>
         public static int GetLowestAvailableID()
         {
             for (int i = 0; i < short.MaxValue; i++)
                 if (availableIndexes[i])
-                    return i;     
+                    return i;
+
+
+            // If this is reached, there's no available ID
             throw (new Exception());
         }
-        public static void MarkIDAsUnavailable(short id) { availableIndexes[id] = false; }
 
-        public static void MarkIDAsAvailable(short id) { availableIndexes[id] = true; }
+        public static void MarkIDAsUnavailable(short id)
+        {
+            availableIndexes[id] = false;
+        }
+
+        public static void MarkIDAsAvailable(short id)
+        {
+            availableIndexes[id] = true;
+        }
 
         #endregion
 
         #region Rent ID selection
 
+        /// <summary>
+        /// Returns the lowest available ID for rented vehicles.
+        /// </summary>
+        /// <returns></returns>
         public static int GetLowestAvailableRentedID()
         {
             for (int i = 0; i < short.MaxValue; i++)
@@ -43,9 +65,16 @@ namespace Car_Rental_Application.Classes
                     return i;
             throw (new Exception());
         }
-        public static void MarkRentIDAsUnavailable(short id) { rentedIndexes[id] = false; }
 
-        public static void MarkRentIDAsAvailable(short id) { rentedIndexes[id] = true; }
+        public static void MarkRentIDAsUnavailable(short id)
+        {
+            rentedIndexes[id] = false;
+        }
+
+        public static void MarkRentIDAsAvailable(short id)
+        {
+            rentedIndexes[id] = true;
+        }
 
         #endregion
 

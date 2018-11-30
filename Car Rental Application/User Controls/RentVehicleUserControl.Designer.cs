@@ -133,7 +133,6 @@
             this.Controls.Add(this.buttonRent);
             this.Name = "RentVehicleUserControl";
             this.Size = new System.Drawing.Size(325, 250);
-            this.Load += new System.EventHandler(this.RentVehicleUserControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

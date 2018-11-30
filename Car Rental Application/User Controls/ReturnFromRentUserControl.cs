@@ -21,29 +21,31 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
         }
+
         public ReturnFromRentUserControl(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-
         }
 
         public void SelectVehicleToBeReturned(VehicleUserControl vehicle)
         {
-            if(vehicle.GetType() == (new RentedSedanUserControl()).GetType())
+            if ( vehicle.GetType() == ( new RentedSedanUserControl() ).GetType() )
             {
                 rentedVehicle = vehicle;
-                vehicleToBeReturned = new AvailableSedanUserControl((RentedSedanUserControl)vehicle);
+                vehicleToBeReturned = new AvailableSedanUserControl( (RentedSedanUserControl)vehicle );
                 fuelPercentageNumericUpDown.Value = vehicleToBeReturned.GetFuelPercentage();
                 damagePercentageNumericUpDown.Value = vehicleToBeReturned.GetDamagePercentage();
             }
-            if (vehicle.GetType() == (new RentedMinivanUserControl()).GetType())
+
+            if ( vehicle.GetType() == ( new RentedMinivanUserControl() ).GetType() )
             {
                 rentedVehicle = vehicle;
-                vehicleToBeReturned = new AvailableMinivanUserControl((RentedMinivanUserControl)vehicle);
+                vehicleToBeReturned = new AvailableMinivanUserControl( (RentedMinivanUserControl)vehicle );
                 fuelPercentageNumericUpDown.Value = vehicleToBeReturned.GetFuelPercentage();
                 damagePercentageNumericUpDown.Value = vehicleToBeReturned.GetDamagePercentage();
             }
+
             returnDate = returnDateDateTimePicker.Value;
         }
 
@@ -51,26 +53,44 @@ namespace Car_Rental_Application.User_Controls
 
         private void fuelPercentageNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (fuelPercentageNumericUpDown.Value > 100) fuelPercentageNumericUpDown.Value = 100;
-            if (fuelPercentageNumericUpDown.Value < 0) fuelPercentageNumericUpDown.Value = 0;
+            if (fuelPercentageNumericUpDown.Value > 100)
+            {
+                fuelPercentageNumericUpDown.Value = 100;
+            }
+
+            if (fuelPercentageNumericUpDown.Value < 0)
+            {
+                fuelPercentageNumericUpDown.Value = 0;
+            }
         }
 
         private void damagePercentageNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (damagePercentageNumericUpDown.Value > 100) damagePercentageNumericUpDown.Value = 100;
-            if (damagePercentageNumericUpDown.Value < 0) damagePercentageNumericUpDown.Value = 0;
+            if (damagePercentageNumericUpDown.Value > 100)
+            {
+                damagePercentageNumericUpDown.Value = 100;
+            }
 
+            if (damagePercentageNumericUpDown.Value < 0)
+            {
+                damagePercentageNumericUpDown.Value = 0;
+            }
         }
+
         #endregion
 
         private void buttonReturn_Click(object sender, EventArgs e)
         {
-            string order = "";
-            order += rentedVehicle.GetDetails();
-
             vehicleToBeReturned.SetVehicleFuelPercentage((short)fuelPercentageNumericUpDown.Value);
             vehicleToBeReturned.SetVehicleDamagePercentage((short)damagePercentageNumericUpDown.Value);
-            order += ". Was returned with " + vehicleToBeReturned.GetFuelPercentage() + "% fuel and " + vehicleToBeReturned.GetDamagePercentage() + "% damage, on "+returnDate.ToShortDateString();
+
+            string order = "";
+            order += rentedVehicle.GetDetails();
+            order += ". Was returned with ";
+            order += vehicleToBeReturned.GetFuelPercentage() + "% fuel and ";
+            order += vehicleToBeReturned.GetDamagePercentage() + "% damage, on";
+            order += returnDate.ToShortDateString();
+
             mainWindow.SetLogID(mainWindow.GetLastLog() + 1);
             mainWindow.WriteLog(order);
 
@@ -88,28 +108,34 @@ namespace Car_Rental_Application.User_Controls
 
         private void returnDateDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            if (rentedVehicle.GetType() == (new RentedSedanUserControl()).GetType())
+            if ( rentedVehicle.GetType() == ( new RentedSedanUserControl() ).GetType() )
             {
-                int difference = (returnDateDateTimePicker.Value - ((RentedSedanUserControl)rentedVehicle).GetReturnDate()).Days;
+                int difference = (returnDateDateTimePicker.Value - ( (RentedSedanUserControl)rentedVehicle).GetReturnDate() ).Days;
                 labelCheckReturnDate.Text = difference + " days";
                 if (difference > 0)
                     labelCheckReturnDate.Text = "The vehicle has been returned " + difference + " days later";
+
                 if (difference < 0)
                     labelCheckReturnDate.Text = "The vehicle has been returned " + (-difference) + " days earlier";
+
                 if (difference == 0)
                     labelCheckReturnDate.Text = "The vehicle has been returned just on time";
+
                 returnDate = returnDateDateTimePicker.Value;
             }
-            if (rentedVehicle.GetType() == (new RentedMinivanUserControl()).GetType())
+            if ( rentedVehicle.GetType() == ( new RentedMinivanUserControl() ).GetType() )
             {
-                int difference = (returnDateDateTimePicker.Value - ((RentedMinivanUserControl)rentedVehicle).GetReturnDate()).Days;
+                int difference = (returnDateDateTimePicker.Value - ( (RentedMinivanUserControl)rentedVehicle).GetReturnDate() ).Days;
                 labelCheckReturnDate.Text = difference + " days";
                 if (difference > 0)
                     labelCheckReturnDate.Text = "The vehicle has been returned " + difference + " days later";
+
                 if (difference < 0)
                     labelCheckReturnDate.Text = "The vehicle has been returned " + (-difference) + " days earlier";
+
                 if (difference == 0)
                     labelCheckReturnDate.Text = "The vehicle has been returned just on time";
+
                 returnDate = returnDateDateTimePicker.Value;
             }
         }
