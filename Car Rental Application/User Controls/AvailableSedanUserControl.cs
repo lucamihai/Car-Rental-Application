@@ -70,8 +70,11 @@ namespace Car_Rental_Application.User_Controls
         public override string GetDetails()
         {
             string details = "";
-            details += "Sedan " + GetVehicleName() + ", registered with the id " + GetVehicleID().ToString() + ", has " + GetFuelPercentage().ToString() + " % fuel"
-                + "and is " + GetDamagePercentage().ToString() + " % damaged";
+            details += "Sedan " + GetVehicleName() + ", ";
+            details += "registered with the id " + GetVehicleID().ToString() + ", ";
+            details += "has " + GetFuelPercentage().ToString() + " % fuel and ";
+            details += "and is " + GetDamagePercentage().ToString() + " % damaged";
+
             return details;
         }
 

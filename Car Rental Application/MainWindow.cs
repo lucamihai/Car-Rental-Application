@@ -1,5 +1,6 @@
 ﻿using Car_Rental_Application.Classes;
 using Car_Rental_Application.User_Controls;
+using Car_Rental_Application.Forms;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+
 
 namespace Car_Rental_Application
 {
@@ -72,11 +74,6 @@ namespace Car_Rental_Application
             sortRentedSelectionComboBox.SelectedIndex = sortRentedSelectionComboBox.FindStringExact("By ID");
         }
 
-        public void AddToAvailableCarsList(VehicleUserControl vehicle)
-        {
-            availableVehicles.Add(vehicle);
-        }
-
         public void AddToRentedCarsList(VehicleUserControl vehicle)
         {
             rentedVehicles.Add(vehicle);
@@ -100,7 +97,7 @@ namespace Car_Rental_Application
         public void AddAvailableVehicle(VehicleUserControl vehicle)
         {
             availableCarsElementsPanel.VerticalScroll.Value = 0;
-            AddToAvailableCarsList(vehicle);
+            availableVehicles.Add(vehicle);
             PopulateAvailableVehiclesPanel();
         }
 
@@ -113,8 +110,14 @@ namespace Car_Rental_Application
 
         private void buttonAddVehicle_Click(object sender, EventArgs e)
         {
-            panelAddVehicles.Show();
-            addVehicleUserControl.Show();
+            FormAddVehicle formAddVehicle = new FormAddVehicle();
+
+            var result = formAddVehicle.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                VehicleUserControl vehicleToBeAdded = formAddVehicle.Vehicle;
+                AddAvailableVehicle(vehicleToBeAdded);
+            }
         }
 
         public void RentMenu()
@@ -840,5 +843,6 @@ namespace Car_Rental_Application
         }
 
         #endregion
+
     }
 }
