@@ -64,37 +64,6 @@ namespace Car_Rental_Application.User_Controls
             
         }
 
-        public override void configureRentedVehicle(string config)
-        {
-            //rentConfiguration = intID + "#" + vehicleName + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;
-            string[] configurations = new string[8];
-            configurations = config.Split('#');
-            foreach (string a in configurations) Console.WriteLine(a);
-
-            int IDInt = Convert.ToInt32(configurations[0]);
-            ID = (short)IDInt;
-            IDManagement.MarkIDAsUnavailable(ID);
-
-            string name = configurations[1];
-            VehicleName = name;
-
-            int damageInt = Convert.ToInt32(configurations[2]);
-            DamagePercentage = (short)damageInt;
-
-            int fuelInt = Convert.ToInt32(configurations[3]);
-            FuelPercentage = (short)fuelInt;
-
-            int rentIDInt = Convert.ToInt32(configurations[4]);
-            SetRentID((short)rentIDInt);
-
-            string ownerName = configurations[5]; string ownerPhone = configurations[6];
-            Customer newOwner = new Customer(ownerName, ownerPhone);
-            SetOwner(newOwner);
-
-            string returnDateString = configurations[7];
-            SetReturnDate(DateTime.Parse(returnDateString));
-        }
-
         public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
         {
             ID = id;

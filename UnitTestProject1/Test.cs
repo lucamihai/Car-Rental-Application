@@ -40,9 +40,9 @@ namespace UnitTestProject1
 
 
             // Check if the sorting is correct
-            short IDFromFirst = vehicles[0].GetVehicleID();
-            short IDFromSecond = vehicles[1].GetVehicleID();
-            short IDFromThird = vehicles[2].GetVehicleID();
+            short IDFromFirst = vehicles[0].ID;
+            short IDFromSecond = vehicles[1].ID;
+            short IDFromThird = vehicles[2].ID;
 
             Assert.AreEqual(IDFromFirst, 0);
             Assert.AreEqual(IDFromSecond, 1);
@@ -69,9 +69,9 @@ namespace UnitTestProject1
             AvailableCarsSorter sorter = new AvailableCarsSorter();
             vehicles = sorter.SortListByName(vehicles);
 
-            string nameFromFirst = vehicles[0].GetVehicleName();
-            string nameFromSecond = vehicles[1].GetVehicleName();
-            string nameFromThird = vehicles[2].GetVehicleName();
+            string nameFromFirst = vehicles[0].VehicleName;
+            string nameFromSecond = vehicles[1].VehicleName;
+            string nameFromThird = vehicles[2].VehicleName;
 
             Assert.AreEqual(nameFromFirst, "a"); Assert.AreEqual(nameFromSecond, "y"); Assert.AreEqual(nameFromThird, "z");
 
@@ -94,9 +94,9 @@ namespace UnitTestProject1
             AvailableCarsSorter sorter = new AvailableCarsSorter();
             vehicles = sorter.SortListByFuelPercent(vehicles);
 
-            short fuelFromFirst = vehicles[0].GetFuelPercentage();
-            short fuelFromSecond = vehicles[1].GetFuelPercentage();
-            short fuelFromThird = vehicles[2].GetFuelPercentage();
+            short fuelFromFirst = vehicles[0].FuelPercentage;
+            short fuelFromSecond = vehicles[1].FuelPercentage;
+            short fuelFromThird = vehicles[2].FuelPercentage;
 
             Assert.AreEqual(fuelFromFirst, 25); Assert.AreEqual(fuelFromSecond, 50); Assert.AreEqual(fuelFromThird, 50);
 
@@ -120,9 +120,9 @@ namespace UnitTestProject1
             AvailableCarsSorter sorter = new AvailableCarsSorter();
             vehicles = sorter.SortListByDamagePercent(vehicles);
 
-            short damageFromFirst = vehicles[0].GetDamagePercentage();
-            short damageFromSecond = vehicles[1].GetDamagePercentage();
-            short damageFromThird = vehicles[2].GetDamagePercentage();
+            short damageFromFirst = vehicles[0].DamagePercentage;
+            short damageFromSecond = vehicles[1].DamagePercentage;
+            short damageFromThird = vehicles[2].DamagePercentage;
 
             Assert.AreEqual(damageFromFirst, 0); Assert.AreEqual(damageFromSecond, 15); Assert.AreEqual(damageFromThird, 50);
 
@@ -160,13 +160,23 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByID(vehicles);
 
-            short IDFromFirst = vehicles[0].GetRentID(); string nameFromFirst = vehicles[0].GetVehicleName();
-            short IDFromSecond = vehicles[1].GetRentID(); string nameFromSecond = vehicles[1].GetVehicleName();
-            short IDFromThird = vehicles[2].GetRentID(); string nameFromThird = vehicles[2].GetVehicleName();
+            short IDFromFirst = vehicles[0].GetRentID();
+            string nameFromFirst = vehicles[0].VehicleName;
 
-            Assert.AreEqual(IDFromFirst, 0); Assert.AreEqual(nameFromFirst, "z");
-            Assert.AreEqual(IDFromSecond, 1); Assert.AreEqual(nameFromSecond, "y");
-            Assert.AreEqual(IDFromThird, 2); Assert.AreEqual(nameFromThird, "a");
+            short IDFromSecond = vehicles[1].GetRentID();
+            string nameFromSecond = vehicles[1].VehicleName;
+
+            short IDFromThird = vehicles[2].GetRentID();
+            string nameFromThird = vehicles[2].VehicleName;
+
+            Assert.AreEqual(IDFromFirst, 0);
+            Assert.AreEqual(nameFromFirst, "z");
+
+            Assert.AreEqual(IDFromSecond, 1);
+            Assert.AreEqual(nameFromSecond, "y");
+
+            Assert.AreEqual(IDFromThird, 2);
+            Assert.AreEqual(nameFromThird, "a");
 
             IDManagement.InitializeIndexes();
         }
@@ -199,9 +209,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByName(vehicles);
 
-            string nameFromFirst = vehicles[0].GetVehicleName();
-            string nameFromSecond = vehicles[1].GetVehicleName();
-            string nameFromThird = vehicles[2].GetVehicleName();
+            string nameFromFirst = vehicles[0].VehicleName;
+            string nameFromSecond = vehicles[1].VehicleName;
+            string nameFromThird = vehicles[2].VehicleName;
 
             Assert.AreEqual(nameFromFirst, "a"); Assert.AreEqual(nameFromSecond, "y"); Assert.AreEqual(nameFromThird, "z");
 
@@ -236,9 +246,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByFuelPercent(vehicles);
 
-            short fuelFromFirst = vehicles[0].GetFuelPercentage();
-            short fuelFromSecond = vehicles[1].GetFuelPercentage();
-            short fuelFromThird = vehicles[2].GetFuelPercentage();
+            short fuelFromFirst = vehicles[0].FuelPercentage;
+            short fuelFromSecond = vehicles[1].FuelPercentage;
+            short fuelFromThird = vehicles[2].FuelPercentage;
 
             Assert.AreEqual(fuelFromFirst, 25); Assert.AreEqual(fuelFromSecond, 50); Assert.AreEqual(fuelFromThird, 50);
 
@@ -268,16 +278,20 @@ namespace UnitTestProject1
             RentedMinivanUserControl rentedMinivan1 = new RentedMinivanUserControl(availableMinivan1, owner2, returnDate2);
             RentedSedanUserControl rentedSedan2 = new RentedSedanUserControl(availableSedan2, owner3, returnDate3);
 
-            vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
+            vehicles.Add(rentedSedan2);
+            vehicles.Add(rentedSedan1);
+            vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByDamagePercent(vehicles);
 
-            short damageFromFirst = vehicles[0].GetDamagePercentage();
-            short damageFromSecond = vehicles[1].GetDamagePercentage();
-            short damageFromThird = vehicles[2].GetDamagePercentage();
+            short damageFromFirst = vehicles[0].DamagePercentage;
+            short damageFromSecond = vehicles[1].DamagePercentage;
+            short damageFromThird = vehicles[2].DamagePercentage;
 
-            Assert.AreEqual(damageFromFirst, 0); Assert.AreEqual(damageFromSecond, 15); Assert.AreEqual(damageFromThird, 50);
+            Assert.AreEqual(damageFromFirst, 0);
+            Assert.AreEqual(damageFromSecond, 15);
+            Assert.AreEqual(damageFromThird, 50);
 
             IDManagement.InitializeIndexes();
         }
@@ -379,7 +393,9 @@ namespace UnitTestProject1
             RentedMinivanUserControl rentedMinivan1 = new RentedMinivanUserControl(availableMinivan1, owner2, returnDate2);
             RentedSedanUserControl rentedSedan2 = new RentedSedanUserControl(availableSedan2, owner3, returnDate3);
 
-            vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
+            vehicles.Add(rentedSedan2);
+            vehicles.Add(rentedSedan1);
+            vehicles.Add(rentedMinivan1);
 
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByReturnDate(vehicles);
@@ -388,7 +404,9 @@ namespace UnitTestProject1
             string returnDateFromSecond = vehicles[1].GetReturnDate().ToShortDateString();
             string returnDateFromThird = vehicles[2].GetReturnDate().ToShortDateString();
 
-            Assert.AreEqual(returnDateFromFirst, "7/7/2009"); Assert.AreEqual(returnDateFromSecond, "1/1/2010"); Assert.AreEqual(returnDateFromThird, "5/5/2015");
+            Assert.AreEqual(returnDate3, DateTime.Parse(returnDateFromFirst));
+            Assert.AreEqual(returnDate1, DateTime.Parse(returnDateFromSecond));
+            Assert.AreEqual(returnDate2, DateTime.Parse(returnDateFromThird));
 
             IDManagement.InitializeIndexes();
         }

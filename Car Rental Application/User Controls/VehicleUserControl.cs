@@ -165,10 +165,7 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
-        #region Get and Set
-
-
-        #region virtual methods to be redefined in the rented cars classes
+        #region Methods for rented vehicles
 
         public virtual void SetRentID(short id)
         {
@@ -201,6 +198,5 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
-        #endregion
     }
 }

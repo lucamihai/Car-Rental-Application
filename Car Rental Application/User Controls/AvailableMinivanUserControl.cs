@@ -147,7 +147,7 @@ namespace Car_Rental_Application.User_Controls
             }
             set
             {
-                damagePercentValueLabel.Text = value.ToString();
+                fuelPercentValueLabel.Text = value.ToString();
             }
         }
 
