@@ -166,8 +166,7 @@ namespace Car_Rental_Application.User_Controls
 
         private void buttonRent_Click(object sender, EventArgs e)
         {
-            rentVehicleUserControl.SelectVehicleToBeRent(this);
-            mainWindow.RentMenu();
+            mainWindow.RentForm(this);
         }
     }
 }

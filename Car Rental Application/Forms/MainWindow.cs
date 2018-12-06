@@ -22,7 +22,6 @@ namespace Car_Rental_Application
         AvailableCarsSorter availableCarsSorter;
         RentedCarsSorter rentedCarsSorter;
 
-        RentVehicleUserControl rentVehicleUserControl;
         ReturnFromRentUserControl returnFromRentUserControl;
 
         DateTime programTime;
@@ -50,10 +49,8 @@ namespace Car_Rental_Application
             saveToDatabaseToolStripMenuItem.Available = false;
             loadFromDatabaseToolStripMenuItem.Available = false;
 
-            rentVehicleUserControl = new RentVehicleUserControl(this);
             returnFromRentUserControl = new ReturnFromRentUserControl(this);
 
-            panelAddVehicles.Controls.Add(rentVehicleUserControl);
             panelAddVehicles.Controls.Add(returnFromRentUserControl);
 
             InitializeComboBoxSelections();
@@ -115,18 +112,22 @@ namespace Car_Rental_Application
             }
         }
 
-        public void RentMenu()
+        public void RentForm(VehicleUserControl vehicle)
         {
-            panelAddVehicles.Show();
-            rentVehicleUserControl.Show();
-            returnFromRentUserControl.Hide();
+            FormRentVehicle formRentVehicle = new FormRentVehicle(vehicle);
+
+            var result = formRentVehicle.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                VehicleUserControl vehicleToBeRented = formRentVehicle.VehicleToBeRented;
+                RentVehicle(vehicleToBeRented);
+            }
         }
 
         public void ReturnMenu()
         {
             panelAddVehicles.Show();
             returnFromRentUserControl.Show();
-            rentVehicleUserControl.Hide();
         }
 
         #region Error timer
@@ -566,7 +567,6 @@ namespace Car_Rental_Application
             foreach (VehicleUserControl vehicle in availableVehicles)
             {
                 vehicle.LinkToMainWindow(this);
-                vehicle.LinkToRentMenu(rentVehicleUserControl);
                 availableCarsElementsPanel.Controls.Add(vehicle);
                 vehicle.Location = new Point(0, counter++ * 100);
             }
