@@ -26,7 +26,7 @@ namespace Car_Rental_Application
 
         DateTime programTime;
 
-        LogMaganer logMaganer;
+        ReturnedVehiclesLogManager returnedVehiclesLogManager;
 
         public List<int> indexesOfSelectedAvailableCars = new List<int>();
         public List<int> indexesOfSelectedRentedCars = new List<int>();
@@ -37,8 +37,8 @@ namespace Car_Rental_Application
 
             errorLabel.Text = "";
 
-            logMaganer = new LogMaganer();
-            logMaganer.SetPath("log.txt");
+            returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
+            returnedVehiclesLogManager.Path = "log.txt";
 
             availableVehicles = new List<VehicleUserControl>();
             rentedVehicles = new List<VehicleUserControl>();
@@ -187,6 +187,17 @@ namespace Car_Rental_Application
                 }
                 timerClearErrors.Start();
             }
+        }
+
+        public String SQLConnectionString()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "tcp:carrentals.database.windows.net,1433";
+            builder.UserID = "mihai";
+            builder.Password = "Luca123456789";
+            builder.InitialCatalog = "carrentals";
+
+            return builder.ConnectionString;
         }
 
         void ClearAvailableVehiclesDatabase()
@@ -366,16 +377,7 @@ namespace Car_Rental_Application
             }
         }
 
-        public String SQLConnectionString()
-        {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "tcp:carrentals.database.windows.net,1433";
-            builder.UserID = "mihai";
-            builder.Password = "Luca123456789";
-            builder.InitialCatalog = "carrentals";
-
-            return builder.ConnectionString;
-        }
+        
 
         #endregion
 
@@ -803,30 +805,12 @@ namespace Car_Rental_Application
 
         public void WriteLog(string data)
         {
-            logMaganer.WriteToLog(data);
-        }
-
-        public void SetLogID(int id)
-        {
-            logMaganer.SetCounter(id);
-        }
-
-        public int GetLastLog()
-        {
-            if ( !File.Exists( logMaganer.GetPath() ) || new FileInfo( logMaganer.GetPath() ).Length == 0 ) 
-            {
-                return 0;
-            }
-
-            string last = File.ReadLines(logMaganer.GetPath()).Last();
-            string counterString = last.Split(' ')[1];
-
-            return Convert.ToInt32(counterString);
+            returnedVehiclesLogManager.WriteToLog(data);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ( !File.Exists(logMaganer.GetPath() ) || new FileInfo( logMaganer.GetPath() ).Length == 0)
+            if ( !File.Exists(returnedVehiclesLogManager.Path ) || new FileInfo( returnedVehiclesLogManager.Path ).Length == 0)
             {
                 errorLabel.Text = "There is no log created";
                 timerClearErrors.Start();
@@ -835,21 +819,23 @@ namespace Car_Rental_Application
             }
 
             errorLabel.Text = "";
-            Process.Start( logMaganer.GetPath() );
+            Process.Start( returnedVehiclesLogManager.Path );
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ( !File.Exists(logMaganer.GetPath() ) || new FileInfo( logMaganer.GetPath() ).Length == 0)
+            if ( !File.Exists(returnedVehiclesLogManager.Path ) || new FileInfo( returnedVehiclesLogManager.Path ).Length == 0)
             {
                 return;
             }
 
-            logMaganer.ReinitiateCounter();          
+            string oldLogManagerPath = returnedVehiclesLogManager.Path;
+            returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
+            returnedVehiclesLogManager.Path = oldLogManagerPath;
             
-            if ( File.Exists( logMaganer.GetPath() ))
+            if ( File.Exists( returnedVehiclesLogManager.Path ))
             {
-                File.Delete(logMaganer.GetPath());
+                File.Delete(returnedVehiclesLogManager.Path);
             }
         }
 

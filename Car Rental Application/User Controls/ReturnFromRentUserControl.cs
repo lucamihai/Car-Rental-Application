@@ -88,10 +88,9 @@ namespace Car_Rental_Application.User_Controls
             order += rentedVehicle.GetDetails();
             order += ". Was returned with ";
             order += vehicleToBeReturned.GetFuelPercentage() + "% fuel and ";
-            order += vehicleToBeReturned.GetDamagePercentage() + "% damage, on";
+            order += vehicleToBeReturned.GetDamagePercentage() + "% damage, on ";
             order += returnDate.ToShortDateString();
 
-            mainWindow.SetLogID(mainWindow.GetLastLog() + 1);
             mainWindow.WriteLog(order);
 
             mainWindow.ReturnVehicleFromRent(vehicleToBeReturned);
