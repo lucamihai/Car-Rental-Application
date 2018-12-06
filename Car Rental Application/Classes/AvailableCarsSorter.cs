@@ -15,12 +15,12 @@ namespace Car_Rental_Application.Classes
 
         public List<VehicleUserControl> SortListByID(List <VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetVehicleID() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.ID ).ToList();
         }
 
         public List<VehicleUserControl> SortListByName(List <VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetVehicleName() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.VehicleName ).ToList();
         }
 
         public List<VehicleUserControl> SortListByType(List <VehicleUserControl> vehicles)
@@ -48,12 +48,12 @@ namespace Car_Rental_Application.Classes
 
         public List<VehicleUserControl> SortListByFuelPercent(List <VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetFuelPercentage() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.FuelPercentage ).ToList();
         }
 
         public List<VehicleUserControl> SortListByDamagePercent(List <VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetDamagePercentage() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.DamagePercentage ).ToList();
         }
 
         #endregion

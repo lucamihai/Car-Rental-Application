@@ -18,10 +18,6 @@ namespace Car_Rental_Application.User_Controls
         protected RentVehicleUserControl rentVehicleUserControl;
         protected ReturnFromRentUserControl returnFromRentUserControl;
         protected MainWindow mainWindow;
-        protected string vehicleName;
-        protected short damagePercent;
-        protected short fuelPercentage;
-        protected short id;
         protected short specialRentID;
 
         public VehicleUserControl()
@@ -29,18 +25,40 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
         }
 
-        public virtual string GetDetails()
+        public virtual string Details
         {
-            return "";
+            get;
         }
 
-        public virtual bool IsSelected()
+        public virtual bool Selected
         {
-            return false;
+            get; set;
         }
 
-        public virtual void SelectVehicle() { }
-        public virtual void DeselectVehicle() { }
+        public virtual string VehicleName
+        {
+            get;
+            protected set;
+        }
+
+        public virtual short DamagePercentage
+        {
+            get;
+            set;
+        }
+
+        public virtual short FuelPercentage
+        {
+            get;
+            set;
+        }
+
+        public virtual short ID
+        {
+            get;
+            protected set;
+        }
+
         public virtual void configureRentedVehicle(string config) { }
 
         #region Methods from IXmlSerializable
@@ -53,10 +71,10 @@ namespace Car_Rental_Application.User_Controls
         public void WriteXml(System.Xml.XmlWriter xmlWriter)
         {
             xmlWriter.WriteAttributeString("Name", Name);
-            xmlWriter.WriteElementString("id", id.ToString() );
-            xmlWriter.WriteElementString("vehicleName", vehicleName);
-            xmlWriter.WriteElementString("damagePercent", damagePercent.ToString() );
-            xmlWriter.WriteElementString("fuelPercentage", fuelPercentage.ToString() );
+            xmlWriter.WriteElementString("id", ID.ToString() );
+            xmlWriter.WriteElementString("vehicleName", VehicleName);
+            xmlWriter.WriteElementString("damagePercent", DamagePercentage.ToString() );
+            xmlWriter.WriteElementString("fuelPercentage", FuelPercentage.ToString() );
 
             short rentID = GetRentID();
             if (rentID > -1)
@@ -85,14 +103,14 @@ namespace Car_Rental_Application.User_Controls
                 if (Name == "AvailableSedanUserControl" || Name == "AvailableMinivanUserControl")
                 {
                     int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
-                    id = (short)intID;
-                    vehicleName = xmlReader.ReadElementString("vehicleName");
+                    ID = (short)intID;
+                    VehicleName = xmlReader.ReadElementString("vehicleName");
 
                     int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercent"));
-                    damagePercent = (short)intDamage;
+                    DamagePercentage = (short)intDamage;
 
                     int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
-                    fuelPercentage = (short)intFuel;
+                    FuelPercentage = (short)intFuel;
 
                     xmlReader.ReadEndElement();
                 }
@@ -149,24 +167,38 @@ namespace Car_Rental_Application.User_Controls
 
         #region Get and Set
 
-        public string GetVehicleName() { return vehicleName; }
-        public short GetFuelPercentage() { return fuelPercentage; }
-        public short GetDamagePercentage() { return damagePercent; }
-        public short GetVehicleID() { return id; }
-
-        #region virtual methods to be redefined in the available cars classes in order to set the label values as well, else just set members
-        public virtual void SetVehicleFuelPercentage(short fuelPercentage) { this.fuelPercentage = fuelPercentage; }
-        public virtual void SetVehicleDamagePercentage(short damagePercent) { this.damagePercent = damagePercent; }
-        #endregion
 
         #region virtual methods to be redefined in the rented cars classes
-        public virtual void SetRentID(short id) { specialRentID = id; }
-        public virtual short GetSpecialRentID() { return specialRentID; }
+
+        public virtual void SetRentID(short id)
+        {
+            specialRentID = id;
+        }
+
+        public virtual short GetSpecialRentID()
+        {
+            return specialRentID;
+        }
+
         public virtual void SetOwner(Customer owner) { }
+
         public virtual void SetReturnDate(DateTime returnDate) { }
-        public virtual short GetRentID() { return -1; }
-        public virtual Customer GetOwner(){ return new Customer("-", ""); }
-        public virtual DateTime GetReturnDate() { return new DateTime(1, 1, 1); }
+
+        public virtual short GetRentID()
+        {
+            return -1;
+        }
+
+        public virtual Customer GetOwner()
+        {
+            return new Customer("-", "-");
+        }
+
+        public virtual DateTime GetReturnDate()
+        {
+            return new DateTime(1, 1, 1);
+        }
+
         #endregion
 
         #endregion

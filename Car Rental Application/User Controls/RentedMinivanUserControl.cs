@@ -24,10 +24,10 @@ namespace Car_Rental_Application.User_Controls
         public RentedMinivanUserControl(VehicleUserControl minivan)
         {
             InitializeComponent();
-            SetID(id = minivan.GetVehicleID());
-            SetVehicleName(minivan.GetVehicleName());
-            SetVehicleFuelPercentage(minivan.GetFuelPercentage());
-            SetVehicleDamagePercentage(minivan.GetDamagePercentage());
+            ID = minivan.ID;
+            VehicleName = minivan.VehicleName;
+            FuelPercentage = minivan.FuelPercentage;
+            DamagePercentage = (minivan.DamagePercentage);
             SetRentID(minivan.GetSpecialRentID());
             SetOwner(minivan.GetOwner());
             SetReturnDate(minivan.GetReturnDate());
@@ -37,14 +37,14 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
             SetRentID((short)IDManagement.GetLowestAvailableRentedID());
-            SetID(availableVehicle.GetVehicleID());
+            ID = availableVehicle.ID;
             IDManagement.MarkRentIDAsUnavailable(rentID);
-            string availableVehicleName = availableVehicle.GetVehicleName();
-            short availableVehicleFuelPercentage = availableVehicle.GetFuelPercentage();
-            short avaiableVehicleDamagePercentage = availableVehicle.GetDamagePercentage();
-            SetVehicleName(availableVehicleName);
-            SetVehicleFuelPercentage(availableVehicleFuelPercentage);
-            SetVehicleDamagePercentage(avaiableVehicleDamagePercentage);
+            string availableVehicleName = availableVehicle.VehicleName;
+            short availableVehicleFuelPercentage = availableVehicle.FuelPercentage;
+            short avaiableVehicleDamagePercentage = availableVehicle.DamagePercentage;
+            VehicleName = availableVehicleName;
+            FuelPercentage = availableVehicleFuelPercentage;
+            DamagePercentage = avaiableVehicleDamagePercentage;
             this.owner = owner;
             ownerNameValueLabel.Text = owner.GetName();
             ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
@@ -52,40 +52,39 @@ namespace Car_Rental_Application.User_Controls
             returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
 
-        public override string GetDetails()
+        public override string Details
         {
-            string details = "";
-            details += "Minivan, id " + GetVehicleID() + ", has " + GetFuelPercentage() + "% fuel, is " + GetDamagePercentage() + "% damaged, owned by: "
-                + GetOwner().GetName() + ", phone number: " + GetOwner().GetPhoneNumber() + ", return date: " + GetReturnDate().ToShortDateString();
-            return details; ;
+            get
+            {
+                string details = "";
+                details += "Minivan, id " + ID + ", has " + FuelPercentage + "% fuel, is " + DamagePercentage + "% damaged, owned by: "
+                    + GetOwner().GetName() + ", phone number: " + GetOwner().GetPhoneNumber() + ", return date: " + GetReturnDate().ToShortDateString();
+                return details;
+            }
+            
         }
 
         public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
         {
-            SetID(id);
-            SetVehicleName(name);
-            SetVehicleFuelPercentage(fuel);
-            SetVehicleDamagePercentage(damage);
+            ID = id;
+            VehicleName = name;
+            FuelPercentage = fuel;
+            DamagePercentage = damage;
             SetRentID(rentID);
             SetOwner(owner);
             SetReturnDate(DateTime.Parse(returnDate));
         }
 
-        public override void SelectVehicle()
+        public override bool Selected
         {
-            selectCheckBox.Checked = true;
-        }
-
-        public override void DeselectVehicle()
-        {
-            selectCheckBox.Checked = false;
-        }
-
-        public override bool IsSelected()
-        {
-            if (selectCheckBox.Checked)
-                return true;
-            return false;
+            get
+            {
+                return selectCheckBox.Checked;
+            }
+            set
+            {
+                selectCheckBox.Checked = value;
+            }
         }
 
         public override void configureRentedVehicle(string config)
@@ -96,17 +95,17 @@ namespace Car_Rental_Application.User_Controls
             foreach (string a in configurations) Console.WriteLine(a);
 
             int IDInt = Convert.ToInt32(configurations[0]);
-            SetID((short)IDInt);
-            IDManagement.MarkIDAsUnavailable(id);
+            ID = (short)IDInt;
+            IDManagement.MarkIDAsUnavailable(ID);
 
             string name = configurations[1];
-            SetVehicleName(name);
+            VehicleName = name;
 
             int damageInt = Convert.ToInt32(configurations[2]);
-            SetVehicleDamagePercentage((short)damageInt);
+            DamagePercentage = (short)damageInt;
 
             int fuelInt = Convert.ToInt32(configurations[3]);
-            SetVehicleFuelPercentage((short)fuelInt);
+            FuelPercentage = (short)fuelInt;
 
             int rentIDInt = Convert.ToInt32(configurations[4]);
             SetRentID((short)rentIDInt);
@@ -121,18 +120,33 @@ namespace Car_Rental_Application.User_Controls
 
         #region Set and Get methods
 
-        public void SetID(short id) { this.id = id; IDManagement.MarkIDAsUnavailable(id); }
+        public override short ID
+        {
+            protected set
+            {
+                IDManagement.MarkIDAsUnavailable(value);
+            }
+        }
+
         public override void SetRentID(short id)
         {
             rentID = id;
             rentIDValueLabel.Text = id.ToString();
             IDManagement.MarkRentIDAsUnavailable(rentID);
         }
-        public void SetVehicleName(string vehicleName)
+
+        public override string VehicleName
         {
-            this.vehicleName = vehicleName;
-            vehicleNameValueLabel.Text = vehicleName;
+            get
+            {
+                return vehicleNameValueLabel.Text;
+            }
+            protected set
+            {
+                vehicleNameValueLabel.Text = value;
+            }
         }
+
         public override void SetOwner(Customer owner)
         {
             this.owner = owner;
@@ -155,10 +169,10 @@ namespace Car_Rental_Application.User_Controls
         {
             if (selectCheckBox.Checked == true)
             {
-                mainWindow.indexesOfSelectedRentedCars.Add(id);
+                mainWindow.indexesOfSelectedRentedCars.Add(ID);
                 return;
             }
-            mainWindow.indexesOfSelectedRentedCars.Remove(id);
+            mainWindow.indexesOfSelectedRentedCars.Remove(ID);
         }
 
         private void buttonReturn_Click(object sender, EventArgs e)

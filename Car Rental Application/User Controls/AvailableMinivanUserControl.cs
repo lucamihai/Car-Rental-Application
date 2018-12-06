@@ -24,21 +24,21 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
             short id = (short)IDManagement.GetLowestAvailableID();
 
-            SetVehicleID(id);
-            SetVehicleName(vehicleName);
-            SetVehicleFuelPercentage(100);
-            SetVehicleDamagePercentage(0);
+            ID = id;
+            VehicleName = vehicleName;
+            FuelPercentage = 100;
+            DamagePercentage = 0;
             IDManagement.MarkIDAsUnavailable(id);
         }
 
         public AvailableMinivanUserControl(VehicleUserControl sedan)
         {
             InitializeComponent();
-            SetVehicleID(sedan.GetVehicleID());
-            SetVehicleName(sedan.GetVehicleName());
-            SetVehicleFuelPercentage(sedan.GetFuelPercentage());
-            SetVehicleDamagePercentage(sedan.GetDamagePercentage());
-            IDManagement.MarkIDAsUnavailable(id);
+            ID = sedan.ID;
+            VehicleName = sedan.VehicleName;
+            FuelPercentage = sedan.FuelPercentage;
+            DamagePercentage = sedan.DamagePercentage;
+            IDManagement.MarkIDAsUnavailable(ID);
         }
 
         public AvailableMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
@@ -46,10 +46,10 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
             short id = (short)IDManagement.GetLowestAvailableID();
 
-            SetVehicleID(id);
-            SetVehicleName(vehicleName);
-            SetVehicleFuelPercentage(fuelPercent);
-            SetVehicleDamagePercentage(damagePercent);
+            ID = id;
+            VehicleName = vehicleName;
+            FuelPercentage = fuelPercent;
+            DamagePercentage = damagePercent;
             IDManagement.MarkIDAsUnavailable(id);
         }
 
@@ -57,72 +57,98 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
 
-            short returnedVehicleID = minivan.GetVehicleID();
-            string returnedVehicleName = minivan.GetVehicleName();
-            short returnedVehicleFuelPercentage = minivan.GetFuelPercentage();
-            short returnedVehicleDamagePercentage = minivan.GetDamagePercentage();
+            short returnedVehicleID = minivan.ID;
+            string returnedVehicleName = minivan.VehicleName;
+            short returnedVehicleFuelPercentage = minivan.FuelPercentage;
+            short returnedVehicleDamagePercentage = minivan.DamagePercentage;
 
-            SetVehicleID(returnedVehicleID);
-            SetVehicleName(returnedVehicleName);
-            SetVehicleFuelPercentage(returnedVehicleFuelPercentage);
-            SetVehicleDamagePercentage(returnedVehicleDamagePercentage);
+            ID = returnedVehicleID;
+            VehicleName = returnedVehicleName;
+            FuelPercentage = returnedVehicleFuelPercentage;
+            DamagePercentage = returnedVehicleDamagePercentage;
         }
 
-        public override string GetDetails()
+        public override string Details
         {
-            string details = "";
-            details += "Minivan " + GetVehicleName() + ", registered with the id " + GetVehicleID().ToString() + ", has " + GetFuelPercentage().ToString() + " % fuel"
-                + "and is " + GetDamagePercentage().ToString() + " % damaged";
-            return details;
+            get
+            {
+                string details = "";
+                details += "Minivan " + VehicleName + ", registered with the id " + ID.ToString() + ", has " + FuelPercentage.ToString() + " % fuel"
+                    + "and is " + DamagePercentage.ToString() + " % damaged";
+                return details;
+            }
+            
         }
 
         public void FromDatabase(short id, string name, short fuel, short damage)
         {
-            SetVehicleID(id);
-            SetVehicleName(name);
-            SetVehicleFuelPercentage(fuel);
-            SetVehicleDamagePercentage(damage);
+            ID = id;
+            VehicleName = name;
+            FuelPercentage = fuel;
+            DamagePercentage = damage;
         }
 
-        public override void SelectVehicle()
+        public override bool Selected
         {
-            selectCheckBox.Checked = true;
+            get
+            {
+                return selectCheckBox.Checked;
+            }
+            set
+            {
+                selectCheckBox.Checked = value;
+            }
         }
 
-        public override void DeselectVehicle()
+        #region Set methods
+
+        public override short ID
         {
-            selectCheckBox.Checked = false;
+            get
+            {
+                return Convert.ToInt16(IDValueLabel.Text);
+            }
+            protected set
+            {
+                IDValueLabel.Text = value.ToString();
+                IDManagement.MarkIDAsUnavailable(value);
+            }
         }
 
-        public override bool IsSelected()
+        public override string VehicleName
         {
-            if (selectCheckBox.Checked)
-                return true;
-            return false;
+            get
+            {
+                return vehicleNameValueLabel.Text;
+            }
+            protected set
+            {
+                vehicleNameValueLabel.Text = value;
+            }
         }
 
-        #region Set  methods
+        public override short FuelPercentage
+        {
+            get
+            {
+                return Convert.ToInt16(fuelPercentValueLabel.Text);
+            }
+            set
+            {
+                damagePercentValueLabel.Text = value.ToString();
+            }
+        }
 
-        public void SetVehicleID(short id)
+        public override short DamagePercentage
         {
-            this.id = id;
-            IDValueLabel.Text = id.ToString();
-            IDManagement.MarkIDAsUnavailable(id);
-        }
-        public void SetVehicleName(string vehicleName)
-        {
-            this.vehicleName = vehicleName;
-            vehicleNameValueLabel.Text = vehicleName;
-        }
-        public override void SetVehicleFuelPercentage(short fuelPercentage)
-        {
-            this.fuelPercentage = fuelPercentage;
-            fuelPercentValueLabel.Text = fuelPercentage.ToString();
-        }
-        public override void SetVehicleDamagePercentage(short damagePercent)
-        {
-            this.damagePercent = damagePercent;
-            damagePercentValueLabel.Text = damagePercent.ToString();
+            get
+            {
+                return Convert.ToInt16(damagePercentValueLabel.Text);
+            }
+            set
+            {
+                damagePercentValueLabel.Text = value.ToString();
+            }
         }
 
         #endregion

@@ -22,7 +22,6 @@ namespace Car_Rental_Application
         AvailableCarsSorter availableCarsSorter;
         RentedCarsSorter rentedCarsSorter;
 
-        AddVehicleUserControl addVehicleUserControl;
         RentVehicleUserControl rentVehicleUserControl;
         ReturnFromRentUserControl returnFromRentUserControl;
 
@@ -51,15 +50,11 @@ namespace Car_Rental_Application
             saveToDatabaseToolStripMenuItem.Available = false;
             loadFromDatabaseToolStripMenuItem.Available = false;
 
-            addVehicleUserControl = new AddVehicleUserControl(this);
             rentVehicleUserControl = new RentVehicleUserControl(this);
             returnFromRentUserControl = new ReturnFromRentUserControl(this);
 
-            panelAddVehicles.Controls.Add(addVehicleUserControl);
             panelAddVehicles.Controls.Add(rentVehicleUserControl);
             panelAddVehicles.Controls.Add(returnFromRentUserControl);
-
-            addVehicleUserControl.Hide();
 
             InitializeComboBoxSelections();
 
@@ -125,7 +120,6 @@ namespace Car_Rental_Application
             panelAddVehicles.Show();
             rentVehicleUserControl.Show();
             returnFromRentUserControl.Hide();
-            addVehicleUserControl.Hide();
         }
 
         public void ReturnMenu()
@@ -133,7 +127,6 @@ namespace Car_Rental_Application
             panelAddVehicles.Show();
             returnFromRentUserControl.Show();
             rentVehicleUserControl.Hide();
-            addVehicleUserControl.Hide();
         }
 
         #region Error timer
@@ -239,11 +232,11 @@ namespace Car_Rental_Application
             sqlConnection.Open();
 
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", vehicle.GetVehicleID());
-            myCommand.Parameters.AddWithValue("@name", vehicle.GetVehicleName());
+            myCommand.Parameters.AddWithValue("@id", vehicle.ID);
+            myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
             myCommand.Parameters.AddWithValue("@type", vehicleType);
-            myCommand.Parameters.AddWithValue("@fuel", vehicle.GetFuelPercentage());
-            myCommand.Parameters.AddWithValue("@damage", vehicle.GetDamagePercentage());
+            myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
+            myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
             myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
@@ -264,11 +257,11 @@ namespace Car_Rental_Application
             sqlConnection.Open();
 
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", vehicle.GetVehicleID());
-            myCommand.Parameters.AddWithValue("@name", vehicle.GetVehicleName());
+            myCommand.Parameters.AddWithValue("@id", vehicle.ID);
+            myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
             myCommand.Parameters.AddWithValue("@type", vehicleType);
-            myCommand.Parameters.AddWithValue("@fuel", vehicle.GetFuelPercentage());
-            myCommand.Parameters.AddWithValue("@damage", vehicle.GetDamagePercentage());
+            myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
+            myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
             myCommand.Parameters.AddWithValue("@rentID", vehicle.GetRentID());
             myCommand.Parameters.AddWithValue("@ownerName", vehicle.GetOwner().GetName());
             myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.GetOwner().GetPhoneNumber());
@@ -425,9 +418,9 @@ namespace Car_Rental_Application
             }
 
             VehicleUserControl lastVehicle = availableVehicles[availableVehicles.Count - 1];
-            IDManagement.MarkIDAsAvailable(lastVehicle.GetVehicleID());
+            IDManagement.MarkIDAsAvailable(lastVehicle.ID);
 
-            lastVehicle.DeselectVehicle();
+            lastVehicle.Selected = false;
             availableVehicles.Remove(lastVehicle);
 
             availableCarsElementsPanel.VerticalScroll.Value = 0;
@@ -451,9 +444,9 @@ namespace Car_Rental_Application
             }
 
             VehicleUserControl lastVehicle = rentedVehicles[rentedVehicles.Count - 1];
-            lastVehicle.DeselectVehicle();
+            lastVehicle.Selected = false;
 
-            short idToBeMarkedAsAvailable = rentedVehicles[rentedVehicles.Count - 1].GetVehicleID();
+            short idToBeMarkedAsAvailable = rentedVehicles[rentedVehicles.Count - 1].ID;
             short rentIDToBeMarkedAsAvailable = rentedVehicles[rentedVehicles.Count - 1].GetRentID();
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
             IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
@@ -479,7 +472,7 @@ namespace Car_Rental_Application
                 List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
                 foreach (int index in indexesOfSelectedAvailableCars)
                 {
-                    short idToBeMarkedAsAvailable = availableVehicles[index].GetVehicleID();
+                    short idToBeMarkedAsAvailable = availableVehicles[index].ID;
                     IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
                     vehiclesToBeRemoved.Add(availableVehicles.ElementAt(index));
                 }
@@ -512,7 +505,7 @@ namespace Car_Rental_Application
                 List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
                 foreach (int index in indexesOfSelectedRentedCars)
                 {
-                    short idToBeMarkedAsAvailable = rentedVehicles[index].GetVehicleID();
+                    short idToBeMarkedAsAvailable = rentedVehicles[index].ID;
                     IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
 
                     short rentIDToBeMarkedAsAvailable = rentedVehicles[index].GetRentID();
@@ -758,18 +751,18 @@ namespace Car_Rental_Application
             bool areAllSelected = true;
             foreach (VehicleUserControl vehicle in availableVehicles)
             {
-                if ( !vehicle.IsSelected() )
+                if ( !vehicle.Selected )
                 {
                     areAllSelected = false;
                 }
-                vehicle.SelectVehicle();
+                vehicle.Selected = true;
             }
 
             // If all available vehicles are already selected, deselect them
             if (areAllSelected)
             {
                 foreach (VehicleUserControl vehicle in availableVehicles)
-                    vehicle.DeselectVehicle();
+                    vehicle.Selected = false;
             }
             errorLabel.Text = "";
         }
@@ -786,18 +779,18 @@ namespace Car_Rental_Application
             bool areAllSelected = true;
             foreach (VehicleUserControl vehicle in rentedVehicles)
             {
-                if (!vehicle.IsSelected())
+                if (!vehicle.Selected)
                 {
                     areAllSelected = false;
                 }
-                vehicle.SelectVehicle();
+                vehicle.Selected = true;
             }
 
             // If all rented vehicles are already selected, deselect them
             if (areAllSelected)
             {
                 foreach (VehicleUserControl vehicle in rentedVehicles)
-                    vehicle.DeselectVehicle();
+                    vehicle.Selected = false;
             }
             errorLabel.Text = "";
         }
