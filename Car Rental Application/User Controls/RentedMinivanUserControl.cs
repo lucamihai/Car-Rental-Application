@@ -16,6 +16,7 @@ namespace Car_Rental_Application.User_Controls
         short rentID;
         Customer owner;
         DateTime returnDate;
+
         public RentedMinivanUserControl()
         {
             InitializeComponent();
@@ -24,6 +25,7 @@ namespace Car_Rental_Application.User_Controls
         public RentedMinivanUserControl(VehicleUserControl minivan)
         {
             InitializeComponent();
+
             ID = minivan.ID;
             VehicleName = minivan.VehicleName;
             FuelPercentage = minivan.FuelPercentage;
@@ -36,32 +38,21 @@ namespace Car_Rental_Application.User_Controls
         public RentedMinivanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
         {
             InitializeComponent();
-            SetRentID((short)IDManagement.GetLowestAvailableRentedID());
+
+            SetRentID(IDManagement.GetLowestAvailableRentedID());
             ID = availableVehicle.ID;
             IDManagement.MarkRentIDAsUnavailable(rentID);
-            string availableVehicleName = availableVehicle.VehicleName;
-            short availableVehicleFuelPercentage = availableVehicle.FuelPercentage;
-            short avaiableVehicleDamagePercentage = availableVehicle.DamagePercentage;
-            VehicleName = availableVehicleName;
-            FuelPercentage = availableVehicleFuelPercentage;
-            DamagePercentage = avaiableVehicleDamagePercentage;
+
+            VehicleName = availableVehicle.VehicleName;
+            FuelPercentage = availableVehicle.FuelPercentage;
+            DamagePercentage = availableVehicle.DamagePercentage;
+
             this.owner = owner;
             ownerNameValueLabel.Text = owner.GetName();
             ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
+
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
-        }
-
-        public override string Details
-        {
-            get
-            {
-                string details = "";
-                details += "Minivan, id " + ID + ", has " + FuelPercentage + "% fuel, is " + DamagePercentage + "% damaged, owned by: "
-                    + GetOwner().GetName() + ", phone number: " + GetOwner().GetPhoneNumber() + ", return date: " + GetReturnDate().ToShortDateString();
-                return details;
-            }
-            
         }
 
         public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
@@ -73,6 +64,24 @@ namespace Car_Rental_Application.User_Controls
             SetRentID(rentID);
             SetOwner(owner);
             SetReturnDate(DateTime.Parse(returnDate));
+        }
+
+        #region Properties
+
+        public override string Details
+        {
+            get
+            {
+                string details = "";
+                details += "Sedan, id " + ID + ", ";
+                details += "has " + FuelPercentage + "% fuel, ";
+                details += "is " + DamagePercentage + " % damaged, ";
+                details += "owned by: " + GetOwner().GetName() + ", ";
+                details += "phone number: " + GetOwner().GetPhoneNumber() + ", ";
+                details += "return date: " + GetReturnDate().ToShortDateString();
+
+                return details;
+            }
         }
 
         public override bool Selected
@@ -87,52 +96,12 @@ namespace Car_Rental_Application.User_Controls
             }
         }
 
-        public override void configureRentedVehicle(string config)
-        {
-            //rentConfiguration = intID + "#" + vehicleName + "#" + intDamage + "#" + intFuel + "#" + rentIDInt + "#" + ownerName + "#" + ownerPhone + "#" + returnDateString;
-            string[] configurations = new string[8];
-            configurations = config.Split('#');
-            foreach (string a in configurations) Console.WriteLine(a);
-
-            int IDInt = Convert.ToInt32(configurations[0]);
-            ID = (short)IDInt;
-            IDManagement.MarkIDAsUnavailable(ID);
-
-            string name = configurations[1];
-            VehicleName = name;
-
-            int damageInt = Convert.ToInt32(configurations[2]);
-            DamagePercentage = (short)damageInt;
-
-            int fuelInt = Convert.ToInt32(configurations[3]);
-            FuelPercentage = (short)fuelInt;
-
-            int rentIDInt = Convert.ToInt32(configurations[4]);
-            SetRentID((short)rentIDInt);
-
-            string ownerName = configurations[5]; string ownerPhone = configurations[6];
-            Customer newOwner = new Customer(ownerName, ownerPhone);
-            SetOwner(newOwner);
-
-            string returnDateString = configurations[7];
-            SetReturnDate(DateTime.Parse(returnDateString));
-        }
-
-        #region Set and Get methods
-
         public override short ID
         {
             protected set
             {
                 IDManagement.MarkIDAsUnavailable(value);
             }
-        }
-
-        public override void SetRentID(short id)
-        {
-            rentID = id;
-            rentIDValueLabel.Text = id.ToString();
-            IDManagement.MarkRentIDAsUnavailable(rentID);
         }
 
         public override string VehicleName
@@ -147,23 +116,46 @@ namespace Car_Rental_Application.User_Controls
             }
         }
 
+        #endregion
+        
+        #region Set and Get methods
+
+        public override void SetRentID(short id)
+        {
+            rentID = id;
+            rentIDValueLabel.Text = id.ToString();
+            IDManagement.MarkRentIDAsUnavailable(rentID);
+        }
+
         public override void SetOwner(Customer owner)
         {
             this.owner = owner;
             ownerNameValueLabel.Text = owner.GetName();
             ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
         }
+
         public override void SetReturnDate(DateTime returnDate)
         {
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
         }
-        public override Customer GetOwner() { return owner; }
-        public override DateTime GetReturnDate() { return returnDate; }
-        public override short GetRentID() { return rentID; }
+
+        public override Customer GetOwner()
+        {
+            return owner;
+        }
+
+        public override DateTime GetReturnDate()
+        {
+            return returnDate;
+        }
+
+        public override short GetRentID()
+        {
+            return rentID;
+        }
 
         #endregion
-
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -172,6 +164,7 @@ namespace Car_Rental_Application.User_Controls
                 mainWindow.indexesOfSelectedRentedCars.Add(ID);
                 return;
             }
+
             mainWindow.indexesOfSelectedRentedCars.Remove(ID);
         }
 

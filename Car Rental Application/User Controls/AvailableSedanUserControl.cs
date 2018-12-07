@@ -30,15 +30,7 @@ namespace Car_Rental_Application.User_Controls
             IDManagement.MarkIDAsUnavailable(id);
         }
 
-        public AvailableSedanUserControl(VehicleUserControl sedan)
-        {
-            InitializeComponent();
-            ID = sedan.ID;
-            vehicleNameValueLabel.Text = sedan.VehicleName;
-            FuelPercentage = sedan.FuelPercentage;
-            DamagePercentage = sedan.DamagePercentage;
-            IDManagement.MarkIDAsUnavailable(ID);
-        }
+        
 
         public AvailableSedanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
@@ -52,20 +44,32 @@ namespace Car_Rental_Application.User_Controls
             IDManagement.MarkIDAsUnavailable(id);
         }
 
-        public AvailableSedanUserControl(RentedSedanUserControl sedan)
+        public AvailableSedanUserControl(VehicleUserControl availableVehicle)
+        {
+            InitializeComponent();
+            ID = availableVehicle.ID;
+            vehicleNameValueLabel.Text = availableVehicle.VehicleName;
+            FuelPercentage = availableVehicle.FuelPercentage;
+            DamagePercentage = availableVehicle.DamagePercentage;
+            IDManagement.MarkIDAsUnavailable(ID);
+        }
+
+        public AvailableSedanUserControl(RentedSedanUserControl rentedSedan)
         {
             InitializeComponent();
 
-            short returnedVehicleID = sedan.ID;
-            string returnedVehicleName = sedan.VehicleName;
-            short returnedVehicleFuelPercentage = sedan.FuelPercentage;
-            short returnedVehicleDamagePercentage = sedan.DamagePercentage;
+            short returnedVehicleID = rentedSedan.ID;
+            string returnedVehicleName = rentedSedan.VehicleName;
+            short returnedVehicleFuelPercentage = rentedSedan.FuelPercentage;
+            short returnedVehicleDamagePercentage = rentedSedan.DamagePercentage;
 
             ID = returnedVehicleID;
             vehicleNameValueLabel.Text = returnedVehicleName;
             FuelPercentage = returnedVehicleFuelPercentage;
             DamagePercentage = returnedVehicleDamagePercentage;
         }
+
+        #region Properties
 
         public override string Details
         {
@@ -79,15 +83,6 @@ namespace Car_Rental_Application.User_Controls
 
                 return details;
             }
-            
-        }
-
-        public void FromDatabase(short id, string name, short fuel, short damage)
-        {
-            ID = id;
-            vehicleNameValueLabel.Text = VehicleName;
-            FuelPercentage = fuel;
-            DamagePercentage = damage;
         }
 
         public override bool Selected
@@ -101,8 +96,6 @@ namespace Car_Rental_Application.User_Controls
                 selectCheckBox.Checked = value;
             }
         }
-
-        #region Set methods
 
         public override short ID
         {
@@ -155,14 +148,24 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
+        public void FromDatabase(short id, string name, short fuel, short damage)
+        {
+            ID = id;
+            vehicleNameValueLabel.Text = VehicleName;
+            FuelPercentage = fuel;
+            DamagePercentage = damage;
+        }
+
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
+
             if (selectCheckBox.Checked == true)
             {
                 mainWindow.indexesOfSelectedAvailableCars.Add(indexOfCurrentVehicle);
                 return;
             }
+
             mainWindow.indexesOfSelectedAvailableCars.Remove(indexOfCurrentVehicle);
         }
 

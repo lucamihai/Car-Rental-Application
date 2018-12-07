@@ -29,9 +29,9 @@ namespace Car_Rental_Application.Classes
         /// Returns the lowest available ID for available vehicles.
         /// </summary>
         /// <returns></returns>
-        public static int GetLowestAvailableID()
+        public static short GetLowestAvailableID()
         {
-            for (int i = 0; i < short.MaxValue; i++)
+            for (short i = 0; i < short.MaxValue; i++)
                 if (availableIndexes[i])
                     return i;
 
@@ -58,11 +58,13 @@ namespace Car_Rental_Application.Classes
         /// Returns the lowest available ID for rented vehicles.
         /// </summary>
         /// <returns></returns>
-        public static int GetLowestAvailableRentedID()
+        public static short GetLowestAvailableRentedID()
         {
-            for (int i = 0; i < short.MaxValue; i++)
+            for (short i = 0; i < short.MaxValue; i++)
                 if (rentedIndexes[i])
                     return i;
+
+            // If this is reached, there's no available ID
             throw (new Exception());
         }
 

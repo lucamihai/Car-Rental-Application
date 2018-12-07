@@ -22,7 +22,7 @@ namespace Car_Rental_Application.User_Controls
         public AvailableMinivanUserControl(string vehicleName)
         {
             InitializeComponent();
-            short id = (short)IDManagement.GetLowestAvailableID();
+            short id = IDManagement.GetLowestAvailableID();
 
             ID = id;
             VehicleName = vehicleName;
@@ -31,20 +31,10 @@ namespace Car_Rental_Application.User_Controls
             IDManagement.MarkIDAsUnavailable(id);
         }
 
-        public AvailableMinivanUserControl(VehicleUserControl sedan)
-        {
-            InitializeComponent();
-            ID = sedan.ID;
-            VehicleName = sedan.VehicleName;
-            FuelPercentage = sedan.FuelPercentage;
-            DamagePercentage = sedan.DamagePercentage;
-            IDManagement.MarkIDAsUnavailable(ID);
-        }
-
         public AvailableMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();
-            short id = (short)IDManagement.GetLowestAvailableID();
+            short id = IDManagement.GetLowestAvailableID();
 
             ID = id;
             VehicleName = vehicleName;
@@ -53,20 +43,33 @@ namespace Car_Rental_Application.User_Controls
             IDManagement.MarkIDAsUnavailable(id);
         }
 
-        public AvailableMinivanUserControl(RentedMinivanUserControl minivan)
+        public AvailableMinivanUserControl(VehicleUserControl availableVehicle)
+        {
+            InitializeComponent();
+            ID = availableVehicle.ID;
+            VehicleName = availableVehicle.VehicleName;
+            FuelPercentage = availableVehicle.FuelPercentage;
+            DamagePercentage = availableVehicle.DamagePercentage;
+            IDManagement.MarkIDAsUnavailable(ID);
+        }
+
+
+        public AvailableMinivanUserControl(RentedMinivanUserControl rentedMinivan)
         {
             InitializeComponent();
 
-            short returnedVehicleID = minivan.ID;
-            string returnedVehicleName = minivan.VehicleName;
-            short returnedVehicleFuelPercentage = minivan.FuelPercentage;
-            short returnedVehicleDamagePercentage = minivan.DamagePercentage;
+            short returnedVehicleID = rentedMinivan.ID;
+            string returnedVehicleName = rentedMinivan.VehicleName;
+            short returnedVehicleFuelPercentage = rentedMinivan.FuelPercentage;
+            short returnedVehicleDamagePercentage = rentedMinivan.DamagePercentage;
 
             ID = returnedVehicleID;
             VehicleName = returnedVehicleName;
             FuelPercentage = returnedVehicleFuelPercentage;
             DamagePercentage = returnedVehicleDamagePercentage;
         }
+
+        #region Properties
 
         public override string Details
         {
@@ -77,15 +80,7 @@ namespace Car_Rental_Application.User_Controls
                     + "and is " + DamagePercentage.ToString() + " % damaged";
                 return details;
             }
-            
-        }
 
-        public void FromDatabase(short id, string name, short fuel, short damage)
-        {
-            ID = id;
-            VehicleName = name;
-            FuelPercentage = fuel;
-            DamagePercentage = damage;
         }
 
         public override bool Selected
@@ -99,8 +94,6 @@ namespace Car_Rental_Application.User_Controls
                 selectCheckBox.Checked = value;
             }
         }
-
-        #region Set methods
 
         public override short ID
         {
@@ -152,6 +145,14 @@ namespace Car_Rental_Application.User_Controls
         }
 
         #endregion
+
+        public void FromDatabase(short id, string name, short fuel, short damage)
+        {
+            ID = id;
+            VehicleName = name;
+            FuelPercentage = fuel;
+            DamagePercentage = damage;
+        }
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {

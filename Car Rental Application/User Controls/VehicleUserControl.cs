@@ -23,6 +23,8 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
         }
 
+        #region Properties
+
         public virtual string Details
         {
             get;
@@ -56,6 +58,8 @@ namespace Car_Rental_Application.User_Controls
             get;
             protected set;
         }
+
+        #endregion
 
         public virtual void configureRentedVehicle(string config) { }
 
