@@ -103,6 +103,7 @@ namespace Car_Rental_Application.User_Controls
                 {
                     int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
                     ID = (short)intID;
+
                     VehicleName = xmlReader.ReadElementString("vehicleName");
 
                     int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercent"));
@@ -117,11 +118,13 @@ namespace Car_Rental_Application.User_Controls
                 if (Name == "RentedSedanUserControl" || Name == "RentedMinivanUserControl")
                 {
                     int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
+
+                    string vehicleName = xmlReader.ReadElementString("vehicleName");
+
                     int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercent"));
                     int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
                     int rentIDInt = Convert.ToInt32(xmlReader.ReadElementString("rentID"));
-
-                    string vehicleName = xmlReader.ReadElementString("vehicleName");
+                    
                     string ownerName = xmlReader.ReadElementString("ownerName");
                     string ownerPhone = xmlReader.ReadElementString("ownerPhone");
                     string returnDateString = xmlReader.ReadElementString("returnDate");
