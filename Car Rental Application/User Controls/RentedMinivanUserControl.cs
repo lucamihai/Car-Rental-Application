@@ -177,8 +177,7 @@ namespace Car_Rental_Application.User_Controls
 
         private void buttonReturn_Click(object sender, EventArgs e)
         {
-            returnFromRentUserControl.SelectVehicleToBeReturned(this);
-            mainWindow.ReturnMenu();
+            mainWindow.ReturnForm(this);
         }
     }
 }

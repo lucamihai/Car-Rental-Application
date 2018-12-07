@@ -15,7 +15,6 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class VehicleUserControl : UserControl, IXmlSerializable
     {
-        protected ReturnFromRentUserControl returnFromRentUserControl;
         protected MainWindow mainWindow;
         protected short specialRentID;
 
@@ -148,19 +147,10 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
-        #region Linking to menus
-
         public void LinkToMainWindow(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
         }
-
-        public void LinkToReturnMenu(ReturnFromRentUserControl returnFromRentUserControl)
-        {
-            this.returnFromRentUserControl = returnFromRentUserControl;
-        }
-
-        #endregion
 
         #region Methods for rented vehicles
 

@@ -81,6 +81,12 @@
     <Compile Include="Forms\FormRentVehicle.Designer.cs">
       <DependentUpon>FormRentVehicle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormReturnVehicle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormReturnVehicle.Designer.cs">
+      <DependentUpon>FormReturnVehicle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\ISort.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
@@ -120,12 +126,6 @@
     <Compile Include="User Controls\RentedSedanUserControl.Designer.cs">
       <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Controls\ReturnFromRentUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\ReturnFromRentUserControl.Designer.cs">
-      <DependentUpon>ReturnFromRentUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="User Controls\SedanUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -143,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormRentVehicle.resx">
       <DependentUpon>FormRentVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormReturnVehicle.resx">
+      <DependentUpon>FormReturnVehicle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -168,9 +171,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\RentedSedanUserControl.resx">
       <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="User Controls\ReturnFromRentUserControl.resx">
-      <DependentUpon>ReturnFromRentUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\SedanUserControl.resx">
       <DependentUpon>SedanUserControl.cs</DependentUpon>
