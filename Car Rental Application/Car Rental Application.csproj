@@ -69,6 +69,7 @@
     <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />
     <Compile Include="Classes\RentedCarsSorter.cs" />
     <Compile Include="Classes\RentVehicleConfiguration.cs" />
+    <Compile Include="Classes\Translator.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>

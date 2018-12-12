@@ -38,6 +38,7 @@
             this.damagePercentageNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.buttonReturn = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fuelPercentageNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.damagePercentageNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +64,7 @@
             // returnDateDateTimePicker
             // 
             this.returnDateDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.returnDateDateTimePicker.Location = new System.Drawing.Point(121, 142);
+            this.returnDateDateTimePicker.Location = new System.Drawing.Point(119, 142);
             this.returnDateDateTimePicker.Name = "returnDateDateTimePicker";
             this.returnDateDateTimePicker.Size = new System.Drawing.Size(120, 20);
             this.returnDateDateTimePicker.TabIndex = 17;
@@ -80,31 +81,31 @@
             // damagePercentageLabel
             // 
             this.damagePercentageLabel.AutoSize = true;
-            this.damagePercentageLabel.Location = new System.Drawing.Point(14, 113);
+            this.damagePercentageLabel.Location = new System.Drawing.Point(51, 108);
             this.damagePercentageLabel.Name = "damagePercentageLabel";
-            this.damagePercentageLabel.Size = new System.Drawing.Size(104, 13);
+            this.damagePercentageLabel.Size = new System.Drawing.Size(64, 13);
             this.damagePercentageLabel.TabIndex = 15;
-            this.damagePercentageLabel.Text = "Damage percentage";
+            this.damagePercentageLabel.Text = "Damage (%)";
             // 
             // fuelPercentageLabel
             // 
             this.fuelPercentageLabel.AutoSize = true;
-            this.fuelPercentageLabel.Location = new System.Drawing.Point(14, 80);
+            this.fuelPercentageLabel.Location = new System.Drawing.Point(71, 82);
             this.fuelPercentageLabel.Name = "fuelPercentageLabel";
-            this.fuelPercentageLabel.Size = new System.Drawing.Size(84, 13);
+            this.fuelPercentageLabel.Size = new System.Drawing.Size(44, 13);
             this.fuelPercentageLabel.TabIndex = 14;
-            this.fuelPercentageLabel.Text = "Fuel percentage";
+            this.fuelPercentageLabel.Text = "Fuel (%)";
             // 
             // fuelPercentageNumericUpDown
             // 
-            this.fuelPercentageNumericUpDown.Location = new System.Drawing.Point(121, 80);
+            this.fuelPercentageNumericUpDown.Location = new System.Drawing.Point(119, 80);
             this.fuelPercentageNumericUpDown.Name = "fuelPercentageNumericUpDown";
             this.fuelPercentageNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.fuelPercentageNumericUpDown.TabIndex = 13;
             // 
             // damagePercentageNumericUpDown
             // 
-            this.damagePercentageNumericUpDown.Location = new System.Drawing.Point(121, 106);
+            this.damagePercentageNumericUpDown.Location = new System.Drawing.Point(119, 106);
             this.damagePercentageNumericUpDown.Name = "damagePercentageNumericUpDown";
             this.damagePercentageNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.damagePercentageNumericUpDown.TabIndex = 12;
@@ -129,12 +130,22 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(46, 142);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 13);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "Returned on:";
+            // 
             // FormReturnVehicle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(309, 211);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.labelCheckReturnDate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.returnDateDateTimePicker);
@@ -166,5 +177,6 @@
         private System.Windows.Forms.NumericUpDown damagePercentageNumericUpDown;
         private System.Windows.Forms.Button buttonReturn;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label label2;
     }
 }

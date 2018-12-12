@@ -63,6 +63,9 @@
             this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
             this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addALanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -270,7 +273,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.databaseToolStripMenuItem,
             this.localFileToolStripMenuItem,
-            this.orderLogsToolStripMenuItem});
+            this.orderLogsToolStripMenuItem,
+            this.languageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1392, 24);
@@ -320,14 +324,14 @@
             // loadFromLocalFileToolStripMenuItem
             // 
             this.loadFromLocalFileToolStripMenuItem.Name = "loadFromLocalFileToolStripMenuItem";
-            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadFromLocalFileToolStripMenuItem.Text = "Load from local file";
             this.loadFromLocalFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromLocalFileToolStripMenuItem_Click);
             // 
             // saveToLocalFileToolStripMenuItem
             // 
             this.saveToLocalFileToolStripMenuItem.Name = "saveToLocalFileToolStripMenuItem";
-            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
             this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
             // 
@@ -343,14 +347,14 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -385,6 +389,28 @@
             // 
             this.timerClearErrors.Interval = 5000;
             this.timerClearErrors.Tick += new System.EventHandler(this.timerClearErrors_Tick);
+            // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.chooseLanguageToolStripMenuItem,
+            this.addALanguageToolStripMenuItem});
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.languageToolStripMenuItem.Text = "Language";
+            // 
+            // chooseLanguageToolStripMenuItem
+            // 
+            this.chooseLanguageToolStripMenuItem.Name = "chooseLanguageToolStripMenuItem";
+            this.chooseLanguageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.chooseLanguageToolStripMenuItem.Text = "Choose language";
+            // 
+            // addALanguageToolStripMenuItem
+            // 
+            this.addALanguageToolStripMenuItem.Name = "addALanguageToolStripMenuItem";
+            this.addALanguageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addALanguageToolStripMenuItem.Text = "Add a language";
+            this.addALanguageToolStripMenuItem.Click += new System.EventHandler(this.addALanguageToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -448,6 +474,9 @@
         private System.Windows.Forms.ToolStripMenuItem orderLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chooseLanguageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addALanguageToolStripMenuItem;
     }
 }
 

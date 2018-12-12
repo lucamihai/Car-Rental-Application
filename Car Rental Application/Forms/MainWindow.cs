@@ -843,5 +843,9 @@ namespace Car_Rental_Application
 
         #endregion
 
+        private void addALanguageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
