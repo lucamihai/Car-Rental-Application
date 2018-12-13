@@ -118,7 +118,7 @@
             this.buttonReturn.TabIndex = 11;
             this.buttonReturn.Text = "Return vehicle";
             this.buttonReturn.UseVisualStyleBackColor = true;
-            this.buttonReturn.Click += new System.EventHandler(this.buttonReturn_Click);
+            this.buttonReturn.Click += new System.EventHandler(this.ReturnFromRent);
             // 
             // buttonCancel
             // 
@@ -128,7 +128,7 @@
             this.buttonCancel.TabIndex = 10;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.Cancel);
             // 
             // label2
             // 

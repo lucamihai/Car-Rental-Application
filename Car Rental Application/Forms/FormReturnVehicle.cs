@@ -54,7 +54,7 @@ namespace Car_Rental_Application.Forms
             RentedVehicle = vehicle;
         }
 
-        private void buttonReturn_Click(object sender, EventArgs e)
+        private void ReturnFromRent(object sender, EventArgs e)
         {
             ReturnedVehicle.FuelPercentage = (short)fuelPercentageNumericUpDown.Value;
             ReturnedVehicle.DamagePercentage = (short)damagePercentageNumericUpDown.Value;
@@ -75,7 +75,7 @@ namespace Car_Rental_Application.Forms
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void Cancel(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();

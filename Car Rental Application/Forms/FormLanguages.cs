@@ -13,7 +13,7 @@ namespace Car_Rental_Application.Forms
 {
     public partial class FormLanguages : Form
     {
-        public Dictionary<string, string> chosenLanguage { get; set; }
+        public Dictionary<string, string> ChosenLanguage { get; set; }
         Dictionary<string, Dictionary<string, string>> availableLanguages = new Dictionary<string, Dictionary<string, string>>();
 
         public FormLanguages()
@@ -21,7 +21,7 @@ namespace Car_Rental_Application.Forms
             InitializeComponent();
 
             Dictionary<string, string> english = GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
-            chosenLanguage = english;
+            ChosenLanguage = english;
 
             LoadDefaultLanguage();
             SetAvailableLanguagesDictionary();
@@ -160,7 +160,7 @@ namespace Car_Rental_Application.Forms
             return translations;
         }
 
-        private void buttonAddLanguage_Click(object sender, EventArgs e)
+        private void AddLanguage(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -185,12 +185,15 @@ namespace Car_Rental_Application.Forms
             SetLanguagesPanel();
         }
 
-        private void buttonRemoveLanguage_Click(object sender, EventArgs e)
+        private void RemoveLanguage(object sender, EventArgs e)
         {
+            bool wasLanguageSelected = false;
             foreach (RadioButton languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
             {
                 if (languageRadioButton.Checked)
                 {
+                    wasLanguageSelected = true;
+
                     string languageName = languageRadioButton.Text;
                     string action = string.Format("remove the {0} language", languageName);
                     FormConfirmation formConfirmation = new FormConfirmation(action);
@@ -203,18 +206,43 @@ namespace Car_Rental_Application.Forms
                 }
             }
 
+            if (!wasLanguageSelected)
+            {
+                MessageBox.Show("You haven't selected any language to remove");
+                return;
+            }
+
             SetAvailableLanguagesDictionary();
             SetLanguagesPanel();
         }
 
-        private void buttonChooseLanguage_Click(object sender, EventArgs e)
+        private void ChooseLanguage(object sender, EventArgs e)
         {
+            bool wasLanguageSelected = false;
+            foreach (RadioButton languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
+            {
+                if (languageRadioButton.Checked)
+                {
+                    wasLanguageSelected = true;
 
+                    string languageName = languageRadioButton.Text;
+                    ChosenLanguage = availableLanguages[languageName];
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+            }
+
+            if (!wasLanguageSelected)
+            {
+                MessageBox.Show("You haven't selected any language");
+                return;
+            }
         }
 
-        private void buttonRenameSelected_Click(object sender, EventArgs e)
+        private void RenameLanguage(object sender, EventArgs e)
         {
-
+            // TO-DO
         }
     }
 }

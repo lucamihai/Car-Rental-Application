@@ -63,7 +63,7 @@
             this.buttonAddLanguage.TabIndex = 2;
             this.buttonAddLanguage.Text = "Add language";
             this.buttonAddLanguage.UseVisualStyleBackColor = true;
-            this.buttonAddLanguage.Click += new System.EventHandler(this.buttonAddLanguage_Click);
+            this.buttonAddLanguage.Click += new System.EventHandler(this.AddLanguage);
             // 
             // buttonRemoveLanguage
             // 
@@ -73,7 +73,7 @@
             this.buttonRemoveLanguage.TabIndex = 3;
             this.buttonRemoveLanguage.Text = "Remove selected";
             this.buttonRemoveLanguage.UseVisualStyleBackColor = true;
-            this.buttonRemoveLanguage.Click += new System.EventHandler(this.buttonRemoveLanguage_Click);
+            this.buttonRemoveLanguage.Click += new System.EventHandler(this.RemoveLanguage);
             // 
             // buttonChooseLanguage
             // 
@@ -83,7 +83,7 @@
             this.buttonChooseLanguage.TabIndex = 4;
             this.buttonChooseLanguage.Text = "Apply selected";
             this.buttonChooseLanguage.UseVisualStyleBackColor = true;
-            this.buttonChooseLanguage.Click += new System.EventHandler(this.buttonChooseLanguage_Click);
+            this.buttonChooseLanguage.Click += new System.EventHandler(this.ChooseLanguage);
             // 
             // buttonRenameSelected
             // 
@@ -93,7 +93,7 @@
             this.buttonRenameSelected.TabIndex = 5;
             this.buttonRenameSelected.Text = "Rename selected";
             this.buttonRenameSelected.UseVisualStyleBackColor = true;
-            this.buttonRenameSelected.Click += new System.EventHandler(this.buttonRenameSelected_Click);
+            this.buttonRenameSelected.Click += new System.EventHandler(this.RenameLanguage);
             // 
             // FormLanguages
             // 

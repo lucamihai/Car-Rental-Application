@@ -89,7 +89,7 @@ namespace Car_Rental_Application
             PopulateRentedVehiclesPanel();
         }
 
-        private void buttonAddVehicle_Click(object sender, EventArgs e)
+        private void AddVehicle(object sender, EventArgs e)
         {
             FormAddVehicle formAddVehicle = new FormAddVehicle();
 
@@ -134,7 +134,7 @@ namespace Car_Rental_Application
 
         #region Error timer
 
-        private void timerProgramDateUpdater_Tick(object sender, EventArgs e)
+        private void ProgramDateTick(object sender, EventArgs e)
         {
             DateTime currentTime = DateTime.Now;
             programTime = currentTime;
@@ -148,7 +148,7 @@ namespace Car_Rental_Application
             labelProgramDate.Text = currentTimeString;
         }
 
-        private void timerClearErrors_Tick(object sender, EventArgs e)
+        private void ClearErrorsTick(object sender, EventArgs e)
         {
             errorLabel.Text = "";
             timerClearErrors.Stop();
@@ -843,8 +843,24 @@ namespace Car_Rental_Application
             var result = formLanguages.ShowDialog();
             if (result == DialogResult.OK)
             {
-                
+                Dictionary<string, string> chosenLanguage = formLanguages.ChosenLanguage;
+                UpdateLanguage(chosenLanguage);
             }
+        }
+
+        void UpdateLanguage(Dictionary<string, string> language)
+        {
+            labelAvailableVehicles.Text = Translate(language, "Available cars");
+        }
+
+        string Translate(Dictionary<string, string> language, string text)
+        {
+            if (language.ContainsKey(text) && language[text] != null)
+            {
+                return language[text];
+            }
+
+            return text;
         }
     }
 }
