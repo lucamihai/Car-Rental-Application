@@ -46,7 +46,10 @@
             this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
             this.rentedCarsElementsPanel = new System.Windows.Forms.Panel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.labelProgramDate = new System.Windows.Forms.Label();
+            this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFromDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,14 +61,10 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.labelProgramDate = new System.Windows.Forms.Label();
-            this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
-            this.errorLabel = new System.Windows.Forms.Label();
-            this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
+            this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // AvailableCarsPanel
@@ -134,9 +133,9 @@
             this.labelAvailableVehicles.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAvailableVehicles.Location = new System.Drawing.Point(184, 2);
             this.labelAvailableVehicles.Name = "labelAvailableVehicles";
-            this.labelAvailableVehicles.Size = new System.Drawing.Size(215, 33);
+            this.labelAvailableVehicles.Size = new System.Drawing.Size(169, 33);
             this.labelAvailableVehicles.TabIndex = 0;
-            this.labelAvailableVehicles.Text = "Available vehicles";
+            this.labelAvailableVehicles.Text = "Available cars";
             // 
             // buttonAddAvailableVehicle
             // 
@@ -223,9 +222,9 @@
             this.labelRentedVehicles.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRentedVehicles.Location = new System.Drawing.Point(287, 2);
             this.labelRentedVehicles.Name = "labelRentedVehicles";
-            this.labelRentedVehicles.Size = new System.Drawing.Size(192, 33);
+            this.labelRentedVehicles.Size = new System.Drawing.Size(146, 33);
             this.labelRentedVehicles.TabIndex = 2;
-            this.labelRentedVehicles.Text = "Rented vehicles";
+            this.labelRentedVehicles.Text = "Rented cars";
             // 
             // buttonSortRentedVehicles
             // 
@@ -256,18 +255,37 @@
             this.rentedCarsElementsPanel.Size = new System.Drawing.Size(722, 501);
             this.rentedCarsElementsPanel.TabIndex = 1;
             // 
-            // menuStrip1
+            // labelProgramDate
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.databaseToolStripMenuItem,
-            this.localFileToolStripMenuItem,
-            this.orderLogsToolStripMenuItem,
-            this.languageToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1392, 24);
-            this.menuStrip1.TabIndex = 7;
-            this.menuStrip1.Text = "menuStrip1";
+            this.labelProgramDate.AutoSize = true;
+            this.labelProgramDate.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelProgramDate.Location = new System.Drawing.Point(1109, 27);
+            this.labelProgramDate.Name = "labelProgramDate";
+            this.labelProgramDate.Size = new System.Drawing.Size(91, 19);
+            this.labelProgramDate.TabIndex = 9;
+            this.labelProgramDate.Text = "Program date";
+            // 
+            // timerProgramDateUpdater
+            // 
+            this.timerProgramDateUpdater.Interval = 1000;
+            this.timerProgramDateUpdater.Tick += new System.EventHandler(this.ProgramDateTick);
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.BackColor = System.Drawing.Color.Black;
+            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.errorLabel.Location = new System.Drawing.Point(410, 46);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(81, 16);
+            this.errorLabel.TabIndex = 10;
+            this.errorLabel.Text = "Error label";
+            // 
+            // timerClearErrors
+            // 
+            this.timerClearErrors.Interval = 5000;
+            this.timerClearErrors.Tick += new System.EventHandler(this.ClearErrorsTick);
             // 
             // databaseToolStripMenuItem
             // 
@@ -353,37 +371,18 @@
             this.languageToolStripMenuItem.Text = "Language";
             this.languageToolStripMenuItem.Click += new System.EventHandler(this.languageToolStripMenuItem_Click);
             // 
-            // labelProgramDate
+            // mainMenuStrip
             // 
-            this.labelProgramDate.AutoSize = true;
-            this.labelProgramDate.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelProgramDate.Location = new System.Drawing.Point(1109, 27);
-            this.labelProgramDate.Name = "labelProgramDate";
-            this.labelProgramDate.Size = new System.Drawing.Size(91, 19);
-            this.labelProgramDate.TabIndex = 9;
-            this.labelProgramDate.Text = "Program date";
-            // 
-            // timerProgramDateUpdater
-            // 
-            this.timerProgramDateUpdater.Interval = 1000;
-            this.timerProgramDateUpdater.Tick += new System.EventHandler(this.ProgramDateTick);
-            // 
-            // errorLabel
-            // 
-            this.errorLabel.AutoSize = true;
-            this.errorLabel.BackColor = System.Drawing.Color.Black;
-            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(410, 46);
-            this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(81, 16);
-            this.errorLabel.TabIndex = 10;
-            this.errorLabel.Text = "Error label";
-            // 
-            // timerClearErrors
-            // 
-            this.timerClearErrors.Interval = 5000;
-            this.timerClearErrors.Tick += new System.EventHandler(this.ClearErrorsTick);
+            this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.databaseToolStripMenuItem,
+            this.localFileToolStripMenuItem,
+            this.orderLogsToolStripMenuItem,
+            this.languageToolStripMenuItem});
+            this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.mainMenuStrip.Name = "mainMenuStrip";
+            this.mainMenuStrip.Size = new System.Drawing.Size(1392, 24);
+            this.mainMenuStrip.TabIndex = 7;
+            this.mainMenuStrip.Text = "menuStrip1";
             // 
             // MainWindow
             // 
@@ -395,16 +394,16 @@
             this.Controls.Add(this.labelProgramDate);
             this.Controls.Add(this.RentedCarsPanel);
             this.Controls.Add(this.AvailableCarsPanel);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.mainMenuStrip);
+            this.MainMenuStrip = this.mainMenuStrip;
             this.Name = "MainWindow";
             this.Text = "Car rental";
             this.AvailableCarsPanel.ResumeLayout(false);
             this.AvailableCarsPanel.PerformLayout();
             this.RentedCarsPanel.ResumeLayout(false);
             this.RentedCarsPanel.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.mainMenuStrip.ResumeLayout(false);
+            this.mainMenuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,14 +422,6 @@
         private System.Windows.Forms.Panel rentedCarsElementsPanel;
         private System.Windows.Forms.Button buttonSortAvailableVehicles;
         private System.Windows.Forms.ComboBox sortAvailableSelectionComboBox;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadFromDatabaseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToDatabaseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem localFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadFromLocalFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToLocalFileToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ComboBox sortRentedSelectionComboBox;
         private System.Windows.Forms.Button buttonSortRentedVehicles;
         private System.Windows.Forms.Label labelProgramDate;
@@ -439,13 +430,20 @@
         private System.Windows.Forms.Timer timerClearErrors;
         private System.Windows.Forms.Button buttonRemoveSelectedRentedCars;
         private System.Windows.Forms.Button buttonRemoveLastRentedCar;
-        private System.Windows.Forms.ToolStripMenuItem connectToDatabaseToolStripMenuItem;
         private System.Windows.Forms.Button buttonSelectAllAvailable;
         private System.Windows.Forms.Button buttonSelectAllRented;
+        private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadFromDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectToDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem localFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadFromLocalFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToLocalFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orderLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip mainMenuStrip;
     }
 }
 

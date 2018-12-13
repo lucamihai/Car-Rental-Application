@@ -15,6 +15,11 @@ namespace Car_Rental_Application.Classes
             this.dictionary = dictionary;
         }
 
+        /// <summary>
+        /// If there's a translation available for the provided text, returns the translation. Returns the provided text otherwise.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public string Translate(string text)
         {
             if (dictionary.ContainsKey(text) && dictionary[text] != null)

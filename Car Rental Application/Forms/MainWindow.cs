@@ -850,7 +850,28 @@ namespace Car_Rental_Application
 
         void UpdateLanguage(Language language)
         {
+            buttonAddAvailableVehicle.Text = language.Translate("Add vehicle");
+            buttonSelectAllAvailable.Text = language.Translate("Select all");
+            buttonSelectAllRented.Text = language.Translate("Select all");
+            buttonRemoveLastAvailableVehicle.Text = language.Translate("Remove last");
+            buttonRemoveLastRentedCar.Text = language.Translate("Remove last");
+            buttonRemoveSelectedAvailableCars.Text = language.Translate("Remove selected");
+            buttonRemoveSelectedRentedCars.Text = language.Translate("Remove selected");
+            buttonSortAvailableVehicles.Text = language.Translate("Sort");
+            buttonSortRentedVehicles.Text = language.Translate("Sort");
+
             labelAvailableVehicles.Text = language.Translate("Available cars");
+            labelRentedVehicles.Text = language.Translate("Rented cars");
+
+            connectToDatabaseToolStripMenuItem.Text = language.Translate("Connect to database");
+            loadFromDatabaseToolStripMenuItem.Text = language.Translate("Load from database");
+            saveToDatabaseToolStripMenuItem.Text = language.Translate("Save to database");
+            loadFromLocalFileToolStripMenuItem.Text = language.Translate("Load from local file");
+            saveToLocalFileToolStripMenuItem.Text = language.Translate("Save to local file");
+            orderLogsToolStripMenuItem.Text = language.Translate("Order logs");
+            openToolStripMenuItem.Text = language.Translate("Open");
+            deleteToolStripMenuItem.Text = language.Translate("Delete");
+            languageToolStripMenuItem.Text = language.Translate("Language");
         }
     }
 }
