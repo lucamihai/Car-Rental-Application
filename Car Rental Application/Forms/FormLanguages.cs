@@ -21,26 +21,24 @@ namespace Car_Rental_Application.Forms
             InitializeComponent();
 
             Dictionary<string, string> english = GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
-            availableLanguages["English"] = english;
             chosenLanguage = english;
 
-            if (Directory.Exists("Languages"))
+            LoadDefaultLanguage();
+            SetAvailableLanguagesDictionary();
+            SetLanguagesPanel();
+        }
+
+        void LoadDefaultLanguage()
+        {
+            if (!Directory.Exists("Languages"))
             {
-                string[] languageFiles = Directory.GetFiles("Languages");
-
-                foreach (string languageFile in languageFiles)
-                {
-                    if (Path.GetExtension(languageFile) == ".csv")
-                    {
-                        string languageName = Path.GetFileNameWithoutExtension(languageFile);
-                        Dictionary<string, string> language = GetTranslationsFromCSVFile(languageFile, '\\');
-
-                        availableLanguages[languageName] = language;
-                    }
-                }
+                Directory.CreateDirectory("Languages");
             }
 
-            SetLanguagesPanel();
+            if (!File.Exists(@"Languages\English.csv"))
+            {
+                File.WriteAllText(@"Languages\English.csv", Properties.Resources.English);
+            }
         }
 
         void SetLanguagesPanel()
@@ -56,6 +54,26 @@ namespace Car_Rental_Application.Forms
                 radioButtonLanguage.Text = languageName;
                 radioButtonLanguage.Location = new Point(10, counterLanguages++ * 20);
                 panelLanguages.Controls.Add(radioButtonLanguage);
+            }
+        }
+
+        void SetAvailableLanguagesDictionary()
+        {
+            if (Directory.Exists("Languages"))
+            {
+                availableLanguages = new Dictionary<string, Dictionary<string, string>>();
+                string[] languageFiles = Directory.GetFiles("Languages");
+
+                foreach (string languageFile in languageFiles)
+                {
+                    if (Path.GetExtension(languageFile) == ".csv")
+                    {
+                        string languageName = Path.GetFileNameWithoutExtension(languageFile);
+                        Dictionary<string, string> language = GetTranslationsFromCSVFile(languageFile, '\\');
+
+                        availableLanguages[languageName] = language;
+                    }
+                }
             }
         }
 
@@ -163,7 +181,40 @@ namespace Car_Rental_Application.Forms
                 File.Copy(languageFile, @"Languages\" + Path.GetFileName(languageFile));
             }
 
+            SetAvailableLanguagesDictionary();
             SetLanguagesPanel();
+        }
+
+        private void buttonRemoveLanguage_Click(object sender, EventArgs e)
+        {
+            foreach (RadioButton languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
+            {
+                if (languageRadioButton.Checked)
+                {
+                    string languageName = languageRadioButton.Text;
+                    string action = string.Format("remove the {0} language", languageName);
+                    FormConfirmation formConfirmation = new FormConfirmation(action);
+
+                    var result = formConfirmation.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        File.Delete(@"Languages\" + languageName + ".csv");
+                    }
+                }
+            }
+
+            SetAvailableLanguagesDictionary();
+            SetLanguagesPanel();
+        }
+
+        private void buttonChooseLanguage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonRenameSelected_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

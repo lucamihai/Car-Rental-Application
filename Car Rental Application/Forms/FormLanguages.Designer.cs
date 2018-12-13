@@ -33,7 +33,7 @@
             this.buttonAddLanguage = new System.Windows.Forms.Button();
             this.buttonRemoveLanguage = new System.Windows.Forms.Button();
             this.buttonChooseLanguage = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonRenameSelected = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // panelLanguages
@@ -73,6 +73,7 @@
             this.buttonRemoveLanguage.TabIndex = 3;
             this.buttonRemoveLanguage.Text = "Remove selected";
             this.buttonRemoveLanguage.UseVisualStyleBackColor = true;
+            this.buttonRemoveLanguage.Click += new System.EventHandler(this.buttonRemoveLanguage_Click);
             // 
             // buttonChooseLanguage
             // 
@@ -82,15 +83,17 @@
             this.buttonChooseLanguage.TabIndex = 4;
             this.buttonChooseLanguage.Text = "Apply selected";
             this.buttonChooseLanguage.UseVisualStyleBackColor = true;
+            this.buttonChooseLanguage.Click += new System.EventHandler(this.buttonChooseLanguage_Click);
             // 
-            // button1
+            // buttonRenameSelected
             // 
-            this.button1.Location = new System.Drawing.Point(344, 166);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Rename selected";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonRenameSelected.Location = new System.Drawing.Point(344, 166);
+            this.buttonRenameSelected.Name = "buttonRenameSelected";
+            this.buttonRenameSelected.Size = new System.Drawing.Size(107, 23);
+            this.buttonRenameSelected.TabIndex = 5;
+            this.buttonRenameSelected.Text = "Rename selected";
+            this.buttonRenameSelected.UseVisualStyleBackColor = true;
+            this.buttonRenameSelected.Click += new System.EventHandler(this.buttonRenameSelected_Click);
             // 
             // FormLanguages
             // 
@@ -98,7 +101,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(484, 336);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonRenameSelected);
             this.Controls.Add(this.buttonChooseLanguage);
             this.Controls.Add(this.buttonRemoveLanguage);
             this.Controls.Add(this.buttonAddLanguage);
@@ -118,6 +121,6 @@
         private System.Windows.Forms.Button buttonAddLanguage;
         private System.Windows.Forms.Button buttonRemoveLanguage;
         private System.Windows.Forms.Button buttonChooseLanguage;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonRenameSelected;
     }
 }

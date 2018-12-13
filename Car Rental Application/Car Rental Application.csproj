@@ -69,12 +69,17 @@
     <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />
     <Compile Include="Classes\RentedCarsSorter.cs" />
     <Compile Include="Classes\RentVehicleConfiguration.cs" />
-    <Compile Include="Classes\Translator.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FormAddVehicle.Designer.cs">
       <DependentUpon>FormAddVehicle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormConfirmation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormConfirmation.Designer.cs">
+      <DependentUpon>FormConfirmation.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormLanguages.cs">
       <SubType>Form</SubType>
@@ -147,6 +152,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\FormAddVehicle.resx">
       <DependentUpon>FormAddVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormConfirmation.resx">
+      <DependentUpon>FormConfirmation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLanguages.resx">
       <DependentUpon>FormLanguages.cs</DependentUpon>

@@ -56,8 +56,8 @@ namespace Car_Rental_Application
 
         void InitializeComboBoxSelections()
         {
-            sortAvailableSelectionComboBox.SelectedIndex = sortAvailableSelectionComboBox.FindStringExact("By ID");
-            sortRentedSelectionComboBox.SelectedIndex = sortRentedSelectionComboBox.FindStringExact("By ID");
+            sortAvailableSelectionComboBox.SelectedIndex = 0;
+            sortRentedSelectionComboBox.SelectedIndex = 0;
         }
 
         public void AddToRentedCarsList(VehicleUserControl vehicle)
