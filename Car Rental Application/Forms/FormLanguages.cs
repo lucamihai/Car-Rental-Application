@@ -122,7 +122,7 @@ namespace Car_Rental_Application.Forms
             return translations;
         }
 
-        Dictionary<string, string> GetTranslationsFromCSVContents(string CSVContents, char separator = ',', int beginFrom = 2)
+        public static Dictionary<string, string> GetTranslationsFromCSVContents(string CSVContents, char separator = ',', int beginFrom = 2)
         {
             Dictionary<string, string> translations = new Dictionary<string, string>();
 

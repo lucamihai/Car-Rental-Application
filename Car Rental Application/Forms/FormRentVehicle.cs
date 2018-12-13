@@ -17,6 +17,9 @@ namespace Car_Rental_Application.Forms
         public VehicleUserControl AvailableVehicle { get; set; }
         public VehicleUserControl VehicleToBeRented { get; set; }
 
+        string errorOwnerNameNotProvided;
+        string errorOwnerPhoneNumberNotProvided;
+
         public FormRentVehicle()
         {
             InitializeComponent();
@@ -25,7 +28,18 @@ namespace Car_Rental_Application.Forms
         public FormRentVehicle(VehicleUserControl availableVehicle)
         {
             InitializeComponent();
+
             AvailableVehicle = availableVehicle;
+
+            errorOwnerNameNotProvided = Program.Language.Translate("Owner's name must be provided");
+            errorOwnerPhoneNumberNotProvided = Program.Language.Translate("Owner's phone must be provided");
+
+            labelOwnerName.Text = Program.Language.Translate("Owner name");
+            labelOwnerPhoneNumber.Text = Program.Language.Translate("Owner phone number");
+            labelReturnDate.Text = Program.Language.Translate("Return date");
+
+            buttonRent.Text = Program.Language.Translate("Rent");
+            buttonCancel.Text = Program.Language.Translate("Cancel");
         }
 
         private void buttonRent_Click(object sender, EventArgs e)

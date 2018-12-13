@@ -52,6 +52,14 @@ namespace Car_Rental_Application.Forms
         {
             InitializeComponent();
             RentedVehicle = vehicle;
+
+            labelDescription.Text = Program.Language.Translate("Fill in the details of the vehicle at return");
+            labelFuelPercentage.Text = Program.Language.Translate("Fuel percentage");
+            labelDamagePercentage.Text = Program.Language.Translate("Damage percentage");
+            labelReturnedDate.Text = Program.Language.Translate("Returned on");
+
+            buttonReturn.Text = Program.Language.Translate("Return vehicle");
+            buttonCancel.Text = Program.Language.Translate("Cancel");
         }
 
         private void ReturnFromRent(object sender, EventArgs e)

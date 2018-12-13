@@ -934,6 +934,7 @@ namespace Car_Rental_Application
             {
                 Language chosenLanguage = formLanguages.ChosenLanguage;
                 UpdateLanguage(chosenLanguage);
+                Program.Language = chosenLanguage;
             }
         }
 
