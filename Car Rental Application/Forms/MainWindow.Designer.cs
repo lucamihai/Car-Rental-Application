@@ -46,7 +46,6 @@
             this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
             this.rentedCarsElementsPanel = new System.Windows.Forms.Panel();
-            this.panelAddVehicles = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFromDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,14 +57,12 @@
             this.orderLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.labelProgramDate = new System.Windows.Forms.Label();
             this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
             this.timerClearErrors = new System.Windows.Forms.Timer(this.components);
-            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooseLanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addALanguageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AvailableCarsPanel.SuspendLayout();
             this.RentedCarsPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -259,15 +256,6 @@
             this.rentedCarsElementsPanel.Size = new System.Drawing.Size(722, 501);
             this.rentedCarsElementsPanel.TabIndex = 1;
             // 
-            // panelAddVehicles
-            // 
-            this.panelAddVehicles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelAddVehicles.Location = new System.Drawing.Point(470, 235);
-            this.panelAddVehicles.Name = "panelAddVehicles";
-            this.panelAddVehicles.Size = new System.Drawing.Size(325, 250);
-            this.panelAddVehicles.TabIndex = 5;
-            this.panelAddVehicles.Visible = false;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -324,14 +312,14 @@
             // loadFromLocalFileToolStripMenuItem
             // 
             this.loadFromLocalFileToolStripMenuItem.Name = "loadFromLocalFileToolStripMenuItem";
-            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.loadFromLocalFileToolStripMenuItem.Text = "Load from local file";
             this.loadFromLocalFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromLocalFileToolStripMenuItem_Click);
             // 
             // saveToLocalFileToolStripMenuItem
             // 
             this.saveToLocalFileToolStripMenuItem.Name = "saveToLocalFileToolStripMenuItem";
-            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
             this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
             // 
@@ -347,16 +335,23 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.languageToolStripMenuItem.Text = "Language";
+            this.languageToolStripMenuItem.Click += new System.EventHandler(this.languageToolStripMenuItem_Click);
             // 
             // labelProgramDate
             // 
@@ -390,28 +385,6 @@
             this.timerClearErrors.Interval = 5000;
             this.timerClearErrors.Tick += new System.EventHandler(this.timerClearErrors_Tick);
             // 
-            // languageToolStripMenuItem
-            // 
-            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chooseLanguageToolStripMenuItem,
-            this.addALanguageToolStripMenuItem});
-            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.languageToolStripMenuItem.Text = "Language";
-            // 
-            // chooseLanguageToolStripMenuItem
-            // 
-            this.chooseLanguageToolStripMenuItem.Name = "chooseLanguageToolStripMenuItem";
-            this.chooseLanguageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.chooseLanguageToolStripMenuItem.Text = "Choose language";
-            // 
-            // addALanguageToolStripMenuItem
-            // 
-            this.addALanguageToolStripMenuItem.Name = "addALanguageToolStripMenuItem";
-            this.addALanguageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addALanguageToolStripMenuItem.Text = "Add a language";
-            this.addALanguageToolStripMenuItem.Click += new System.EventHandler(this.addALanguageToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -420,7 +393,6 @@
             this.ClientSize = new System.Drawing.Size(1392, 753);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.labelProgramDate);
-            this.Controls.Add(this.panelAddVehicles);
             this.Controls.Add(this.RentedCarsPanel);
             this.Controls.Add(this.AvailableCarsPanel);
             this.Controls.Add(this.menuStrip1);
@@ -447,7 +419,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel availableCarsElementsPanel;
         private System.Windows.Forms.Button buttonAddVehicle;
-        private System.Windows.Forms.Panel panelAddVehicles;
         private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
         private System.Windows.Forms.Panel rentedCarsElementsPanel;
         private System.Windows.Forms.Button buttonSortAvailableVehicles;
@@ -475,8 +446,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chooseLanguageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addALanguageToolStripMenuItem;
     }
 }
 

@@ -34,14 +34,7 @@ namespace Car_Rental_Application
             InitializeComponent();
 
             errorLabel.Text = "";
-
-            ToolStripItem ceva = MainMenuStrip.Items[1];
             
-
-            Translator translator = new Translator();
-
-            
-
             returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
             returnedVehiclesLogManager.Path = "log.txt";
 
@@ -70,11 +63,6 @@ namespace Car_Rental_Application
         public void AddToRentedCarsList(VehicleUserControl vehicle)
         {
             rentedVehicles.Add(vehicle);
-        }
-
-        public void HideAddVehiclePanel()
-        {
-            panelAddVehicles.Hide();
         }
 
         public int GetIndexOfAvailableVehicle(VehicleUserControl vehicle)
@@ -200,7 +188,7 @@ namespace Car_Rental_Application
             }
         }
 
-        public String SQLConnectionString()
+        public string SQLConnectionString()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "tcp:carrentals.database.windows.net,1433";
@@ -387,8 +375,6 @@ namespace Car_Rental_Application
                 sqlConnection.Close();
             }
         }
-
-        
 
         #endregion
 
@@ -850,9 +836,15 @@ namespace Car_Rental_Application
 
         #endregion
 
-        private void addALanguageToolStripMenuItem_Click(object sender, EventArgs e)
+        private void languageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            FormLanguages formLanguages = new FormLanguages();
 
+            var result = formLanguages.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                
+            }
         }
     }
 }

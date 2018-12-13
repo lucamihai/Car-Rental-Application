@@ -76,6 +76,12 @@
     <Compile Include="Forms\FormAddVehicle.Designer.cs">
       <DependentUpon>FormAddVehicle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormLanguages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLanguages.Designer.cs">
+      <DependentUpon>FormLanguages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormRentVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\FormAddVehicle.resx">
       <DependentUpon>FormAddVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLanguages.resx">
+      <DependentUpon>FormLanguages.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormRentVehicle.resx">
       <DependentUpon>FormRentVehicle.cs</DependentUpon>
