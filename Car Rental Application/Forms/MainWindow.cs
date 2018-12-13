@@ -387,12 +387,32 @@ namespace Car_Rental_Application
 
         private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string action = "load vehicles from the database";
+            string consequence = "remove existing vehicles from the program";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             GetAvailableVehiclesFromSQLDatabase();
             GetRentedVehiclesFromSQLDatabase();
         }
 
         private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string action = "save vehicles to the database";
+            string consequence = "remove existing vehicles from the database";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             ClearAvailableVehiclesDatabase();
             ClearRentedVehiclesDatabase();
 
@@ -627,6 +647,16 @@ namespace Car_Rental_Application
 
         public void ToXML(List<VehicleUserControl> list, string filePath)
         {
+            string action = "save vehicles to local file";
+            string consequence = "delete already existing local file";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             XmlSerializer serializer = new XmlSerializer( typeof( List<VehicleUserControl> ) );
 
             if (File.Exists(filePath))
@@ -650,8 +680,8 @@ namespace Car_Rental_Application
             XmlSerializer serializer = new XmlSerializer (typeof( List<VehicleUserControl> ) );
             using (FileStream stream = File.OpenRead(filePath))
             {
-                List<VehicleUserControl> dezerializedList = (List<VehicleUserControl>)serializer.Deserialize(stream);
-                return dezerializedList;
+                List<VehicleUserControl> deserializedList = (List<VehicleUserControl>)serializer.Deserialize(stream);
+                return deserializedList;
             }
         }
 
@@ -856,6 +886,15 @@ namespace Car_Rental_Application
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if ( !File.Exists(returnedVehiclesLogManager.Path ) || new FileInfo( returnedVehiclesLogManager.Path ).Length == 0)
+            {
+                return;
+            }
+
+            string action = "delete the existing log";
+            FormConfirmation formConfirmation = new FormConfirmation(action);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
             {
                 return;
             }

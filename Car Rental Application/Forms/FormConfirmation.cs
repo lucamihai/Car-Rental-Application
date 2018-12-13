@@ -12,13 +12,18 @@ namespace Car_Rental_Application.Forms
 {
     public partial class FormConfirmation : Form
     {
-        public FormConfirmation(string action = null)
+        public FormConfirmation(string action = null, string consequence = null)
         {
             InitializeComponent();
 
             if (action != null)
             {
                 labelAreYouSure.Text = string.Format("Are you sure you want to {0}?", action);
+            }
+
+            if (consequence != null)
+            {
+                labelAreYouSure.Text += string.Format("This will {0}", consequence);
             }
         }
 
