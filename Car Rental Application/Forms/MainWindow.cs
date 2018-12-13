@@ -35,6 +35,13 @@ namespace Car_Rental_Application
 
             errorLabel.Text = "";
 
+            ToolStripItem ceva = MainMenuStrip.Items[1];
+            
+
+            Translator translator = new Translator();
+
+            
+
             returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
             returnedVehiclesLogManager.Path = "log.txt";
 

@@ -59,5 +59,33 @@ namespace Car_Rental_Application.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to text\translated text
+        ///Car rental\Car rental
+        ///Sedan\Sedan
+        ///Minivan\Minivan
+        ///Available cars\Available cars
+        ///Rented cars\Rented cars
+        ///Sort\Sort
+        ///By ID\By ID
+        ///By name\By name
+        ///By type\By type
+        ///By fuel percentage\By fuel percentage
+        ///By damage percentage\By damage percentage
+        ///By owner name\By owner name
+        ///By owner phone\By owner phone
+        ///By return date\By return date
+        ///Database\Database
+        ///Connect to database\Connect to database
+        ///Local file\Local file
+        ///Load from local file\Load from local file
+        ///Save to local file\Save  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
     }
 }
