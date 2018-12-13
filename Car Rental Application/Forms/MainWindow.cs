@@ -409,6 +409,15 @@ namespace Car_Rental_Application
 
         private void RemoveLastAvailableVehicle(object sender, EventArgs e)
         {
+            string action = "remove the last available vehicle";
+            FormConfirmation formConfirmation = new FormConfirmation(action);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             if (availableVehicles.Count < 1)
             {
                 errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove";
@@ -435,6 +444,15 @@ namespace Car_Rental_Application
 
         private void RemoveLastRentedVehicle(object sender, EventArgs e)
         {
+            string action = "remove the last rented vehicle";
+            FormConfirmation formConfirmation = new FormConfirmation(action);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             if (rentedVehicles.Count < 1)
             {
                 errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove";
@@ -467,6 +485,15 @@ namespace Car_Rental_Application
         {
             if (indexesOfSelectedAvailableCars.Count > 0)
             {
+                string action = "remove the selected available vehicles";
+                FormConfirmation formConfirmation = new FormConfirmation(action);
+
+                var result = formConfirmation.ShowDialog();
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+
                 errorLabel.Text = "";
 
                 // Store the vehicles to be removed in a temporary List
@@ -500,6 +527,15 @@ namespace Car_Rental_Application
         {
             if (indexesOfSelectedRentedCars.Count > 0)
             {
+                string action = "remove the selected rented vehicles";
+                FormConfirmation formConfirmation = new FormConfirmation(action);
+
+                var result = formConfirmation.ShowDialog();
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+
                 errorLabel.Text = "";
 
                 // Store the vehicles to be removed in a temporary List
