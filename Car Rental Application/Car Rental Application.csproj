@@ -66,6 +66,7 @@
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\AvailableCarsSorter.cs" />
     <Compile Include="Classes\IDManagement.cs" />
+    <Compile Include="Classes\Language.cs" />
     <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />
     <Compile Include="Classes\RentedCarsSorter.cs" />
     <Compile Include="Classes\RentVehicleConfiguration.cs" />

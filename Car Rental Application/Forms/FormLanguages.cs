@@ -8,19 +8,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Car_Rental_Application.Classes;
 
 namespace Car_Rental_Application.Forms
 {
     public partial class FormLanguages : Form
     {
-        public Dictionary<string, string> ChosenLanguage { get; set; }
-        Dictionary<string, Dictionary<string, string>> availableLanguages = new Dictionary<string, Dictionary<string, string>>();
+        public Language ChosenLanguage { get; set; }
+
+        Dictionary<string, Language> availableLanguages = new Dictionary<string, Language>();
 
         public FormLanguages()
         {
             InitializeComponent();
 
-            Dictionary<string, string> english = GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
+            Dictionary<string, string> englishDictionary = GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
+            Language english = new Language(englishDictionary);
             ChosenLanguage = english;
 
             LoadDefaultLanguage();
@@ -61,7 +64,7 @@ namespace Car_Rental_Application.Forms
         {
             if (Directory.Exists("Languages"))
             {
-                availableLanguages = new Dictionary<string, Dictionary<string, string>>();
+                availableLanguages = new Dictionary<string, Language>();
                 string[] languageFiles = Directory.GetFiles("Languages");
 
                 foreach (string languageFile in languageFiles)
@@ -69,7 +72,8 @@ namespace Car_Rental_Application.Forms
                     if (Path.GetExtension(languageFile) == ".csv")
                     {
                         string languageName = Path.GetFileNameWithoutExtension(languageFile);
-                        Dictionary<string, string> language = GetTranslationsFromCSVFile(languageFile, '\\');
+                        Dictionary<string, string> languageDictionary = GetTranslationsFromCSVFile(languageFile, '\\');
+                        Language language = new Language(languageDictionary);
 
                         availableLanguages[languageName] = language;
                     }

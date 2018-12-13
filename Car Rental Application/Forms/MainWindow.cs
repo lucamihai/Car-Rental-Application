@@ -843,24 +843,14 @@ namespace Car_Rental_Application
             var result = formLanguages.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Dictionary<string, string> chosenLanguage = formLanguages.ChosenLanguage;
+                Language chosenLanguage = formLanguages.ChosenLanguage;
                 UpdateLanguage(chosenLanguage);
             }
         }
 
-        void UpdateLanguage(Dictionary<string, string> language)
+        void UpdateLanguage(Language language)
         {
-            labelAvailableVehicles.Text = Translate(language, "Available cars");
-        }
-
-        string Translate(Dictionary<string, string> language, string text)
-        {
-            if (language.ContainsKey(text) && language[text] != null)
-            {
-                return language[text];
-            }
-
-            return text;
+            labelAvailableVehicles.Text = language.Translate("Available cars");
         }
     }
 }
