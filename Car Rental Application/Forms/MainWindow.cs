@@ -647,16 +647,6 @@ namespace Car_Rental_Application
 
         public void ToXML(List<VehicleUserControl> list, string filePath)
         {
-            string action = "save vehicles to local file";
-            string consequence = "delete already existing local file";
-            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
-
-            var result = formConfirmation.ShowDialog();
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-
             XmlSerializer serializer = new XmlSerializer( typeof( List<VehicleUserControl> ) );
 
             if (File.Exists(filePath))
@@ -685,14 +675,38 @@ namespace Car_Rental_Application
             }
         }
 
+        #endregion
+
+        #region Local file ToolStripMenu
+
         private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string action = "save vehicles to local file";
+            string consequence = "delete already existing local file";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             ToXML(availableVehicles, "availableVehiclesList.xml");
             ToXML(rentedVehicles, "rentedVehiclesList.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string action = "load vehicles from local file";
+            string consequence = "remove existing vehicles from the program";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
             availableVehicles.Clear();
             rentedVehicles.Clear();
 
@@ -702,25 +716,25 @@ namespace Car_Rental_Application
             foreach (VehicleUserControl vehicle in listOfImportedAvailableVehicles)
             {
                 if (vehicle.Name == "AvailableSedanUserControl")
-                    availableVehicles.Add( new AvailableSedanUserControl(vehicle) );
+                    availableVehicles.Add(new AvailableSedanUserControl(vehicle));
 
                 if (vehicle.Name == "AvailableMinivanUserControl")
-                    availableVehicles.Add( new AvailableMinivanUserControl(vehicle) );
+                    availableVehicles.Add(new AvailableMinivanUserControl(vehicle));
             }
 
             foreach (VehicleUserControl vehicle in listOfImportedRentedVehicles)
             {
                 if (vehicle.Name == "RentedSedanUserControl")
-                    rentedVehicles.Add( new RentedSedanUserControl(vehicle) );
+                    rentedVehicles.Add(new RentedSedanUserControl(vehicle));
 
                 if (vehicle.Name == "RentedMinivanUserControl")
-                    rentedVehicles.Add( new RentedMinivanUserControl(vehicle) );        
+                    rentedVehicles.Add(new RentedMinivanUserControl(vehicle));
             }
 
-            foreach(VehicleUserControl vehicle in rentedVehicles)
-            {               
-                vehicle.configureRentedVehicle( RentVehicleConfiguration.GetRentConfiguration() );
-                IDManagement.MarkRentIDAsUnavailable( vehicle.GetRentID() );
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+            {
+                vehicle.configureRentedVehicle(RentVehicleConfiguration.GetRentConfiguration());
+                IDManagement.MarkRentIDAsUnavailable(vehicle.GetRentID());
             }
 
             PopulateAvailableVehiclesPanel();

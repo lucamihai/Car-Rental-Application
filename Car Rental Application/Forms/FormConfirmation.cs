@@ -23,7 +23,7 @@ namespace Car_Rental_Application.Forms
 
             if (consequence != null)
             {
-                labelAreYouSure.Text += string.Format("This will {0}", consequence);
+                labelAreYouSure.Text += string.Format("\r\nThis will {0}", consequence);
             }
         }
 
