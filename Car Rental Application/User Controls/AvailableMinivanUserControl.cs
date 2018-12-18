@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Car_Rental_Application.Interfaces;
-using Car_Rental_Application.Classes;
+﻿using Car_Rental_Application.Classes;
+using System;
 
 namespace Car_Rental_Application.User_Controls
 {
@@ -17,6 +8,8 @@ namespace Car_Rental_Application.User_Controls
         public AvailableMinivanUserControl()
         {
             InitializeComponent();
+
+            UpdateLanguage(Program.Language);
         }
 
         public AvailableMinivanUserControl(string vehicleName)
@@ -29,6 +22,8 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = 100;
             DamagePercentage = 0;
             IDManagement.MarkIDAsUnavailable(id);
+
+            UpdateLanguage(Program.Language);
         }
 
         public AvailableMinivanUserControl(string vehicleName, short fuelPercent, short damagePercent)
@@ -41,6 +36,8 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = fuelPercent;
             DamagePercentage = damagePercent;
             IDManagement.MarkIDAsUnavailable(id);
+
+            UpdateLanguage(Program.Language);
         }
 
         public AvailableMinivanUserControl(VehicleUserControl availableVehicle)
@@ -51,6 +48,8 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = availableVehicle.FuelPercentage;
             DamagePercentage = availableVehicle.DamagePercentage;
             IDManagement.MarkIDAsUnavailable(ID);
+
+            UpdateLanguage(Program.Language);
         }
 
 
@@ -67,6 +66,8 @@ namespace Car_Rental_Application.User_Controls
             VehicleName = returnedVehicleName;
             FuelPercentage = returnedVehicleFuelPercentage;
             DamagePercentage = returnedVehicleDamagePercentage;
+
+            UpdateLanguage(Program.Language);
         }
 
         #region Properties
@@ -76,22 +77,24 @@ namespace Car_Rental_Application.User_Controls
             get
             {
                 string details = "";
-                details += "Minivan " + VehicleName + ", registered with the id " + ID.ToString() + ", has " + FuelPercentage.ToString() + " % fuel"
-                    + "and is " + DamagePercentage.ToString() + " % damaged";
+                details += "Minivan " + VehicleName + ", ";
+                details += "registered with the id " + ID.ToString() + ", ";
+                details += "has " + FuelPercentage.ToString() + " % fuel and ";
+                details += "and is " + DamagePercentage.ToString() + " % damaged";
+
                 return details;
             }
-
         }
 
         public override bool Selected
         {
             get
             {
-                return selectCheckBox.Checked;
+                return checkboxSelect.Checked;
             }
             set
             {
-                selectCheckBox.Checked = value;
+                checkboxSelect.Checked = value;
             }
         }
 
@@ -157,7 +160,7 @@ namespace Car_Rental_Application.User_Controls
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
-            if (selectCheckBox.Checked == true)
+            if (checkboxSelect.Checked == true)
             {
                 mainWindow.indexesOfSelectedAvailableCars.Add(indexOfCurrentVehicle);
                 return;
@@ -168,6 +171,20 @@ namespace Car_Rental_Application.User_Controls
         private void buttonRent_Click(object sender, EventArgs e)
         {
             mainWindow.RentForm(this);
+        }
+
+        public override void UpdateLanguage(Language language)
+        {
+            labelID.Text = language.Translate("ID");
+            labelVehicleName.Text = language.Translate("Vehicle name");
+            labelVehicleType.Text = language.Translate("Vehicle type");
+            labelVehicleTypeValue.Text = language.Translate("Minivan");
+            labelDamagePercentage.Text = language.Translate("Damage percentage");
+            labelFuelPercentage.Text = language.Translate("Fuel percentage");
+
+            checkboxSelect.Text = language.Translate("Select");
+
+            buttonRent.Text = language.Translate("Rent");
         }
     }
 }

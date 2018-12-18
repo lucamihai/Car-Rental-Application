@@ -25,8 +25,10 @@ Language\Language
 ID\ID
 Vehicle name\Vehicle name
 Vehicle type\Vehicle type
-Damage percent\Damage percent
-Fuel percent\Fuel percent
+Damage percent\Damage (%)
+Damage percentage\Damage (%)
+Fuel percent\Fuel (%)
+Fuel percentage\Fuel (%)
 Select\Select
 Rent\Rent
 Rent vehicle\Rent vehicle

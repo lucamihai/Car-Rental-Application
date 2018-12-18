@@ -189,5 +189,9 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
+        public virtual void UpdateLanguage(Language language)
+        {
+
+        }
     }
 }

@@ -20,6 +20,8 @@ namespace Car_Rental_Application.User_Controls
         public RentedSedanUserControl()
         {
             InitializeComponent();
+
+            UpdateLanguage(Program.Language);
         }
 
         public RentedSedanUserControl(VehicleUserControl vehicle)
@@ -33,6 +35,8 @@ namespace Car_Rental_Application.User_Controls
             SetRentID( vehicle.GetSpecialRentID()) ;
             SetOwner( vehicle.GetOwner() );
             SetReturnDate( vehicle.GetReturnDate() );
+
+            UpdateLanguage(Program.Language);
         }
 
         public RentedSedanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
@@ -52,7 +56,9 @@ namespace Car_Rental_Application.User_Controls
             ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
 
             this.returnDate = returnDate;
-            returnDateValueLabel.Text = returnDate.ToShortDateString();           
+            returnDateValueLabel.Text = returnDate.ToShortDateString();
+
+            UpdateLanguage(Program.Language);
         }
 
         public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
@@ -88,11 +94,11 @@ namespace Car_Rental_Application.User_Controls
         {
             get
             {
-                return selectCheckBox.Checked;
+                return checkboxSelect.Checked;
             }
             set
             {
-                selectCheckBox.Checked = value;
+                checkboxSelect.Checked = value;
             }
         }
 
@@ -166,13 +172,28 @@ namespace Car_Rental_Application.User_Controls
         {
             int indexOfCurrentVehicle = mainWindow.GetIndexOfRentedVehicle(this);
 
-            if (selectCheckBox.Checked == true)
+            if (checkboxSelect.Checked == true)
             {
                 mainWindow.indexesOfSelectedRentedCars.Add(indexOfCurrentVehicle);
                 return;
             }
 
             mainWindow.indexesOfSelectedRentedCars.Remove(indexOfCurrentVehicle);
+        }
+
+        public override void UpdateLanguage(Language language)
+        {
+            labelRentID.Text = language.Translate("ID");
+            labelVehicleName.Text = language.Translate("Vehicle name");
+            labelVehicleType.Text = language.Translate("Vehicle type");
+            labelVehicleTypeValue.Text = language.Translate("Sedan");
+            labelOwnerName.Text = language.Translate("Owner name");
+            labelOWnerPhoneNumber.Text = language.Translate("Owner phone number");
+            labelReturnDate.Text = language.Translate("Return date");
+
+            checkboxSelect.Text = language.Translate("Select");
+
+            buttonReturn.Text = language.Translate("Return");
         }
     }
 }

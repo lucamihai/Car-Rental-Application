@@ -21,27 +21,29 @@ namespace Car_Rental_Application.User_Controls
         public AvailableSedanUserControl(string vehicleName)
         {
             InitializeComponent();
-            short id = (short)IDManagement.GetLowestAvailableID();
+            short id = IDManagement.GetLowestAvailableID();
 
             ID = id;
             vehicleNameValueLabel.Text = vehicleName;
             FuelPercentage = 100;
             DamagePercentage = 0;
             IDManagement.MarkIDAsUnavailable(id);
-        }
 
-        
+            UpdateLanguage(Program.Language);
+        }
 
         public AvailableSedanUserControl(string vehicleName, short fuelPercent, short damagePercent)
         {
             InitializeComponent();
-            short id = (short)IDManagement.GetLowestAvailableID();
+            short id = IDManagement.GetLowestAvailableID();
 
             ID = id;
             vehicleNameValueLabel.Text = vehicleName;
             FuelPercentage = fuelPercent;
             DamagePercentage = damagePercent;
             IDManagement.MarkIDAsUnavailable(id);
+
+            UpdateLanguage(Program.Language);
         }
 
         public AvailableSedanUserControl(VehicleUserControl availableVehicle)
@@ -52,6 +54,8 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = availableVehicle.FuelPercentage;
             DamagePercentage = availableVehicle.DamagePercentage;
             IDManagement.MarkIDAsUnavailable(ID);
+
+            UpdateLanguage(Program.Language);
         }
 
         public AvailableSedanUserControl(RentedSedanUserControl rentedSedan)
@@ -67,6 +71,8 @@ namespace Car_Rental_Application.User_Controls
             vehicleNameValueLabel.Text = returnedVehicleName;
             FuelPercentage = returnedVehicleFuelPercentage;
             DamagePercentage = returnedVehicleDamagePercentage;
+
+            UpdateLanguage(Program.Language);
         }
 
         #region Properties
@@ -89,11 +95,11 @@ namespace Car_Rental_Application.User_Controls
         {
             get
             {
-                return selectCheckBox.Checked;
+                return checkboxSelect.Checked;
             }
             set
             {
-                selectCheckBox.Checked = value;
+                checkboxSelect.Checked = value;
             }
         }
 
@@ -160,7 +166,7 @@ namespace Car_Rental_Application.User_Controls
         {
             int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
 
-            if (selectCheckBox.Checked == true)
+            if (checkboxSelect.Checked == true)
             {
                 mainWindow.indexesOfSelectedAvailableCars.Add(indexOfCurrentVehicle);
                 return;
@@ -172,6 +178,20 @@ namespace Car_Rental_Application.User_Controls
         private void buttonRent_Click(object sender, EventArgs e)
         {
             mainWindow.RentForm(this);
+        }
+
+        public override void UpdateLanguage(Language language)
+        {
+            labelID.Text = language.Translate("ID");
+            labelVehicleName.Text = language.Translate("Vehicle name");
+            labelVehicleType.Text = language.Translate("Vehicle type");
+            labelVehicleTypeValue.Text = language.Translate("Sedan");
+            labelDamagePercentage.Text = language.Translate("Damage percentage");
+            labelFuelPercentage.Text = language.Translate("Fuel percentage");
+
+            checkboxSelect.Text = language.Translate("Select");
+
+            buttonRent.Text = language.Translate("Rent");
         }
     }
 }

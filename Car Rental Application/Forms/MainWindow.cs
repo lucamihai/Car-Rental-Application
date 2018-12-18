@@ -962,6 +962,30 @@ namespace Car_Rental_Application
             openToolStripMenuItem.Text = language.Translate("Open");
             deleteToolStripMenuItem.Text = language.Translate("Delete");
             languageToolStripMenuItem.Text = language.Translate("Language");
+
+            UpdateLanguageForExistingVehicles(language);
+        }
+
+        void UpdateLanguageForExistingVehicles(Language language)
+        {
+            UpdateLanguageForExistingAvailableVehicles(language);
+            UpdateLanguageForExistingRentedVehicles(language);
+        }
+
+        void UpdateLanguageForExistingAvailableVehicles(Language language)
+        {
+            foreach (VehicleUserControl vehicle in availableVehicles)
+            {
+                vehicle.UpdateLanguage(language);
+            }
+        }
+
+        void UpdateLanguageForExistingRentedVehicles(Language language)
+        {
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+            {
+                vehicle.UpdateLanguage(language);
+            }
         }
     }
 }

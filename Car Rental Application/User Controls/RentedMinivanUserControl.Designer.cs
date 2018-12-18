@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.rentIDValueLabel = new System.Windows.Forms.Label();
-            this.vehicleIDLabel = new System.Windows.Forms.Label();
+            this.labelRentID = new System.Windows.Forms.Label();
             this.buttonReturn = new System.Windows.Forms.Button();
             this.returnDateValueLabel = new System.Windows.Forms.Label();
             this.ownerPhoneNumberValueLabel = new System.Windows.Forms.Label();
             this.ownerNameValueLabel = new System.Windows.Forms.Label();
-            this.returnDateLabel = new System.Windows.Forms.Label();
-            this.ownerPhoneNumberValue = new System.Windows.Forms.Label();
-            this.ownerNameLabel = new System.Windows.Forms.Label();
-            this.vehicleTypeValueLabel = new System.Windows.Forms.Label();
+            this.labelReturnDate = new System.Windows.Forms.Label();
+            this.labelOwnerPhoneNumber = new System.Windows.Forms.Label();
+            this.labelOwnerName = new System.Windows.Forms.Label();
+            this.labelVehicleTypeValue = new System.Windows.Forms.Label();
             this.vehicleNameValueLabel = new System.Windows.Forms.Label();
-            this.vehicleTypeLabel = new System.Windows.Forms.Label();
-            this.vehicleNameLabel = new System.Windows.Forms.Label();
-            this.selectCheckBox = new System.Windows.Forms.CheckBox();
+            this.labelVehicleType = new System.Windows.Forms.Label();
+            this.labelVehicleName = new System.Windows.Forms.Label();
+            this.checkboxSelect = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // rentIDValueLabel
@@ -55,13 +55,13 @@
             // 
             // vehicleIDLabel
             // 
-            this.vehicleIDLabel.AutoSize = true;
-            this.vehicleIDLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleIDLabel.Location = new System.Drawing.Point(3, 18);
-            this.vehicleIDLabel.Name = "vehicleIDLabel";
-            this.vehicleIDLabel.Size = new System.Drawing.Size(27, 19);
-            this.vehicleIDLabel.TabIndex = 38;
-            this.vehicleIDLabel.Text = "ID";
+            this.labelRentID.AutoSize = true;
+            this.labelRentID.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRentID.Location = new System.Drawing.Point(3, 18);
+            this.labelRentID.Name = "vehicleIDLabel";
+            this.labelRentID.Size = new System.Drawing.Size(27, 19);
+            this.labelRentID.TabIndex = 38;
+            this.labelRentID.Text = "ID";
             // 
             // buttonReturn
             // 
@@ -102,42 +102,42 @@
             // 
             // returnDateLabel
             // 
-            this.returnDateLabel.AutoSize = true;
-            this.returnDateLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.returnDateLabel.Location = new System.Drawing.Point(524, 18);
-            this.returnDateLabel.Name = "returnDateLabel";
-            this.returnDateLabel.Size = new System.Drawing.Size(89, 19);
-            this.returnDateLabel.TabIndex = 33;
-            this.returnDateLabel.Text = "Return date";
+            this.labelReturnDate.AutoSize = true;
+            this.labelReturnDate.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelReturnDate.Location = new System.Drawing.Point(524, 18);
+            this.labelReturnDate.Name = "returnDateLabel";
+            this.labelReturnDate.Size = new System.Drawing.Size(89, 19);
+            this.labelReturnDate.TabIndex = 33;
+            this.labelReturnDate.Text = "Return date";
             // 
             // ownerPhoneNumberValue
             // 
-            this.ownerPhoneNumberValue.AutoSize = true;
-            this.ownerPhoneNumberValue.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ownerPhoneNumberValue.Location = new System.Drawing.Point(356, 18);
-            this.ownerPhoneNumberValue.Name = "ownerPhoneNumberValue";
-            this.ownerPhoneNumberValue.Size = new System.Drawing.Size(162, 19);
-            this.ownerPhoneNumberValue.TabIndex = 32;
-            this.ownerPhoneNumberValue.Text = "Owner\'s phone number";
+            this.labelOwnerPhoneNumber.AutoSize = true;
+            this.labelOwnerPhoneNumber.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOwnerPhoneNumber.Location = new System.Drawing.Point(356, 18);
+            this.labelOwnerPhoneNumber.Name = "ownerPhoneNumberValue";
+            this.labelOwnerPhoneNumber.Size = new System.Drawing.Size(162, 19);
+            this.labelOwnerPhoneNumber.TabIndex = 32;
+            this.labelOwnerPhoneNumber.Text = "Owner\'s phone number";
             // 
             // ownerNameLabel
             // 
-            this.ownerNameLabel.AutoSize = true;
-            this.ownerNameLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ownerNameLabel.Location = new System.Drawing.Point(259, 18);
-            this.ownerNameLabel.Name = "ownerNameLabel";
-            this.ownerNameLabel.Size = new System.Drawing.Size(93, 19);
-            this.ownerNameLabel.TabIndex = 31;
-            this.ownerNameLabel.Text = "Owner name";
+            this.labelOwnerName.AutoSize = true;
+            this.labelOwnerName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOwnerName.Location = new System.Drawing.Point(259, 18);
+            this.labelOwnerName.Name = "ownerNameLabel";
+            this.labelOwnerName.Size = new System.Drawing.Size(93, 19);
+            this.labelOwnerName.TabIndex = 31;
+            this.labelOwnerName.Text = "Owner name";
             // 
             // vehicleTypeValueLabel
             // 
-            this.vehicleTypeValueLabel.AutoSize = true;
-            this.vehicleTypeValueLabel.Location = new System.Drawing.Point(163, 37);
-            this.vehicleTypeValueLabel.Name = "vehicleTypeValueLabel";
-            this.vehicleTypeValueLabel.Size = new System.Drawing.Size(44, 13);
-            this.vehicleTypeValueLabel.TabIndex = 30;
-            this.vehicleTypeValueLabel.Text = "Minivan";
+            this.labelVehicleTypeValue.AutoSize = true;
+            this.labelVehicleTypeValue.Location = new System.Drawing.Point(163, 37);
+            this.labelVehicleTypeValue.Name = "vehicleTypeValueLabel";
+            this.labelVehicleTypeValue.Size = new System.Drawing.Size(44, 13);
+            this.labelVehicleTypeValue.TabIndex = 30;
+            this.labelVehicleTypeValue.Text = "Minivan";
             // 
             // vehicleNameValueLabel
             // 
@@ -150,54 +150,54 @@
             // 
             // vehicleTypeLabel
             // 
-            this.vehicleTypeLabel.AutoSize = true;
-            this.vehicleTypeLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleTypeLabel.Location = new System.Drawing.Point(162, 18);
-            this.vehicleTypeLabel.Name = "vehicleTypeLabel";
-            this.vehicleTypeLabel.Size = new System.Drawing.Size(91, 19);
-            this.vehicleTypeLabel.TabIndex = 28;
-            this.vehicleTypeLabel.Text = "Vehicle type";
+            this.labelVehicleType.AutoSize = true;
+            this.labelVehicleType.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVehicleType.Location = new System.Drawing.Point(162, 18);
+            this.labelVehicleType.Name = "vehicleTypeLabel";
+            this.labelVehicleType.Size = new System.Drawing.Size(91, 19);
+            this.labelVehicleType.TabIndex = 28;
+            this.labelVehicleType.Text = "Vehicle type";
             // 
             // vehicleNameLabel
             // 
-            this.vehicleNameLabel.AutoSize = true;
-            this.vehicleNameLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleNameLabel.Location = new System.Drawing.Point(58, 18);
-            this.vehicleNameLabel.Name = "vehicleNameLabel";
-            this.vehicleNameLabel.Size = new System.Drawing.Size(98, 19);
-            this.vehicleNameLabel.TabIndex = 27;
-            this.vehicleNameLabel.Text = "Vehicle name";
+            this.labelVehicleName.AutoSize = true;
+            this.labelVehicleName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVehicleName.Location = new System.Drawing.Point(58, 18);
+            this.labelVehicleName.Name = "vehicleNameLabel";
+            this.labelVehicleName.Size = new System.Drawing.Size(98, 19);
+            this.labelVehicleName.TabIndex = 27;
+            this.labelVehicleName.Text = "Vehicle name";
             // 
             // selectCheckBox
             // 
-            this.selectCheckBox.AutoSize = true;
-            this.selectCheckBox.Location = new System.Drawing.Point(617, 21);
-            this.selectCheckBox.Name = "selectCheckBox";
-            this.selectCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.selectCheckBox.TabIndex = 40;
-            this.selectCheckBox.Text = "Select";
-            this.selectCheckBox.UseVisualStyleBackColor = true;
-            this.selectCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkboxSelect.AutoSize = true;
+            this.checkboxSelect.Location = new System.Drawing.Point(617, 21);
+            this.checkboxSelect.Name = "selectCheckBox";
+            this.checkboxSelect.Size = new System.Drawing.Size(56, 17);
+            this.checkboxSelect.TabIndex = 40;
+            this.checkboxSelect.Text = "Select";
+            this.checkboxSelect.UseVisualStyleBackColor = true;
+            this.checkboxSelect.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // RentedMinivanUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Controls.Add(this.selectCheckBox);
+            this.Controls.Add(this.checkboxSelect);
             this.Controls.Add(this.rentIDValueLabel);
-            this.Controls.Add(this.vehicleIDLabel);
+            this.Controls.Add(this.labelRentID);
             this.Controls.Add(this.buttonReturn);
             this.Controls.Add(this.returnDateValueLabel);
             this.Controls.Add(this.ownerPhoneNumberValueLabel);
             this.Controls.Add(this.ownerNameValueLabel);
-            this.Controls.Add(this.returnDateLabel);
-            this.Controls.Add(this.ownerPhoneNumberValue);
-            this.Controls.Add(this.ownerNameLabel);
-            this.Controls.Add(this.vehicleTypeValueLabel);
+            this.Controls.Add(this.labelReturnDate);
+            this.Controls.Add(this.labelOwnerPhoneNumber);
+            this.Controls.Add(this.labelOwnerName);
+            this.Controls.Add(this.labelVehicleTypeValue);
             this.Controls.Add(this.vehicleNameValueLabel);
-            this.Controls.Add(this.vehicleTypeLabel);
-            this.Controls.Add(this.vehicleNameLabel);
+            this.Controls.Add(this.labelVehicleType);
+            this.Controls.Add(this.labelVehicleName);
             this.Name = "RentedMinivanUserControl";
             this.Size = new System.Drawing.Size(700, 75);
             this.ResumeLayout(false);
@@ -208,18 +208,18 @@
         #endregion
 
         private System.Windows.Forms.Label rentIDValueLabel;
-        private System.Windows.Forms.Label vehicleIDLabel;
+        private System.Windows.Forms.Label labelRentID;
         private System.Windows.Forms.Button buttonReturn;
         private System.Windows.Forms.Label returnDateValueLabel;
         private System.Windows.Forms.Label ownerPhoneNumberValueLabel;
         private System.Windows.Forms.Label ownerNameValueLabel;
-        private System.Windows.Forms.Label returnDateLabel;
-        private System.Windows.Forms.Label ownerPhoneNumberValue;
-        private System.Windows.Forms.Label ownerNameLabel;
-        private System.Windows.Forms.Label vehicleTypeValueLabel;
+        private System.Windows.Forms.Label labelReturnDate;
+        private System.Windows.Forms.Label labelOwnerPhoneNumber;
+        private System.Windows.Forms.Label labelOwnerName;
+        private System.Windows.Forms.Label labelVehicleTypeValue;
         private System.Windows.Forms.Label vehicleNameValueLabel;
-        private System.Windows.Forms.Label vehicleTypeLabel;
-        private System.Windows.Forms.Label vehicleNameLabel;
-        private System.Windows.Forms.CheckBox selectCheckBox;
+        private System.Windows.Forms.Label labelVehicleType;
+        private System.Windows.Forms.Label labelVehicleName;
+        private System.Windows.Forms.CheckBox checkboxSelect;
     }
 }

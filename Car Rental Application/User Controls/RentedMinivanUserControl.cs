@@ -20,6 +20,8 @@ namespace Car_Rental_Application.User_Controls
         public RentedMinivanUserControl()
         {
             InitializeComponent();
+
+            UpdateLanguage(Program.Language);
         }
 
         public RentedMinivanUserControl(VehicleUserControl minivan)
@@ -33,6 +35,8 @@ namespace Car_Rental_Application.User_Controls
             SetRentID(minivan.GetSpecialRentID());
             SetOwner(minivan.GetOwner());
             SetReturnDate(minivan.GetReturnDate());
+
+            UpdateLanguage(Program.Language);
         }
 
         public RentedMinivanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
@@ -53,6 +57,8 @@ namespace Car_Rental_Application.User_Controls
 
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
+
+            UpdateLanguage(Program.Language);
         }
 
         public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
@@ -88,11 +94,11 @@ namespace Car_Rental_Application.User_Controls
         {
             get
             {
-                return selectCheckBox.Checked;
+                return checkboxSelect.Checked;
             }
             set
             {
-                selectCheckBox.Checked = value;
+                checkboxSelect.Checked = value;
             }
         }
 
@@ -159,7 +165,7 @@ namespace Car_Rental_Application.User_Controls
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (selectCheckBox.Checked == true)
+            if (checkboxSelect.Checked == true)
             {
                 mainWindow.indexesOfSelectedRentedCars.Add(ID);
                 return;
@@ -171,6 +177,21 @@ namespace Car_Rental_Application.User_Controls
         private void buttonReturn_Click(object sender, EventArgs e)
         {
             mainWindow.ReturnForm(this);
+        }
+
+        public override void UpdateLanguage(Language language)
+        {
+            labelRentID.Text = language.Translate("ID");
+            labelVehicleName.Text = language.Translate("Vehicle name");
+            labelVehicleType.Text = language.Translate("Vehicle type");
+            labelVehicleTypeValue.Text = language.Translate("Minivan");
+            labelOwnerName.Text = language.Translate("Owner name");
+            labelOwnerPhoneNumber.Text = language.Translate("Owner phone number");
+            labelReturnDate.Text = language.Translate("Return date");
+
+            checkboxSelect.Text = language.Translate("Select");
+
+            buttonReturn.Text = language.Translate("Return");
         }
     }
 }

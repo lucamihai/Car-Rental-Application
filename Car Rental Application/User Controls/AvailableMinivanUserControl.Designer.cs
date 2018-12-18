@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.IDValueLabel = new System.Windows.Forms.Label();
-            this.IDLabel = new System.Windows.Forms.Label();
-            this.selectCheckBox = new System.Windows.Forms.CheckBox();
+            this.labelID = new System.Windows.Forms.Label();
+            this.checkboxSelect = new System.Windows.Forms.CheckBox();
             this.fuelPercentValueLabel = new System.Windows.Forms.Label();
             this.damagePercentValueLabel = new System.Windows.Forms.Label();
-            this.vehicleTypeValueLabel = new System.Windows.Forms.Label();
+            this.labelVehicleTypeValue = new System.Windows.Forms.Label();
             this.vehicleNameValueLabel = new System.Windows.Forms.Label();
-            this.fuelPercentLabel = new System.Windows.Forms.Label();
-            this.damagePercentLabel = new System.Windows.Forms.Label();
-            this.vehicleTypeLabel = new System.Windows.Forms.Label();
-            this.vehicleNameLabel = new System.Windows.Forms.Label();
+            this.labelFuelPercentage = new System.Windows.Forms.Label();
+            this.labelDamagePercentage = new System.Windows.Forms.Label();
+            this.labelVehicleType = new System.Windows.Forms.Label();
+            this.labelVehicleName = new System.Windows.Forms.Label();
             this.buttonRent = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -53,24 +53,24 @@
             // 
             // IDLabel
             // 
-            this.IDLabel.AutoSize = true;
-            this.IDLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IDLabel.Location = new System.Drawing.Point(3, 18);
-            this.IDLabel.Name = "IDLabel";
-            this.IDLabel.Size = new System.Drawing.Size(27, 19);
-            this.IDLabel.TabIndex = 20;
-            this.IDLabel.Text = "ID";
+            this.labelID.AutoSize = true;
+            this.labelID.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelID.Location = new System.Drawing.Point(3, 18);
+            this.labelID.Name = "IDLabel";
+            this.labelID.Size = new System.Drawing.Size(27, 19);
+            this.labelID.TabIndex = 20;
+            this.labelID.Text = "ID";
             // 
             // selectCheckBox
             // 
-            this.selectCheckBox.AutoSize = true;
-            this.selectCheckBox.Location = new System.Drawing.Point(487, 20);
-            this.selectCheckBox.Name = "selectCheckBox";
-            this.selectCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.selectCheckBox.TabIndex = 19;
-            this.selectCheckBox.Text = "Select";
-            this.selectCheckBox.UseVisualStyleBackColor = true;
-            this.selectCheckBox.CheckedChanged += new System.EventHandler(this.selectCheckBox_CheckedChanged);
+            this.checkboxSelect.AutoSize = true;
+            this.checkboxSelect.Location = new System.Drawing.Point(487, 20);
+            this.checkboxSelect.Name = "selectCheckBox";
+            this.checkboxSelect.Size = new System.Drawing.Size(56, 17);
+            this.checkboxSelect.TabIndex = 19;
+            this.checkboxSelect.Text = "Select";
+            this.checkboxSelect.UseVisualStyleBackColor = true;
+            this.checkboxSelect.CheckedChanged += new System.EventHandler(this.selectCheckBox_CheckedChanged);
             // 
             // fuelPercentValueLabel
             // 
@@ -92,12 +92,12 @@
             // 
             // vehicleTypeValueLabel
             // 
-            this.vehicleTypeValueLabel.AutoSize = true;
-            this.vehicleTypeValueLabel.Location = new System.Drawing.Point(159, 37);
-            this.vehicleTypeValueLabel.Name = "vehicleTypeValueLabel";
-            this.vehicleTypeValueLabel.Size = new System.Drawing.Size(44, 13);
-            this.vehicleTypeValueLabel.TabIndex = 16;
-            this.vehicleTypeValueLabel.Text = "Minivan";
+            this.labelVehicleTypeValue.AutoSize = true;
+            this.labelVehicleTypeValue.Location = new System.Drawing.Point(159, 37);
+            this.labelVehicleTypeValue.Name = "vehicleTypeValueLabel";
+            this.labelVehicleTypeValue.Size = new System.Drawing.Size(44, 13);
+            this.labelVehicleTypeValue.TabIndex = 16;
+            this.labelVehicleTypeValue.Text = "Minivan";
             // 
             // vehicleNameValueLabel
             // 
@@ -110,43 +110,43 @@
             // 
             // fuelPercentLabel
             // 
-            this.fuelPercentLabel.AutoSize = true;
-            this.fuelPercentLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fuelPercentLabel.Location = new System.Drawing.Point(389, 18);
-            this.fuelPercentLabel.Name = "fuelPercentLabel";
-            this.fuelPercentLabel.Size = new System.Drawing.Size(92, 19);
-            this.fuelPercentLabel.TabIndex = 14;
-            this.fuelPercentLabel.Text = "Fuel percent";
+            this.labelFuelPercentage.AutoSize = true;
+            this.labelFuelPercentage.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFuelPercentage.Location = new System.Drawing.Point(389, 18);
+            this.labelFuelPercentage.Name = "fuelPercentLabel";
+            this.labelFuelPercentage.Size = new System.Drawing.Size(92, 19);
+            this.labelFuelPercentage.TabIndex = 14;
+            this.labelFuelPercentage.Text = "Fuel percent";
             // 
             // damagePercentLabel
             // 
-            this.damagePercentLabel.AutoSize = true;
-            this.damagePercentLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damagePercentLabel.Location = new System.Drawing.Point(255, 18);
-            this.damagePercentLabel.Name = "damagePercentLabel";
-            this.damagePercentLabel.Size = new System.Drawing.Size(119, 19);
-            this.damagePercentLabel.TabIndex = 13;
-            this.damagePercentLabel.Text = "Damage percent";
+            this.labelDamagePercentage.AutoSize = true;
+            this.labelDamagePercentage.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDamagePercentage.Location = new System.Drawing.Point(255, 18);
+            this.labelDamagePercentage.Name = "damagePercentLabel";
+            this.labelDamagePercentage.Size = new System.Drawing.Size(119, 19);
+            this.labelDamagePercentage.TabIndex = 13;
+            this.labelDamagePercentage.Text = "Damage percent";
             // 
             // vehicleTypeLabel
             // 
-            this.vehicleTypeLabel.AutoSize = true;
-            this.vehicleTypeLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleTypeLabel.Location = new System.Drawing.Point(158, 18);
-            this.vehicleTypeLabel.Name = "vehicleTypeLabel";
-            this.vehicleTypeLabel.Size = new System.Drawing.Size(91, 19);
-            this.vehicleTypeLabel.TabIndex = 12;
-            this.vehicleTypeLabel.Text = "Vehicle type";
+            this.labelVehicleType.AutoSize = true;
+            this.labelVehicleType.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVehicleType.Location = new System.Drawing.Point(158, 18);
+            this.labelVehicleType.Name = "vehicleTypeLabel";
+            this.labelVehicleType.Size = new System.Drawing.Size(91, 19);
+            this.labelVehicleType.TabIndex = 12;
+            this.labelVehicleType.Text = "Vehicle type";
             // 
             // vehicleNameLabel
             // 
-            this.vehicleNameLabel.AutoSize = true;
-            this.vehicleNameLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vehicleNameLabel.Location = new System.Drawing.Point(54, 18);
-            this.vehicleNameLabel.Name = "vehicleNameLabel";
-            this.vehicleNameLabel.Size = new System.Drawing.Size(98, 19);
-            this.vehicleNameLabel.TabIndex = 11;
-            this.vehicleNameLabel.Text = "Vehicle name";
+            this.labelVehicleName.AutoSize = true;
+            this.labelVehicleName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVehicleName.Location = new System.Drawing.Point(54, 18);
+            this.labelVehicleName.Name = "vehicleNameLabel";
+            this.labelVehicleName.Size = new System.Drawing.Size(98, 19);
+            this.labelVehicleName.TabIndex = 11;
+            this.labelVehicleName.Text = "Vehicle name";
             // 
             // buttonRent
             // 
@@ -165,16 +165,16 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.buttonRent);
             this.Controls.Add(this.IDValueLabel);
-            this.Controls.Add(this.IDLabel);
-            this.Controls.Add(this.selectCheckBox);
+            this.Controls.Add(this.labelID);
+            this.Controls.Add(this.checkboxSelect);
             this.Controls.Add(this.fuelPercentValueLabel);
             this.Controls.Add(this.damagePercentValueLabel);
-            this.Controls.Add(this.vehicleTypeValueLabel);
+            this.Controls.Add(this.labelVehicleTypeValue);
             this.Controls.Add(this.vehicleNameValueLabel);
-            this.Controls.Add(this.fuelPercentLabel);
-            this.Controls.Add(this.damagePercentLabel);
-            this.Controls.Add(this.vehicleTypeLabel);
-            this.Controls.Add(this.vehicleNameLabel);
+            this.Controls.Add(this.labelFuelPercentage);
+            this.Controls.Add(this.labelDamagePercentage);
+            this.Controls.Add(this.labelVehicleType);
+            this.Controls.Add(this.labelVehicleName);
             this.Name = "AvailableMinivanUserControl";
             this.Size = new System.Drawing.Size(550, 75);
             this.ResumeLayout(false);
@@ -185,16 +185,16 @@
         #endregion
 
         private System.Windows.Forms.Label IDValueLabel;
-        private System.Windows.Forms.Label IDLabel;
-        private System.Windows.Forms.CheckBox selectCheckBox;
+        private System.Windows.Forms.Label labelID;
+        private System.Windows.Forms.CheckBox checkboxSelect;
         private System.Windows.Forms.Label fuelPercentValueLabel;
         private System.Windows.Forms.Label damagePercentValueLabel;
-        private System.Windows.Forms.Label vehicleTypeValueLabel;
+        private System.Windows.Forms.Label labelVehicleTypeValue;
         private System.Windows.Forms.Label vehicleNameValueLabel;
-        private System.Windows.Forms.Label fuelPercentLabel;
-        private System.Windows.Forms.Label damagePercentLabel;
-        private System.Windows.Forms.Label vehicleTypeLabel;
-        private System.Windows.Forms.Label vehicleNameLabel;
+        private System.Windows.Forms.Label labelFuelPercentage;
+        private System.Windows.Forms.Label labelDamagePercentage;
+        private System.Windows.Forms.Label labelVehicleType;
+        private System.Windows.Forms.Label labelVehicleName;
         private System.Windows.Forms.Button buttonRent;
     }
 }
