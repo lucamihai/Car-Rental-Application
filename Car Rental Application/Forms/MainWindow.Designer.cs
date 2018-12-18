@@ -113,7 +113,7 @@
             this.buttonSortAvailableVehicles.Name = "buttonSortAvailableVehicles";
             this.buttonSortAvailableVehicles.Size = new System.Drawing.Size(75, 23);
             this.buttonSortAvailableVehicles.TabIndex = 8;
-            this.buttonSortAvailableVehicles.Text = "Sort";
+            this.buttonSortAvailableVehicles.Text = "Sort by";
             this.buttonSortAvailableVehicles.UseVisualStyleBackColor = true;
             this.buttonSortAvailableVehicles.Click += new System.EventHandler(this.SortAvailableVehicles);
             // 
@@ -232,7 +232,7 @@
             this.buttonSortRentedVehicles.Name = "buttonSortRentedVehicles";
             this.buttonSortRentedVehicles.Size = new System.Drawing.Size(75, 23);
             this.buttonSortRentedVehicles.TabIndex = 10;
-            this.buttonSortRentedVehicles.Text = "Sort";
+            this.buttonSortRentedVehicles.Text = "Sort by";
             this.buttonSortRentedVehicles.UseVisualStyleBackColor = true;
             this.buttonSortRentedVehicles.Click += new System.EventHandler(this.SortRentedVehicles);
             // 

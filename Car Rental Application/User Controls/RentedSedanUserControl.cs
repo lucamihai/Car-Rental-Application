@@ -174,11 +174,11 @@ namespace Car_Rental_Application.User_Controls
 
             if (checkboxSelect.Checked == true)
             {
-                mainWindow.indexesOfSelectedRentedCars.Add(indexOfCurrentVehicle);
+                mainWindow.SelectRentedVehicle(indexOfCurrentVehicle);
                 return;
             }
 
-            mainWindow.indexesOfSelectedRentedCars.Remove(indexOfCurrentVehicle);
+            mainWindow.DeselectRentedVehicle(indexOfCurrentVehicle);
         }
 
         public override void UpdateLanguage(Language language)

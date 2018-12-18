@@ -26,8 +26,8 @@ namespace Car_Rental_Application
 
         ReturnedVehiclesLogManager returnedVehiclesLogManager;
 
-        public List<int> indexesOfSelectedAvailableCars = new List<int>();
-        public List<int> indexesOfSelectedRentedCars = new List<int>();
+        List<int> indexesOfSelectedAvailableCars = new List<int>();
+        List<int> indexesOfSelectedRentedCars = new List<int>();
             
         public MainWindow()
         {
@@ -132,6 +132,30 @@ namespace Car_Rental_Application
             }
         }
 
+        #region Selecting / Deselecting vehicles
+
+        public void SelectAvailableVehicle(int indexOfAvailableVehicle)
+        {
+            indexesOfSelectedAvailableCars.Add(indexOfAvailableVehicle);
+        }
+
+        public void DeselectAvailableVehicle(int indexOfAvailableVehicle)
+        {
+            indexesOfSelectedAvailableCars.Remove(indexOfAvailableVehicle);
+        }
+
+        public void SelectRentedVehicle(int indexOfAvailableVehicle)
+        {
+            indexesOfSelectedRentedCars.Add(indexOfAvailableVehicle);
+        }
+
+        public void DeselectRentedVehicle(int indexOfAvailableVehicle)
+        {
+            indexesOfSelectedRentedCars.Remove(indexOfAvailableVehicle);
+        }
+
+        #endregion
+
         #region Timers
 
         private void ClearErrorsTick(object sender, EventArgs e)
@@ -156,7 +180,7 @@ namespace Car_Rental_Application
 
         #endregion
 
-        #region SQL ToolStripMenu
+        #region Database ToolStripMenu
 
         private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -203,7 +227,7 @@ namespace Car_Rental_Application
 
         #endregion
 
-        #region SQL
+        #region SQL Server
 
         SqlConnection sqlConnection;
 
@@ -216,6 +240,7 @@ namespace Car_Rental_Application
                 sqlConnection.Open();
                 Console.WriteLine("Connected!");
                 sqlConnection.Close();
+
                 saveToDatabaseToolStripMenuItem.Available = true;
                 loadFromDatabaseToolStripMenuItem.Available = true;
                 connectToDatabaseToolStripMenuItem.Available = false;
@@ -925,7 +950,7 @@ namespace Car_Rental_Application
 
         #endregion
 
-        #region Language changing
+        #region Language ToolStripMenu
 
         private void languageToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -939,6 +964,10 @@ namespace Car_Rental_Application
                 Program.Language = chosenLanguage;
             }
         }
+
+        #endregion
+
+        #region Language changing
 
         void UpdateLanguage(Language language)
         {

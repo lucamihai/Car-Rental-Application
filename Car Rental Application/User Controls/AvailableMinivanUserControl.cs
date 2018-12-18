@@ -162,10 +162,10 @@ namespace Car_Rental_Application.User_Controls
             int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
             if (checkboxSelect.Checked == true)
             {
-                mainWindow.indexesOfSelectedAvailableCars.Add(indexOfCurrentVehicle);
+                mainWindow.SelectAvailableVehicle(indexOfCurrentVehicle);
                 return;
             }
-            mainWindow.indexesOfSelectedAvailableCars.Remove(indexOfCurrentVehicle);
+            mainWindow.DeselectAvailableVehicle(indexOfCurrentVehicle);
         }
 
         private void buttonRent_Click(object sender, EventArgs e)

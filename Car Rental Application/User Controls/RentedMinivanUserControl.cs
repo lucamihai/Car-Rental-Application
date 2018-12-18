@@ -167,11 +167,11 @@ namespace Car_Rental_Application.User_Controls
         {
             if (checkboxSelect.Checked == true)
             {
-                mainWindow.indexesOfSelectedRentedCars.Add(ID);
+                mainWindow.SelectRentedVehicle(ID);
                 return;
             }
 
-            mainWindow.indexesOfSelectedRentedCars.Remove(ID);
+            mainWindow.DeselectRentedVehicle(ID);
         }
 
         private void buttonReturn_Click(object sender, EventArgs e)
