@@ -74,7 +74,7 @@
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.labelAreYouSure);
             this.Name = "FormConfirmation";
-            this.Text = "Confirm";
+            this.Text = "Are you sure?";
             this.ResumeLayout(false);
 
         }

@@ -46,3 +46,19 @@ Remove selected\Remove selected
 Remove last\Remove last
 Select all\Select all
 Fill in the details of the vehicle at return\Fill in the details of the vehicle at return
+Action\Action
+Consequence\Consequence
+Are you sure\Are you sure
+Confirm\Confirm
+load vehicles from the database\load vehicles from the database
+existing vehicles in the program will be removed\existing vehicles in the program will be removed
+save vehicles to the database\save vehicles to the database
+existing vehicles in the database will be removed\existing vehicles in the database will be removed
+save vehicles to local file\save vehicles to local file
+existing local file will be deleted\existing local file will be deleted
+load vehicles from local file\load vehicles from local file
+remove the last available vehicle\remove the last available vehicle
+remove the last rented vehicle\remove the last rented vehicle
+remove the selected available vehicles\remove the selected available vehicles
+remove the selected rented vehicles\remove the selected rented vehicles
+delete the existing log\delete the existing log

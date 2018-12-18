@@ -16,15 +16,31 @@ namespace Car_Rental_Application.Forms
         {
             InitializeComponent();
 
+            UpdateLanguage();
+
+            if (action == null)
+            {
+                labelAreYouSure.Text = string.Empty;
+            }
+
             if (action != null)
             {
-                labelAreYouSure.Text = string.Format("Are you sure you want to {0}?", action);
+                string translatedAction = Program.Language.Translate(action);
+                labelAreYouSure.Text = string.Format("{0}: {1}", Program.Language.Translate("Action"), translatedAction);
             }
 
             if (consequence != null)
             {
-                labelAreYouSure.Text += string.Format("\r\nThis will {0}", consequence);
+                string translatedConsequence = Program.Language.Translate(consequence);
+                labelAreYouSure.Text += string.Format("\r\n{0}: {1}", Program.Language.Translate("Consequence"), translatedConsequence);
             }
+        }
+
+        void UpdateLanguage()
+        {
+            this.Text = string.Format("{0}?", Program.Language.Translate("Are you sure"));
+            buttonConfirm.Text = Program.Language.Translate("Confirm");
+            buttonCancel.Text = Program.Language.Translate("Cancel");
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)

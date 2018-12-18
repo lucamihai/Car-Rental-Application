@@ -132,7 +132,13 @@ namespace Car_Rental_Application
             }
         }
 
-        #region Error timer
+        #region Timers
+
+        private void ClearErrorsTick(object sender, EventArgs e)
+        {
+            errorLabel.Text = "";
+            timerClearErrors.Stop();
+        }
 
         private void ProgramDateTick(object sender, EventArgs e)
         {
@@ -148,10 +154,51 @@ namespace Car_Rental_Application
             labelProgramDate.Text = currentTimeString;
         }
 
-        private void ClearErrorsTick(object sender, EventArgs e)
+        #endregion
+
+        #region SQL ToolStripMenu
+
+        private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            errorLabel.Text = "";
-            timerClearErrors.Stop();
+            ConnectToSQL();
+        }
+
+        private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string action = "load vehicles from the database";
+            string consequence = "existing vehicles in the program will be removed";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            GetAvailableVehiclesFromSQLDatabase();
+            GetRentedVehiclesFromSQLDatabase();
+        }
+
+        private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string action = "save vehicles to the database";
+            string consequence = "existing vehicles in the database will be removed";
+            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            ClearAvailableVehiclesDatabase();
+            ClearRentedVehiclesDatabase();
+
+            foreach (VehicleUserControl vehicle in availableVehicles)
+                SaveAvailableVehicleToSQLDatabase(vehicle);
+
+            foreach (VehicleUserControl vehicle in rentedVehicles)
+                SaveRentedVehicleToSQLDatabase(vehicle);
         }
 
         #endregion
@@ -378,54 +425,7 @@ namespace Car_Rental_Application
 
         #endregion
 
-        #region SQL ToolStripMenu
-
-        private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConnectToSQL();
-        }
-
-        private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string action = "load vehicles from the database";
-            string consequence = "remove existing vehicles from the program";
-            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
-
-            var result = formConfirmation.ShowDialog();
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-
-            GetAvailableVehiclesFromSQLDatabase();
-            GetRentedVehiclesFromSQLDatabase();
-        }
-
-        private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string action = "save vehicles to the database";
-            string consequence = "remove existing vehicles from the database";
-            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
-
-            var result = formConfirmation.ShowDialog();
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-
-            ClearAvailableVehiclesDatabase();
-            ClearRentedVehiclesDatabase();
-
-            foreach (VehicleUserControl vehicle in availableVehicles)
-                SaveAvailableVehicleToSQLDatabase(vehicle);
-
-            foreach (VehicleUserControl vehicle in rentedVehicles)
-                SaveRentedVehicleToSQLDatabase(vehicle);
-        }
-
-        #endregion
-
-        #region Remove buttons
+        #region Vehicle removal
 
         private void RemoveLastAvailableVehicle(object sender, EventArgs e)
         {
@@ -642,47 +642,13 @@ namespace Car_Rental_Application
         }
 
         #endregion
-        
-        #region XML save and load
-
-        public void ToXML(List<VehicleUserControl> list, string filePath)
-        {
-            XmlSerializer serializer = new XmlSerializer( typeof( List<VehicleUserControl> ) );
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            
-            using (FileStream stream = File.OpenWrite(filePath))
-            {
-                serializer.Serialize(stream, list);
-            }
-        }
-
-        public List<VehicleUserControl> Read(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                return new List<VehicleUserControl>();
-            }
-
-            XmlSerializer serializer = new XmlSerializer (typeof( List<VehicleUserControl> ) );
-            using (FileStream stream = File.OpenRead(filePath))
-            {
-                List<VehicleUserControl> deserializedList = (List<VehicleUserControl>)serializer.Deserialize(stream);
-                return deserializedList;
-            }
-        }
-
-        #endregion
 
         #region Local file ToolStripMenu
 
         private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string action = "save vehicles to local file";
-            string consequence = "delete already existing local file";
+            string consequence = "existing local file will be deleted";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
@@ -698,7 +664,7 @@ namespace Car_Rental_Application
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string action = "load vehicles from local file";
-            string consequence = "remove existing vehicles from the program";
+            string consequence = "existing vehicles in the program will be removed";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
@@ -739,6 +705,40 @@ namespace Car_Rental_Application
 
             PopulateAvailableVehiclesPanel();
             PopulateRentedVehiclesPanel();
+        }
+
+        #endregion
+
+        #region XML save and load
+
+        public void ToXML(List<VehicleUserControl> list, string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer( typeof( List<VehicleUserControl> ) );
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            
+            using (FileStream stream = File.OpenWrite(filePath))
+            {
+                serializer.Serialize(stream, list);
+            }
+        }
+
+        public List<VehicleUserControl> Read(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return new List<VehicleUserControl>();
+            }
+
+            XmlSerializer serializer = new XmlSerializer (typeof( List<VehicleUserControl> ) );
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                List<VehicleUserControl> deserializedList = (List<VehicleUserControl>)serializer.Deserialize(stream);
+                return deserializedList;
+            }
         }
 
         #endregion
@@ -925,6 +925,8 @@ namespace Car_Rental_Application
 
         #endregion
 
+        #region Language changing
+
         private void languageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormLanguages formLanguages = new FormLanguages();
@@ -987,5 +989,7 @@ namespace Car_Rental_Application
                 vehicle.UpdateLanguage(language);
             }
         }
+
+        #endregion
     }
 }
