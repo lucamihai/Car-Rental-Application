@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\AvailableCarsSorter.cs" />
     <Compile Include="Classes\IDManagement.cs" />

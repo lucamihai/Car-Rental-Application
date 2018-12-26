@@ -159,7 +159,7 @@ namespace Car_Rental_Application.User_Controls
 
         private void selectCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            int indexOfCurrentVehicle = mainWindow.GetIndexOfAvailableVehicle(this);
+            int indexOfCurrentVehicle = mainWindow.GetAvailableVehicleIndex(this);
             if (checkboxSelect.Checked == true)
             {
                 mainWindow.SelectAvailableVehicle(indexOfCurrentVehicle);
