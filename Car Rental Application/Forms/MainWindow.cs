@@ -47,16 +47,64 @@ namespace Car_Rental_Application
             saveToDatabaseToolStripMenuItem.Available = false;
             loadFromDatabaseToolStripMenuItem.Available = false;
 
-            InitializeSortByComboBoxesSelection();
+            InitializeSortOptionsForAvailableVehicles();
+            InitializeSortOptionsForRentedVehicles();
 
             timerProgramDateUpdater.Start();
 
             IDManagement.InitializeIndexes();          
         }
 
-        void InitializeSortByComboBoxesSelection()
+        void InitializeSortOptionsForAvailableVehicles()
         {
+            sortAvailableSelectionComboBox.Items.Clear();
+
+            string textID = Program.Language.Translate("ID");
+            string textName = Program.Language.Translate("Name");
+            string textType = Program.Language.Translate("Type");
+            string textFuelPercentage = Program.Language.Translate("Fuel percentage");
+            string textDamagePercentage = Program.Language.Translate("Damage percentage");
+
+            SortSelectionItem selectionID = new SortSelectionItem(textID, Constants.SORT_BY_VEHICLE_ID);
+            SortSelectionItem selectionName = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
+            SortSelectionItem selectionType = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
+            SortSelectionItem selectionFuelPercentage = new SortSelectionItem(textFuelPercentage, Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE);
+            SortSelectionItem selectionDamagePercentage = new SortSelectionItem(textDamagePercentage, Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE);
+
+            sortAvailableSelectionComboBox.Items.Add(selectionID);
+            sortAvailableSelectionComboBox.Items.Add(selectionName);
+            sortAvailableSelectionComboBox.Items.Add(selectionType);
+            sortAvailableSelectionComboBox.Items.Add(selectionFuelPercentage);
+            sortAvailableSelectionComboBox.Items.Add(selectionDamagePercentage);
+
             sortAvailableSelectionComboBox.SelectedIndex = 0;
+        }
+
+        void InitializeSortOptionsForRentedVehicles()
+        {
+            sortRentedSelectionComboBox.Items.Clear();
+
+            string textID = Program.Language.Translate("ID");
+            string textName = Program.Language.Translate("Name");
+            string textType = Program.Language.Translate("Type");
+            string textOwnerName = Program.Language.Translate("Owner name");
+            string textOwnerPhone = Program.Language.Translate("Owner phone");
+            string textReturnDate = Program.Language.Translate("Return date");
+
+            SortSelectionItem selectionID = new SortSelectionItem(textID, Constants.SORT_BY_VEHICLE_ID);
+            SortSelectionItem selectionName = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
+            SortSelectionItem selectionType = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
+            SortSelectionItem selectionOwnerName = new SortSelectionItem(textOwnerName, Constants.SORT_BY_VEHICLE_OWNER_NAME);
+            SortSelectionItem selectionOwnerPhone = new SortSelectionItem(textOwnerPhone, Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER);
+            SortSelectionItem selectionReturnDate = new SortSelectionItem(textReturnDate, Constants.SORT_BY_VEHICLE_RETURN_DATE);
+
+            sortRentedSelectionComboBox.Items.Add(selectionID);
+            sortRentedSelectionComboBox.Items.Add(selectionName);
+            sortRentedSelectionComboBox.Items.Add(selectionType);
+            sortRentedSelectionComboBox.Items.Add(selectionOwnerName);
+            sortRentedSelectionComboBox.Items.Add(selectionOwnerPhone);
+            sortRentedSelectionComboBox.Items.Add(selectionReturnDate);
+
             sortRentedSelectionComboBox.SelectedIndex = 0;
         }
 
@@ -598,6 +646,7 @@ namespace Car_Rental_Application
             languageToolStripMenuItem.Text = language.Translate("Language");
 
             UpdateLanguageForExistingVehicles(language);
+            UpdateLanguageForSortSelections(language);
         }
 
         void UpdateLanguageForExistingVehicles(Language language)
@@ -619,6 +668,19 @@ namespace Car_Rental_Application
             foreach (VehicleUserControl vehicle in rentedVehicles)
             {
                 vehicle.UpdateLanguage(language);
+            }
+        }
+
+        void UpdateLanguageForSortSelections(Language language)
+        {
+            foreach (SortSelectionItem sortSelectionItem in sortAvailableSelectionComboBox.Items)
+            {
+                sortSelectionItem.UpdateLanguage(language);
+            }
+
+            foreach(SortSelectionItem sortSelectionItem in sortRentedSelectionComboBox.Items)
+            {
+                sortSelectionItem.UpdateLanguage(language);
             }
         }
 
@@ -939,7 +1001,7 @@ namespace Car_Rental_Application
 
         private void SortAvailableVehicles(object sender, EventArgs e)
         {
-            int sortSelection = sortAvailableSelectionComboBox.SelectedIndex;
+            int sortSelection = ((SortSelectionItem)sortAvailableSelectionComboBox.SelectedItem).Value;
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
@@ -971,7 +1033,7 @@ namespace Car_Rental_Application
 
         private void SortRentedVehicles(object sender, EventArgs e)
         {
-            int sortSelection = sortRentedSelectionComboBox.SelectedIndex;
+            int sortSelection = ((SortSelectionItem)sortRentedSelectionComboBox.SelectedItem).Value;
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {

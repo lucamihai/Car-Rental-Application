@@ -70,6 +70,7 @@
     <Compile Include="Classes\Language.cs" />
     <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />
     <Compile Include="Classes\RentedCarsSorter.cs" />
+    <Compile Include="Classes\SortSelectionItem.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>

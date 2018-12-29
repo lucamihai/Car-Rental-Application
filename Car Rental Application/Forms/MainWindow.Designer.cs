@@ -96,12 +96,6 @@
             // 
             this.sortAvailableSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortAvailableSelectionComboBox.FormattingEnabled = true;
-            this.sortAvailableSelectionComboBox.Items.AddRange(new object[] {
-            "By ID",
-            "By name",
-            "By type",
-            "By fuel percentage",
-            "By damage percentage"});
             this.sortAvailableSelectionComboBox.Location = new System.Drawing.Point(109, 68);
             this.sortAvailableSelectionComboBox.Name = "sortAvailableSelectionComboBox";
             this.sortAvailableSelectionComboBox.Size = new System.Drawing.Size(121, 21);
@@ -204,13 +198,6 @@
             // 
             this.sortRentedSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortRentedSelectionComboBox.FormattingEnabled = true;
-            this.sortRentedSelectionComboBox.Items.AddRange(new object[] {
-            "By ID",
-            "By name",
-            "By type",
-            "By owner name",
-            "By owner phone number",
-            "By return date"});
             this.sortRentedSelectionComboBox.Location = new System.Drawing.Point(111, 68);
             this.sortRentedSelectionComboBox.Name = "sortRentedSelectionComboBox";
             this.sortRentedSelectionComboBox.Size = new System.Drawing.Size(121, 21);
