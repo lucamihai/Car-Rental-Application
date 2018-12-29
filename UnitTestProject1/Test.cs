@@ -143,9 +143,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");
@@ -192,9 +192,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");
@@ -229,9 +229,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");
@@ -266,9 +266,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");
@@ -307,9 +307,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");
@@ -324,9 +324,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByOwnerName(vehicles);
 
-            string ownerNameFromFirst = vehicles[0].GetOwner().GetName();
-            string ownerNameFromSecond = vehicles[1].GetOwner().GetName();
-            string ownerNameFromThird = vehicles[2].GetOwner().GetName();
+            string ownerNameFromFirst = vehicles[0].GetOwner().Name;
+            string ownerNameFromSecond = vehicles[1].GetOwner().Name;
+            string ownerNameFromThird = vehicles[2].GetOwner().Name;
 
             Assert.AreEqual(ownerNameFromFirst, "John Doe"); Assert.AreEqual(ownerNameFromSecond, "John Smith"); Assert.AreEqual(ownerNameFromThird, "Johnny John");
 
@@ -344,9 +344,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");
@@ -361,9 +361,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByOwnerPhoneNumber(vehicles);
 
-            string ownerPhoneFromFirst = vehicles[0].GetOwner().GetPhoneNumber();
-            string ownerPhoneFromSecond = vehicles[1].GetOwner().GetPhoneNumber();
-            string ownerPhoneFromThird = vehicles[2].GetOwner().GetPhoneNumber();
+            string ownerPhoneFromFirst = vehicles[0].GetOwner().PhoneNumber;
+            string ownerPhoneFromSecond = vehicles[1].GetOwner().PhoneNumber;
+            string ownerPhoneFromThird = vehicles[2].GetOwner().PhoneNumber;
 
             Assert.AreEqual(ownerPhoneFromFirst, "012345"); Assert.AreEqual(ownerPhoneFromSecond, "192837"); Assert.AreEqual(ownerPhoneFromThird, "987654");
 
@@ -381,9 +381,9 @@ namespace UnitTestProject1
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
             AvailableSedanUserControl availableSedan2 = new AvailableSedanUserControl("a", 25, 0); //=2
 
-            Customer owner1 = new Customer("John Doe", "012345");
-            Customer owner2 = new Customer("John Smith", "987654");
-            Customer owner3 = new Customer("Johnny John", "192837");
+            Person owner1 = new Person("John Doe", "012345");
+            Person owner2 = new Person("John Smith", "987654");
+            Person owner3 = new Person("Johnny John", "192837");
 
             DateTime returnDate1 = DateTime.Parse("1/1/2010");
             DateTime returnDate2 = DateTime.Parse("5/5/2015");

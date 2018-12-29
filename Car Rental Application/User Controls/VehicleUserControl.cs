@@ -23,6 +23,7 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
         }
 
+
         #region Properties
 
         public virtual string Details
@@ -59,9 +60,24 @@ namespace Car_Rental_Application.User_Controls
             protected set;
         }
 
+        public virtual Person Owner
+        {
+            get;
+            protected set;
+        }
+
         #endregion
 
-        public virtual void configureRentedVehicle(string config) { }
+
+        public virtual void configureRentedVehicle(string config){ }
+
+        public virtual void UpdateLanguage(Language language){ }
+
+        public void LinkToMainWindow(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
+
 
         #region Methods from IXmlSerializable
 
@@ -83,9 +99,9 @@ namespace Car_Rental_Application.User_Controls
             {
                 xmlWriter.WriteElementString("rentID", rentID.ToString() );
 
-                Customer owner = GetOwner();
-                xmlWriter.WriteElementString("ownerName", owner.GetName() );
-                xmlWriter.WriteElementString("ownerPhone", owner.GetPhoneNumber() );
+                Person owner = Owner;
+                xmlWriter.WriteElementString("ownerName", owner.Name );
+                xmlWriter.WriteElementString("ownerPhone", owner.PhoneNumber );
                 
                 DateTime returnDate = GetReturnDate();
                 xmlWriter.WriteElementString("returnDate", returnDate.ToString());
@@ -151,10 +167,6 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
-        public void LinkToMainWindow(MainWindow mainWindow)
-        {
-            this.mainWindow = mainWindow;
-        }
 
         #region Methods for rented vehicles
 
@@ -168,18 +180,11 @@ namespace Car_Rental_Application.User_Controls
             return specialRentID;
         }
 
-        public virtual void SetOwner(Customer owner) { }
-
         public virtual void SetReturnDate(DateTime returnDate) { }
 
         public virtual short GetRentID()
         {
             return -1;
-        }
-
-        public virtual Customer GetOwner()
-        {
-            return new Customer("-", "-");
         }
 
         public virtual DateTime GetReturnDate()
@@ -189,9 +194,6 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
 
-        public virtual void UpdateLanguage(Language language)
-        {
-
-        }
+        
     }
 }

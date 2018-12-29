@@ -35,12 +35,12 @@ namespace Car_Rental_Application.Classes
 
         public List<VehicleUserControl> SortListByOwnerPhoneNumber(List<VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetOwner().GetPhoneNumber() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.Owner.PhoneNumber ).ToList();
         }
 
         public List<VehicleUserControl> SortListByOwnerName(List<VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetOwner().GetName() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.Owner.Name ).ToList();
         }
 
         public List<VehicleUserControl> SortListByFuelPercent(List<VehicleUserControl> vehicles)

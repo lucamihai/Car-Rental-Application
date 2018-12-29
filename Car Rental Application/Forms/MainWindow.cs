@@ -423,8 +423,8 @@ namespace Car_Rental_Application
             myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
             myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
             myCommand.Parameters.AddWithValue("@rentID", vehicle.GetRentID());
-            myCommand.Parameters.AddWithValue("@ownerName", vehicle.GetOwner().GetName());
-            myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.GetOwner().GetPhoneNumber());
+            myCommand.Parameters.AddWithValue("@ownerName", vehicle.Owner.Name);
+            myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.Owner.PhoneNumber);
             myCommand.Parameters.AddWithValue("@returnDate", vehicle.GetReturnDate().ToShortDateString());
             myCommand.ExecuteNonQuery();
 
@@ -501,7 +501,7 @@ namespace Car_Rental_Application
 
                     string ownerName = sqlDataReader["ownerName"].ToString();
                     string ownerPhone = sqlDataReader["ownerPhone"].ToString();
-                    Customer owner = new Customer(ownerName, ownerPhone);
+                    Person owner = new Person(ownerName, ownerPhone);
 
                     if (type == "sedan")
                     {

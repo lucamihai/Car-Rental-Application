@@ -58,7 +58,7 @@ namespace Car_Rental_Application.Forms
 
             string ownerName = textBoxOwnerName.Text;
             string ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
-            Customer owner = new Customer(ownerName, ownerPhoneNumber);
+            Person owner = new Person(ownerName, ownerPhoneNumber);
 
             if (AvailableVehicle.GetType() == (new AvailableSedanUserControl()).GetType())
             {

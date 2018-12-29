@@ -14,7 +14,6 @@ namespace Car_Rental_Application.User_Controls
     public partial class RentedSedanUserControl : SedanUserControl
     {
         short rentID;
-        Customer owner;
         DateTime returnDate;
 
         public RentedSedanUserControl()
@@ -33,13 +32,13 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = vehicle.FuelPercentage;
             DamagePercentage = vehicle.DamagePercentage;
             SetRentID( vehicle.GetSpecialRentID()) ;
-            SetOwner( vehicle.GetOwner() );
+            Owner = vehicle.Owner;
             SetReturnDate( vehicle.GetReturnDate() );
 
             UpdateLanguage(Program.Language);
         }
 
-        public RentedSedanUserControl(VehicleUserControl availableVehicle, Customer owner, DateTime returnDate)
+        public RentedSedanUserControl(VehicleUserControl availableVehicle, Person owner, DateTime returnDate)
         {
             InitializeComponent();
 
@@ -51,9 +50,9 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = availableVehicle.FuelPercentage;
             DamagePercentage = availableVehicle.DamagePercentage;
 
-            this.owner = owner;
-            ownerNameValueLabel.Text = owner.GetName();
-            ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
+            Owner = owner;
+            ownerNameValueLabel.Text = owner.Name;
+            ownerPhoneNumberValueLabel.Text = owner.PhoneNumber;
 
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
@@ -61,16 +60,17 @@ namespace Car_Rental_Application.User_Controls
             UpdateLanguage(Program.Language);
         }
 
-        public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Customer owner, string returnDate)
+        public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Person owner, string returnDate)
         {
             ID = id;
             VehicleName = name;
             FuelPercentage = fuel;
             DamagePercentage = damage;
             SetRentID(rentID);
-            SetOwner(owner);
+            Owner = owner;
             SetReturnDate(DateTime.Parse(returnDate));
         }
+
 
         #region Properties
 
@@ -82,8 +82,8 @@ namespace Car_Rental_Application.User_Controls
                 details += "Sedan, id " + ID + ", ";
                 details += "has " + FuelPercentage + "% fuel, ";
                 details += "is " + DamagePercentage + " % damaged, ";
-                details += "owned by: " + GetOwner().GetName() + ", ";
-                details += "phone number: " + GetOwner().GetPhoneNumber() + ", ";
+                details += "owned by: " + Owner.Name + ", ";
+                details += "phone number: " + Owner.PhoneNumber + ", ";
                 details += "return date: " + GetReturnDate().ToShortDateString();
 
                 return details;
@@ -122,7 +122,14 @@ namespace Car_Rental_Application.User_Controls
             }
         }
 
+        public override Person Owner
+        {
+            get;
+            protected set;
+        }
+
         #endregion
+
 
         #region Set and Get methods
 
@@ -133,22 +140,10 @@ namespace Car_Rental_Application.User_Controls
             IDManagement.MarkRentIDAsUnavailable(id);
         }
 
-        public override void SetOwner(Customer owner)
-        {
-            this.owner = owner;
-            ownerNameValueLabel.Text = owner.GetName();
-            ownerPhoneNumberValueLabel.Text = owner.GetPhoneNumber();
-        }
-
         public override void SetReturnDate(DateTime returnDate)
         {
             this.returnDate = returnDate;
             returnDateValueLabel.Text = returnDate.ToShortDateString();
-        }
-
-        public override Customer GetOwner()
-        {
-            return owner;
         }
 
         public override DateTime GetReturnDate()
@@ -162,6 +157,7 @@ namespace Car_Rental_Application.User_Controls
         }
 
         #endregion
+
 
         private void buttonReturn_Click(object sender, EventArgs e)
         {
