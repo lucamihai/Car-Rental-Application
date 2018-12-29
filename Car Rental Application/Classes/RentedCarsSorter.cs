@@ -15,7 +15,7 @@ namespace Car_Rental_Application.Classes
 
         public List<VehicleUserControl> SortListByID(List<VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetRentID() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.RentID ).ToList();
         }
 
         public List<VehicleUserControl> SortListByName(List<VehicleUserControl> vehicles)

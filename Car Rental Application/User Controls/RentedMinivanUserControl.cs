@@ -13,8 +13,8 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class RentedMinivanUserControl : MinivanUserControl
     {
-        short rentID;
         DateTime returnDate;
+        short id;
 
         public RentedMinivanUserControl()
         {
@@ -31,7 +31,7 @@ namespace Car_Rental_Application.User_Controls
             VehicleName = minivan.VehicleName;
             FuelPercentage = minivan.FuelPercentage;
             DamagePercentage = (minivan.DamagePercentage);
-            SetRentID(minivan.GetSpecialRentID());
+            RentID = minivan.RentID;
             Owner = minivan.Owner;
             SetReturnDate(minivan.GetReturnDate());
 
@@ -42,9 +42,9 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
 
-            SetRentID(IDManagement.GetLowestAvailableRentedID());
+            RentID = IDManagement.GetLowestAvailableRentedID();
             ID = availableVehicle.ID;
-            IDManagement.MarkRentIDAsUnavailable(rentID);
+            IDManagement.MarkRentIDAsUnavailable(RentID);
 
             VehicleName = availableVehicle.VehicleName;
             FuelPercentage = availableVehicle.FuelPercentage;
@@ -60,16 +60,19 @@ namespace Car_Rental_Application.User_Controls
             UpdateLanguage(Program.Language);
         }
 
-        public void FromDatabase(short id, string name, short fuel, short damage, short rentID, Person owner, string returnDate)
+        public RentedMinivanUserControl(short id, string name, short fuel, short damage, short rentID, Person owner, DateTime returnDate)
         {
+            InitializeComponent();
+
             ID = id;
             VehicleName = name;
             FuelPercentage = fuel;
             DamagePercentage = damage;
-            SetRentID(rentID);
+            RentID = rentID;
             Owner = owner;
-            SetReturnDate(DateTime.Parse(returnDate));
+            SetReturnDate(returnDate);
         }
+
 
         #region Properties
 
@@ -105,7 +108,25 @@ namespace Car_Rental_Application.User_Controls
         {
             protected set
             {
+                id = value;
                 IDManagement.MarkIDAsUnavailable(value);
+            }
+            get
+            {
+                return id;
+            }
+        }
+
+        public override short RentID
+        {
+            get
+            {
+                return Convert.ToInt16(rentIDValueLabel.Text);
+            }
+            protected set
+            {
+                rentIDValueLabel.Text = value.ToString();
+                IDManagement.MarkRentIDAsUnavailable(value);
             }
         }
 
@@ -129,14 +150,8 @@ namespace Car_Rental_Application.User_Controls
 
         #endregion
         
-        #region Set and Get methods
 
-        public override void SetRentID(short id)
-        {
-            rentID = id;
-            rentIDValueLabel.Text = id.ToString();
-            IDManagement.MarkRentIDAsUnavailable(rentID);
-        }
+        #region Set and Get methods
 
         public override void SetReturnDate(DateTime returnDate)
         {
@@ -147,11 +162,6 @@ namespace Car_Rental_Application.User_Controls
         public override DateTime GetReturnDate()
         {
             return returnDate;
-        }
-
-        public override short GetRentID()
-        {
-            return rentID;
         }
 
         #endregion

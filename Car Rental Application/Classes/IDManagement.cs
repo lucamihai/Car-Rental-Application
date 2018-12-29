@@ -70,11 +70,21 @@ namespace Car_Rental_Application.Classes
 
         public static void MarkRentIDAsUnavailable(short id)
         {
+            if (id == -1)
+            {
+                return;
+            }
+
             rentedIndexes[id] = false;
         }
 
         public static void MarkRentIDAsAvailable(short id)
         {
+            if (id == -1)
+            {
+                return;
+            }
+
             rentedIndexes[id] = true;
         }
 

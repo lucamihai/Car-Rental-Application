@@ -238,8 +238,8 @@ namespace Car_Rental_Application
 
             foreach (VehicleUserControl vehicle in rentedVehicles)
             {
-                vehicle.configureRentedVehicle(RentVehicleConfiguration.GetRentConfiguration());
-                IDManagement.MarkRentIDAsUnavailable(vehicle.GetRentID());
+                //vehicle.configureRentedVehicle(RentVehicleConfiguration.GetRentConfiguration());
+                IDManagement.MarkRentIDAsUnavailable(vehicle.RentID);
             }
 
             PopulateAvailableVehiclesPanel();
@@ -422,7 +422,7 @@ namespace Car_Rental_Application
             myCommand.Parameters.AddWithValue("@type", vehicleType);
             myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
             myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
-            myCommand.Parameters.AddWithValue("@rentID", vehicle.GetRentID());
+            myCommand.Parameters.AddWithValue("@rentID", vehicle.RentID);
             myCommand.Parameters.AddWithValue("@ownerName", vehicle.Owner.Name);
             myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.Owner.PhoneNumber);
             myCommand.Parameters.AddWithValue("@returnDate", vehicle.GetReturnDate().ToShortDateString());
@@ -497,7 +497,8 @@ namespace Car_Rental_Application
                     short fuel = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel"));
                     short damage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage"));
                     short rentID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("rentID"));
-                    string returnDate = sqlDataReader["returnDate"].ToString();
+                    string returnDateString = sqlDataReader["returnDate"].ToString();
+                    DateTime returnDate = DateTime.Parse(returnDateString);
 
                     string ownerName = sqlDataReader["ownerName"].ToString();
                     string ownerPhone = sqlDataReader["ownerPhone"].ToString();
@@ -505,15 +506,13 @@ namespace Car_Rental_Application
 
                     if (type == "sedan")
                     {
-                        RentedSedanUserControl sedan = new RentedSedanUserControl();
-                        sedan.FromDatabase(id, name, fuel, damage, rentID, owner, returnDate);
+                        RentedSedanUserControl sedan = new RentedSedanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
                         rentedVehicles.Add(sedan);
                     }
 
                     if (type == "minivan")
                     {
-                        RentedMinivanUserControl minivan = new RentedMinivanUserControl();
-                        minivan.FromDatabase(id, name, fuel, damage, rentID, owner, returnDate);
+                        RentedMinivanUserControl minivan = new RentedMinivanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
                         rentedVehicles.Add(minivan);
                     }
                 }
@@ -776,7 +775,7 @@ namespace Car_Rental_Application
             lastVehicle.Selected = false;
 
             short idToBeMarkedAsAvailable = lastVehicle.ID;
-            short rentIDToBeMarkedAsAvailable = lastVehicle.GetRentID();
+            short rentIDToBeMarkedAsAvailable = lastVehicle.RentID;
             IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
             IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
 
@@ -855,7 +854,7 @@ namespace Car_Rental_Application
                     short idToBeMarkedAsAvailable = rentedVehicles[index].ID;
                     IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
 
-                    short rentIDToBeMarkedAsAvailable = rentedVehicles[index].GetRentID();
+                    short rentIDToBeMarkedAsAvailable = rentedVehicles[index].RentID;
                     IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
 
                     vehiclesToBeRemoved.Add( rentedVehicles.ElementAt(index) );
@@ -892,7 +891,7 @@ namespace Car_Rental_Application
         public void RemoveRentedCarFromList(VehicleUserControl vehicle)
         {
             rentedVehicles.Remove(vehicle);
-            IDManagement.MarkRentIDAsAvailable(vehicle.GetRentID());
+            IDManagement.MarkRentIDAsAvailable(vehicle.RentID);
             PopulateRentedVehiclesPanel();
         }
 

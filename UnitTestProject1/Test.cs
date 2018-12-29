@@ -160,13 +160,13 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByID(vehicles);
 
-            short IDFromFirst = vehicles[0].GetRentID();
+            short IDFromFirst = vehicles[0].RentID;
             string nameFromFirst = vehicles[0].VehicleName;
 
-            short IDFromSecond = vehicles[1].GetRentID();
+            short IDFromSecond = vehicles[1].RentID;
             string nameFromSecond = vehicles[1].VehicleName;
 
-            short IDFromThird = vehicles[2].GetRentID();
+            short IDFromThird = vehicles[2].RentID;
             string nameFromThird = vehicles[2].VehicleName;
 
             Assert.AreEqual(IDFromFirst, 0);
@@ -324,9 +324,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByOwnerName(vehicles);
 
-            string ownerNameFromFirst = vehicles[0].GetOwner().Name;
-            string ownerNameFromSecond = vehicles[1].GetOwner().Name;
-            string ownerNameFromThird = vehicles[2].GetOwner().Name;
+            string ownerNameFromFirst = vehicles[0].Owner.Name;
+            string ownerNameFromSecond = vehicles[1].Owner.Name;
+            string ownerNameFromThird = vehicles[2].Owner.Name;
 
             Assert.AreEqual(ownerNameFromFirst, "John Doe"); Assert.AreEqual(ownerNameFromSecond, "John Smith"); Assert.AreEqual(ownerNameFromThird, "Johnny John");
 
@@ -361,9 +361,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByOwnerPhoneNumber(vehicles);
 
-            string ownerPhoneFromFirst = vehicles[0].GetOwner().PhoneNumber;
-            string ownerPhoneFromSecond = vehicles[1].GetOwner().PhoneNumber;
-            string ownerPhoneFromThird = vehicles[2].GetOwner().PhoneNumber;
+            string ownerPhoneFromFirst = vehicles[0].Owner.PhoneNumber;
+            string ownerPhoneFromSecond = vehicles[1].Owner.PhoneNumber;
+            string ownerPhoneFromThird = vehicles[2].Owner.PhoneNumber;
 
             Assert.AreEqual(ownerPhoneFromFirst, "012345"); Assert.AreEqual(ownerPhoneFromSecond, "192837"); Assert.AreEqual(ownerPhoneFromThird, "987654");
 

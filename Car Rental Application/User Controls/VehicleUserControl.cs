@@ -16,7 +16,6 @@ namespace Car_Rental_Application.User_Controls
     public partial class VehicleUserControl : UserControl, IXmlSerializable
     {
         protected MainWindow mainWindow;
-        protected short specialRentID;
 
         public VehicleUserControl()
         {
@@ -60,6 +59,12 @@ namespace Car_Rental_Application.User_Controls
             protected set;
         }
 
+        public virtual short RentID
+        {
+            get;
+            protected set;
+        } = -1;
+
         public virtual Person Owner
         {
             get;
@@ -94,14 +99,12 @@ namespace Car_Rental_Application.User_Controls
             xmlWriter.WriteElementString("damagePercent", DamagePercentage.ToString() );
             xmlWriter.WriteElementString("fuelPercentage", FuelPercentage.ToString() );
 
-            short rentID = GetRentID();
-            if (rentID > -1)
+            if (RentID > -1)
             {
-                xmlWriter.WriteElementString("rentID", rentID.ToString() );
+                xmlWriter.WriteElementString("rentID", RentID.ToString() );
 
-                Person owner = Owner;
-                xmlWriter.WriteElementString("ownerName", owner.Name );
-                xmlWriter.WriteElementString("ownerPhone", owner.PhoneNumber );
+                xmlWriter.WriteElementString("ownerName", Owner.Name );
+                xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber );
                 
                 DateTime returnDate = GetReturnDate();
                 xmlWriter.WriteElementString("returnDate", returnDate.ToString());
@@ -137,17 +140,27 @@ namespace Car_Rental_Application.User_Controls
                 if (Name == "RentedSedanUserControl" || Name == "RentedMinivanUserControl")
                 {
                     int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
+                    ID = (short)intID;
 
-                    string vehicleName = xmlReader.ReadElementString("vehicleName");
+                    VehicleName = xmlReader.ReadElementString("vehicleName");
 
                     int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercent"));
+                    DamagePercentage = (short)intDamage;
+
                     int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
+                    FuelPercentage = (short)intFuel;
+
                     int rentIDInt = Convert.ToInt32(xmlReader.ReadElementString("rentID"));
+                    RentID = (short)rentIDInt;
                     
                     string ownerName = xmlReader.ReadElementString("ownerName");
                     string ownerPhone = xmlReader.ReadElementString("ownerPhone");
-                    string returnDateString = xmlReader.ReadElementString("returnDate");
+                    Owner = new Person(ownerName, ownerPhone);
 
+                    string returnDateString = xmlReader.ReadElementString("returnDate");
+                    SetReturnDate(DateTime.Parse(returnDateString));
+
+                    /*
                     string rentConfiguration = "";
                     rentConfiguration += intID + "#";
                     rentConfiguration += vehicleName + "#";
@@ -157,8 +170,9 @@ namespace Car_Rental_Application.User_Controls
                     rentConfiguration += ownerName + "#";
                     rentConfiguration += ownerPhone + "#";
                     rentConfiguration += returnDateString;
+                    */
 
-                    RentVehicleConfiguration.AddRentConfiguration(rentConfiguration);
+                    //RentVehicleConfiguration.AddRentConfiguration(rentConfiguration);
 
                     xmlReader.ReadEndElement();
                 }
@@ -170,22 +184,7 @@ namespace Car_Rental_Application.User_Controls
 
         #region Methods for rented vehicles
 
-        public virtual void SetRentID(short id)
-        {
-            specialRentID = id;
-        }
-
-        public virtual short GetSpecialRentID()
-        {
-            return specialRentID;
-        }
-
         public virtual void SetReturnDate(DateTime returnDate) { }
-
-        public virtual short GetRentID()
-        {
-            return -1;
-        }
 
         public virtual DateTime GetReturnDate()
         {
