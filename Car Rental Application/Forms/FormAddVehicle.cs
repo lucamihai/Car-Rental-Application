@@ -43,25 +43,18 @@ namespace Car_Rental_Application.Forms
                 return;
             }
 
+            short fuelPercentage = (short)numericUpDownFuelPercentage.Value;
+            short damagePercentage = (short)numericUpDownDamagePercentage.Value;
+
             if (radioButtonSedan.Checked)
             {
-                Vehicle = new AvailableSedanUserControl(
-                    textBoxVehicleName.Text,
-                    (short)numericUpDownFuelPercentage.Value,
-                    (short)numericUpDownDamagePercentage.Value
-                );
-
+                Vehicle = new AvailableSedanUserControl(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
                 errorLabel.Text = "";
             }
 
             if (radioButtonMinivan.Checked)
             {
-                Vehicle = new AvailableMinivanUserControl(
-                    textBoxVehicleName.Text,
-                    (short)numericUpDownFuelPercentage.Value,
-                    (short)numericUpDownDamagePercentage.Value
-                );
-
+                Vehicle = new AvailableMinivanUserControl(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
                 errorLabel.Text = "";
             }
 

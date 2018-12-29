@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Car_Rental_Application.Classes;
 using Car_Rental_Application.Forms;
 using Car_Rental_Application.User_Controls;
 
@@ -21,16 +22,16 @@ namespace Car_Rental_Application.Forms
             {
                 VehicleUserControl vehicle = value;
 
-                if (vehicle.GetType() == (new RentedSedanUserControl()).GetType())
+                if (vehicle.GetType() == Constants.TYPE_RENTED_SEDAN)
                 {
-                    ReturnedVehicle = new AvailableSedanUserControl((RentedSedanUserControl)vehicle);
+                    ReturnedVehicle = new AvailableSedanUserControl( (RentedSedanUserControl)vehicle );
                     fuelPercentageNumericUpDown.Value = ReturnedVehicle.FuelPercentage;
                     damagePercentageNumericUpDown.Value = ReturnedVehicle.DamagePercentage;
                 }
 
-                if (vehicle.GetType() == (new RentedMinivanUserControl()).GetType())
+                if (vehicle.GetType() == Constants.TYPE_RENTED_MINIVAN)
                 {
-                    ReturnedVehicle = new AvailableMinivanUserControl((RentedMinivanUserControl)vehicle);
+                    ReturnedVehicle = new AvailableMinivanUserControl( (RentedMinivanUserControl)vehicle );
                     fuelPercentageNumericUpDown.Value = ReturnedVehicle.FuelPercentage;
                     damagePercentageNumericUpDown.Value = ReturnedVehicle.DamagePercentage;
                 }
@@ -64,20 +65,20 @@ namespace Car_Rental_Application.Forms
 
         private void ReturnFromRent(object sender, EventArgs e)
         {
-            ReturnedVehicle.FuelPercentage = (short)fuelPercentageNumericUpDown.Value;
-            ReturnedVehicle.DamagePercentage = (short)damagePercentageNumericUpDown.Value;
-
-            string order = "";
-            order += vehicleDetails;
-            order += ". Was returned with ";
-            order += ReturnedVehicle.FuelPercentage + "% fuel and ";
-            order += ReturnedVehicle.DamagePercentage + "% damage, on ";
-            order += returnDateDateTimePicker.Value.ToShortDateString();
-
-            OrderDetails = order;
-
             if (ReturnedVehicle != null)
             {
+                ReturnedVehicle.FuelPercentage = (short)fuelPercentageNumericUpDown.Value;
+                ReturnedVehicle.DamagePercentage = (short)damagePercentageNumericUpDown.Value;
+
+                string order = "";
+                order += vehicleDetails;
+                order += ". Was returned with ";
+                order += ReturnedVehicle.FuelPercentage + "% fuel and ";
+                order += ReturnedVehicle.DamagePercentage + "% damage, on ";
+                order += returnDateDateTimePicker.Value.ToShortDateString();
+
+                OrderDetails = order;
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

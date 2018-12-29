@@ -46,13 +46,13 @@ namespace Car_Rental_Application.Forms
         {
             if (textBoxOwnerName.Text == "")
             {
-                errorLabel.Text = "Owner's name must be provided";
+                errorLabel.Text = errorOwnerNameNotProvided;
                 return;
             }
 
             if (textBoxOwnerPhoneNumber.Text == "")
             {
-                errorLabel.Text = "Owner's phone must be provided";
+                errorLabel.Text = errorOwnerPhoneNumberNotProvided;
                 return;
             }
 
@@ -60,12 +60,12 @@ namespace Car_Rental_Application.Forms
             string ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
             Person owner = new Person(ownerName, ownerPhoneNumber);
 
-            if (AvailableVehicle.GetType() == (new AvailableSedanUserControl()).GetType())
+            if (AvailableVehicle.GetType() == Constants.TYPE_AVAILABLE_SEDAN)
             {
                 VehicleToBeRented = new RentedSedanUserControl(AvailableVehicle, owner, dateTimePickerReturnDate.Value);
             }
 
-            if (AvailableVehicle.GetType() == (new AvailableMinivanUserControl()).GetType())
+            if (AvailableVehicle.GetType() == Constants.TYPE_AVAILABLE_MINIVAN)
             {
                 VehicleToBeRented = new RentedMinivanUserControl(AvailableVehicle, owner, dateTimePickerReturnDate.Value);
             }

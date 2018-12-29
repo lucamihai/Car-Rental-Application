@@ -130,6 +130,7 @@ namespace UnitTestProject1
         }
         #endregion
 
+
         #region Rented vehicles sorting
 
         [TestMethod]
@@ -400,9 +401,9 @@ namespace UnitTestProject1
             RentedCarsSorter sorter = new RentedCarsSorter();
             vehicles = sorter.SortListByReturnDate(vehicles);
 
-            string returnDateFromFirst = vehicles[0].GetReturnDate().ToShortDateString();
-            string returnDateFromSecond = vehicles[1].GetReturnDate().ToShortDateString();
-            string returnDateFromThird = vehicles[2].GetReturnDate().ToShortDateString();
+            string returnDateFromFirst = vehicles[0].ReturnDate.ToShortDateString();
+            string returnDateFromSecond = vehicles[1].ReturnDate.ToShortDateString();
+            string returnDateFromThird = vehicles[2].ReturnDate.ToShortDateString();
 
             Assert.AreEqual(returnDate3, DateTime.Parse(returnDateFromFirst));
             Assert.AreEqual(returnDate1, DateTime.Parse(returnDateFromSecond));
@@ -414,5 +415,4 @@ namespace UnitTestProject1
         #endregion 
 
     }
-
 }

@@ -13,8 +13,9 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class RentedMinivanUserControl : MinivanUserControl
     {
-        DateTime returnDate;
-        short id;
+        short _ID;
+        Person _Owner;
+        DateTime _ReturnDate;
 
         public RentedMinivanUserControl()
         {
@@ -33,7 +34,7 @@ namespace Car_Rental_Application.User_Controls
             DamagePercentage = (minivan.DamagePercentage);
             RentID = minivan.RentID;
             Owner = minivan.Owner;
-            SetReturnDate(minivan.GetReturnDate());
+            ReturnDate = minivan.ReturnDate;
 
             UpdateLanguage(Program.Language);
         }
@@ -51,11 +52,7 @@ namespace Car_Rental_Application.User_Controls
             DamagePercentage = availableVehicle.DamagePercentage;
 
             Owner = owner;
-            ownerNameValueLabel.Text = owner.Name;
-            ownerPhoneNumberValueLabel.Text = owner.PhoneNumber;
-
-            this.returnDate = returnDate;
-            returnDateValueLabel.Text = returnDate.ToShortDateString();
+            ReturnDate = returnDate;
 
             UpdateLanguage(Program.Language);
         }
@@ -70,7 +67,7 @@ namespace Car_Rental_Application.User_Controls
             DamagePercentage = damage;
             RentID = rentID;
             Owner = owner;
-            SetReturnDate(returnDate);
+            ReturnDate = returnDate;
         }
 
 
@@ -86,7 +83,7 @@ namespace Car_Rental_Application.User_Controls
                 details += "is " + DamagePercentage + " % damaged, ";
                 details += "owned by: " + Owner.Name + ", ";
                 details += "phone number: " + Owner.PhoneNumber + ", ";
-                details += "return date: " + GetReturnDate().ToShortDateString();
+                details += "return date: " + ReturnDate.ToShortDateString();
 
                 return details;
             }
@@ -108,12 +105,12 @@ namespace Car_Rental_Application.User_Controls
         {
             protected set
             {
-                id = value;
+                _ID = value;
                 IDManagement.MarkIDAsUnavailable(value);
             }
             get
             {
-                return id;
+                return _ID;
             }
         }
 
@@ -144,27 +141,33 @@ namespace Car_Rental_Application.User_Controls
 
         public override Person Owner
         {
-            get;
-            protected set;
+            get
+            {
+                return _Owner;
+            }
+            protected set
+            {
+                _Owner = value;
+                ownerNameValueLabel.Text = _Owner.Name;
+                ownerPhoneNumberValueLabel.Text = _Owner.PhoneNumber;
+            }
+        }
+
+        public override DateTime ReturnDate
+        {
+            get
+            {
+                return _ReturnDate;
+            }
+            protected set
+            {
+                _ReturnDate = value;
+                returnDateValueLabel.Text = _ReturnDate.ToShortDateString();
+            }
         }
 
         #endregion
-        
 
-        #region Set and Get methods
-
-        public override void SetReturnDate(DateTime returnDate)
-        {
-            this.returnDate = returnDate;
-            returnDateValueLabel.Text = returnDate.ToShortDateString();
-        }
-
-        public override DateTime GetReturnDate()
-        {
-            return returnDate;
-        }
-
-        #endregion
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {

@@ -71,6 +71,12 @@ namespace Car_Rental_Application.User_Controls
             protected set;
         }
 
+        public virtual DateTime ReturnDate
+        {
+            get;
+            protected set;
+        }
+
         #endregion
 
 
@@ -106,8 +112,7 @@ namespace Car_Rental_Application.User_Controls
                 xmlWriter.WriteElementString("ownerName", Owner.Name );
                 xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber );
                 
-                DateTime returnDate = GetReturnDate();
-                xmlWriter.WriteElementString("returnDate", returnDate.ToString());
+                xmlWriter.WriteElementString("returnDate", ReturnDate.ToString());
             }
         }
 
@@ -158,37 +163,11 @@ namespace Car_Rental_Application.User_Controls
                     Owner = new Person(ownerName, ownerPhone);
 
                     string returnDateString = xmlReader.ReadElementString("returnDate");
-                    SetReturnDate(DateTime.Parse(returnDateString));
-
-                    /*
-                    string rentConfiguration = "";
-                    rentConfiguration += intID + "#";
-                    rentConfiguration += vehicleName + "#";
-                    rentConfiguration += intDamage + "#";
-                    rentConfiguration += intFuel + "#";
-                    rentConfiguration += rentIDInt + "#";
-                    rentConfiguration += ownerName + "#";
-                    rentConfiguration += ownerPhone + "#";
-                    rentConfiguration += returnDateString;
-                    */
-
-                    //RentVehicleConfiguration.AddRentConfiguration(rentConfiguration);
+                    ReturnDate = DateTime.Parse(returnDateString);
 
                     xmlReader.ReadEndElement();
                 }
             }
-        }
-
-        #endregion
-
-
-        #region Methods for rented vehicles
-
-        public virtual void SetReturnDate(DateTime returnDate) { }
-
-        public virtual DateTime GetReturnDate()
-        {
-            return new DateTime(1, 1, 1);
         }
 
         #endregion

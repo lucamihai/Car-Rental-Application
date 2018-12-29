@@ -381,9 +381,9 @@ namespace Car_Rental_Application
         void SaveAvailableVehicleToSQLDatabase(VehicleUserControl vehicle)
         {
             string vehicleType = "";
-            if (vehicle.GetType() == (new AvailableSedanUserControl()).GetType())
+            if (vehicle.GetType() == Constants.TYPE_AVAILABLE_SEDAN)
                 vehicleType = "sedan";
-            if (vehicle.GetType() == (new AvailableMinivanUserControl()).GetType())
+            if (vehicle.GetType() == Constants.TYPE_AVAILABLE_MINIVAN)
                 vehicleType = "minivan";
 
             string query = "INSERT INTO availableVehicles (id, name, type, fuel, damage)";
@@ -405,9 +405,9 @@ namespace Car_Rental_Application
         void SaveRentedVehicleToSQLDatabase(VehicleUserControl vehicle)
         {
             string vehicleType = "";
-            if (vehicle.GetType() == (new RentedSedanUserControl()).GetType())
+            if (vehicle.GetType() == Constants.TYPE_RENTED_SEDAN)
                 vehicleType = "sedan";
-            if (vehicle.GetType() == (new RentedMinivanUserControl()).GetType())
+            if (vehicle.GetType() == Constants.TYPE_RENTED_MINIVAN)
                 vehicleType = "minivan";
 
 
@@ -425,7 +425,7 @@ namespace Car_Rental_Application
             myCommand.Parameters.AddWithValue("@rentID", vehicle.RentID);
             myCommand.Parameters.AddWithValue("@ownerName", vehicle.Owner.Name);
             myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.Owner.PhoneNumber);
-            myCommand.Parameters.AddWithValue("@returnDate", vehicle.GetReturnDate().ToShortDateString());
+            myCommand.Parameters.AddWithValue("@returnDate", vehicle.ReturnDate.ToShortDateString());
             myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();

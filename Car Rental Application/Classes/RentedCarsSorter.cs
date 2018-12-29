@@ -30,7 +30,7 @@ namespace Car_Rental_Application.Classes
 
         public List<VehicleUserControl> SortListByReturnDate(List<VehicleUserControl> vehicles)
         {
-            return vehicles.OrderBy( vehicle => vehicle.GetReturnDate() ).ToList();
+            return vehicles.OrderBy( vehicle => vehicle.ReturnDate ).ToList();
         }
 
         public List<VehicleUserControl> SortListByOwnerPhoneNumber(List<VehicleUserControl> vehicles)
