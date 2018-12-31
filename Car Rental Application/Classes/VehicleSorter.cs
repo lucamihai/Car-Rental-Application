@@ -9,53 +9,49 @@ using Car_Rental_Application.User_Controls;
 
 namespace Car_Rental_Application.Classes
 {
-    public class AvailableCarsSorter : ISort
+    public class VehicleSorter
     {
-        #region ISort methods
-
-        public List<VehicleUserControl> SortListByID(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByID(List <Vehicle> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.ID ).ToList();
         }
 
-        public List<VehicleUserControl> SortListByName(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByName(List <Vehicle> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.VehicleName ).ToList();
         }
 
-        public List<VehicleUserControl> SortListByType(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByType(List <Vehicle> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.GetType().ToString() ).ToList();
         }
 
-        public List<VehicleUserControl> SortListByReturnDate(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByReturnDate(List <Vehicle> vehicles)
         {
             // Available cars don't have a return date, perform no sorting
             return vehicles;
         }
 
-        public List<VehicleUserControl> SortListByOwnerPhoneNumber(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByOwnerPhoneNumber(List <Vehicle> vehicles)
         {
             // Available cars don't have an owner, perform no sorting
             return vehicles;
         }
 
-        public List<VehicleUserControl> SortListByOwnerName(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByOwnerName(List <Vehicle> vehicles)
         {
             // Available cars don't have an owner, perform no sorting
             return vehicles;
         }
 
-        public List<VehicleUserControl> SortListByFuelPercent(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByFuelPercent(List <Vehicle> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.FuelPercentage ).ToList();
         }
 
-        public List<VehicleUserControl> SortListByDamagePercent(List <VehicleUserControl> vehicles)
+        public List<Vehicle> SortListByDamagePercent(List <Vehicle> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.DamagePercentage ).ToList();
         }
-
-        #endregion
     }
 }

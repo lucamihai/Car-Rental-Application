@@ -65,7 +65,7 @@
   <ItemGroup>
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\Person.cs" />
-    <Compile Include="Classes\AvailableCarsSorter.cs" />
+    <Compile Include="Classes\VehicleSorter.cs" />
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\Language.cs" />
     <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />

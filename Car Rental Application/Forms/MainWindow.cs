@@ -19,7 +19,7 @@ namespace Car_Rental_Application
         List <VehicleUserControl> rentedVehicles;
         List <Vehicle> vehicles;
 
-        AvailableCarsSorter availableCarsSorter;
+        VehicleSorter availableCarsSorter;
         RentedCarsSorter rentedCarsSorter;
 
         DateTime programTime;
@@ -41,7 +41,7 @@ namespace Car_Rental_Application
             rentedVehicles = new List<VehicleUserControl>();
             vehicles = new List<Vehicle>();
 
-            availableCarsSorter = new AvailableCarsSorter();
+            availableCarsSorter = new VehicleSorter();
             rentedCarsSorter = new RentedCarsSorter();
 
             saveToDatabaseToolStripMenuItem.Available = false;
@@ -998,36 +998,36 @@ namespace Car_Rental_Application
         
         private void SortAvailableVehicles(object sender, EventArgs e)
         {
-            /*
+            
             int sortSelection = ((SortSelectionItem)sortAvailableSelectionComboBox.SelectedItem).Value;
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
-                availableVehicles = availableCarsSorter.SortListByID(availableVehicles);
+                vehicles = availableCarsSorter.SortListByID(vehicles);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-                availableVehicles = availableCarsSorter.SortListByName(availableVehicles);
+                vehicles = availableCarsSorter.SortListByName(vehicles);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                availableVehicles = availableCarsSorter.SortListByType(availableVehicles);
+                vehicles = availableCarsSorter.SortListByType(vehicles);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
             {
-                availableVehicles = availableCarsSorter.SortListByFuelPercent(availableVehicles);
+                vehicles = availableCarsSorter.SortListByFuelPercent(vehicles);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
             {
-                availableVehicles = availableCarsSorter.SortListByDamagePercent(availableVehicles);
+                vehicles = availableCarsSorter.SortListByDamagePercent(vehicles);
             }
 
-            PopulateAvailableVehiclesPanel();
-            */
+            PopulateVehiclesPanel();
+            
         }
         
 

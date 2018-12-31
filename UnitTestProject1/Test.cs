@@ -12,7 +12,7 @@ namespace UnitTestProject1
     [TestClass]
     public class Test
     {
-
+        /*
         #region Available vehicles sorting
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace UnitTestProject1
 
 
             // Perform sorting by ID
-            AvailableCarsSorter sorter = new AvailableCarsSorter();
+            VehicleSorter sorter = new VehicleSorter();
             vehicles = sorter.SortListByID(vehicles);
 
 
@@ -66,7 +66,7 @@ namespace UnitTestProject1
 
             vehicles.Add(availableSedan2); vehicles.Add(availableSedan1); vehicles.Add(availableMinivan1); //added id 2, 0 then 1
 
-            AvailableCarsSorter sorter = new AvailableCarsSorter();
+            VehicleSorter sorter = new VehicleSorter();
             vehicles = sorter.SortListByName(vehicles);
 
             string nameFromFirst = vehicles[0].VehicleName;
@@ -91,7 +91,7 @@ namespace UnitTestProject1
 
             vehicles.Add(availableSedan2); vehicles.Add(availableSedan1); vehicles.Add(availableMinivan1); //added id 2, 0 then 1
 
-            AvailableCarsSorter sorter = new AvailableCarsSorter();
+            VehicleSorter sorter = new VehicleSorter();
             vehicles = sorter.SortListByFuelPercent(vehicles);
 
             short fuelFromFirst = vehicles[0].FuelPercentage;
@@ -117,7 +117,7 @@ namespace UnitTestProject1
 
             vehicles.Add(availableSedan2); vehicles.Add(availableSedan1); vehicles.Add(availableMinivan1); //added id 2, 0 then 1
 
-            AvailableCarsSorter sorter = new AvailableCarsSorter();
+            VehicleSorter sorter = new VehicleSorter();
             vehicles = sorter.SortListByDamagePercent(vehicles);
 
             short damageFromFirst = vehicles[0].DamagePercentage;
@@ -129,7 +129,7 @@ namespace UnitTestProject1
             IDManagement.InitializeIndexes();
         }
         #endregion
-
+        */
 
         #region Rented vehicles sorting
 
