@@ -134,6 +134,12 @@
     <Compile Include="User Controls\MinivanUserControl.Designer.cs">
       <DependentUpon>MinivanUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\Rental.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Rental.Designer.cs">
+      <DependentUpon>Rental.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\RentedMinivanUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\Minivan.resx">
       <DependentUpon>Minivan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Rental.resx">
+      <DependentUpon>Rental.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\RentedMinivanUserControl.resx">
       <DependentUpon>RentedMinivanUserControl.cs</DependentUpon>
