@@ -122,6 +122,12 @@
     <Compile Include="User Controls\AvailableSedanUserControl.Designer.cs">
       <DependentUpon>AvailableSedanUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\Minivan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Minivan.Designer.cs">
+      <DependentUpon>Minivan.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\MinivanUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -140,11 +146,23 @@
     <Compile Include="User Controls\RentedSedanUserControl.Designer.cs">
       <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\Sedan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Sedan.Designer.cs">
+      <DependentUpon>Sedan.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\SedanUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="User Controls\SedanUserControl.Designer.cs">
       <DependentUpon>SedanUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Vehicle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Vehicle.Designer.cs">
+      <DependentUpon>Vehicle.cs</DependentUpon>
     </Compile>
     <Compile Include="User Controls\VehicleUserControl.cs">
       <SubType>UserControl</SubType>
@@ -186,14 +204,23 @@
     <EmbeddedResource Include="User Controls\AvailableSedanUserControl.resx">
       <DependentUpon>AvailableSedanUserControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Minivan.resx">
+      <DependentUpon>Minivan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="User Controls\RentedMinivanUserControl.resx">
       <DependentUpon>RentedMinivanUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\RentedSedanUserControl.resx">
       <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Sedan.resx">
+      <DependentUpon>Sedan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="User Controls\SedanUserControl.resx">
       <DependentUpon>SedanUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Vehicle.resx">
+      <DependentUpon>Vehicle.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram.cd" />
     <None Include="Properties\Settings.settings">

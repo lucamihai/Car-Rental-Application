@@ -17,7 +17,8 @@ namespace Car_Rental_Application
     public partial class MainWindow : Form
     {
         List <VehicleUserControl> availableVehicles;
-        List<VehicleUserControl> rentedVehicles;
+        List <VehicleUserControl> rentedVehicles;
+        List <Vehicle> vehicles;
 
         AvailableCarsSorter availableCarsSorter;
         RentedCarsSorter rentedCarsSorter;
@@ -40,6 +41,7 @@ namespace Car_Rental_Application
 
             availableVehicles = new List<VehicleUserControl>();
             rentedVehicles = new List<VehicleUserControl>();
+            vehicles = new List<Vehicle>();
 
             availableCarsSorter = new AvailableCarsSorter();
             rentedCarsSorter = new RentedCarsSorter();
@@ -130,6 +132,13 @@ namespace Car_Rental_Application
             PopulateAvailableVehiclesPanel();
         }
 
+        public void AddVehicle(Vehicle vehicle)
+        {
+            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            vehicles.Add(vehicle);
+            PopulateVehiclesPanel();
+        }
+
         public void RentVehicle(VehicleUserControl vehicle)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
@@ -144,8 +153,8 @@ namespace Car_Rental_Application
             var result = formAddVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                VehicleUserControl vehicleToBeAdded = formAddVehicle.Vehicle;
-                AddAvailableVehicle(vehicleToBeAdded);
+                Vehicle vehicleToBeAdded = formAddVehicle.Vehicle;
+                AddVehicle(vehicleToBeAdded);
             }
         }
 
@@ -974,6 +983,19 @@ namespace Car_Rental_Application
             short counter = 0;
 
             foreach (VehicleUserControl vehicle in availableVehicles)
+            {
+                vehicle.LinkToMainWindow(this);
+                availableCarsElementsPanel.Controls.Add(vehicle);
+                vehicle.Location = new Point(0, counter++ * 100);
+            }
+        }
+
+        public void PopulateVehiclesPanel()
+        {
+            availableCarsElementsPanel.Controls.Clear();
+            short counter = 0;
+
+            foreach (Vehicle vehicle in vehicles)
             {
                 vehicle.LinkToMainWindow(this);
                 availableCarsElementsPanel.Controls.Add(vehicle);

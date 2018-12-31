@@ -14,7 +14,7 @@ namespace Car_Rental_Application.Forms
 {
     public partial class FormAddVehicle : Form
     {
-        public VehicleUserControl Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; }
         string errorVehicleNameNotProvided;
 
         public FormAddVehicle()
@@ -48,13 +48,13 @@ namespace Car_Rental_Application.Forms
 
             if (radioButtonSedan.Checked)
             {
-                Vehicle = new AvailableSedanUserControl(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
+                Vehicle = new Sedan(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
                 errorLabel.Text = "";
             }
 
             if (radioButtonMinivan.Checked)
             {
-                Vehicle = new AvailableMinivanUserControl(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
+                Vehicle = new Minivan(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
                 errorLabel.Text = "";
             }
 
