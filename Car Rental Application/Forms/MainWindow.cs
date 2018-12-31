@@ -244,8 +244,8 @@ namespace Car_Rental_Application
                 return;
             }
 
-            //StoreVehiclesToXMLFile(availableVehicles, "availableVehiclesList.xml");
-            StoreVehiclesToXMLFile(rentedVehicles, "rentedVehiclesList.xml");
+            StoreVehiclesToXMLFile(vehicles, "vehicles.xml");
+            //StoreVehiclesToXMLFile(rentedVehicles, "rentedVehiclesList.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -260,21 +260,22 @@ namespace Car_Rental_Application
                 return;
             }
 
-            //availableVehicles.Clear();
+            vehicles.Clear();
             rentedVehicles.Clear();
 
-            List<VehicleUserControl> listOfImportedAvailableVehicles = ReadVehiclesFromXMLFile("availableVehiclesList.xml");
-            List<VehicleUserControl> listOfImportedRentedVehicles = ReadVehiclesFromXMLFile("rentedVehiclesList.xml");
+            List<Vehicle> ImportedVehicles = ReadVehiclesFromXMLFile("vehicles.xml");
+            //List<VehicleUserControl> listOfImportedRentedVehicles = ReadVehiclesFromXMLFile("rentedVehiclesList.xml");
 
-            foreach (VehicleUserControl vehicle in listOfImportedAvailableVehicles)
+            foreach (Vehicle vehicle in ImportedVehicles)
             {
-                //if (vehicle.Name == "AvailableSedanUserControl")
-                    //availableVehicles.Add(new AvailableSedanUserControl(vehicle));
+                if (vehicle.Name == "Sedan")
+                    vehicles.Add(new Sedan(vehicle));
 
-                //if (vehicle.Name == "AvailableMinivanUserControl")
-                    //availableVehicles.Add(new AvailableMinivanUserControl(vehicle));
+                if (vehicle.Name == "Minivan")
+                    vehicles.Add(new Minivan(vehicle));
             }
 
+            /*
             foreach (VehicleUserControl vehicle in listOfImportedRentedVehicles)
             {
                 if (vehicle.Name == "RentedSedanUserControl")
@@ -283,6 +284,7 @@ namespace Car_Rental_Application
                 if (vehicle.Name == "RentedMinivanUserControl")
                     rentedVehicles.Add(new RentedMinivanUserControl(vehicle));
             }
+            */
 
             foreach (VehicleUserControl vehicle in rentedVehicles)
             {
@@ -291,7 +293,7 @@ namespace Car_Rental_Application
             }
 
             PopulateVehiclesPanel();
-            PopulateRentedVehiclesPanel();
+            //PopulateRentedVehiclesPanel();
         }
 
         #endregion
@@ -585,9 +587,9 @@ namespace Car_Rental_Application
 
         #region XML save and load
 
-        public void StoreVehiclesToXMLFile(List<VehicleUserControl> vehicles, string filePath)
+        public void StoreVehiclesToXMLFile(List<Vehicle> vehicles, string filePath)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<VehicleUserControl>));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Vehicle>));
 
             if (File.Exists(filePath))
             {
@@ -600,17 +602,17 @@ namespace Car_Rental_Application
             }
         }
 
-        public List<VehicleUserControl> ReadVehiclesFromXMLFile(string filePath)
+        public List<Vehicle> ReadVehiclesFromXMLFile(string filePath)
         {
             if (!File.Exists(filePath))
             {
-                return new List<VehicleUserControl>();
+                return new List<Vehicle>();
             }
 
-            XmlSerializer serializer = new XmlSerializer(typeof(List<VehicleUserControl>));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Vehicle>));
             using (FileStream stream = File.OpenRead(filePath))
             {
-                List<VehicleUserControl> deserializedList = (List<VehicleUserControl>)serializer.Deserialize(stream);
+                List<Vehicle> deserializedList = (List<Vehicle>)serializer.Deserialize(stream);
                 return deserializedList;
             }
         }
@@ -994,7 +996,6 @@ namespace Car_Rental_Application
 
 
         #region Sorting
-
         
         private void SortAvailableVehicles(object sender, EventArgs e)
         {
@@ -1030,7 +1031,6 @@ namespace Car_Rental_Application
             
         }
         
-
         private void SortRentedVehicles(object sender, EventArgs e)
         {
             int sortSelection = ((SortSelectionItem)sortRentedSelectionComboBox.SelectedItem).Value;

@@ -26,24 +26,6 @@ namespace Car_Rental_Application.Classes
             return vehicles.OrderBy( vehicle => vehicle.GetType().ToString() ).ToList();
         }
 
-        public List<Vehicle> SortListByReturnDate(List <Vehicle> vehicles)
-        {
-            // Available cars don't have a return date, perform no sorting
-            return vehicles;
-        }
-
-        public List<Vehicle> SortListByOwnerPhoneNumber(List <Vehicle> vehicles)
-        {
-            // Available cars don't have an owner, perform no sorting
-            return vehicles;
-        }
-
-        public List<Vehicle> SortListByOwnerName(List <Vehicle> vehicles)
-        {
-            // Available cars don't have an owner, perform no sorting
-            return vehicles;
-        }
-
         public List<Vehicle> SortListByFuelPercent(List <Vehicle> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.FuelPercentage ).ToList();

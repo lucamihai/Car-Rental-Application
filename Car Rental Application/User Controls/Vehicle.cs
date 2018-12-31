@@ -24,6 +24,7 @@ namespace Car_Rental_Application.User_Controls
         public Vehicle()
         {
             InitializeComponent();
+            PrepareComponents();
         }
 
         public Vehicle(string vehicleName, short fuelPercent = 0, short damagePercent = 0)
@@ -237,7 +238,7 @@ namespace Car_Rental_Application.User_Controls
         #endregion
 
 
-        #region Methods from IXmlSerializable
+        #region IXmlSerializable methods
 
         public System.Xml.Schema.XmlSchema GetSchema()
         {
@@ -246,7 +247,7 @@ namespace Car_Rental_Application.User_Controls
 
         public void WriteXml(System.Xml.XmlWriter xmlWriter)
         {
-            xmlWriter.WriteAttributeString("Name", Name);
+            xmlWriter.WriteAttributeString("Name", GetType().Name);
             xmlWriter.WriteElementString("id", ID.ToString());
             xmlWriter.WriteElementString("vehicleName", VehicleName);
             xmlWriter.WriteElementString("damagePercentage", DamagePercentage.ToString());
@@ -256,14 +257,15 @@ namespace Car_Rental_Application.User_Controls
         public void ReadXml(System.Xml.XmlReader xmlReader)
         {
             xmlReader.MoveToContent();
-            Name = xmlReader.GetAttribute("Name");
+            string VehicleType = xmlReader.GetAttribute("Name");
+            Name = VehicleType;
 
             bool isEmptyElement = xmlReader.IsEmptyElement;
             xmlReader.ReadStartElement();
 
             if (!isEmptyElement)
             {
-                if (Name == "Sedan")
+                if (VehicleType == "Sedan")
                 {
                     int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
                     ID = (short)intID;
@@ -279,7 +281,7 @@ namespace Car_Rental_Application.User_Controls
                     xmlReader.ReadEndElement();
                 }
 
-                if (Name == "Minivan")
+                if (VehicleType == "Minivan")
                 {
                     int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
                     ID = (short)intID;
