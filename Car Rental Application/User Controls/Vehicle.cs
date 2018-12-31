@@ -43,6 +43,21 @@ namespace Car_Rental_Application.User_Controls
             UpdateLanguage(Program.Language);
         }
 
+        public Vehicle(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0)
+        {
+            InitializeComponent();
+            PrepareComponents();
+
+            ID = id;
+            IDManagement.MarkIDAsUnavailable(id);
+
+            VehicleName = vehicleName;
+            FuelPercentage = fuelPercent;
+            DamagePercentage = damagePercent;
+
+            UpdateLanguage(Program.Language);
+        }
+
         public Vehicle(Vehicle vehicle)
         {
             InitializeComponent();
@@ -235,6 +250,23 @@ namespace Car_Rental_Application.User_Controls
             }
         }
 
+        public bool InputsEnabled
+        {
+            set
+            {
+                if (value == true)
+                {
+                    checkboxSelect.Visible = true;
+                    buttonRent.Visible = true;
+                }
+                else
+                {
+                    checkboxSelect.Visible = false;
+                    buttonRent.Visible = false;
+                }
+            }
+        }
+
         #endregion
 
 
@@ -309,7 +341,7 @@ namespace Car_Rental_Application.User_Controls
 
         private void Rent(object sender, EventArgs e)
         {
-
+            mainWindow.RentForm(this);
         }
 
         private void Select(object sender, EventArgs e)

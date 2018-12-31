@@ -14,6 +14,7 @@ namespace Car_Rental_Application.User_Controls
 {
     public partial class Rental : UserControl
     {
+        MainWindow mainWindow;
         Vehicle _Vehicle;
         Person _Owner;
         DateTime _ReturnDate;
@@ -48,8 +49,10 @@ namespace Car_Rental_Application.User_Controls
             }
             private set
             {
-                _Vehicle = Vehicle;
+                _Vehicle = value;
+                panelVehicle.Controls.Clear();
                 panelVehicle.Controls.Add(_Vehicle);
+                _Vehicle.InputsEnabled = false;
             }
         }
 
@@ -122,6 +125,11 @@ namespace Car_Rental_Application.User_Controls
         }
 
         #endregion
+
+        public void LinkToMainWindow(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
 
         public void UpdateLanguage(Language language)
         {

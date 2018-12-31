@@ -16,11 +16,12 @@ namespace Car_Rental_Application.Forms
     public partial class FormReturnVehicle : Form
     {
         string vehicleDetails;
-        public VehicleUserControl RentedVehicle
+        public Vehicle RentedVehicle
         {
             set
             {
-                VehicleUserControl vehicle = value;
+                /*
+                Vehicle vehicle = value;
 
                 if (vehicle.GetType() == Constants.TYPE_RENTED_SEDAN)
                 {
@@ -35,21 +36,22 @@ namespace Car_Rental_Application.Forms
                     fuelPercentageNumericUpDown.Value = ReturnedVehicle.FuelPercentage;
                     damagePercentageNumericUpDown.Value = ReturnedVehicle.DamagePercentage;
                 }
+                */
 
-                vehicleDetails = vehicle.Details;
+                //vehicleDetails = vehicle.Details;
             }
         }
 
         public string OrderDetails { get; set; }
 
-        public VehicleUserControl ReturnedVehicle { get; set; }
+        public Vehicle ReturnedVehicle { get; set; }
 
         public FormReturnVehicle()
         {
             InitializeComponent();
         }
 
-        public FormReturnVehicle(VehicleUserControl vehicle)
+        public FormReturnVehicle(Vehicle vehicle)
         {
             InitializeComponent();
             RentedVehicle = vehicle;
@@ -67,8 +69,7 @@ namespace Car_Rental_Application.Forms
         {
             if (ReturnedVehicle != null)
             {
-                ReturnedVehicle.FuelPercentage = (short)fuelPercentageNumericUpDown.Value;
-                ReturnedVehicle.DamagePercentage = (short)damagePercentageNumericUpDown.Value;
+                
 
                 string order = "";
                 order += vehicleDetails;

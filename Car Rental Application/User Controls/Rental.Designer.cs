@@ -149,7 +149,7 @@
             // 
             // panelVehicle
             // 
-            this.panelVehicle.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panelVehicle.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.panelVehicle.Location = new System.Drawing.Point(147, 24);
             this.panelVehicle.Name = "panelVehicle";
             this.panelVehicle.Size = new System.Drawing.Size(550, 75);

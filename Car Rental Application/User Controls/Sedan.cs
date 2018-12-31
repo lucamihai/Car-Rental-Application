@@ -23,6 +23,11 @@ namespace Car_Rental_Application.User_Controls
             
         }
 
+        public Sedan(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0) : base(id, vehicleName, fuelPercent, damagePercent)
+        {
+
+        }
+
         public Sedan(Vehicle vehicle) : base(vehicle)
         {
             

@@ -14,8 +14,8 @@ namespace Car_Rental_Application.Forms
 {
     public partial class FormRentVehicle : Form
     {
-        public VehicleUserControl AvailableVehicle { get; set; }
-        public VehicleUserControl VehicleToBeRented { get; set; }
+        public Vehicle Vehicle { get; set; }
+        public Rental Rental { get; set; }
 
         string errorOwnerNameNotProvided;
         string errorOwnerPhoneNumberNotProvided;
@@ -25,11 +25,11 @@ namespace Car_Rental_Application.Forms
             InitializeComponent();
         }
 
-        public FormRentVehicle(VehicleUserControl availableVehicle)
+        public FormRentVehicle(Vehicle vehicle)
         {
             InitializeComponent();
 
-            AvailableVehicle = availableVehicle;
+            Vehicle = vehicle;
 
             errorOwnerNameNotProvided = Program.Language.Translate("Owner's name must be provided");
             errorOwnerPhoneNumberNotProvided = Program.Language.Translate("Owner's phone must be provided");
@@ -60,17 +60,17 @@ namespace Car_Rental_Application.Forms
             string ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
             Person owner = new Person(ownerName, ownerPhoneNumber);
 
-            if (AvailableVehicle.GetType() == Constants.TYPE_AVAILABLE_SEDAN)
+            if (Vehicle.GetType().Name == "Sedan")
             {
-                VehicleToBeRented = new RentedSedanUserControl(AvailableVehicle, owner, dateTimePickerReturnDate.Value);
+                Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
             }
 
-            if (AvailableVehicle.GetType() == Constants.TYPE_AVAILABLE_MINIVAN)
+            if (Vehicle.GetType().Name == "Minivan")
             {
-                VehicleToBeRented = new RentedMinivanUserControl(AvailableVehicle, owner, dateTimePickerReturnDate.Value);
+                Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
             }
 
-            if (VehicleToBeRented != null)
+            if (Rental != null)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();

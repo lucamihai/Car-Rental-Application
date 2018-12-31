@@ -69,7 +69,7 @@
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\Language.cs" />
     <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />
-    <Compile Include="Classes\RentedCarsSorter.cs" />
+    <Compile Include="Classes\RentalSorter.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
@@ -101,7 +101,6 @@
     <Compile Include="Forms\FormReturnVehicle.Designer.cs">
       <DependentUpon>FormReturnVehicle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\ISort.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,29 +109,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User Controls\AvailableMinivanUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\AvailableMinivanUserControl.Designer.cs">
-      <DependentUpon>AvailableMinivanUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="User Controls\AvailableSedanUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\AvailableSedanUserControl.Designer.cs">
-      <DependentUpon>AvailableSedanUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="User Controls\Minivan.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="User Controls\Minivan.Designer.cs">
       <DependentUpon>Minivan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="User Controls\MinivanUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\MinivanUserControl.Designer.cs">
-      <DependentUpon>MinivanUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="User Controls\Rental.cs">
       <SubType>UserControl</SubType>
@@ -140,41 +121,17 @@
     <Compile Include="User Controls\Rental.Designer.cs">
       <DependentUpon>Rental.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Controls\RentedMinivanUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\RentedMinivanUserControl.Designer.cs">
-      <DependentUpon>RentedMinivanUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="User Controls\RentedSedanUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\RentedSedanUserControl.Designer.cs">
-      <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="User Controls\Sedan.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="User Controls\Sedan.Designer.cs">
       <DependentUpon>Sedan.cs</DependentUpon>
     </Compile>
-    <Compile Include="User Controls\SedanUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\SedanUserControl.Designer.cs">
-      <DependentUpon>SedanUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="User Controls\Vehicle.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="User Controls\Vehicle.Designer.cs">
       <DependentUpon>Vehicle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="User Controls\VehicleUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="User Controls\VehicleUserControl.Designer.cs">
-      <DependentUpon>VehicleUserControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Forms\FormAddVehicle.resx">
       <DependentUpon>FormAddVehicle.cs</DependentUpon>
@@ -204,29 +161,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="User Controls\AvailableMinivanUserControl.resx">
-      <DependentUpon>AvailableMinivanUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="User Controls\AvailableSedanUserControl.resx">
-      <DependentUpon>AvailableSedanUserControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="User Controls\Minivan.resx">
       <DependentUpon>Minivan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\Rental.resx">
       <DependentUpon>Rental.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="User Controls\RentedMinivanUserControl.resx">
-      <DependentUpon>RentedMinivanUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="User Controls\RentedSedanUserControl.resx">
-      <DependentUpon>RentedSedanUserControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="User Controls\Sedan.resx">
       <DependentUpon>Sedan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="User Controls\SedanUserControl.resx">
-      <DependentUpon>SedanUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\Vehicle.resx">
       <DependentUpon>Vehicle.cs</DependentUpon>

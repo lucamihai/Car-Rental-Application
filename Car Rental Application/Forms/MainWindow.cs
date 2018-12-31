@@ -16,18 +16,18 @@ namespace Car_Rental_Application
 {
     public partial class MainWindow : Form
     {
-        List <VehicleUserControl> rentedVehicles;
+        List <Rental> rentals;
         List <Vehicle> vehicles;
 
         VehicleSorter availableCarsSorter;
-        RentedCarsSorter rentedCarsSorter;
+        RentalSorter rentalSorter;
 
         DateTime programTime;
 
         ReturnedVehiclesLogManager returnedVehiclesLogManager;
 
         List<int> indexesOfSelectedVehicles = new List<int>();
-        List<int> indexesOfSelectedRentedCars = new List<int>();
+        List<int> indexesOfSelectedRentals = new List<int>();
             
         public MainWindow()
         {
@@ -38,11 +38,11 @@ namespace Car_Rental_Application
             returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
             returnedVehiclesLogManager.Path = "log.txt";
 
-            rentedVehicles = new List<VehicleUserControl>();
+            rentals = new List<Rental>();
             vehicles = new List<Vehicle>();
 
             availableCarsSorter = new VehicleSorter();
-            rentedCarsSorter = new RentedCarsSorter();
+            rentalSorter = new RentalSorter();
 
             saveToDatabaseToolStripMenuItem.Available = false;
             loadFromDatabaseToolStripMenuItem.Available = false;
@@ -108,9 +108,9 @@ namespace Car_Rental_Application
             sortRentedSelectionComboBox.SelectedIndex = 0;
         }
 
-        public void AddToRentedCarsList(VehicleUserControl vehicle)
+        public void AddToRentalList(Rental rental)
         {
-            rentedVehicles.Add(vehicle);
+            rentals.Add(rental);
         }
 
         public int GetVehicleIndex(Vehicle vehicle)
@@ -118,9 +118,9 @@ namespace Car_Rental_Application
             return vehicles.IndexOf(vehicle);
         }
 
-        public int GetRentedVehicleIndex(VehicleUserControl vehicle)
+        public int GetRentalIndex(Rental rental)
         {
-            return rentedVehicles.IndexOf(vehicle);
+            return rentals.IndexOf(rental);
         }
 
         public void AddVehicle(Vehicle vehicle)
@@ -130,11 +130,11 @@ namespace Car_Rental_Application
             PopulateVehiclesPanel();
         }
 
-        public void RentVehicle(VehicleUserControl vehicle)
+        void AddRental(Rental rental)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            AddToRentedCarsList(vehicle);
-            PopulateRentedVehiclesPanel();
+            rentals.Add(rental);
+            PopulateRentalsPanel();
         }
 
         private void AddVehicle(object sender, EventArgs e)
@@ -149,34 +149,33 @@ namespace Car_Rental_Application
             }
         }
 
-        public void RentForm(VehicleUserControl vehicle)
+        public void RentForm(Vehicle vehicle)
         {
             FormRentVehicle formRentVehicle = new FormRentVehicle(vehicle);
 
             var result = formRentVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                VehicleUserControl vehicleToBeRented = formRentVehicle.VehicleToBeRented;
-                RentVehicle(vehicleToBeRented);
-
-                //RemoveVehicleFromList(vehicle);
+                Rental rental = formRentVehicle.Rental;
+                AddRental(rental);
+                RemoveVehicleFromList(vehicle);
             }
         }
 
-        public void ReturnForm(VehicleUserControl vehicle)
+        public void ReturnForm(Vehicle vehicle)
         {
             FormReturnVehicle formReturnVehicle = new FormReturnVehicle(vehicle);
 
             var result = formReturnVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                VehicleUserControl returnedVehicle = formReturnVehicle.ReturnedVehicle;
+                Vehicle returnedVehicle = formReturnVehicle.ReturnedVehicle;
                 string orderDetails = formReturnVehicle.OrderDetails;
 
                 returnedVehiclesLogManager.WriteToLog(orderDetails);
 
                 //ReturnVehicleFromRent(returnedVehicle);
-                RemoveRentedCarFromList(vehicle);
+                //RemoveRentedCarFromList(vehicle);
             }
         }
 
@@ -224,8 +223,8 @@ namespace Car_Rental_Application
             //foreach (VehicleUserControl vehicle in availableVehicles)
             //    SaveAvailableVehicleToSQLDatabase(vehicle);
 
-            foreach (VehicleUserControl vehicle in rentedVehicles)
-                SaveRentedVehicleToSQLDatabase(vehicle);
+            //foreach (Vehicle vehicle in rentals)
+                //SaveRentedVehicleToSQLDatabase(vehicle);
         }
 
         #endregion
@@ -261,7 +260,7 @@ namespace Car_Rental_Application
             }
 
             vehicles.Clear();
-            rentedVehicles.Clear();
+            rentals.Clear();
 
             List<Vehicle> ImportedVehicles = ReadVehiclesFromXMLFile("vehicles.xml");
             //List<VehicleUserControl> listOfImportedRentedVehicles = ReadVehiclesFromXMLFile("rentedVehiclesList.xml");
@@ -286,10 +285,10 @@ namespace Car_Rental_Application
             }
             */
 
-            foreach (VehicleUserControl vehicle in rentedVehicles)
+            //foreach (Vehicle vehicle in rentals)
             {
                 //vehicle.configureRentedVehicle(RentVehicleConfiguration.GetRentConfiguration());
-                IDManagement.MarkRentIDAsUnavailable(vehicle.RentID);
+                //IDManagement.MarkRentIDAsUnavailable(vehicle.RentID);
             }
 
             PopulateVehiclesPanel();
@@ -428,12 +427,12 @@ namespace Car_Rental_Application
             sqlConnection.Close();
         }
 
-        void SaveAvailableVehicleToSQLDatabase(VehicleUserControl vehicle)
+        void SaveAvailableVehicleToSQLDatabase(Vehicle vehicle)
         {
             string vehicleType = "";
-            if (vehicle.GetType() == Constants.TYPE_AVAILABLE_SEDAN)
+            if (vehicle.GetType().Name == "Sedan")
                 vehicleType = "sedan";
-            if (vehicle.GetType() == Constants.TYPE_AVAILABLE_MINIVAN)
+            if (vehicle.GetType().Name == "Minivan")
                 vehicleType = "minivan";
 
             string query = "INSERT INTO availableVehicles (id, name, type, fuel, damage)";
@@ -452,12 +451,12 @@ namespace Car_Rental_Application
             sqlConnection.Close();
         }
 
-        void SaveRentedVehicleToSQLDatabase(VehicleUserControl vehicle)
+        void SaveRentedVehicleToSQLDatabase(Vehicle vehicle)
         {
             string vehicleType = "";
-            if (vehicle.GetType() == Constants.TYPE_RENTED_SEDAN)
+            if (vehicle.GetType().Name == "Sedan")
                 vehicleType = "sedan";
-            if (vehicle.GetType() == Constants.TYPE_RENTED_MINIVAN)
+            if (vehicle.GetType().Name == "Minivan")
                 vehicleType = "minivan";
 
 
@@ -466,6 +465,7 @@ namespace Car_Rental_Application
 
             sqlConnection.Open();
 
+            /*
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
             myCommand.Parameters.AddWithValue("@id", vehicle.ID);
             myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
@@ -477,6 +477,7 @@ namespace Car_Rental_Application
             myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.Owner.PhoneNumber);
             myCommand.Parameters.AddWithValue("@returnDate", vehicle.ReturnDate.ToShortDateString());
             myCommand.ExecuteNonQuery();
+            */
 
             sqlConnection.Close();
         }
@@ -502,15 +503,13 @@ namespace Car_Rental_Application
 
                     if (vehicleType == "sedan")
                     {
-                        AvailableSedanUserControl sedan = new AvailableSedanUserControl();
-                        sedan.FromDatabase(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                        Sedan sedan = new Sedan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                         //availableVehicles.Add(sedan);
                     }
 
                     if (vehicleType == "minivan")
                     {
-                        AvailableMinivanUserControl minivan = new AvailableMinivanUserControl();
-                        minivan.FromDatabase(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                        Minivan minivan = new Minivan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                         //availableVehicles.Add(minivan);
                     }
                 }
@@ -538,7 +537,7 @@ namespace Car_Rental_Application
             {
                 sqlConnection.Open();
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                rentedVehicles.Clear();
+                rentals.Clear();
                 while (sqlDataReader.Read())
                 {
                     short id = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
@@ -556,19 +555,19 @@ namespace Car_Rental_Application
 
                     if (type == "sedan")
                     {
-                        RentedSedanUserControl sedan = new RentedSedanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
-                        rentedVehicles.Add(sedan);
+                        //RentedSedanUserControl sedan = new RentedSedanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
+                        //rentedVehicles.Add(sedan);
                     }
 
                     if (type == "minivan")
                     {
-                        RentedMinivanUserControl minivan = new RentedMinivanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
-                        rentedVehicles.Add(minivan);
+                        //RentedMinivanUserControl minivan = new RentedMinivanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
+                        //rentedVehicles.Add(minivan);
                     }
                 }
 
                 sqlDataReader.Close();
-                PopulateRentedVehiclesPanel();
+                PopulateRentalsPanel();
             }
 
             catch (Exception exception)
@@ -661,9 +660,9 @@ namespace Car_Rental_Application
 
         void UpdateLanguageForExistingRentedVehicles(Language language)
         {
-            foreach (VehicleUserControl vehicle in rentedVehicles)
+            //foreach (Vehicle vehicle in rentals)
             {
-                vehicle.UpdateLanguage(language);
+                //vehicle.UpdateLanguage(language);
             }
         }
 
@@ -700,12 +699,12 @@ namespace Car_Rental_Application
 
         public void SelectRentedVehicle(int indexOfAvailableVehicle)
         {
-            indexesOfSelectedRentedCars.Add(indexOfAvailableVehicle);
+            indexesOfSelectedRentals.Add(indexOfAvailableVehicle);
         }
 
         public void DeselectRentedVehicle(int indexOfAvailableVehicle)
         {
-            indexesOfSelectedRentedCars.Remove(indexOfAvailableVehicle);
+            indexesOfSelectedRentals.Remove(indexOfAvailableVehicle);
         }
 
         #endregion
@@ -742,7 +741,8 @@ namespace Car_Rental_Application
 
         private void buttonSelectAllRented_Click(object sender, EventArgs e)
         {
-            if (rentedVehicles.Count < 1)
+            /*
+            if (rentals.Count < 1)
             {
                 errorLabel.Text = "There are no rented vehicles to select";
                 timerClearErrors.Start();
@@ -750,7 +750,7 @@ namespace Car_Rental_Application
             }
 
             bool areAllSelected = true;
-            foreach (VehicleUserControl vehicle in rentedVehicles)
+            foreach (Vehicle vehicle in rentals)
             {
                 if (!vehicle.Selected)
                 {
@@ -762,10 +762,11 @@ namespace Car_Rental_Application
             // If all rented vehicles are already selected, deselect them
             if (areAllSelected)
             {
-                foreach (VehicleUserControl vehicle in rentedVehicles)
+                foreach (Vehicle vehicle in rentals)
                     vehicle.Selected = false;
             }
             errorLabel.Text = "";
+            */
         }
 
         #endregion
@@ -806,45 +807,6 @@ namespace Car_Rental_Application
 
             foreach (Vehicle vehicle in vehicles)
                 availableCarsElementsPanel.Controls.Add(vehicle);
-
-            errorLabel.Text = "";
-        }
-
-        private void RemoveLastRentedVehicle(object sender, EventArgs e)
-        {
-            string action = "remove the last rented vehicle";
-            FormConfirmation formConfirmation = new FormConfirmation(action);
-
-            var result = formConfirmation.ShowDialog();
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-
-            if (rentedVehicles.Count < 1)
-            {
-                errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove";
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
-                return;
-            }
-
-            VehicleUserControl lastVehicle = rentedVehicles[rentedVehicles.Count - 1];
-            lastVehicle.Selected = false;
-
-            short idToBeMarkedAsAvailable = lastVehicle.ID;
-            short rentIDToBeMarkedAsAvailable = lastVehicle.RentID;
-            IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
-            IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
-
-            rentedVehicles.Remove(lastVehicle);
-
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            rentedCarsElementsPanel.Controls.Clear();
-
-            foreach (VehicleUserControl vehicle in rentedVehicles)
-                rentedCarsElementsPanel.Controls.Add(vehicle);
 
             errorLabel.Text = "";
         }
@@ -891,50 +853,14 @@ namespace Car_Rental_Application
             }
         }
 
+        private void RemoveLastRentedVehicle(object sender, EventArgs e)
+        {
+
+        }
+
         private void RemoveSelectedRentedVehicles(object sender, EventArgs e)
         {
-            if (indexesOfSelectedRentedCars.Count > 0)
-            {
-                string action = "remove the selected rented vehicles";
-                FormConfirmation formConfirmation = new FormConfirmation(action);
 
-                var result = formConfirmation.ShowDialog();
-                if (result != DialogResult.OK)
-                {
-                    return;
-                }
-
-                errorLabel.Text = "";
-
-                // Store the vehicles to be removed in a temporary List
-                List<VehicleUserControl> vehiclesToBeRemoved = new List<VehicleUserControl>();
-                foreach (int index in indexesOfSelectedRentedCars)
-                {
-                    short idToBeMarkedAsAvailable = rentedVehicles[index].ID;
-                    IDManagement.MarkIDAsAvailable(idToBeMarkedAsAvailable);
-
-                    short rentIDToBeMarkedAsAvailable = rentedVehicles[index].RentID;
-                    IDManagement.MarkRentIDAsAvailable(rentIDToBeMarkedAsAvailable);
-
-                    vehiclesToBeRemoved.Add( rentedVehicles.ElementAt(index) );
-                }
-
-                // Remove the stored vehicles from the rentedVehicles List
-                foreach (VehicleUserControl vehicle in vehiclesToBeRemoved)
-                {
-                    rentedVehicles.Remove(vehicle);
-                }
-                    
-                PopulateRentedVehiclesPanel();
-                indexesOfSelectedRentedCars.Clear();
-            }
-
-            else
-            {
-                errorLabel.Text = "You didn't select any rented vehicle to remove";
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-            }
         }
 
         #endregion
@@ -946,12 +872,6 @@ namespace Car_Rental_Application
         {
             vehicles.Remove(vehicle);
             PopulateVehiclesPanel();
-        }
-        public void RemoveRentedCarFromList(VehicleUserControl vehicle)
-        {
-            rentedVehicles.Remove(vehicle);
-            IDManagement.MarkRentIDAsAvailable(vehicle.RentID);
-            PopulateRentedVehiclesPanel();
         }
 
         public void ReturnVehicleFromRent(Vehicle vehicle)
@@ -979,16 +899,16 @@ namespace Car_Rental_Application
             }
         }
 
-        public void PopulateRentedVehiclesPanel()
+        public void PopulateRentalsPanel()
         {
             rentedCarsElementsPanel.Controls.Clear();
             short counter = 0;
 
-            foreach (VehicleUserControl vehicle in rentedVehicles)
+            foreach (Rental rental in rentals)
             {
-                vehicle.LinkToMainWindow(this);
-                rentedCarsElementsPanel.Controls.Add(vehicle);
-                vehicle.Location = new Point(0, counter++ * 100);
+                rental.LinkToMainWindow(this);
+                rentedCarsElementsPanel.Controls.Add(rental);
+                rental.Location = new Point(0, counter++ * 150);
             }
         }
 
@@ -1031,41 +951,44 @@ namespace Car_Rental_Application
             
         }
         
+        
+
+
         private void SortRentedVehicles(object sender, EventArgs e)
         {
             int sortSelection = ((SortSelectionItem)sortRentedSelectionComboBox.SelectedItem).Value;
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
-                rentedVehicles = rentedCarsSorter.SortListByID(rentedVehicles);
+                //rentedVehicles = rentedCarsSorter.SortListByID(rentedVehicles);
             } 
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-                rentedVehicles = rentedCarsSorter.SortListByName(rentedVehicles);
+               //rentedVehicles = rentedCarsSorter.SortListByName(rentedVehicles);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                rentedVehicles = rentedCarsSorter.SortListByType(rentedVehicles);
+                //rentedVehicles = rentedCarsSorter.SortListByType(rentedVehicles);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_NAME)
             {
-                rentedVehicles = rentedCarsSorter.SortListByOwnerName(rentedVehicles);
+                //rentedVehicles = rentedCarsSorter.SortListByOwnerName(rentedVehicles);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER)
             {
-                rentedVehicles = rentedCarsSorter.SortListByOwnerPhoneNumber(rentedVehicles);
+                //rentedVehicles = rentedCarsSorter.SortListByOwnerPhoneNumber(rentedVehicles);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_RETURN_DATE)
             {
-                rentedVehicles = rentedCarsSorter.SortListByReturnDate(rentedVehicles);
+                //rentedVehicles = rentedCarsSorter.SortListByReturnDate(rentedVehicles);
             }
             
-            PopulateRentedVehiclesPanel();
+            PopulateRentalsPanel();
         }
 
         #endregion

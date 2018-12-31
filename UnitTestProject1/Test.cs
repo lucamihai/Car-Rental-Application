@@ -131,6 +131,7 @@ namespace UnitTestProject1
         #endregion
         */
 
+        /*
         #region Rented vehicles sorting
 
         [TestMethod]
@@ -138,7 +139,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -158,7 +159,7 @@ namespace UnitTestProject1
 
             vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByID(vehicles);
 
             short IDFromFirst = vehicles[0].RentID;
@@ -187,7 +188,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -207,7 +208,7 @@ namespace UnitTestProject1
 
             vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByName(vehicles);
 
             string nameFromFirst = vehicles[0].VehicleName;
@@ -224,7 +225,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -244,7 +245,7 @@ namespace UnitTestProject1
 
             vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByFuelPercent(vehicles);
 
             short fuelFromFirst = vehicles[0].FuelPercentage;
@@ -261,7 +262,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -283,7 +284,7 @@ namespace UnitTestProject1
             vehicles.Add(rentedSedan1);
             vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByDamagePercent(vehicles);
 
             short damageFromFirst = vehicles[0].DamagePercentage;
@@ -302,7 +303,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -322,7 +323,7 @@ namespace UnitTestProject1
 
             vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByOwnerName(vehicles);
 
             string ownerNameFromFirst = vehicles[0].Owner.Name;
@@ -339,7 +340,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -359,7 +360,7 @@ namespace UnitTestProject1
 
             vehicles.Add(rentedSedan2); vehicles.Add(rentedSedan1); vehicles.Add(rentedMinivan1); //added id 2, 0 then 1
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByOwnerPhoneNumber(vehicles);
 
             string ownerPhoneFromFirst = vehicles[0].Owner.PhoneNumber;
@@ -376,7 +377,7 @@ namespace UnitTestProject1
         {
             IDManagement.InitializeIndexes();
 
-            List<VehicleUserControl> vehicles = new List<VehicleUserControl>();
+            List<Vehicle> vehicles = new List<Vehicle>();
 
             AvailableSedanUserControl availableSedan1 = new AvailableSedanUserControl("z", 50, 15);  //should have id=0
             AvailableMinivanUserControl availableMinivan1 = new AvailableMinivanUserControl("y", 50, 50); //id=1
@@ -398,7 +399,7 @@ namespace UnitTestProject1
             vehicles.Add(rentedSedan1);
             vehicles.Add(rentedMinivan1);
 
-            RentedCarsSorter sorter = new RentedCarsSorter();
+            RentalSorter sorter = new RentalSorter();
             vehicles = sorter.SortListByReturnDate(vehicles);
 
             string returnDateFromFirst = vehicles[0].ReturnDate.ToShortDateString();
@@ -413,6 +414,6 @@ namespace UnitTestProject1
         }
 
         #endregion 
-
+        */
     }
 }

@@ -16,15 +16,12 @@ namespace Car_Rental_Application
         [STAThread]
         static void Main()
         {
-            // Default language
-            Dictionary<string, string> englishDictionary = FormLanguages.GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
-            Language = new Language(englishDictionary);
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
         }
 
-        public static Language Language { get; set; }
+        static Dictionary<string, string> englishDictionary = FormLanguages.GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
+        public static Language Language { get; set; } = new Language(englishDictionary);
     }
 }
