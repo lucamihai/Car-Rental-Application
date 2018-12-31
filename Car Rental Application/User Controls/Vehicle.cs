@@ -133,6 +133,7 @@ namespace Car_Rental_Application.User_Controls
             checkboxSelect.Text = Program.Language.Translate("Select");
             checkboxSelect.Location = new Point(487, 20);
             checkboxSelect.AutoSize = true;
+            checkboxSelect.Click += Select;
             Controls.Add(checkboxSelect);
 
             // -----
@@ -171,6 +172,16 @@ namespace Car_Rental_Application.User_Controls
             set
             {
                 checkboxSelect.Checked = value;
+
+                int indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
+
+                if (checkboxSelect.Checked == true)
+                {
+                    mainWindow.SelectVehicle(indexOfCurrentVehicle);
+                    return;
+                }
+
+                mainWindow.DeselectVehicle(indexOfCurrentVehicle);
             }
         }
 
@@ -297,6 +308,19 @@ namespace Car_Rental_Application.User_Controls
         private void Rent(object sender, EventArgs e)
         {
 
+        }
+
+        private void Select(object sender, EventArgs e)
+        {
+            int indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
+
+            if (checkboxSelect.Checked == true)
+            {
+                mainWindow.SelectVehicle(indexOfCurrentVehicle);
+                return;
+            }
+
+            mainWindow.DeselectVehicle(indexOfCurrentVehicle);
         }
 
         public virtual void UpdateLanguage(Language language)

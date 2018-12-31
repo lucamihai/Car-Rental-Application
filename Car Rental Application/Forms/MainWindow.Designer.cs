@@ -90,7 +90,7 @@
             this.buttonSelectAllAvailable.TabIndex = 10;
             this.buttonSelectAllAvailable.Text = "Select All";
             this.buttonSelectAllAvailable.UseVisualStyleBackColor = true;
-            this.buttonSelectAllAvailable.Click += new System.EventHandler(this.buttonSelectAllAvailable_Click);
+            this.buttonSelectAllAvailable.Click += new System.EventHandler(this.SelectAllVehicles);
             // 
             // sortAvailableSelectionComboBox
             // 
@@ -119,7 +119,7 @@
             this.buttonRemoveSelectedAvailableCars.TabIndex = 7;
             this.buttonRemoveSelectedAvailableCars.Text = "Remove Selected";
             this.buttonRemoveSelectedAvailableCars.UseVisualStyleBackColor = true;
-            this.buttonRemoveSelectedAvailableCars.Click += new System.EventHandler(this.RemoveSelectedAvailableVehicles);
+            this.buttonRemoveSelectedAvailableCars.Click += new System.EventHandler(this.RemoveSelectedVehicles);
             // 
             // labelAvailableVehicles
             // 
@@ -158,7 +158,7 @@
             this.buttonRemoveLastAvailableVehicle.TabIndex = 3;
             this.buttonRemoveLastAvailableVehicle.Text = "Remove last";
             this.buttonRemoveLastAvailableVehicle.UseVisualStyleBackColor = true;
-            this.buttonRemoveLastAvailableVehicle.Click += new System.EventHandler(this.RemoveLastAvailableVehicle);
+            this.buttonRemoveLastAvailableVehicle.Click += new System.EventHandler(this.RemoveLastVehicle);
             // 
             // RentedCarsPanel
             // 
