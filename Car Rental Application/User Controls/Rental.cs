@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using Car_Rental_Application.Classes;
 using Car_Rental_Application.User_Controls;
 
 namespace Car_Rental_Application.User_Controls
 {
-    public partial class Rental : UserControl
+    public partial class Rental : UserControl, IXmlSerializable
     {
         MainWindow mainWindow;
         Vehicle _Vehicle;
@@ -34,6 +35,20 @@ namespace Car_Rental_Application.User_Controls
             Vehicle = vehicle;
             Owner = owner;
             ReturnDate = returnDate;
+
+            UpdateLanguage(Program.Language);
+        }
+
+        public Rental(Rental rental)
+        {
+            InitializeComponent();
+
+            ID = rental.ID;
+            IDManagement.MarkRentIDAsUnavailable(ID);
+
+            Vehicle = new Vehicle(rental.Vehicle);
+            Owner = rental.Owner;
+            ReturnDate = rental.ReturnDate;
 
             UpdateLanguage(Program.Language);
         }
@@ -167,8 +182,55 @@ namespace Car_Rental_Application.User_Controls
             {
                 mainWindow.DeselectRental(rentalIndex);
             }
-
-            
         }
+
+        #region IXmlSerializable methods
+
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void WriteXml(System.Xml.XmlWriter xmlWriter)
+        {
+            xmlWriter.WriteElementString("id", ID.ToString());
+            xmlWriter.WriteElementString("ownerName", Owner.Name.ToString());
+            xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber.ToString());
+            xmlWriter.WriteElementString("returnDate", ReturnDate.ToShortDateString());
+            xmlWriter.WriteElementString("vehicleID", Vehicle.ID.ToString());
+            xmlWriter.WriteElementString("vehicleName", Vehicle.VehicleName);
+            xmlWriter.WriteElementString("vehicleFuelPercentage", Vehicle.FuelPercentage.ToString());
+            xmlWriter.WriteElementString("vehicleDamagePercentage", Vehicle.DamagePercentage.ToString());
+        }
+
+        public void ReadXml(System.Xml.XmlReader xmlReader)
+        {
+            xmlReader.MoveToContent();
+            bool isEmptyElement = xmlReader.IsEmptyElement;
+            xmlReader.ReadStartElement();
+
+            if (!isEmptyElement)
+            {
+                int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
+                ID = (short)intID;
+
+                string ownerName = xmlReader.ReadElementString("ownerName");
+                string ownerPhone = xmlReader.ReadElementString("ownerPhone");
+                Owner = new Person(ownerName, ownerPhone);
+
+                string returnDateString = xmlReader.ReadElementString("returnDate");
+                ReturnDate = DateTime.Parse(returnDateString);
+
+                short vehicleID = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleID"));
+                string vehicleName = xmlReader.ReadElementString("vehicleName");
+                short vehicleFuelPercentage = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleFuelPercentage"));
+                short vehicleDamagePercentage = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleDamagePercentage"));
+                Vehicle = new Vehicle(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+
+                xmlReader.ReadEndElement();
+            }
+        }
+
+        #endregion
     }
 }

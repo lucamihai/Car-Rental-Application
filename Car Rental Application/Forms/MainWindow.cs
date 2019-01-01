@@ -233,7 +233,7 @@ namespace Car_Rental_Application
 
         private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string action = "save vehicles to local file";
+            string action = "save vehicles and rentals to local file";
             string consequence = "existing local file will be deleted";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
@@ -244,12 +244,12 @@ namespace Car_Rental_Application
             }
 
             StoreVehiclesToXMLFile(vehicles, "vehicles.xml");
-            //StoreVehiclesToXMLFile(rentedVehicles, "rentedVehiclesList.xml");
+            StoreRentalsToXMLFile(rentals, "rentals.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string action = "load vehicles from local file";
+            string action = "load vehicles and rentals from local file";
             string consequence = "existing vehicles in the program will be removed";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
@@ -262,10 +262,10 @@ namespace Car_Rental_Application
             vehicles.Clear();
             rentals.Clear();
 
-            List<Vehicle> ImportedVehicles = ReadVehiclesFromXMLFile("vehicles.xml");
-            //List<VehicleUserControl> listOfImportedRentedVehicles = ReadVehiclesFromXMLFile("rentedVehiclesList.xml");
+            List<Vehicle> importedVehicles = ReadVehiclesFromXMLFile("vehicles.xml");
+            List<Rental> importedRentals = ReadRentalsFromXMLFile("rentals.xml");
 
-            foreach (Vehicle vehicle in ImportedVehicles)
+            foreach (Vehicle vehicle in importedVehicles)
             {
                 if (vehicle.Name == "Sedan")
                     vehicles.Add(new Sedan(vehicle));
@@ -274,25 +274,13 @@ namespace Car_Rental_Application
                     vehicles.Add(new Minivan(vehicle));
             }
 
-            /*
-            foreach (VehicleUserControl vehicle in listOfImportedRentedVehicles)
+            foreach (Rental rental in importedRentals)
             {
-                if (vehicle.Name == "RentedSedanUserControl")
-                    rentedVehicles.Add(new RentedSedanUserControl(vehicle));
-
-                if (vehicle.Name == "RentedMinivanUserControl")
-                    rentedVehicles.Add(new RentedMinivanUserControl(vehicle));
-            }
-            */
-
-            //foreach (Vehicle vehicle in rentals)
-            {
-                //vehicle.configureRentedVehicle(RentVehicleConfiguration.GetRentConfiguration());
-                //IDManagement.MarkRentIDAsUnavailable(vehicle.RentID);
+                rentals.Add(new Rental(rental));
             }
 
             PopulateVehiclesPanel();
-            //PopulateRentedVehiclesPanel();
+            PopulateRentalsPanel();
         }
 
         #endregion
@@ -612,6 +600,36 @@ namespace Car_Rental_Application
             using (FileStream stream = File.OpenRead(filePath))
             {
                 List<Vehicle> deserializedList = (List<Vehicle>)serializer.Deserialize(stream);
+                return deserializedList;
+            }
+        }
+
+        public void StoreRentalsToXMLFile(List<Rental> rentals, string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Rental>));
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            using (FileStream stream = File.OpenWrite(filePath))
+            {
+                serializer.Serialize(stream, rentals);
+            }
+        }
+
+        public List<Rental> ReadRentalsFromXMLFile(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return new List<Rental>();
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Rental>));
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                List<Rental> deserializedList = (List<Rental>)serializer.Deserialize(stream);
                 return deserializedList;
             }
         }
