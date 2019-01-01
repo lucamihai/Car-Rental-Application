@@ -1051,32 +1051,32 @@ namespace Car_Rental_Application
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
-                //rentedVehicles = rentedCarsSorter.SortListByID(rentedVehicles);
+                rentals = rentalSorter.SortListByID(rentals);
             } 
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-               //rentedVehicles = rentedCarsSorter.SortListByName(rentedVehicles);
+                rentals = rentalSorter.SortListByVehicleName(rentals);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                //rentedVehicles = rentedCarsSorter.SortListByType(rentedVehicles);
+                rentals = rentalSorter.SortListByVehicleType(rentals);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_NAME)
             {
-                //rentedVehicles = rentedCarsSorter.SortListByOwnerName(rentedVehicles);
+                rentals = rentalSorter.SortListByOwnerName(rentals);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER)
             {
-                //rentedVehicles = rentedCarsSorter.SortListByOwnerPhoneNumber(rentedVehicles);
+                rentals = rentalSorter.SortListByOwnerPhoneNumber(rentals);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_RETURN_DATE)
             {
-                //rentedVehicles = rentedCarsSorter.SortListByReturnDate(rentedVehicles);
+                rentals = rentalSorter.SortListByReturnDate(rentals);
             }
             
             PopulateRentalsPanel();
