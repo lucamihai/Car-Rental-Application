@@ -192,7 +192,7 @@
             this.buttonRemoveSelectedRentedCars.TabIndex = 12;
             this.buttonRemoveSelectedRentedCars.Text = "Remove Selected";
             this.buttonRemoveSelectedRentedCars.UseVisualStyleBackColor = true;
-            this.buttonRemoveSelectedRentedCars.Click += new System.EventHandler(this.RemoveSelectedRentedVehicles);
+            this.buttonRemoveSelectedRentedCars.Click += new System.EventHandler(this.RemoveSelectedRentals);
             // 
             // sortRentedSelectionComboBox
             // 
@@ -231,7 +231,7 @@
             this.buttonRemoveLastRentedCar.TabIndex = 10;
             this.buttonRemoveLastRentedCar.Text = "Remove last";
             this.buttonRemoveLastRentedCar.UseVisualStyleBackColor = true;
-            this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.RemoveLastRentedVehicle);
+            this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.RemoveLastRental);
             // 
             // rentedCarsElementsPanel
             // 

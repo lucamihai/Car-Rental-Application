@@ -49,10 +49,9 @@ namespace Car_Rental_Application.User_Controls
             }
             private set
             {
-                _Vehicle = value;
-                panelVehicle.Controls.Clear();
-                panelVehicle.Controls.Add(_Vehicle);
+                _Vehicle = new Vehicle(value);
                 _Vehicle.InputsEnabled = false;
+                panelVehicle.Controls.Add(_Vehicle);
             }
         }
 
@@ -81,6 +80,21 @@ namespace Car_Rental_Application.User_Controls
             set
             {
                 checkboxSelect.Checked = value;
+
+                if (mainWindow != null)
+                {
+                    int rentalIndex = mainWindow.GetRentalIndex(this);
+
+                    if (checkboxSelect.Checked == true)
+                    {
+                        
+                        mainWindow.SelectRental(rentalIndex);
+                    }
+                    else
+                    {
+                        mainWindow.DeselectRental(rentalIndex);
+                    }
+                }
             }
         }
 
@@ -106,7 +120,7 @@ namespace Car_Rental_Application.User_Controls
             protected set
             {
                 _Owner = value;
-                labelOwnerName.Text = _Owner.Name;
+                labelOwnerNameValue.Text = _Owner.Name;
                 labelOwnerPhoneValue.Text = _Owner.PhoneNumber;
             }
         }
@@ -134,6 +148,27 @@ namespace Car_Rental_Application.User_Controls
         public void UpdateLanguage(Language language)
         {
 
+        }
+
+        private void Return(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Select(object sender, EventArgs e)
+        {
+            int rentalIndex = mainWindow.GetRentalIndex(this);
+
+            if (checkboxSelect.Checked == true)
+            {
+                mainWindow.SelectRental(rentalIndex);
+            }
+            else
+            {
+                mainWindow.DeselectRental(rentalIndex);
+            }
+
+            
         }
     }
 }

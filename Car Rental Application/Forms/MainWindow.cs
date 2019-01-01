@@ -682,34 +682,35 @@ namespace Car_Rental_Application
         #endregion
 
 
-        #region Vehicle selection / deselection
+        #region Selection / deselection
 
-        #region Select / deselect single vehicle
+        #region Select / deselect single vehicle / rental
 
-        public void SelectVehicle(int indexOfVehicle)
+        public void SelectVehicle(int vehicleIndex)
         {
-            if (!indexesOfSelectedVehicles.Contains(indexOfVehicle))
-                indexesOfSelectedVehicles.Add(indexOfVehicle);
+            if (!indexesOfSelectedVehicles.Contains(vehicleIndex))
+                indexesOfSelectedVehicles.Add(vehicleIndex);
         }
 
-        public void DeselectVehicle(int indexOfVehicle)
+        public void DeselectVehicle(int vehicleIndex)
         {
-            indexesOfSelectedVehicles.Remove(indexOfVehicle);
+            indexesOfSelectedVehicles.Remove(vehicleIndex);
         }
 
-        public void SelectRentedVehicle(int indexOfAvailableVehicle)
+        public void SelectRental(int rentalIndex)
         {
-            indexesOfSelectedRentals.Add(indexOfAvailableVehicle);
+            if (!indexesOfSelectedRentals.Contains(rentalIndex))
+                indexesOfSelectedRentals.Add(rentalIndex);
         }
 
-        public void DeselectRentedVehicle(int indexOfAvailableVehicle)
+        public void DeselectRental(int rentalIndex)
         {
-            indexesOfSelectedRentals.Remove(indexOfAvailableVehicle);
+            indexesOfSelectedRentals.Remove(rentalIndex);
         }
 
         #endregion
 
-        #region Select / deselect all vehicles
+        #region Select / deselect all
 
         private void SelectAllVehicles(object sender, EventArgs e)
         {
@@ -736,21 +737,21 @@ namespace Car_Rental_Application
                 foreach (Vehicle vehicle in vehicles)
                     vehicle.Selected = false;
             }
+
             errorLabel.Text = "";
         }
 
         private void buttonSelectAllRented_Click(object sender, EventArgs e)
         {
-            /*
             if (rentals.Count < 1)
             {
-                errorLabel.Text = "There are no rented vehicles to select";
+                errorLabel.Text = "There are no rentals to select";
                 timerClearErrors.Start();
                 return;
             }
 
             bool areAllSelected = true;
-            foreach (Vehicle vehicle in rentals)
+            foreach (Rental vehicle in rentals)
             {
                 if (!vehicle.Selected)
                 {
@@ -762,11 +763,11 @@ namespace Car_Rental_Application
             // If all rented vehicles are already selected, deselect them
             if (areAllSelected)
             {
-                foreach (Vehicle vehicle in rentals)
-                    vehicle.Selected = false;
+                foreach (Rental rental in rentals)
+                    rental.Selected = false;
             }
+
             errorLabel.Text = "";
-            */
         }
 
         #endregion
@@ -853,14 +854,86 @@ namespace Car_Rental_Application
             }
         }
 
-        private void RemoveLastRentedVehicle(object sender, EventArgs e)
-        {
+        #endregion
 
+
+        #region Rental removal
+
+        private void RemoveLastRental(object sender, EventArgs e)
+        {
+            string action = "remove the last rental";
+            FormConfirmation formConfirmation = new FormConfirmation(action);
+
+            var result = formConfirmation.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            if (rentals.Count < 1)
+            {
+                errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove";
+                timerClearErrors.Stop();
+                timerClearErrors.Start();
+
+                return;
+            }
+
+            Rental lastRental = rentals[rentals.Count - 1];
+            IDManagement.MarkRentIDAsAvailable(lastRental.ID);
+
+            lastRental.Selected = false;
+            rentals.Remove(lastRental);
+
+            rentedCarsElementsPanel.VerticalScroll.Value = 0;
+            rentedCarsElementsPanel.Controls.Clear();
+
+            foreach (Rental rental in rentals)
+                rentedCarsElementsPanel.Controls.Add(rental);
+
+            errorLabel.Text = "";
         }
 
-        private void RemoveSelectedRentedVehicles(object sender, EventArgs e)
+        private void RemoveSelectedRentals(object sender, EventArgs e)
         {
+            if (indexesOfSelectedRentals.Count > 0)
+            {
+                string action = "remove the selected vehicles";
+                FormConfirmation formConfirmation = new FormConfirmation(action);
 
+                var result = formConfirmation.ShowDialog();
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+
+                errorLabel.Text = "";
+
+                // Store the rentals to be removed in a temporary List
+                List<Rental> rentalsToBeRemoved = new List<Rental>();
+                foreach (int index in indexesOfSelectedRentals)
+                {
+                    short idToBeMarkedAsAvailable = rentals[index].ID;
+                    IDManagement.MarkRentIDAsAvailable(idToBeMarkedAsAvailable);
+                    rentalsToBeRemoved.Add(rentals.ElementAt(index));
+                }
+
+                // Remove the stored vehicles from the vehicles List
+                foreach (Rental rental in rentalsToBeRemoved)
+                {
+                    rentals.Remove(rental);
+                }
+
+                PopulateRentalsPanel();
+                indexesOfSelectedRentals.Clear();
+            }
+
+            else
+            {
+                errorLabel.Text = "You didn't select any rental to remove";
+                timerClearErrors.Stop();
+                timerClearErrors.Start();
+            }
         }
 
         #endregion
@@ -883,7 +956,7 @@ namespace Car_Rental_Application
         #endregion
 
 
-        #region Available and rented vehicles list update
+        #region Vehicle and rental panels update
 
 
         public void PopulateVehiclesPanel()

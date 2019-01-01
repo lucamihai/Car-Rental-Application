@@ -69,7 +69,6 @@ namespace Car_Rental_Application.User_Controls
             FuelPercentage = vehicle.FuelPercentage;
             DamagePercentage = vehicle.DamagePercentage;
             
-
             UpdateLanguage(Program.Language);
         }
 
@@ -189,15 +188,19 @@ namespace Car_Rental_Application.User_Controls
             {
                 checkboxSelect.Checked = value;
 
-                int indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
-
-                if (checkboxSelect.Checked == true)
+                if (mainWindow != null)
                 {
-                    mainWindow.SelectVehicle(indexOfCurrentVehicle);
-                    return;
-                }
+                    int indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
 
-                mainWindow.DeselectVehicle(indexOfCurrentVehicle);
+                    if (checkboxSelect.Checked == true)
+                    {
+                        mainWindow.SelectVehicle(indexOfCurrentVehicle);
+                    }
+                    else
+                    {
+                        mainWindow.DeselectVehicle(indexOfCurrentVehicle);
+                    }
+                }
             }
         }
 

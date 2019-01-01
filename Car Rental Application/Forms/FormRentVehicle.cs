@@ -60,21 +60,18 @@ namespace Car_Rental_Application.Forms
             string ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
             Person owner = new Person(ownerName, ownerPhoneNumber);
 
-            if (Vehicle.GetType().Name == "Sedan")
-            {
-                Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
-            }
-
-            if (Vehicle.GetType().Name == "Minivan")
-            {
-                Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
-            }
+            Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
 
             if (Rental != null)
             {
                 this.DialogResult = DialogResult.OK;
-                this.Close();
             }
+            else
+            {
+                this.DialogResult = DialogResult.Cancel;
+            }
+
+            this.Close();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

@@ -118,6 +118,7 @@
             this.checkboxSelect.TabIndex = 8;
             this.checkboxSelect.Text = "Select";
             this.checkboxSelect.UseVisualStyleBackColor = true;
+            this.checkboxSelect.CheckedChanged += new System.EventHandler(this.Select);
             // 
             // buttonReturn
             // 
@@ -127,6 +128,7 @@
             this.buttonReturn.TabIndex = 9;
             this.buttonReturn.Text = "Return";
             this.buttonReturn.UseVisualStyleBackColor = true;
+            this.buttonReturn.Click += new System.EventHandler(this.Return);
             // 
             // labelID
             // 
