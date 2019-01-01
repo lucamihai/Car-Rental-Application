@@ -17,17 +17,17 @@ namespace Car_Rental_Application.Classes
 
         public List<Rental> SortListByOwnerName(List<Rental> rentals)
         {
-            return rentals.OrderBy(vehicle => vehicle.Owner.Name).ToList();
+            return rentals.OrderBy( vehicle => vehicle.Owner.Name ).ToList();
         }
 
         public List<Rental> SortListByOwnerPhoneNumber(List<Rental> rentals)
         {
-            return rentals.OrderBy(vehicle => vehicle.Owner.PhoneNumber).ToList();
+            return rentals.OrderBy( vehicle => vehicle.Owner.PhoneNumber ).ToList();
         }
 
         public List<Rental> SortListByReturnDate(List<Rental> rentals)
         {
-            return rentals.OrderBy(vehicle => vehicle.ReturnDate).ToList();
+            return rentals.OrderBy( vehicle => vehicle.ReturnDate ).ToList();
         }
 
         public List<Rental> SortListByVehicleName(List<Rental> rentals)
