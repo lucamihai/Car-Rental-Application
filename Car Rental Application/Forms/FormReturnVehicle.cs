@@ -15,35 +15,9 @@ namespace Car_Rental_Application.Forms
 {
     public partial class FormReturnVehicle : Form
     {
-        string vehicleDetails;
-        public Vehicle RentedVehicle
-        {
-            set
-            {
-                /*
-                Vehicle vehicle = value;
-
-                if (vehicle.GetType() == Constants.TYPE_RENTED_SEDAN)
-                {
-                    ReturnedVehicle = new AvailableSedanUserControl( (RentedSedanUserControl)vehicle );
-                    fuelPercentageNumericUpDown.Value = ReturnedVehicle.FuelPercentage;
-                    damagePercentageNumericUpDown.Value = ReturnedVehicle.DamagePercentage;
-                }
-
-                if (vehicle.GetType() == Constants.TYPE_RENTED_MINIVAN)
-                {
-                    ReturnedVehicle = new AvailableMinivanUserControl( (RentedMinivanUserControl)vehicle );
-                    fuelPercentageNumericUpDown.Value = ReturnedVehicle.FuelPercentage;
-                    damagePercentageNumericUpDown.Value = ReturnedVehicle.DamagePercentage;
-                }
-                */
-
-                //vehicleDetails = vehicle.Details;
-            }
-        }
+        Rental rental;
 
         public string OrderDetails { get; set; }
-
         public Vehicle ReturnedVehicle { get; set; }
 
         public FormReturnVehicle()
@@ -51,10 +25,10 @@ namespace Car_Rental_Application.Forms
             InitializeComponent();
         }
 
-        public FormReturnVehicle(Vehicle vehicle)
+        public FormReturnVehicle(Rental rental)
         {
             InitializeComponent();
-            RentedVehicle = vehicle;
+            this.rental = new Rental(rental);
 
             labelDescription.Text = Program.Language.Translate("Fill in the details of the vehicle at return");
             labelFuelPercentage.Text = Program.Language.Translate("Fuel percentage");
@@ -67,19 +41,24 @@ namespace Car_Rental_Application.Forms
 
         private void ReturnFromRent(object sender, EventArgs e)
         {
-            if (ReturnedVehicle != null)
+            if (rental != null)
             {
+                short fuelPercentageAtReturn = (short)fuelPercentageNumericUpDown.Value;
+                short damagePercentageAtReturn = (short)damagePercentageNumericUpDown.Value;
+                ReturnedVehicle = new Vehicle(
+                    rental.Vehicle.ID, 
+                    rental.Vehicle.VehicleName, 
+                    fuelPercentageAtReturn, 
+                    damagePercentageAtReturn
+                );
+
+                OrderDetails = "";
+                OrderDetails += ReturnedVehicle.Details;
+                OrderDetails += ". Was returned with ";
+                OrderDetails += ReturnedVehicle.FuelPercentage + "% fuel and ";
+                OrderDetails += ReturnedVehicle.DamagePercentage + "% damage, on ";
+                OrderDetails += returnDateDateTimePicker.Value.ToShortDateString();
                 
-
-                string order = "";
-                order += vehicleDetails;
-                order += ". Was returned with ";
-                order += ReturnedVehicle.FuelPercentage + "% fuel and ";
-                order += ReturnedVehicle.DamagePercentage + "% damage, on ";
-                order += returnDateDateTimePicker.Value.ToShortDateString();
-
-                OrderDetails = order;
-
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

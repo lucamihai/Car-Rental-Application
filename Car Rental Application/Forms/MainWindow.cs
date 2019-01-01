@@ -130,6 +130,13 @@ namespace Car_Rental_Application
             PopulateVehiclesPanel();
         }
 
+        public void RemoveRental(Rental rental)
+        {
+            rentedCarsElementsPanel.VerticalScroll.Value = 0;
+            rentals.Remove(rental);
+            PopulateRentalsPanel();
+        }
+
         void AddRental(Rental rental)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
@@ -137,7 +144,7 @@ namespace Car_Rental_Application
             PopulateRentalsPanel();
         }
 
-        private void AddVehicle(object sender, EventArgs e)
+        private void AddVehicleForm(object sender, EventArgs e)
         {
             FormAddVehicle formAddVehicle = new FormAddVehicle();
 
@@ -162,9 +169,9 @@ namespace Car_Rental_Application
             }
         }
 
-        public void ReturnForm(Vehicle vehicle)
+        public void ReturnForm(Rental rental)
         {
-            FormReturnVehicle formReturnVehicle = new FormReturnVehicle(vehicle);
+            FormReturnVehicle formReturnVehicle = new FormReturnVehicle(rental);
 
             var result = formReturnVehicle.ShowDialog();
             if (result == DialogResult.OK)
@@ -174,8 +181,8 @@ namespace Car_Rental_Application
 
                 returnedVehiclesLogManager.WriteToLog(orderDetails);
 
-                //ReturnVehicleFromRent(returnedVehicle);
-                //RemoveRentedCarFromList(vehicle);
+                AddVehicle(returnedVehicle);
+                RemoveRental(rental);
             }
         }
 
@@ -1041,9 +1048,6 @@ namespace Car_Rental_Application
             PopulateVehiclesPanel();
             
         }
-        
-        
-
 
         private void SortRentedVehicles(object sender, EventArgs e)
         {

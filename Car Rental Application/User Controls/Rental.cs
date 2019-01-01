@@ -167,7 +167,7 @@ namespace Car_Rental_Application.User_Controls
 
         private void Return(object sender, EventArgs e)
         {
-
+            mainWindow.ReturnForm(this);
         }
 
         private void Select(object sender, EventArgs e)

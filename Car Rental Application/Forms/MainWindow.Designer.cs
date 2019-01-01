@@ -139,7 +139,7 @@
             this.buttonAddAvailableVehicle.TabIndex = 6;
             this.buttonAddAvailableVehicle.Text = "Add vehicle";
             this.buttonAddAvailableVehicle.UseVisualStyleBackColor = true;
-            this.buttonAddAvailableVehicle.Click += new System.EventHandler(this.AddVehicle);
+            this.buttonAddAvailableVehicle.Click += new System.EventHandler(this.AddVehicleForm);
             // 
             // availableCarsElementsPanel
             // 
