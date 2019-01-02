@@ -68,7 +68,7 @@
     <Compile Include="Classes\VehicleSorter.cs" />
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\Language.cs" />
-    <Compile Include="Classes\ReturnedVehiclesLogManager.cs" />
+    <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\RentalSorter.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">

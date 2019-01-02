@@ -24,7 +24,7 @@ namespace Car_Rental_Application
 
         DateTime programTime;
 
-        ReturnedVehiclesLogManager returnedVehiclesLogManager;
+        Logger returnedVehiclesLogManager;
 
         List<int> indexesOfSelectedVehicles = new List<int>();
         List<int> indexesOfSelectedRentals = new List<int>();
@@ -35,8 +35,7 @@ namespace Car_Rental_Application
 
             errorLabel.Text = "";
             
-            returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
-            returnedVehiclesLogManager.Path = "log.txt";
+            returnedVehiclesLogManager = new Logger("log.txt");
 
             rentals = new List<Rental>();
             vehicles = new List<Vehicle>();
@@ -325,8 +324,7 @@ namespace Car_Rental_Application
             }
 
             string oldLogManagerPath = returnedVehiclesLogManager.Path;
-            returnedVehiclesLogManager = new ReturnedVehiclesLogManager();
-            returnedVehiclesLogManager.Path = oldLogManagerPath;
+            returnedVehiclesLogManager = new Logger(oldLogManagerPath);
 
             if (File.Exists(returnedVehiclesLogManager.Path))
             {
