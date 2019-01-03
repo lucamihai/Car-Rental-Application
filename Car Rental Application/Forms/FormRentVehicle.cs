@@ -17,9 +17,6 @@ namespace Car_Rental_Application.Forms
         public Vehicle Vehicle { get; set; }
         public Rental Rental { get; set; }
 
-        string errorOwnerNameNotProvided;
-        string errorOwnerPhoneNumberNotProvided;
-
         public FormRentVehicle()
         {
             InitializeComponent();
@@ -30,9 +27,6 @@ namespace Car_Rental_Application.Forms
             InitializeComponent();
 
             Vehicle = vehicle;
-
-            errorOwnerNameNotProvided = Program.Language.Translate("Owner's name must be provided");
-            errorOwnerPhoneNumberNotProvided = Program.Language.Translate("Owner's phone must be provided");
 
             labelOwnerName.Text = Program.Language.Translate("Owner name");
             labelOwnerPhoneNumber.Text = Program.Language.Translate("Owner phone number");
@@ -46,13 +40,13 @@ namespace Car_Rental_Application.Forms
         {
             if (textBoxOwnerName.Text == "")
             {
-                errorLabel.Text = errorOwnerNameNotProvided;
+                errorLabel.Text = ErrorMessages.OWNER_NAME_NOT_PROVIDED;
                 return;
             }
 
             if (textBoxOwnerPhoneNumber.Text == "")
             {
-                errorLabel.Text = errorOwnerPhoneNumberNotProvided;
+                errorLabel.Text = ErrorMessages.OWNER_PHONE_NOT_PROVIDED;
                 return;
             }
 

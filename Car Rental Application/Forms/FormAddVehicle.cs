@@ -15,13 +15,10 @@ namespace Car_Rental_Application.Forms
     public partial class FormAddVehicle : Form
     {
         public Vehicle Vehicle { get; set; }
-        string errorVehicleNameNotProvided;
 
         public FormAddVehicle()
         {
             InitializeComponent();
-
-            errorVehicleNameNotProvided = Program.Language.Translate("Vehicle name must be provided");
 
             labelVehicleName.Text = Program.Language.Translate("Vehicle name");
             labelVehicleType.Text = Program.Language.Translate("Vehicle type");
@@ -39,7 +36,7 @@ namespace Car_Rental_Application.Forms
         {
             if (textBoxVehicleName.Text == "")
             {
-                errorLabel.Text = errorVehicleNameNotProvided;
+                errorLabel.Text = ErrorMessages.VEHICLE_NAME_NOT_PROVIDED;
                 return;
             }
 

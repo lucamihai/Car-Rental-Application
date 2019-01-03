@@ -62,3 +62,13 @@ remove the last rented vehicle\remove the last rented vehicle
 remove the selected available vehicles\remove the selected available vehicles
 remove the selected rented vehicles\remove the selected rented vehicles
 delete the existing log\delete the existing log
+There are no vehicles to select\There are no vehicles to select
+There are no vehicles to remove\There are no vehicles to remove
+No vehicles have been selected\No vehicles have been selected
+There are no rentals to select\There are no rentals to select
+There are no rentals to remove\There are no rentals to remove
+No rentals have been selected\No rentals have been selected
+Log file doesn't exist\Log file doesn't exist
+Vehicle name must be provided\Vehicle name must be provided
+Owner's name must be provided\Owner's name must be provided
+Owner's phone must be provided\Owner's phone must be provided

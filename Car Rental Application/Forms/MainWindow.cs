@@ -297,7 +297,7 @@ namespace Car_Rental_Application
         {
             if (!File.Exists(returnedVehiclesLogManager.Path) || new FileInfo(returnedVehiclesLogManager.Path).Length == 0)
             {
-                errorLabel.Text = "There is no log created";
+                errorLabel.Text = ErrorMessages.NO_LOG_CREATED;
                 timerClearErrors.Start();
 
                 return;
@@ -671,6 +671,8 @@ namespace Car_Rental_Application
 
             UpdateLanguageForExistingVehicles(language);
             UpdateLanguageForSortSelections(language);
+
+            ErrorMessages.UpdateLanguage(language);
         }
 
         void UpdateLanguageForExistingVehicles(Language language)
@@ -739,7 +741,7 @@ namespace Car_Rental_Application
         {
             if (vehicles.Count < 1)
             {
-                errorLabel.Text = "There are no available vehicles to select";
+                errorLabel.Text = ErrorMessages.NO_VEHICLES_TO_SELECT;
                 timerClearErrors.Start();
                 return;
             }
@@ -768,7 +770,7 @@ namespace Car_Rental_Application
         {
             if (rentals.Count < 1)
             {
-                errorLabel.Text = "There are no rentals to select";
+                errorLabel.Text = ErrorMessages.NO_RENTALS_TO_SELECT;
                 timerClearErrors.Start();
                 return;
             }
@@ -814,21 +816,21 @@ namespace Car_Rental_Application
 
         private void RemoveLastVehicle(object sender, EventArgs e)
         {
+            if (vehicles.Count < 1)
+            {
+                errorLabel.Text = ErrorMessages.NO_VEHICLES_TO_REMOVE;
+                timerClearErrors.Stop();
+                timerClearErrors.Start();
+
+                return;
+            }
+
             string action = "remove the last vehicle";
             FormConfirmation formConfirmation = new FormConfirmation(action);
 
             var result = formConfirmation.ShowDialog();
             if (result != DialogResult.OK)
             {
-                return;
-            }
-
-            if (vehicles.Count < 1)
-            {
-                errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove";
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
                 return;
             }
 
@@ -877,7 +879,7 @@ namespace Car_Rental_Application
 
             else
             {
-                errorLabel.Text = "You didn't select any vehicle to remove";
+                errorLabel.Text = ErrorMessages.NO_VEHICLES_SELECTED;
                 timerClearErrors.Stop();
                 timerClearErrors.Start();
             }
@@ -907,21 +909,21 @@ namespace Car_Rental_Application
 
         private void RemoveLastRental(object sender, EventArgs e)
         {
+            if (rentals.Count < 1)
+            {
+                errorLabel.Text = ErrorMessages.NO_RENTALS_TO_REMOVE;
+                timerClearErrors.Stop();
+                timerClearErrors.Start();
+
+                return;
+            }
+
             string action = "remove the last rental";
             FormConfirmation formConfirmation = new FormConfirmation(action);
 
             var result = formConfirmation.ShowDialog();
             if (result != DialogResult.OK)
             {
-                return;
-            }
-
-            if (rentals.Count < 1)
-            {
-                errorLabel.Text = "There's nothing" + Environment.NewLine + " to remove";
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
                 return;
             }
 
@@ -938,7 +940,7 @@ namespace Car_Rental_Application
         {
             if (indexesOfSelectedRentals.Count > 0)
             {
-                string action = "remove the selected vehicles";
+                string action = "remove the selected rentals";
                 FormConfirmation formConfirmation = new FormConfirmation(action);
 
                 var result = formConfirmation.ShowDialog();
@@ -970,7 +972,7 @@ namespace Car_Rental_Application
 
             else
             {
-                errorLabel.Text = "You didn't select any rental to remove";
+                errorLabel.Text = ErrorMessages.NO_RENTALS_SELECTED;
                 timerClearErrors.Stop();
                 timerClearErrors.Start();
             }

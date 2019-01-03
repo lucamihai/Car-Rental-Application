@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Classes\VehicleSorter.cs" />
     <Compile Include="Classes\IDManagement.cs" />
