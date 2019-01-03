@@ -34,7 +34,7 @@
             this.sortVehicleSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.buttonSortAvailableVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedAvailableCars = new System.Windows.Forms.Button();
-            this.labelAvailableVehicles = new System.Windows.Forms.Label();
+            this.labelVehicles = new System.Windows.Forms.Label();
             this.buttonAddAvailableVehicle = new System.Windows.Forms.Button();
             this.availableCarsElementsPanel = new System.Windows.Forms.Panel();
             this.buttonRemoveLastAvailableVehicle = new System.Windows.Forms.Button();
@@ -42,7 +42,7 @@
             this.buttonSelectAllRented = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedRentedCars = new System.Windows.Forms.Button();
             this.sortRentalSelectionComboBox = new System.Windows.Forms.ComboBox();
-            this.labelRentedVehicles = new System.Windows.Forms.Label();
+            this.labelRentals = new System.Windows.Forms.Label();
             this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
             this.rentedCarsElementsPanel = new System.Windows.Forms.Panel();
@@ -73,7 +73,7 @@
             this.AvailableCarsPanel.Controls.Add(this.sortVehicleSelectionComboBox);
             this.AvailableCarsPanel.Controls.Add(this.buttonSortAvailableVehicles);
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveSelectedAvailableCars);
-            this.AvailableCarsPanel.Controls.Add(this.labelAvailableVehicles);
+            this.AvailableCarsPanel.Controls.Add(this.labelVehicles);
             this.AvailableCarsPanel.Controls.Add(this.buttonAddAvailableVehicle);
             this.AvailableCarsPanel.Controls.Add(this.availableCarsElementsPanel);
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveLastAvailableVehicle);
@@ -92,12 +92,12 @@
             this.buttonSelectAllAvailable.UseVisualStyleBackColor = true;
             this.buttonSelectAllAvailable.Click += new System.EventHandler(this.SelectAllVehicles);
             // 
-            // sortAvailableSelectionComboBox
+            // sortVehicleSelectionComboBox
             // 
             this.sortVehicleSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortVehicleSelectionComboBox.FormattingEnabled = true;
             this.sortVehicleSelectionComboBox.Location = new System.Drawing.Point(109, 68);
-            this.sortVehicleSelectionComboBox.Name = "sortAvailableSelectionComboBox";
+            this.sortVehicleSelectionComboBox.Name = "sortVehicleSelectionComboBox";
             this.sortVehicleSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.sortVehicleSelectionComboBox.TabIndex = 9;
             // 
@@ -123,13 +123,13 @@
             // 
             // labelAvailableVehicles
             // 
-            this.labelAvailableVehicles.AutoSize = true;
-            this.labelAvailableVehicles.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAvailableVehicles.Location = new System.Drawing.Point(184, 2);
-            this.labelAvailableVehicles.Name = "labelAvailableVehicles";
-            this.labelAvailableVehicles.Size = new System.Drawing.Size(169, 33);
-            this.labelAvailableVehicles.TabIndex = 0;
-            this.labelAvailableVehicles.Text = "Available cars";
+            this.labelVehicles.AutoSize = true;
+            this.labelVehicles.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVehicles.Location = new System.Drawing.Point(215, 2);
+            this.labelVehicles.Name = "labelAvailableVehicles";
+            this.labelVehicles.Size = new System.Drawing.Size(108, 33);
+            this.labelVehicles.TabIndex = 0;
+            this.labelVehicles.Text = "Vehicles";
             // 
             // buttonAddAvailableVehicle
             // 
@@ -165,7 +165,7 @@
             this.RentedCarsPanel.Controls.Add(this.buttonSelectAllRented);
             this.RentedCarsPanel.Controls.Add(this.buttonRemoveSelectedRentedCars);
             this.RentedCarsPanel.Controls.Add(this.sortRentalSelectionComboBox);
-            this.RentedCarsPanel.Controls.Add(this.labelRentedVehicles);
+            this.RentedCarsPanel.Controls.Add(this.labelRentals);
             this.RentedCarsPanel.Controls.Add(this.buttonSortRentedVehicles);
             this.RentedCarsPanel.Controls.Add(this.buttonRemoveLastRentedCar);
             this.RentedCarsPanel.Controls.Add(this.rentedCarsElementsPanel);
@@ -194,24 +194,24 @@
             this.buttonRemoveSelectedRentedCars.UseVisualStyleBackColor = true;
             this.buttonRemoveSelectedRentedCars.Click += new System.EventHandler(this.RemoveSelectedRentals);
             // 
-            // sortRentedSelectionComboBox
+            // sortRentalSelectionComboBox
             // 
             this.sortRentalSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortRentalSelectionComboBox.FormattingEnabled = true;
             this.sortRentalSelectionComboBox.Location = new System.Drawing.Point(111, 68);
-            this.sortRentalSelectionComboBox.Name = "sortRentedSelectionComboBox";
+            this.sortRentalSelectionComboBox.Name = "sortRentalSelectionComboBox";
             this.sortRentalSelectionComboBox.Size = new System.Drawing.Size(121, 21);
             this.sortRentalSelectionComboBox.TabIndex = 11;
             // 
             // labelRentedVehicles
             // 
-            this.labelRentedVehicles.AutoSize = true;
-            this.labelRentedVehicles.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRentedVehicles.Location = new System.Drawing.Point(287, 2);
-            this.labelRentedVehicles.Name = "labelRentedVehicles";
-            this.labelRentedVehicles.Size = new System.Drawing.Size(146, 33);
-            this.labelRentedVehicles.TabIndex = 2;
-            this.labelRentedVehicles.Text = "Rented cars";
+            this.labelRentals.AutoSize = true;
+            this.labelRentals.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelRentals.Location = new System.Drawing.Point(298, 2);
+            this.labelRentals.Name = "labelRentedVehicles";
+            this.labelRentals.Size = new System.Drawing.Size(98, 33);
+            this.labelRentals.TabIndex = 2;
+            this.labelRentals.Text = "Rentals";
             // 
             // buttonSortRentedVehicles
             // 
@@ -400,8 +400,8 @@
 
         private System.Windows.Forms.Panel AvailableCarsPanel;
         private System.Windows.Forms.Panel RentedCarsPanel;
-        private System.Windows.Forms.Label labelAvailableVehicles;
-        private System.Windows.Forms.Label labelRentedVehicles;
+        private System.Windows.Forms.Label labelVehicles;
+        private System.Windows.Forms.Label labelRentals;
         private System.Windows.Forms.Button buttonRemoveLastAvailableVehicle;
         private System.Windows.Forms.Panel availableCarsElementsPanel;
         private System.Windows.Forms.Button buttonAddAvailableVehicle;

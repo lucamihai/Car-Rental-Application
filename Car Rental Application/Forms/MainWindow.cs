@@ -656,8 +656,8 @@ namespace Car_Rental_Application
             buttonSortAvailableVehicles.Text = language.Translate("Sort");
             buttonSortRentedVehicles.Text = language.Translate("Sort");
 
-            labelAvailableVehicles.Text = language.Translate("Available cars");
-            labelRentedVehicles.Text = language.Translate("Rented cars");
+            labelVehicles.Text = language.Translate("Vehicles");
+            labelRentals.Text = language.Translate("Rentals");
 
             connectToDatabaseToolStripMenuItem.Text = language.Translate("Connect to database");
             loadFromDatabaseToolStripMenuItem.Text = language.Translate("Load from database");
@@ -670,6 +670,7 @@ namespace Car_Rental_Application
             languageToolStripMenuItem.Text = language.Translate("Language");
 
             UpdateLanguageForExistingVehicles(language);
+            UpdateLanguageForExistingRentals(language);
             UpdateLanguageForSortSelections(language);
 
             ErrorMessages.UpdateLanguage(language);
@@ -683,11 +684,11 @@ namespace Car_Rental_Application
             }
         }
 
-        void UpdateLanguageForExistingRentedVehicles(Language language)
+        void UpdateLanguageForExistingRentals(Language language)
         {
-            //foreach (Vehicle vehicle in rentals)
+            foreach (Rental rental in rentals)
             {
-                //vehicle.UpdateLanguage(language);
+                rental.UpdateLanguage(language);
             }
         }
 

@@ -22,6 +22,13 @@ namespace Car_Rental_Application.Forms
         {
             InitializeComponent();
 
+            this.Text = Program.Language.Translate("Languages");
+            labelChooseLanguage.Text = Program.Language.Translate("Choose language");
+            buttonAddLanguage.Text = Program.Language.Translate("Add language");
+            buttonApplyLanguage.Text = Program.Language.Translate("Apply selected");
+            buttonRenameSelected.Text = Program.Language.Translate("Rename selected");
+            buttonRemoveLanguage.Text = Program.Language.Translate("Remove selected");
+
             Dictionary<string, string> englishDictionary = GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
             Language english = new Language(englishDictionary);
             ChosenLanguage = english;

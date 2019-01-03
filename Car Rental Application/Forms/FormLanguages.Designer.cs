@@ -32,7 +32,7 @@
             this.labelChooseLanguage = new System.Windows.Forms.Label();
             this.buttonAddLanguage = new System.Windows.Forms.Button();
             this.buttonRemoveLanguage = new System.Windows.Forms.Button();
-            this.buttonChooseLanguage = new System.Windows.Forms.Button();
+            this.buttonApplyLanguage = new System.Windows.Forms.Button();
             this.buttonRenameSelected = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -77,13 +77,13 @@
             // 
             // buttonChooseLanguage
             // 
-            this.buttonChooseLanguage.Location = new System.Drawing.Point(344, 272);
-            this.buttonChooseLanguage.Name = "buttonChooseLanguage";
-            this.buttonChooseLanguage.Size = new System.Drawing.Size(107, 23);
-            this.buttonChooseLanguage.TabIndex = 4;
-            this.buttonChooseLanguage.Text = "Apply selected";
-            this.buttonChooseLanguage.UseVisualStyleBackColor = true;
-            this.buttonChooseLanguage.Click += new System.EventHandler(this.ChooseLanguage);
+            this.buttonApplyLanguage.Location = new System.Drawing.Point(344, 272);
+            this.buttonApplyLanguage.Name = "buttonChooseLanguage";
+            this.buttonApplyLanguage.Size = new System.Drawing.Size(107, 23);
+            this.buttonApplyLanguage.TabIndex = 4;
+            this.buttonApplyLanguage.Text = "Apply selected";
+            this.buttonApplyLanguage.UseVisualStyleBackColor = true;
+            this.buttonApplyLanguage.Click += new System.EventHandler(this.ChooseLanguage);
             // 
             // buttonRenameSelected
             // 
@@ -102,7 +102,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(484, 336);
             this.Controls.Add(this.buttonRenameSelected);
-            this.Controls.Add(this.buttonChooseLanguage);
+            this.Controls.Add(this.buttonApplyLanguage);
             this.Controls.Add(this.buttonRemoveLanguage);
             this.Controls.Add(this.buttonAddLanguage);
             this.Controls.Add(this.labelChooseLanguage);
@@ -120,7 +120,7 @@
         private System.Windows.Forms.Label labelChooseLanguage;
         private System.Windows.Forms.Button buttonAddLanguage;
         private System.Windows.Forms.Button buttonRemoveLanguage;
-        private System.Windows.Forms.Button buttonChooseLanguage;
+        private System.Windows.Forms.Button buttonApplyLanguage;
         private System.Windows.Forms.Button buttonRenameSelected;
     }
 }

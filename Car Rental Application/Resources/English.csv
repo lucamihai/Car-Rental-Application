@@ -2,8 +2,10 @@
 Car rental\Car rental
 Sedan\Sedan
 Minivan\Minivan
-Available cars\Available cars
-Rented cars\Rented cars
+Vehicle\Vehicle
+Vehicles\Vehicles
+Rental\Rental
+Rentals\Rentals
 Sort\Sort
 By ID\By ID
 By name\By name
@@ -50,6 +52,12 @@ Action\Action
 Consequence\Consequence
 Are you sure\Are you sure
 Confirm\Confirm
+Languages\Languages
+Choose language\Choose language
+Add language\Add language
+Apply selected\Apply selected
+Rename selected\Rename selected
+Remove selected\Remove selected
 load vehicles from the database\load vehicles from the database
 existing vehicles in the program will be removed\existing vehicles in the program will be removed
 save vehicles to the database\save vehicles to the database

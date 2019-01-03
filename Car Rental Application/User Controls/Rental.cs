@@ -162,7 +162,15 @@ namespace Car_Rental_Application.User_Controls
 
         public void UpdateLanguage(Language language)
         {
+            labelID.Text = language.Translate("ID");
+            labelOwnerName.Text = language.Translate("Owner name");
+            labelOwnerPhone.Text = language.Translate("Owner phone");
+            labelReturnDate.Text = language.Translate("Return date");
+            labelVehicle.Text = language.Translate("Vehicle");
+            checkboxSelect.Text = language.Translate("Select");
+            buttonReturn.Text = language.Translate("Return");
 
+            Vehicle.UpdateLanguage(language);
         }
 
         private void Return(object sender, EventArgs e)
