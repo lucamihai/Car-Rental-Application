@@ -32,9 +32,9 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
             PrepareComponents();
 
-            short id = IDManagement.GetLowestAvailableID();
+            short id = IDManagement.LowestAvailableVehicleID;
             ID = id;
-            IDManagement.MarkIDAsUnavailable(id);
+            IDManagement.MarkVehicleIDAsUnavailable(id);
 
             VehicleName = vehicleName;
             FuelPercentage = fuelPercent;
@@ -49,7 +49,7 @@ namespace Car_Rental_Application.User_Controls
             PrepareComponents();
 
             ID = id;
-            IDManagement.MarkIDAsUnavailable(id);
+            IDManagement.MarkVehicleIDAsUnavailable(id);
 
             VehicleName = vehicleName;
             FuelPercentage = fuelPercent;
@@ -64,7 +64,7 @@ namespace Car_Rental_Application.User_Controls
             PrepareComponents();
 
             ID = vehicle.ID;
-            IDManagement.MarkIDAsUnavailable(ID);
+            IDManagement.MarkVehicleIDAsUnavailable(ID);
             VehicleName = vehicle.VehicleName;
             FuelPercentage = vehicle.FuelPercentage;
             DamagePercentage = vehicle.DamagePercentage;
@@ -213,7 +213,7 @@ namespace Car_Rental_Application.User_Controls
             protected set
             {
                 labelIDValue.Text = value.ToString();
-                IDManagement.MarkIDAsUnavailable(value);
+                IDManagement.MarkVehicleIDAsUnavailable(value);
             }
         }
 

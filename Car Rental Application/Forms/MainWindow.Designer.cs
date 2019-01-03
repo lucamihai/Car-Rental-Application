@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.AvailableCarsPanel = new System.Windows.Forms.Panel();
             this.buttonSelectAllAvailable = new System.Windows.Forms.Button();
-            this.sortAvailableSelectionComboBox = new System.Windows.Forms.ComboBox();
+            this.sortVehicleSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.buttonSortAvailableVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedAvailableCars = new System.Windows.Forms.Button();
             this.labelAvailableVehicles = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@
             this.RentedCarsPanel = new System.Windows.Forms.Panel();
             this.buttonSelectAllRented = new System.Windows.Forms.Button();
             this.buttonRemoveSelectedRentedCars = new System.Windows.Forms.Button();
-            this.sortRentedSelectionComboBox = new System.Windows.Forms.ComboBox();
+            this.sortRentalSelectionComboBox = new System.Windows.Forms.ComboBox();
             this.labelRentedVehicles = new System.Windows.Forms.Label();
             this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
@@ -70,7 +70,7 @@
             // AvailableCarsPanel
             // 
             this.AvailableCarsPanel.Controls.Add(this.buttonSelectAllAvailable);
-            this.AvailableCarsPanel.Controls.Add(this.sortAvailableSelectionComboBox);
+            this.AvailableCarsPanel.Controls.Add(this.sortVehicleSelectionComboBox);
             this.AvailableCarsPanel.Controls.Add(this.buttonSortAvailableVehicles);
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveSelectedAvailableCars);
             this.AvailableCarsPanel.Controls.Add(this.labelAvailableVehicles);
@@ -94,12 +94,12 @@
             // 
             // sortAvailableSelectionComboBox
             // 
-            this.sortAvailableSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sortAvailableSelectionComboBox.FormattingEnabled = true;
-            this.sortAvailableSelectionComboBox.Location = new System.Drawing.Point(109, 68);
-            this.sortAvailableSelectionComboBox.Name = "sortAvailableSelectionComboBox";
-            this.sortAvailableSelectionComboBox.Size = new System.Drawing.Size(121, 21);
-            this.sortAvailableSelectionComboBox.TabIndex = 9;
+            this.sortVehicleSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortVehicleSelectionComboBox.FormattingEnabled = true;
+            this.sortVehicleSelectionComboBox.Location = new System.Drawing.Point(109, 68);
+            this.sortVehicleSelectionComboBox.Name = "sortAvailableSelectionComboBox";
+            this.sortVehicleSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sortVehicleSelectionComboBox.TabIndex = 9;
             // 
             // buttonSortAvailableVehicles
             // 
@@ -164,7 +164,7 @@
             // 
             this.RentedCarsPanel.Controls.Add(this.buttonSelectAllRented);
             this.RentedCarsPanel.Controls.Add(this.buttonRemoveSelectedRentedCars);
-            this.RentedCarsPanel.Controls.Add(this.sortRentedSelectionComboBox);
+            this.RentedCarsPanel.Controls.Add(this.sortRentalSelectionComboBox);
             this.RentedCarsPanel.Controls.Add(this.labelRentedVehicles);
             this.RentedCarsPanel.Controls.Add(this.buttonSortRentedVehicles);
             this.RentedCarsPanel.Controls.Add(this.buttonRemoveLastRentedCar);
@@ -196,12 +196,12 @@
             // 
             // sortRentedSelectionComboBox
             // 
-            this.sortRentedSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sortRentedSelectionComboBox.FormattingEnabled = true;
-            this.sortRentedSelectionComboBox.Location = new System.Drawing.Point(111, 68);
-            this.sortRentedSelectionComboBox.Name = "sortRentedSelectionComboBox";
-            this.sortRentedSelectionComboBox.Size = new System.Drawing.Size(121, 21);
-            this.sortRentedSelectionComboBox.TabIndex = 11;
+            this.sortRentalSelectionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortRentalSelectionComboBox.FormattingEnabled = true;
+            this.sortRentalSelectionComboBox.Location = new System.Drawing.Point(111, 68);
+            this.sortRentalSelectionComboBox.Name = "sortRentedSelectionComboBox";
+            this.sortRentalSelectionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.sortRentalSelectionComboBox.TabIndex = 11;
             // 
             // labelRentedVehicles
             // 
@@ -408,8 +408,8 @@
         private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
         private System.Windows.Forms.Panel rentedCarsElementsPanel;
         private System.Windows.Forms.Button buttonSortAvailableVehicles;
-        private System.Windows.Forms.ComboBox sortAvailableSelectionComboBox;
-        private System.Windows.Forms.ComboBox sortRentedSelectionComboBox;
+        private System.Windows.Forms.ComboBox sortVehicleSelectionComboBox;
+        private System.Windows.Forms.ComboBox sortRentalSelectionComboBox;
         private System.Windows.Forms.Button buttonSortRentedVehicles;
         private System.Windows.Forms.Label labelProgramDate;
         private System.Windows.Forms.Timer timerProgramDateUpdater;

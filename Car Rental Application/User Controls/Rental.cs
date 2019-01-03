@@ -29,8 +29,8 @@ namespace Car_Rental_Application.User_Controls
         {
             InitializeComponent();
 
-            ID = IDManagement.GetLowestAvailableRentedID();
-            IDManagement.MarkRentIDAsUnavailable(ID);
+            ID = IDManagement.LowestAvailableRentalID;
+            IDManagement.MarkRentalIDAsUnavailable(ID);
 
             Vehicle = vehicle;
             Owner = owner;
@@ -44,7 +44,7 @@ namespace Car_Rental_Application.User_Controls
             InitializeComponent();
 
             ID = rental.ID;
-            IDManagement.MarkRentIDAsUnavailable(ID);
+            IDManagement.MarkRentalIDAsUnavailable(ID);
 
             Vehicle = new Vehicle(rental.Vehicle);
             Owner = rental.Owner;
@@ -118,7 +118,7 @@ namespace Car_Rental_Application.User_Controls
             protected set
             {
                 labelIDValue.Text = value.ToString();
-                IDManagement.MarkIDAsUnavailable(value);
+                IDManagement.MarkVehicleIDAsUnavailable(value);
             }
             get
             {
