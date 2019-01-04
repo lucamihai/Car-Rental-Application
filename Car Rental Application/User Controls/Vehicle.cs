@@ -178,6 +178,18 @@ namespace Car_Rental_Application.User_Controls
             }
         }
 
+        public int ceva
+        {
+            get
+            {
+                return 1;
+            }
+            set
+            {
+
+            }
+        }
+
         public bool Selected
         {
             get

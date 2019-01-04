@@ -15,6 +15,31 @@ namespace Car_Rental_Application.Classes
             return rentals.OrderBy( vehicle => vehicle.ID ).ToList();
         }
 
+        public List<Rental> SortListByVehicleID(List<Rental> rentals)
+        {
+            return rentals.OrderBy(vehicle => vehicle.Vehicle.ID).ToList();
+        }
+
+        public List<Rental> SortListByVehicleName(List<Rental> rentals)
+        {
+            return rentals.OrderBy(vehicle => vehicle.Vehicle.VehicleName).ToList();
+        }
+
+        public List<Rental> SortListByVehicleType(List<Rental> rentals)
+        {
+            return rentals.OrderBy(vehicle => vehicle.Vehicle.GetType().ToString()).ToList();
+        }
+
+        public List<Rental> SortListByVehicleFuelPercentage(List<Rental> rentals)
+        {
+            return rentals.OrderBy(vehicle => vehicle.Vehicle.FuelPercentage).ToList();
+        }
+
+        public List<Rental> SortListByVehicleDamagePercentage(List<Rental> rentals)
+        {
+            return rentals.OrderBy(vehicle => vehicle.Vehicle.DamagePercentage).ToList();
+        }
+
         public List<Rental> SortListByOwnerName(List<Rental> rentals)
         {
             return rentals.OrderBy( vehicle => vehicle.Owner.Name ).ToList();
@@ -28,26 +53,6 @@ namespace Car_Rental_Application.Classes
         public List<Rental> SortListByReturnDate(List<Rental> rentals)
         {
             return rentals.OrderBy( vehicle => vehicle.ReturnDate ).ToList();
-        }
-
-        public List<Rental> SortListByVehicleName(List<Rental> rentals)
-        {
-            return rentals.OrderBy( vehicle => vehicle.Vehicle.VehicleName ).ToList();
-        }
-
-        public List<Rental> SortListByVehicleType(List<Rental> rentals)
-        {
-            return rentals.OrderBy( vehicle => vehicle.Vehicle.GetType().ToString() ).ToList();
-        }
-
-        public List<Rental> SortListByVehicleFuelPercent(List<Rental> rentals)
-        {
-            return rentals.OrderBy( vehicle => vehicle.Vehicle.FuelPercentage ).ToList();
-        }
-
-        public List<Rental> SortListByVehicleDamagePercent(List<Rental> rentals)
-        {
-            return rentals.OrderBy( vehicle => vehicle.Vehicle.DamagePercentage ).ToList();
         }
     }
 }

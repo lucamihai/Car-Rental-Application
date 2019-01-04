@@ -30,10 +30,5 @@ namespace Car_Rental_Application.Classes
         {
             return Name;
         }
-
-        public void UpdateLanguage(Language language)
-        {
-            Name = language.Translate(Name);
-        }
     }
 }

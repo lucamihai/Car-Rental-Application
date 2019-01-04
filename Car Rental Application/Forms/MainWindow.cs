@@ -44,7 +44,7 @@ namespace Car_Rental_Application
             saveToDatabaseToolStripMenuItem.Available = false;
             loadFromDatabaseToolStripMenuItem.Available = false;
 
-            InitializeSortOptionsForAvailableVehicles();
+            InitializeSortOptionsForVehicles();
             InitializeSortOptionsForRentals();
 
             timerProgramDateUpdater.Start();
@@ -52,7 +52,7 @@ namespace Car_Rental_Application
             IDManagement.InitializeIndexes();          
         }
 
-        void InitializeSortOptionsForAvailableVehicles()
+        void InitializeSortOptionsForVehicles()
         {
             sortVehicleSelectionComboBox.Items.Clear();
 
@@ -64,7 +64,7 @@ namespace Car_Rental_Application
             string textDamagePercentage = Program.Language.Translate("Damage percentage");
 
 
-            SortSelectionItem selectionID   = new SortSelectionItem(textID, Constants.SORT_BY_VEHICLE_ID);
+            SortSelectionItem selectionID   = new SortSelectionItem(textID, Constants.SORT_BY_ID);
             SortSelectionItem selectionName = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
             SortSelectionItem selectionType = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
 
@@ -85,18 +85,24 @@ namespace Car_Rental_Application
         {
             sortRentalSelectionComboBox.Items.Clear();
 
-            string textID   = Program.Language.Translate("ID");
-            string textName = Program.Language.Translate("Name");
-            string textType = Program.Language.Translate("Type");
+            string textID        = Program.Language.Translate("ID");
+            string textVehicleID = Program.Language.Translate("Vehicle ID");
+            string textName      = Program.Language.Translate("Vehicle name");
+            string textType      = Program.Language.Translate("Vehicle type");
+            string textFuel      = Program.Language.Translate("Vehicle fuel percentage");
+            string textDamage    = Program.Language.Translate("Vehicle damage percentage");
 
             string textOwnerName  = Program.Language.Translate("Owner name");
             string textOwnerPhone = Program.Language.Translate("Owner phone");
             string textReturnDate = Program.Language.Translate("Return date");
 
 
-            SortSelectionItem selectionID   = new SortSelectionItem(textID, Constants.SORT_BY_VEHICLE_ID);
-            SortSelectionItem selectionName = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
-            SortSelectionItem selectionType = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
+            SortSelectionItem selectionID        = new SortSelectionItem(textID, Constants.SORT_BY_ID);
+            SortSelectionItem selectionVehicleID = new SortSelectionItem(textVehicleID, Constants.SORT_BY_VEHICLE_ID);
+            SortSelectionItem selectionName      = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
+            SortSelectionItem selectionType      = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
+            SortSelectionItem selectionFuel      = new SortSelectionItem(textFuel, Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE);
+            SortSelectionItem selectionDamage    = new SortSelectionItem(textDamage, Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE);
 
             SortSelectionItem selectionOwnerName  = new SortSelectionItem(textOwnerName, Constants.SORT_BY_VEHICLE_OWNER_NAME);
             SortSelectionItem selectionOwnerPhone = new SortSelectionItem(textOwnerPhone, Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER);
@@ -104,8 +110,12 @@ namespace Car_Rental_Application
 
 
             sortRentalSelectionComboBox.Items.Add(selectionID);
+            sortRentalSelectionComboBox.Items.Add(selectionVehicleID);
             sortRentalSelectionComboBox.Items.Add(selectionName);
             sortRentalSelectionComboBox.Items.Add(selectionType);
+            sortRentalSelectionComboBox.Items.Add(selectionFuel);
+            sortRentalSelectionComboBox.Items.Add(selectionDamage);
+
             sortRentalSelectionComboBox.Items.Add(selectionOwnerName);
             sortRentalSelectionComboBox.Items.Add(selectionOwnerPhone);
             sortRentalSelectionComboBox.Items.Add(selectionReturnDate);
@@ -198,7 +208,7 @@ namespace Car_Rental_Application
         private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string action = "load vehicles from the database";
-            string consequence = "existing vehicles in the program will be removed";
+            string consequence = "existing vehicles and rentals in the program will be removed";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
@@ -207,14 +217,13 @@ namespace Car_Rental_Application
                 return;
             }
 
-            GetAvailableVehiclesFromSQLDatabase();
-            GetRentedVehiclesFromSQLDatabase();
+            ImportVehiclesAndRentalsFromDatabase();
         }
 
         private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string action = "save vehicles to the database";
-            string consequence = "existing vehicles in the database will be removed";
+            string consequence = "existing vehicles and rentals in the database will be removed";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
@@ -223,14 +232,14 @@ namespace Car_Rental_Application
                 return;
             }
 
-            ClearAvailableVehiclesDatabase();
-            ClearRentedVehiclesDatabase();
+            ClearVehiclesFromDatabase();
+            ClearRentalsFromDatabase();
 
-            //foreach (VehicleUserControl vehicle in availableVehicles)
-            //    SaveAvailableVehicleToSQLDatabase(vehicle);
+            foreach (Vehicle vehicle in vehicles)
+                SaveVehicleToDatabase(vehicle);
 
-            //foreach (Vehicle vehicle in rentals)
-                //SaveRentedVehicleToSQLDatabase(vehicle);
+            foreach (Rental rental in rentals)
+                SaveRentalToDatabase(rental);
         }
 
         #endregion
@@ -256,7 +265,7 @@ namespace Car_Rental_Application
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string action = "load vehicles and rentals from local file";
-            string consequence = "existing vehicles in the program will be removed";
+            string consequence = "existing vehicles and rentals in the program will be removed";
             FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
@@ -365,7 +374,7 @@ namespace Car_Rental_Application
                 Console.WriteLine("Connecting to SQL SERVER");
                 sqlConnection = new SqlConnection(SQLConnectionString());
                 sqlConnection.Open();
-                Console.WriteLine("Connected!");
+                CreateTablesIfNotExisting();
                 sqlConnection.Close();
 
                 saveToDatabaseToolStripMenuItem.Available = true;
@@ -398,45 +407,76 @@ namespace Car_Rental_Application
             return builder.ConnectionString;
         }
 
-        void ClearAvailableVehiclesDatabase()
+        void CreateTablesIfNotExisting()
+        {
+            CreateTableVehicleIfNotExists();
+            CreateTableRentalIfNotExists();
+        }
+
+        void CreateTableVehicleIfNotExists()
+        {
+            string query =
+                @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='vehicles' AND xtype='U')
+                    CREATE TABLE vehicles(
+                        id int NOT NULL,
+                        name VARCHAR(64) NOT NULL,
+                        type VARCHAR(25),
+                        fuel_percentage int,
+                        damage_percentage int
+                    )
+                GO";
+            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            myCommand.ExecuteNonQuery();
+        }
+
+        void CreateTableRentalIfNotExists()
+        {
+            string query =
+                @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='rentals' AND xtype='U')
+                    CREATE TABLE rentals(
+                        id int NOT NULL,
+                        owner_name VARCHAR(64) NOT NULL,
+                        owner_phone_number VARCHAR(20),
+                        vehicle_id int
+                    )
+                GO";
+            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            myCommand.ExecuteNonQuery();
+        }
+
+        void ClearVehiclesFromDatabase()
         {
             sqlConnection.Open();
 
-            string query = "DELETE FROM availableVehicles";
+            string query = "DELETE FROM vehicles";
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
             myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
         }
 
-        void ClearRentedVehiclesDatabase()
+        void ClearRentalsFromDatabase()
         {
             sqlConnection.Open();
 
-            string query = "DELETE FROM rentedVehicles";
+            string query = "DELETE FROM rentals";
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
             myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
         }
 
-        void SaveAvailableVehicleToSQLDatabase(Vehicle vehicle)
-        {
-            string vehicleType = "";
-            if (vehicle.GetType().Name == "Sedan")
-                vehicleType = "sedan";
-            if (vehicle.GetType().Name == "Minivan")
-                vehicleType = "minivan";
-
-            string query = "INSERT INTO availableVehicles (id, name, type, fuel, damage)";
+        void SaveVehicleToDatabase(Vehicle vehicle)
+        { 
+            string query = "INSERT INTO vehicles (id, type, name, fuel_percentage, damage_percentage)";
             query += " VALUES (@id, @name, @type, @fuel, @damage)";
 
             sqlConnection.Open();
 
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
             myCommand.Parameters.AddWithValue("@id", vehicle.ID);
+            myCommand.Parameters.AddWithValue("@type", vehicle.GetType().Name);
             myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
-            myCommand.Parameters.AddWithValue("@type", vehicleType);
             myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
             myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
             myCommand.ExecuteNonQuery();
@@ -444,71 +484,73 @@ namespace Car_Rental_Application
             sqlConnection.Close();
         }
 
-        void SaveRentedVehicleToSQLDatabase(Vehicle vehicle)
+        void SaveRentalToDatabase(Rental rental)
         {
-            string vehicleType = "";
-            if (vehicle.GetType().Name == "Sedan")
-                vehicleType = "sedan";
-            if (vehicle.GetType().Name == "Minivan")
-                vehicleType = "minivan";
+            SaveVehicleToDatabase(rental.Vehicle);
 
-
-            string query = "INSERT INTO rentedVehicles (id, name, type, fuel, damage, rentID, ownerName, ownerPhone, returnDate)";
-            query += " VALUES (@id, @name, @type, @fuel, @damage, @rentID, @ownerName, @ownerPhone, @returnDate)";
+            string query = "INSERT INTO rentals (id, owner_name, owner_phonenumber, return_date, vehicle_id)";
+            query += " VALUES (@id, @owner_name, @owner_phone_number, @return_date, @vehicle_id)";
 
             sqlConnection.Open();
 
-            /*
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", vehicle.ID);
-            myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
-            myCommand.Parameters.AddWithValue("@type", vehicleType);
-            myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
-            myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
-            myCommand.Parameters.AddWithValue("@rentID", vehicle.RentID);
-            myCommand.Parameters.AddWithValue("@ownerName", vehicle.Owner.Name);
-            myCommand.Parameters.AddWithValue("@ownerPhone", vehicle.Owner.PhoneNumber);
-            myCommand.Parameters.AddWithValue("@returnDate", vehicle.ReturnDate.ToShortDateString());
+            myCommand.Parameters.AddWithValue("@id", rental.ID);
+            myCommand.Parameters.AddWithValue("@owner_name", rental.Owner.Name);
+            myCommand.Parameters.AddWithValue("@owner_phone_number", rental.Owner.PhoneNumber);
+            myCommand.Parameters.AddWithValue("@return_date", rental.ReturnDate.ToShortDateString());
+            myCommand.Parameters.AddWithValue("@vehicle_id", rental.Vehicle.ID);
             myCommand.ExecuteNonQuery();
-            */
 
             sqlConnection.Close();
         }
 
-        void GetAvailableVehiclesFromSQLDatabase()
+        void ImportVehiclesAndRentalsFromDatabase()
         {
-            string sqlQuery = "SELECT id, name, type, fuel, damage FROM availableVehicles";
+            List<Vehicle> importedVehicles = GetVehiclesFromDatabase();
+            List<Rental> importedRentals = GetRentalsFromDatabase(importedVehicles);
+            RemoveVehiclesThatAppearInRentals(importedRentals, importedVehicles);
+
+            vehicles = importedVehicles;
+            rentals = importedRentals;
+
+            PopulateVehiclesPanel();
+            PopulateRentalsPanel();
+        }
+
+        List<Vehicle> GetVehiclesFromDatabase()
+        {
+            List<Vehicle> importedVehicles = new List<Vehicle>();
+
+            string sqlQuery = "SELECT id, type, name, fuel_percentage, damage_percentage FROM vehicles";
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
+            
             try
             {
                 sqlConnection.Open();
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-
-                //availableVehicles.Clear();
 
                 while (sqlDataReader.Read())
                 {
                     short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
-                    string vehicleName = sqlDataReader["name"].ToString();
                     string vehicleType = sqlDataReader["type"].ToString();
-                    short vehicleFuelPercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel"));
-                    short vehicleDamagePercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage"));
+                    string vehicleName = sqlDataReader["name"].ToString();
+                    short vehicleFuelPercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel_percentage"));
+                    short vehicleDamagePercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage_percentage"));
 
-                    if (vehicleType == "sedan")
+                    if (vehicleType == "Sedan")
                     {
                         Sedan sedan = new Sedan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
-                        //availableVehicles.Add(sedan);
+                        importedVehicles.Add(sedan);
                     }
 
-                    if (vehicleType == "minivan")
+                    if (vehicleType == "Minivan")
                     {
                         Minivan minivan = new Minivan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
-                        //availableVehicles.Add(minivan);
+                        importedVehicles.Add(minivan);
                     }
                 }
 
                 sqlDataReader.Close();
-                PopulateVehiclesPanel();
             }
 
             catch (Exception exception)
@@ -520,47 +562,41 @@ namespace Car_Rental_Application
             {
                 sqlConnection.Close();
             }
+
+            return importedVehicles;
         }
 
-        void GetRentedVehiclesFromSQLDatabase()
+        List<Rental> GetRentalsFromDatabase(List<Vehicle> importedVehicles)
         {
-            string sqlQuery = "SELECT id, name, type, fuel, damage, rentID, ownerName, ownerPhone, returnDate FROM rentedVehicles";
+            List<Rental> importedRentals = new List<Rental>();
+
+            string sqlQuery = "SELECT id, owner_name, owner_phone_number, return_date, vehicle_id FROM rentals";
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
+
             try
             {
                 sqlConnection.Open();
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                rentals.Clear();
+
                 while (sqlDataReader.Read())
                 {
-                    short id = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
-                    string name = sqlDataReader["name"].ToString();
-                    string type = sqlDataReader["type"].ToString();
-                    short fuel = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel"));
-                    short damage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage"));
-                    short rentID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("rentID"));
-                    string returnDateString = sqlDataReader["returnDate"].ToString();
+                    short ID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
+
+                    string ownerName = sqlDataReader["owner_name"].ToString();
+                    string ownerPhoneNumber = sqlDataReader["owner_phone_number"].ToString();
+                    Person owner = new Person(ownerName, ownerPhoneNumber);
+
+                    string returnDateString = sqlDataReader["return_date"].ToString();
                     DateTime returnDate = DateTime.Parse(returnDateString);
 
-                    string ownerName = sqlDataReader["ownerName"].ToString();
-                    string ownerPhone = sqlDataReader["ownerPhone"].ToString();
-                    Person owner = new Person(ownerName, ownerPhone);
+                    short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
+                    Vehicle vehicle = new Vehicle( GetVehicleWithID(importedVehicles, vehicleID) );
 
-                    if (type == "sedan")
-                    {
-                        //RentedSedanUserControl sedan = new RentedSedanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
-                        //rentedVehicles.Add(sedan);
-                    }
-
-                    if (type == "minivan")
-                    {
-                        //RentedMinivanUserControl minivan = new RentedMinivanUserControl(id, name, fuel, damage, rentID, owner, returnDate);
-                        //rentedVehicles.Add(minivan);
-                    }
+                    Rental importedRental = new Rental(vehicle, owner, returnDate);
+                    importedRentals.Add(importedRental);
                 }
 
                 sqlDataReader.Close();
-                PopulateRentalsPanel();
             }
 
             catch (Exception exception)
@@ -571,6 +607,29 @@ namespace Car_Rental_Application
             finally
             {
                 sqlConnection.Close();
+            }
+
+            return importedRentals;
+        }
+
+        Vehicle GetVehicleWithID(List<Vehicle> vehicles, short vehicleID)
+        {
+            foreach(Vehicle vehicle in vehicles)
+            {
+                if (vehicle.ID == vehicleID)
+                {
+                    return vehicle;
+                }
+            }
+
+            throw new Exception();
+        }
+
+        void RemoveVehiclesThatAppearInRentals(List<Rental> rentals, List<Vehicle> vehicles)
+        {
+            foreach(Rental rental in rentals)
+            {
+                vehicles.Remove(rental.Vehicle);
             }
         }
 
@@ -646,6 +705,8 @@ namespace Car_Rental_Application
 
         void UpdateLanguage(Language language)
         {
+            Program.Language = language;
+
             buttonAddAvailableVehicle.Text = language.Translate("Add vehicle");
             buttonSelectAllAvailable.Text = language.Translate("Select all");
             buttonSelectAllRented.Text = language.Translate("Select all");
@@ -659,9 +720,11 @@ namespace Car_Rental_Application
             labelVehicles.Text = language.Translate("Vehicles");
             labelRentals.Text = language.Translate("Rentals");
 
+            databaseToolStripMenuItem.Text = language.Translate("Database");
             connectToDatabaseToolStripMenuItem.Text = language.Translate("Connect to database");
             loadFromDatabaseToolStripMenuItem.Text = language.Translate("Load from database");
             saveToDatabaseToolStripMenuItem.Text = language.Translate("Save to database");
+            localFileToolStripMenuItem.Text = language.Translate("Local file");
             loadFromLocalFileToolStripMenuItem.Text = language.Translate("Load from local file");
             saveToLocalFileToolStripMenuItem.Text = language.Translate("Save to local file");
             orderLogsToolStripMenuItem.Text = language.Translate("Order logs");
@@ -671,7 +734,9 @@ namespace Car_Rental_Application
 
             UpdateLanguageForExistingVehicles(language);
             UpdateLanguageForExistingRentals(language);
-            UpdateLanguageForSortSelections(language);
+
+            InitializeSortOptionsForVehicles();
+            InitializeSortOptionsForRentals();
 
             ErrorMessages.UpdateLanguage(language);
         }
@@ -689,19 +754,6 @@ namespace Car_Rental_Application
             foreach (Rental rental in rentals)
             {
                 rental.UpdateLanguage(language);
-            }
-        }
-
-        void UpdateLanguageForSortSelections(Language language)
-        {
-            foreach (SortSelectionItem sortSelectionItem in sortVehicleSelectionComboBox.Items)
-            {
-                sortSelectionItem.UpdateLanguage(language);
-            }
-
-            foreach(SortSelectionItem sortSelectionItem in sortRentalSelectionComboBox.Items)
-            {
-                sortSelectionItem.UpdateLanguage(language);
             }
         }
 
@@ -786,7 +838,7 @@ namespace Car_Rental_Application
                 vehicle.Selected = true;
             }
 
-            // If all rented vehicles are already selected, deselect them
+            // If all rentals are already selected, deselect them
             if (areAllSelected)
             {
                 foreach (Rental rental in rentals)
@@ -1021,7 +1073,7 @@ namespace Car_Rental_Application
             
             int sortSelection = ((SortSelectionItem)sortVehicleSelectionComboBox.SelectedItem).Value;
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
+            if (sortSelection == Constants.SORT_BY_ID)
             {
                 vehicles = vehicleSorter.SortListByID(vehicles);
             }
@@ -1054,10 +1106,15 @@ namespace Car_Rental_Application
         {
             int sortSelection = ((SortSelectionItem)sortRentalSelectionComboBox.SelectedItem).Value;
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
+            if (sortSelection == Constants.SORT_BY_ID)
             {
                 rentals = rentalSorter.SortListByID(rentals);
             } 
+
+            if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
+            {
+                rentals = rentalSorter.SortListByVehicleID(rentals);
+            }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
@@ -1068,7 +1125,17 @@ namespace Car_Rental_Application
             {
                 rentals = rentalSorter.SortListByVehicleType(rentals);
             }
-            
+
+            if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
+            {
+                rentals = rentalSorter.SortListByVehicleFuelPercentage(rentals);
+            }
+
+            if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
+            {
+                rentals = rentalSorter.SortListByVehicleDamagePercentage(rentals);
+            }
+
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_NAME)
             {
                 rentals = rentalSorter.SortListByOwnerName(rentals);

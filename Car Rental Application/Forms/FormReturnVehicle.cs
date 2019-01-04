@@ -28,7 +28,7 @@ namespace Car_Rental_Application.Forms
         public FormReturnVehicle(Rental rental)
         {
             InitializeComponent();
-            this.rental = new Rental(rental);
+            this.rental = rental;
 
             labelDescription.Text = Program.Language.Translate("Fill in the details of the vehicle at return");
             labelFuelPercentage.Text = Program.Language.Translate("Fuel percentage");
@@ -45,12 +45,9 @@ namespace Car_Rental_Application.Forms
             {
                 short fuelPercentageAtReturn = (short)fuelPercentageNumericUpDown.Value;
                 short damagePercentageAtReturn = (short)damagePercentageNumericUpDown.Value;
-                ReturnedVehicle = new Vehicle(
-                    rental.Vehicle.ID, 
-                    rental.Vehicle.VehicleName, 
-                    fuelPercentageAtReturn, 
-                    damagePercentageAtReturn
-                );
+
+                ReturnedVehicle = rental.Vehicle;
+                ReturnedVehicle.InputsEnabled = true;
 
                 OrderDetails = "";
                 OrderDetails += ReturnedVehicle.Details;

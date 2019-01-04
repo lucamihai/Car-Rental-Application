@@ -25,8 +25,13 @@ Open\Open
 Delete\Delete
 Language\Language
 ID\ID
+Name\Name
+Type\Type
+Vehicle ID\Vehicle ID
 Vehicle name\Vehicle name
 Vehicle type\Vehicle type
+Vehicle fuel percentage\Vehicle fuel (%)
+Vehicle damage percentage\Vehicle damage (%)
 Damage percent\Damage (%)
 Damage percentage\Damage (%)
 Fuel percent\Fuel (%)
@@ -36,6 +41,7 @@ Rent\Rent
 Rent vehicle\Rent vehicle
 Cancel\Cancel
 Owner name\Owner name
+Owner phone\Owner phone
 Owner phone number\Owner phone number
 Return date\Return date
 Return\Return
@@ -58,17 +64,17 @@ Add language\Add language
 Apply selected\Apply selected
 Rename selected\Rename selected
 Remove selected\Remove selected
-load vehicles from the database\load vehicles from the database
-existing vehicles in the program will be removed\existing vehicles in the program will be removed
-save vehicles to the database\save vehicles to the database
-existing vehicles in the database will be removed\existing vehicles in the database will be removed
-save vehicles to local file\save vehicles to local file
+load vehicles and rentals from the database\load vehicles and rentals from the database
+existing vehicles and rentals in the program will be removed\existing vehicles and rentals in the program will be removed
+save vehicles and rentals to the database\save vehicles and rentals to the database
+existing vehicles and rentals in the database will be removed\existing vehicles and rentals in the database will be removed
+save vehicles and rentals to local file\save vehicles and rentals to local file
 existing local file will be deleted\existing local file will be deleted
-load vehicles from local file\load vehicles from local file
-remove the last available vehicle\remove the last available vehicle
-remove the last rented vehicle\remove the last rented vehicle
-remove the selected available vehicles\remove the selected available vehicles
-remove the selected rented vehicles\remove the selected rented vehicles
+load vehicles and rentals from local file\load vehicles and rentals from local file
+remove the last vehicle\remove the last vehicle
+remove the last rental\remove the last rental
+remove the selected vehicles\remove the selected vehicles
+remove the selected rentals\remove the selected rentals
 delete the existing log\delete the existing log
 There are no vehicles to select\There are no vehicles to select
 There are no vehicles to remove\There are no vehicles to remove

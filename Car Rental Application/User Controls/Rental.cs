@@ -64,9 +64,22 @@ namespace Car_Rental_Application.User_Controls
             }
             private set
             {
-                _Vehicle = new Vehicle(value);
-                _Vehicle.InputsEnabled = false;
-                panelVehicle.Controls.Add(_Vehicle);
+                if (value.GetType().Name == "Sedan")
+                {
+                    _Vehicle = new Sedan(value);
+                }
+
+                if (value.GetType().Name == "Minivan")
+                {
+                    _Vehicle = new Minivan(value);
+                }
+
+                if (_Vehicle != null)
+                {
+                    _Vehicle.InputsEnabled = false;
+                    panelVehicle.Controls.Add(_Vehicle);
+                }
+                
             }
         }
 
