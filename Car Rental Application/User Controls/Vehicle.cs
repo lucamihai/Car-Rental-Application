@@ -178,18 +178,6 @@ namespace Car_Rental_Application.User_Controls
             }
         }
 
-        public int ceva
-        {
-            get
-            {
-                return 1;
-            }
-            set
-            {
-
-            }
-        }
-
         public bool Selected
         {
             get
@@ -247,7 +235,7 @@ namespace Car_Rental_Application.User_Controls
             {
                 return Convert.ToInt16(labelFuelPercentageValue.Text);
             }
-            protected set
+            set
             {
                 labelFuelPercentageValue.Text = value.ToString();
             }
@@ -259,7 +247,7 @@ namespace Car_Rental_Application.User_Controls
             {
                 return Convert.ToInt16(labelDamagePercentageValue.Text);
             }
-            protected set
+            set
             {
                 labelDamagePercentageValue.Text = value.ToString();
             }

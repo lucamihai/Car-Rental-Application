@@ -49,6 +49,9 @@ namespace Car_Rental_Application.Forms
                 ReturnedVehicle = rental.Vehicle;
                 ReturnedVehicle.InputsEnabled = true;
 
+                ReturnedVehicle.FuelPercentage = fuelPercentageAtReturn;
+                ReturnedVehicle.DamagePercentage = damagePercentageAtReturn;
+
                 OrderDetails = "";
                 OrderDetails += ReturnedVehicle.Details;
                 OrderDetails += ". Was returned with ";
