@@ -46,5 +46,10 @@ namespace Car_Rental_Application.User_Controls
 
             buttonRent.Text = language.Translate("Rent");
         }
+
+        public override object Clone()
+        {
+            return new Minivan(ID, VehicleName, FuelPercentage, DamagePercentage);
+        }
     }
 }

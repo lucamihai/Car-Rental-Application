@@ -12,7 +12,7 @@ using Car_Rental_Application.Classes;
 
 namespace Car_Rental_Application.User_Controls
 {
-    public partial class Vehicle : UserControl, IXmlSerializable
+    public partial class Vehicle : UserControl, IXmlSerializable, ICloneable
     {
         protected Label labelID, labelVehicleName, labelVehicleType, labelFuelPercentage, labelDamagePercentage;
         protected Label labelIDValue, labelVehicleNameValue, labelVehicleTypeValue, labelFuelPercentageValue, labelDamagePercentageValue;
@@ -372,6 +372,11 @@ namespace Car_Rental_Application.User_Controls
             checkboxSelect.Text = language.Translate("Select");
 
             buttonRent.Text = language.Translate("Rent");
+        }
+
+        public virtual object Clone()
+        {
+            return new Vehicle(ID, VehicleName, FuelPercentage, DamagePercentage);
         }
     }
 }

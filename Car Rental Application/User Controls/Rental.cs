@@ -46,7 +46,7 @@ namespace Car_Rental_Application.User_Controls
             ID = rental.ID;
             IDManagement.MarkRentalIDAsUnavailable(ID);
 
-            Vehicle = new Vehicle(rental.Vehicle);
+            Vehicle = rental.Vehicle;
             Owner = rental.Owner;
             ReturnDate = rental.ReturnDate;
 
@@ -64,14 +64,17 @@ namespace Car_Rental_Application.User_Controls
             }
             private set
             {
-                if (value.GetType().Name == "Sedan")
-                {
-                    _Vehicle = new Sedan(value);
-                }
+                object vehicleClone = value.Clone();
+                string type = vehicleClone.GetType().Name;
 
-                if (value.GetType().Name == "Minivan")
+                if (type == "Sedan")
                 {
-                    _Vehicle = new Minivan(value);
+                    _Vehicle = (Sedan)vehicleClone;
+                }
+                
+                if (type == "Minivan")
+                {
+                    _Vehicle = (Minivan)vehicleClone;
                 }
 
                 if (_Vehicle != null)
@@ -220,6 +223,7 @@ namespace Car_Rental_Application.User_Controls
             xmlWriter.WriteElementString("returnDate", ReturnDate.ToShortDateString());
             xmlWriter.WriteElementString("vehicleID", Vehicle.ID.ToString());
             xmlWriter.WriteElementString("vehicleName", Vehicle.VehicleName);
+            xmlWriter.WriteElementString("vehicleType", Vehicle.GetType().Name);
             xmlWriter.WriteElementString("vehicleFuelPercentage", Vehicle.FuelPercentage.ToString());
             xmlWriter.WriteElementString("vehicleDamagePercentage", Vehicle.DamagePercentage.ToString());
         }
@@ -244,9 +248,19 @@ namespace Car_Rental_Application.User_Controls
 
                 short vehicleID = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleID"));
                 string vehicleName = xmlReader.ReadElementString("vehicleName");
+                string vehicleType = xmlReader.ReadElementString("vehicleType");
                 short vehicleFuelPercentage = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleFuelPercentage"));
                 short vehicleDamagePercentage = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleDamagePercentage"));
-                Vehicle = new Vehicle(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+
+                if (vehicleType == "Sedan")
+                {
+                    Vehicle = new Sedan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                }
+
+                if (vehicleType == "Minivan")
+                {
+                    Vehicle = new Minivan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                }
 
                 xmlReader.ReadEndElement();
             }
