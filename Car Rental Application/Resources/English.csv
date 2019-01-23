@@ -86,3 +86,11 @@ Log file doesn't exist\Log file doesn't exist
 Vehicle name must be provided\Vehicle name must be provided
 Owner's name must be provided\Owner's name must be provided
 Owner's phone must be provided\Owner's phone must be provided
+Data source must be provided\Data source must be provided
+UserID must be provided\UserID must be provided
+Password must be provided\Password must be provided
+Initial catalog must be provided\Initial catalog must be provided
+Data source\Data source
+UserID\UserID
+Password\Password
+Initial catalog\Initial catalog

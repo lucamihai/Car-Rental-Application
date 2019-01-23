@@ -66,12 +66,14 @@
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\Person.cs" />
+    <Compile Include="Classes\SqlManager.cs" />
     <Compile Include="Classes\VehicleSorter.cs" />
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\Language.cs" />
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\RentalSorter.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
+    <Compile Include="Classes\XmlManager.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,10 +104,16 @@
     <Compile Include="Forms\FormReturnVehicle.Designer.cs">
       <DependentUpon>FormReturnVehicle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainWindow.cs">
+    <Compile Include="Forms\FormSqlConnection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainWindow.Designer.cs">
+    <Compile Include="Forms\FormSqlConnection.Designer.cs">
+      <DependentUpon>FormSqlConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -149,7 +157,10 @@
     <EmbeddedResource Include="Forms\FormReturnVehicle.resx">
       <DependentUpon>FormReturnVehicle.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainWindow.resx">
+    <EmbeddedResource Include="Forms\FormSqlConnection.resx">
+      <DependentUpon>FormSqlConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -195,5 +206,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 
 namespace Car_Rental_Application
@@ -23,6 +22,8 @@ namespace Car_Rental_Application
         RentalSorter rentalSorter;
 
         Logger returnedVehiclesLogManager;
+
+        SqlManager sqlManager;
 
         List<int> indexesOfSelectedVehicles = new List<int>();
         List<int> indexesOfSelectedRentals = new List<int>();
@@ -49,7 +50,7 @@ namespace Car_Rental_Application
 
             timerProgramDateUpdater.Start();
 
-            IDManagement.InitializeIndexes();          
+            IDManagement.InitializeIndexes();
         }
 
         void InitializeSortOptionsForVehicles()
@@ -193,6 +194,18 @@ namespace Car_Rental_Application
             }
         }
 
+        public void SqlConnectionForm()
+        {
+            FormSqlConnection formSqlConnection = new FormSqlConnection();
+
+            var result = formSqlConnection.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                MessageBox.Show(formSqlConnection.ConnectionString);
+                sqlManager = new SqlManager(formSqlConnection.ConnectionString);
+            }
+        }
+
         #endregion
 
 
@@ -202,7 +215,24 @@ namespace Car_Rental_Application
 
         private void connectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConnectToSQL();
+            SqlConnectionForm();
+
+            if (sqlManager != null)
+            {
+                bool isConnected = sqlManager.ConnectionIsSuccesful();
+                if (isConnected)
+                {
+                    saveToDatabaseToolStripMenuItem.Available = true;
+                    loadFromDatabaseToolStripMenuItem.Available = true;
+                    connectToDatabaseToolStripMenuItem.Available = false;
+                }
+                else
+                {
+                    errorLabel.Text = "Couldn't connect to database";
+                    timerClearErrors.Start();
+                }
+            }
+            
         }
 
         private void loadFromDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -217,7 +247,13 @@ namespace Car_Rental_Application
                 return;
             }
 
-            ImportVehiclesAndRentalsFromDatabase();
+            vehicles = sqlManager.GetVehiclesFromDatabase();
+            rentals = sqlManager.GetRentalsFromDatabase(vehicles);
+
+            foreach (Rental rental in rentals)
+            {
+                vehicles.Remove(rental.Vehicle);
+            }
         }
 
         private void saveToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,14 +268,14 @@ namespace Car_Rental_Application
                 return;
             }
 
-            ClearVehiclesFromDatabase();
-            ClearRentalsFromDatabase();
+            sqlManager.ClearVehiclesFromDatabase();
+            sqlManager.ClearRentalsFromDatabase();
 
             foreach (Vehicle vehicle in vehicles)
-                SaveVehicleToDatabase(vehicle);
+                sqlManager.SaveVehicleToDatabase(vehicle);
 
             foreach (Rental rental in rentals)
-                SaveRentalToDatabase(rental);
+                sqlManager.SaveRentalToDatabase(rental);
         }
 
         #endregion
@@ -258,8 +294,8 @@ namespace Car_Rental_Application
                 return;
             }
 
-            StoreVehiclesToXMLFile(vehicles, "vehicles.xml");
-            StoreRentalsToXMLFile(rentals, "rentals.xml");
+            XmlManager.StoreVehiclesToXMLFile(vehicles, "vehicles.xml");
+            XmlManager.StoreRentalsToXMLFile(rentals, "rentals.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -277,8 +313,8 @@ namespace Car_Rental_Application
             vehicles.Clear();
             rentals.Clear();
 
-            List<Vehicle> importedVehicles = ReadVehiclesFromXMLFile("vehicles.xml");
-            List<Rental> importedRentals = ReadRentalsFromXMLFile("rentals.xml");
+            List<Vehicle> importedVehicles = XmlManager.ReadVehiclesFromXMLFile("vehicles.xml");
+            List<Rental> importedRentals = XmlManager.ReadRentalsFromXMLFile("rentals.xml");
 
             foreach (Vehicle vehicle in importedVehicles)
             {
@@ -359,344 +395,6 @@ namespace Car_Rental_Application
         }
 
         #endregion
-
-        #endregion
-
-
-        #region SQL Server
-
-        SqlConnection sqlConnection;
-
-        void ConnectToSQL()
-        {
-            try
-            {
-                Console.WriteLine("Connecting to SQL SERVER");
-                sqlConnection = new SqlConnection(SQLConnectionString());
-                sqlConnection.Open();
-                CreateTablesIfNotExisting();
-                sqlConnection.Close();
-
-                saveToDatabaseToolStripMenuItem.Available = true;
-                loadFromDatabaseToolStripMenuItem.Available = true;
-                connectToDatabaseToolStripMenuItem.Available = false;
-            }
-            catch (SqlException s)
-            {
-                if (s.Number == 40615)
-                {
-                    errorLabel.Text = "Error 40615" + Environment.NewLine + "This IP isn't allowed to access the database." +
-                        Environment.NewLine + "Contact the database owner";
-                }
-                else
-                {
-                    errorLabel.Text = "Error " + s.Number.ToString();
-                }
-                timerClearErrors.Start();
-            }
-        }
-
-        public string SQLConnectionString()
-        {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "tcp:carrentals.database.windows.net,1433";
-            builder.UserID = "mihai";
-            builder.Password = "Luca123456789";
-            builder.InitialCatalog = "carrentals";
-
-            return builder.ConnectionString;
-        }
-
-        void CreateTablesIfNotExisting()
-        {
-            CreateTableVehicleIfNotExists();
-            CreateTableRentalIfNotExists();
-        }
-
-        void CreateTableVehicleIfNotExists()
-        {
-            string query =
-                @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='vehicles' AND xtype='U')
-                    CREATE TABLE vehicles(
-                        id int NOT NULL,
-                        name VARCHAR(64) NOT NULL,
-                        type VARCHAR(25),
-                        fuel_percentage int,
-                        damage_percentage int
-                    )
-                GO";
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.ExecuteNonQuery();
-        }
-
-        void CreateTableRentalIfNotExists()
-        {
-            string query =
-                @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='rentals' AND xtype='U')
-                    CREATE TABLE rentals(
-                        id int NOT NULL,
-                        owner_name VARCHAR(64) NOT NULL,
-                        owner_phone_number VARCHAR(20),
-                        vehicle_id int
-                    )
-                GO";
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.ExecuteNonQuery();
-        }
-
-        void ClearVehiclesFromDatabase()
-        {
-            sqlConnection.Open();
-
-            string query = "DELETE FROM vehicles";
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.ExecuteNonQuery();
-
-            sqlConnection.Close();
-        }
-
-        void ClearRentalsFromDatabase()
-        {
-            sqlConnection.Open();
-
-            string query = "DELETE FROM rentals";
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.ExecuteNonQuery();
-
-            sqlConnection.Close();
-        }
-
-        void SaveVehicleToDatabase(Vehicle vehicle)
-        { 
-            string query = "INSERT INTO vehicles (id, type, name, fuel_percentage, damage_percentage)";
-            query += " VALUES (@id, @name, @type, @fuel, @damage)";
-
-            sqlConnection.Open();
-
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", vehicle.ID);
-            myCommand.Parameters.AddWithValue("@type", vehicle.GetType().Name);
-            myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
-            myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
-            myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
-            myCommand.ExecuteNonQuery();
-
-            sqlConnection.Close();
-        }
-
-        void SaveRentalToDatabase(Rental rental)
-        {
-            SaveVehicleToDatabase(rental.Vehicle);
-
-            string query = "INSERT INTO rentals (id, owner_name, owner_phonenumber, return_date, vehicle_id)";
-            query += " VALUES (@id, @owner_name, @owner_phone_number, @return_date, @vehicle_id)";
-
-            sqlConnection.Open();
-
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", rental.ID);
-            myCommand.Parameters.AddWithValue("@owner_name", rental.Owner.Name);
-            myCommand.Parameters.AddWithValue("@owner_phone_number", rental.Owner.PhoneNumber);
-            myCommand.Parameters.AddWithValue("@return_date", rental.ReturnDate.ToShortDateString());
-            myCommand.Parameters.AddWithValue("@vehicle_id", rental.Vehicle.ID);
-            myCommand.ExecuteNonQuery();
-
-            sqlConnection.Close();
-        }
-
-        void ImportVehiclesAndRentalsFromDatabase()
-        {
-            List<Vehicle> importedVehicles = GetVehiclesFromDatabase();
-            List<Rental> importedRentals = GetRentalsFromDatabase(importedVehicles);
-            RemoveVehiclesThatAppearInRentals(importedRentals, importedVehicles);
-
-            vehicles = importedVehicles;
-            rentals = importedRentals;
-
-            PopulateVehiclesPanel();
-            PopulateRentalsPanel();
-        }
-
-        List<Vehicle> GetVehiclesFromDatabase()
-        {
-            List<Vehicle> importedVehicles = new List<Vehicle>();
-
-            string sqlQuery = "SELECT id, type, name, fuel_percentage, damage_percentage FROM vehicles";
-            SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
-            
-            try
-            {
-                sqlConnection.Open();
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-
-                while (sqlDataReader.Read())
-                {
-                    short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
-                    string vehicleType = sqlDataReader["type"].ToString();
-                    string vehicleName = sqlDataReader["name"].ToString();
-                    short vehicleFuelPercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel_percentage"));
-                    short vehicleDamagePercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage_percentage"));
-
-                    if (vehicleType == "Sedan")
-                    {
-                        Sedan sedan = new Sedan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
-                        importedVehicles.Add(sedan);
-                    }
-
-                    if (vehicleType == "Minivan")
-                    {
-                        Minivan minivan = new Minivan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
-                        importedVehicles.Add(minivan);
-                    }
-                }
-
-                sqlDataReader.Close();
-            }
-
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-
-            finally
-            {
-                sqlConnection.Close();
-            }
-
-            return importedVehicles;
-        }
-
-        List<Rental> GetRentalsFromDatabase(List<Vehicle> importedVehicles)
-        {
-            List<Rental> importedRentals = new List<Rental>();
-
-            string sqlQuery = "SELECT id, owner_name, owner_phone_number, return_date, vehicle_id FROM rentals";
-            SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
-
-            try
-            {
-                sqlConnection.Open();
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-
-                while (sqlDataReader.Read())
-                {
-                    short ID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
-
-                    string ownerName = sqlDataReader["owner_name"].ToString();
-                    string ownerPhoneNumber = sqlDataReader["owner_phone_number"].ToString();
-                    Person owner = new Person(ownerName, ownerPhoneNumber);
-
-                    string returnDateString = sqlDataReader["return_date"].ToString();
-                    DateTime returnDate = DateTime.Parse(returnDateString);
-
-                    short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
-                    Vehicle vehicle = new Vehicle( GetVehicleWithID(importedVehicles, vehicleID) );
-
-                    Rental importedRental = new Rental(vehicle, owner, returnDate);
-                    importedRentals.Add(importedRental);
-                }
-
-                sqlDataReader.Close();
-            }
-
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-
-            finally
-            {
-                sqlConnection.Close();
-            }
-
-            return importedRentals;
-        }
-
-        Vehicle GetVehicleWithID(List<Vehicle> vehicles, short vehicleID)
-        {
-            foreach(Vehicle vehicle in vehicles)
-            {
-                if (vehicle.ID == vehicleID)
-                {
-                    return vehicle;
-                }
-            }
-
-            throw new Exception();
-        }
-
-        void RemoveVehiclesThatAppearInRentals(List<Rental> rentals, List<Vehicle> vehicles)
-        {
-            foreach(Rental rental in rentals)
-            {
-                vehicles.Remove(rental.Vehicle);
-            }
-        }
-
-        #endregion
-
-
-        #region XML save and load
-
-        public void StoreVehiclesToXMLFile(List<Vehicle> vehicles, string filePath)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Vehicle>));
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            using (FileStream stream = File.OpenWrite(filePath))
-            {
-                serializer.Serialize(stream, vehicles);
-            }
-        }
-
-        public List<Vehicle> ReadVehiclesFromXMLFile(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                return new List<Vehicle>();
-            }
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Vehicle>));
-            using (FileStream stream = File.OpenRead(filePath))
-            {
-                List<Vehicle> deserializedList = (List<Vehicle>)serializer.Deserialize(stream);
-                return deserializedList;
-            }
-        }
-
-        public void StoreRentalsToXMLFile(List<Rental> rentals, string filePath)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Rental>));
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            using (FileStream stream = File.OpenWrite(filePath))
-            {
-                serializer.Serialize(stream, rentals);
-            }
-        }
-
-        public List<Rental> ReadRentalsFromXMLFile(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                return new List<Rental>();
-            }
-
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Rental>));
-            using (FileStream stream = File.OpenRead(filePath))
-            {
-                List<Rental> deserializedList = (List<Rental>)serializer.Deserialize(stream);
-                return deserializedList;
-            }
-        }
 
         #endregion
 

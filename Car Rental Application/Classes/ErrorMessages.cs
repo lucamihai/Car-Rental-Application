@@ -27,6 +27,13 @@ namespace Car_Rental_Application.Classes
         public static string OWNER_PHONE_NOT_PROVIDED = Program.Language.Translate("Owner's phone must be provided");
         // -----
 
+        // ----- FormSqlConnection possible errors
+        public static string DATA_SOURCE_NOT_PROVIDED = Program.Language.Translate("Data source must be provided");
+        public static string USER_ID_NOT_PROVIDED = Program.Language.Translate("UserID must be provided");
+        public static string PASSWORD_NOT_PROVIDED = Program.Language.Translate("Password must be provided");
+        public static string INITIAL_CATALOG_NOT_PROVIDED = Program.Language.Translate("Initial catalog must be provided");
+        // -----
+
         public static void UpdateLanguage(Language language)
         {
             NO_VEHICLES_TO_SELECT = language.Translate("There are no vehicles to select");
@@ -41,6 +48,11 @@ namespace Car_Rental_Application.Classes
 
             OWNER_NAME_NOT_PROVIDED = language.Translate("Owner's name must be provided");
             OWNER_PHONE_NOT_PROVIDED = language.Translate("Owner's phone must be provided");
-        } 
+
+            DATA_SOURCE_NOT_PROVIDED = language.Translate("Data source must be provided");
+            USER_ID_NOT_PROVIDED = language.Translate("UserID must be provided");
+            PASSWORD_NOT_PROVIDED = language.Translate("Password must be provided");
+            INITIAL_CATALOG_NOT_PROVIDED = language.Translate("Initial catalog must be provided");
+        }
     }
 }

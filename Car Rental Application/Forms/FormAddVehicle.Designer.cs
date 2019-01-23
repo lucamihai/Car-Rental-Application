@@ -50,8 +50,9 @@
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
             this.errorLabel.Location = new System.Drawing.Point(109, 11);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorLabel.Size = new System.Drawing.Size(54, 13);
             this.errorLabel.TabIndex = 23;
+            this.errorLabel.Text = "Error label";
             // 
             // buttonCancel
             // 

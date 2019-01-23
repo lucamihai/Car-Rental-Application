@@ -20,6 +20,8 @@ namespace Car_Rental_Application.Forms
         {
             InitializeComponent();
 
+            errorLabel.Text = "";
+
             labelVehicleName.Text = Program.Language.Translate("Vehicle name");
             labelVehicleType.Text = Program.Language.Translate("Vehicle type");
             labelFuelPercentage.Text = Program.Language.Translate("Fuel percentage");
