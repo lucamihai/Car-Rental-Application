@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Car_Rental_Application.User_Controls;
 using CarRentalApplication;
 using CarRentalApplication.Classes;
+using CarRentalApplication.Translating;
 
 namespace Car_Rental_Application.User_Controls
 {

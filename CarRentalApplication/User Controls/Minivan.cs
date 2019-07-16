@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
+using CarRentalApplication.Translating;
 
 namespace Car_Rental_Application.User_Controls
 {

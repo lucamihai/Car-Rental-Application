@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using CarRentalApplication.Classes;
 using CarRentalApplication.Forms;
+using CarRentalApplication.Translating;
 
 namespace CarRentalApplication
 {

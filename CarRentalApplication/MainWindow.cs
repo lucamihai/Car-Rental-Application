@@ -9,6 +9,7 @@ using Car_Rental_Application.User_Controls;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Forms;
 using CarRentalApplication.Logging;
+using CarRentalApplication.Translating;
 
 namespace CarRentalApplication
 {

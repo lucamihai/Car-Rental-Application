@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using CarRentalApplication.Classes;
+using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.Forms
 {

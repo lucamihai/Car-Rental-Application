@@ -1,4 +1,6 @@
-﻿namespace CarRentalApplication.Classes
+﻿using CarRentalApplication.Translating;
+
+namespace CarRentalApplication.Classes
 {
     static class ErrorMessages
     {

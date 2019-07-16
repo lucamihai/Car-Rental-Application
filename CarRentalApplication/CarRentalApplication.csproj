@@ -49,7 +49,6 @@
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\IDManagement.cs" />
-    <Compile Include="Classes\Language.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Classes\RentalSorter.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
@@ -185,6 +184,10 @@
     <ProjectReference Include="..\CarRentalApplication.Logging\CarRentalApplication.Logging.csproj">
       <Project>{87dbdc9d-563c-4505-aaa9-f195e6c387a1}</Project>
       <Name>CarRentalApplication.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CarRentalApplication.Translating\CarRentalApplication.Translating.csproj">
+      <Project>{a1c81ff3-4640-4015-af7d-c91649249b4b}</Project>
+      <Name>CarRentalApplication.Translating</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
