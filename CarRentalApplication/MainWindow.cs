@@ -292,8 +292,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            XmlManager.StoreVehiclesToXMLFile(vehicles, "vehicles.xml");
-            XmlManager.StoreRentalsToXMLFile(rentals, "rentals.xml");
+            XmlManager.WriteVehiclesToXmlFile(vehicles, "vehicles.xml");
+            XmlManager.WriteRentalsToXmlFile(rentals, "rentals.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -311,8 +311,8 @@ namespace CarRentalApplication
             vehicles.Clear();
             rentals.Clear();
 
-            List<Vehicle> importedVehicles = XmlManager.ReadVehiclesFromXMLFile("vehicles.xml");
-            List<Rental> importedRentals = XmlManager.ReadRentalsFromXMLFile("rentals.xml");
+            List<Vehicle> importedVehicles = XmlManager.ReadVehiclesFromXmlFile("vehicles.xml");
+            List<Rental> importedRentals = XmlManager.ReadRentalsFromXmlFile("rentals.xml");
 
             foreach (Vehicle vehicle in importedVehicles)
             {
