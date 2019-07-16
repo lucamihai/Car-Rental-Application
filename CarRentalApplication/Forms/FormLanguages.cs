@@ -25,8 +25,7 @@ namespace CarRentalApplication.Forms
             buttonRenameSelected.Text = Program.Language.Translate("Rename selected");
             buttonRemoveLanguage.Text = Program.Language.Translate("Remove selected");
 
-            Dictionary<string, string> englishDictionary = GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
-            Language english = new Language(englishDictionary);
+            var english = Language.FromCsvContents(Properties.Resources.English, '\\');
             ChosenLanguage = english;
 
             LoadDefaultLanguage();
@@ -74,97 +73,13 @@ namespace CarRentalApplication.Forms
                 {
                     if (Path.GetExtension(languageFile) == ".csv")
                     {
-                        string languageName = Path.GetFileNameWithoutExtension(languageFile);
-                        Dictionary<string, string> languageDictionary = GetTranslationsFromCSVFile(languageFile, '\\');
-                        Language language = new Language(languageDictionary);
+                        var languageName = Path.GetFileNameWithoutExtension(languageFile);
+                        var language = Language.FromCsvFile(languageFile, '\\');
 
                         availableLanguages[languageName] = language;
                     }
                 }
             }
-        }
-
-        Dictionary<string, string> GetTranslationsFromCSVFile(string CSVFilePath, char separator = ',', int beginFrom = 2)
-        {
-            Dictionary<string, string> translations = new Dictionary<string, string>();
-
-            using (StreamReader reader = new StreamReader(CSVFilePath))
-            {
-                int lineCounter = 1;
-
-                while (!reader.EndOfStream)
-                {
-                    if (lineCounter < beginFrom)
-                    {
-                        lineCounter++;
-                        continue;
-                    }
-
-                    string line = reader.ReadLine();
-                    string[] values = line.Split(separator);
-
-                    if (values.Length > 2)
-                    {
-                        string error = string.Format(
-                            "File '{0}': Line {1} is odd, expected 2 values, got instead {2}, while using '{3}' as a separator",
-                            CSVFilePath, lineCounter, values.Length, separator
-                        );
-
-                        MessageBox.Show(error);
-                        return null;
-                    }
-
-                    string text = values[0];
-                    string translatedText = values[1];
-                    translations[text] = translatedText;
-
-                    lineCounter++;
-                }
-            }
-
-            return translations;
-        }
-
-        public static Dictionary<string, string> GetTranslationsFromCSVContents(string CSVContents, char separator = ',', int beginFrom = 2)
-        {
-            Dictionary<string, string> translations = new Dictionary<string, string>();
-
-            string[] lines = CSVContents.Split(
-                new[] { Environment.NewLine },
-                StringSplitOptions.None
-            );
-
-            int lineCounter = 1;
-
-            foreach (string line in lines)
-            {
-                if (lineCounter < beginFrom)
-                {
-                    lineCounter++;
-                    continue;
-                }
-
-                string[] values = line.Split(separator);
-
-                if (values.Length > 2)
-                {
-                    string error = string.Format(
-                        "Line {0} is odd, expected 2 values, got instead {1}, while using '{2}' as a separator",
-                        lineCounter, values.Length, separator
-                    );
-
-                    MessageBox.Show(error);
-                    return null;
-                }
-
-                string text = values[0];
-                string translatedText = values[1];
-                translations[text] = translatedText;
-
-                lineCounter++;
-            }
-
-            return translations;
         }
 
         private void AddLanguage(object sender, EventArgs e)

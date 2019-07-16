@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CarRentalApplication.Logging.UnitTests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class LoggerUnitTests
     {
         private Logger logger;

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
-using CarRentalApplication.Forms;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication
 {
     internal static class Program
     {
-        private static Dictionary<string, string> englishDictionary = FormLanguages.GetTranslationsFromCSVContents(Properties.Resources.English, '\\');
-        public static Language Language { get; set; } = new Language(englishDictionary);
+        public static Language Language { get; set; } = Language.FromCsvContents(Properties.Resources.English, '\\');
 
         [STAThread]
         private static void Main()
