@@ -28,6 +28,8 @@ namespace CarRentalApplication.Translating
 
         public static Language FromCsvContents(string csvContents, char separator)
         {
+            ValidateCsvContents(csvContents);
+
             var languageName = "Undefined";
             var translations = new Dictionary<string, string>();
 
@@ -53,12 +55,10 @@ namespace CarRentalApplication.Translating
 
                 var values = line.Split(separator);
 
-                if (values.Length > 2)
+                if (values.Length != 2)
                 {
-                    var error =
-                        $"Line {lineCounter} is odd, expected 2 values, got instead {values.Length}, while using '{separator}' as a separator";
-
-                    return null;
+                    var message = $"Line {lineCounter} is odd, expected 2 values, got instead {values.Length}, while using '{separator}' as a separator";
+                    throw new InvalidOperationException(message);
                 }
 
                 var text = values[0];
@@ -75,6 +75,8 @@ namespace CarRentalApplication.Translating
 
         public static Language FromCsvFile(string csvFilePath, char separator)
         {
+            ValidateCsvFilePath(csvFilePath);
+
             var csvContents = string.Empty;
 
             using (var streamReader = new StreamReader(csvFilePath))
@@ -82,11 +84,34 @@ namespace CarRentalApplication.Translating
                 while (!streamReader.EndOfStream)
                 {
                     var line = streamReader.ReadLine();
-                    csvContents += line;
+                    csvContents += $"{line}{Environment.NewLine}";
                 }
             }
 
+            csvContents = csvContents.Remove(csvContents.LastIndexOf(Environment.NewLine));
+
             return Language.FromCsvContents(csvContents, separator);
+        }
+
+        private static void ValidateCsvContents(string csvContents)
+        {
+            if (string.IsNullOrEmpty(csvContents))
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        private static void ValidateCsvFilePath(string csvFilePath)
+        {
+            if (string.IsNullOrEmpty(csvFilePath))
+            {
+                throw new ArgumentException("CSV file path must be provided");
+            }
+
+            if (!File.Exists(csvFilePath))
+            {
+                throw new ArgumentException($"{csvFilePath} does not exist");
+            }
         }
     }
 }
