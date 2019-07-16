@@ -1,4 +1,6 @@
-﻿namespace Car_Rental_Application.User_Controls
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Car_Rental_Application.User_Controls
 {
     partial class Sedan
     {
@@ -11,6 +13,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        [ExcludeFromCodeCoverage]
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -26,6 +29,7 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
+        [ExcludeFromCodeCoverage]
         private void InitializeComponent()
         {
             this.SuspendLayout();
