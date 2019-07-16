@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalApplication.UnitTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalApplication", "CarRentalApplication\CarRentalApplication.csproj", "{8502F59C-2469-4CAC-8A19-D578CBB2A533}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalApplication.Logging", "CarRentalApplication.Logging\CarRentalApplication.Logging.csproj", "{87DBDC9D-563C-4505-AAA9-F195E6C387A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRentalApplication.Logging.UnitTests", "CarRentalApplication.Logging.UnitTests\CarRentalApplication.Logging.UnitTests.csproj", "{B3C9E23B-2486-404A-B815-BF83388B6937}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,12 +57,45 @@ Global
 		{8502F59C-2469-4CAC-8A19-D578CBB2A533}.Release|x64.Build.0 = Release|Any CPU
 		{8502F59C-2469-4CAC-8A19-D578CBB2A533}.Release|x86.ActiveCfg = Release|Any CPU
 		{8502F59C-2469-4CAC-8A19-D578CBB2A533}.Release|x86.Build.0 = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|ARM.Build.0 = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|x64.Build.0 = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Debug|x86.Build.0 = Debug|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|ARM.ActiveCfg = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|ARM.Build.0 = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|x64.ActiveCfg = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|x64.Build.0 = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|x86.ActiveCfg = Release|Any CPU
+		{87DBDC9D-563C-4505-AAA9-F195E6C387A1}.Release|x86.Build.0 = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|ARM.Build.0 = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|x64.Build.0 = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Debug|x86.Build.0 = Debug|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|ARM.Build.0 = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|x64.ActiveCfg = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|x64.Build.0 = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|x86.ActiveCfg = Release|Any CPU
+		{B3C9E23B-2486-404A-B815-BF83388B6937}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{40AC8D1D-578E-4E19-A9DF-FE3FB84E85AC} = {C7E979BA-151C-4870-8584-AFCEC8644AF8}
+		{B3C9E23B-2486-404A-B815-BF83388B6937} = {C7E979BA-151C-4870-8584-AFCEC8644AF8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64C36589-0691-4E6E-807A-FC9DBD6FA2DD}

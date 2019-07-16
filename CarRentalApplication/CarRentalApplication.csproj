@@ -50,7 +50,6 @@
     <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\Language.cs" />
-    <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Classes\RentalSorter.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
@@ -181,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarRentalApplication.Logging\CarRentalApplication.Logging.csproj">
+      <Project>{87dbdc9d-563c-4505-aaa9-f195e6c387a1}</Project>
+      <Name>CarRentalApplication.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Car_Rental_Application.User_Controls;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Forms;
+using CarRentalApplication.Logging;
 
 namespace CarRentalApplication
 {
@@ -338,7 +339,7 @@ namespace CarRentalApplication
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(returnedVehiclesLogManager.Path) || new FileInfo(returnedVehiclesLogManager.Path).Length == 0)
+            if (!File.Exists(returnedVehiclesLogManager.LogPath) || new FileInfo(returnedVehiclesLogManager.LogPath).Length == 0)
             {
                 errorLabel.Text = ErrorMessages.NO_LOG_CREATED;
                 timerClearErrors.Start();
@@ -347,12 +348,12 @@ namespace CarRentalApplication
             }
 
             errorLabel.Text = "";
-            Process.Start(returnedVehiclesLogManager.Path);
+            Process.Start(returnedVehiclesLogManager.LogPath);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(returnedVehiclesLogManager.Path) || new FileInfo(returnedVehiclesLogManager.Path).Length == 0)
+            if (!File.Exists(returnedVehiclesLogManager.LogPath) || new FileInfo(returnedVehiclesLogManager.LogPath).Length == 0)
             {
                 return;
             }
@@ -366,12 +367,12 @@ namespace CarRentalApplication
                 return;
             }
 
-            string oldLogManagerPath = returnedVehiclesLogManager.Path;
+            string oldLogManagerPath = returnedVehiclesLogManager.LogPath;
             returnedVehiclesLogManager = new Logger(oldLogManagerPath);
 
-            if (File.Exists(returnedVehiclesLogManager.Path))
+            if (File.Exists(returnedVehiclesLogManager.LogPath))
             {
-                File.Delete(returnedVehiclesLogManager.Path);
+                File.Delete(returnedVehiclesLogManager.LogPath);
             }
         }
 
