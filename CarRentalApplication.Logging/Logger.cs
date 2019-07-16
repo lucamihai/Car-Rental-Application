@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace CarRentalApplication.Logging
 {
@@ -14,26 +13,12 @@ namespace CarRentalApplication.Logging
             {
                 ValidateLogPath(value);
                 CreateFileIfNotExists(value);
+                UpdateLogEntryNumberBasedOnFileContents(value);
                 logPath = value;
             }
         }
 
-        public int LogEntryNumber
-        {
-            get
-            {
-                var lineCount = 0;
-                using (var streamReader = new StreamReader(logPath))
-                {
-                    while (streamReader.ReadLine() != null)
-                    {
-                        lineCount++;
-                    }
-                }
-
-                return lineCount;
-            }
-        }
+        public int LogEntryNumber { get; private set; }
 
         public Logger(string logPath)
         {
@@ -45,6 +30,7 @@ namespace CarRentalApplication.Logging
             using (var streamWriter = File.AppendText(LogPath) )
             {
                 streamWriter.WriteLine($"{LogEntryNumber}: {data}");
+                LogEntryNumber++;
             }
         }
 
@@ -60,12 +46,20 @@ namespace CarRentalApplication.Logging
         {
             if (!File.Exists(logPath))
             {
-                using (var fileStream = File.Create(logPath))
-                {
+                File.Create(logPath).Close();
+            }
+        }
 
-                } 
-                //var fileStream = File.Create(logPath);
-                //fileStream.Close();
+        private void UpdateLogEntryNumberBasedOnFileContents(string logPath)
+        {
+            LogEntryNumber = 1;
+
+            using (var streamReader = new StreamReader(logPath))
+            {
+                while (streamReader.ReadLine() != null)
+                {
+                    LogEntryNumber++;
+                }
             }
         }
     }

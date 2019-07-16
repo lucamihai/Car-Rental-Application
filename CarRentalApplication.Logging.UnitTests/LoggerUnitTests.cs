@@ -72,7 +72,7 @@ namespace CarRentalApplication.Logging.UnitTests
         {
             logger = new Logger(logPath);
 
-            var logEntryNumberBeforeLogWriting = logger.LogEntryNumber;
+            var logEntryNumberBeforeLogWriting = 1;
 
             logger.WriteToLog("something");
 
