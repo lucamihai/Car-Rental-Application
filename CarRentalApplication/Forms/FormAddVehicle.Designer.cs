@@ -62,7 +62,7 @@
             this.buttonCancel.TabIndex = 22;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.Cancel);
             // 
             // buttonAddVehicle
             // 
@@ -72,7 +72,7 @@
             this.buttonAddVehicle.TabIndex = 21;
             this.buttonAddVehicle.Text = "Add vehicle";
             this.buttonAddVehicle.UseVisualStyleBackColor = true;
-            this.buttonAddVehicle.Click += new System.EventHandler(this.buttonAddVehicle_Click);
+            this.buttonAddVehicle.Click += new System.EventHandler(this.AddVehicle);
             // 
             // labelDamagePercentage
             // 

@@ -6,7 +6,7 @@ namespace CarRentalApplication.Forms
 {
     public partial class FormReturnVehicle : Form
     {
-        Rental rental;
+        private readonly Rental rental;
 
         public string OrderDetails { get; set; }
         public Vehicle ReturnedVehicle { get; set; }
@@ -34,8 +34,8 @@ namespace CarRentalApplication.Forms
         {
             if (rental != null)
             {
-                short fuelPercentageAtReturn = (short)fuelPercentageNumericUpDown.Value;
-                short damagePercentageAtReturn = (short)damagePercentageNumericUpDown.Value;
+                var fuelPercentageAtReturn = (short)fuelPercentageNumericUpDown.Value;
+                var damagePercentageAtReturn = (short)damagePercentageNumericUpDown.Value;
 
                 ReturnedVehicle = rental.Vehicle;
                 ReturnedVehicle.InputsEnabled = true;

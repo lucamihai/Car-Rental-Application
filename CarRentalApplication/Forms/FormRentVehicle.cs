@@ -29,7 +29,7 @@ namespace CarRentalApplication.Forms
             buttonCancel.Text = Program.Language.Translate("Cancel");
         }
 
-        private void buttonRent_Click(object sender, EventArgs e)
+        private void Rent(object sender, EventArgs e)
         {
             if (textBoxOwnerName.Text == "")
             {
@@ -43,25 +43,17 @@ namespace CarRentalApplication.Forms
                 return;
             }
 
-            string ownerName = textBoxOwnerName.Text;
-            string ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
-            Person owner = new Person(ownerName, ownerPhoneNumber);
+            var ownerName = textBoxOwnerName.Text;
+            var ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
+            var owner = new Person(ownerName, ownerPhoneNumber);
 
             Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
 
-            if (Rental != null)
-            {
-                this.DialogResult = DialogResult.OK;
-            }
-            else
-            {
-                this.DialogResult = DialogResult.Cancel;
-            }
-
+            this.DialogResult = Rental != null ? DialogResult.OK : DialogResult.Cancel;
             this.Close();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void Cancel(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();

@@ -20,7 +20,7 @@ namespace CarRentalApplication.Forms
             labelInitialCatalog.Text = Program.Language.Translate("Initial catalog");
         }
 
-        private void buttonConfirm_Click(object sender, EventArgs e)
+        private void Confirm(object sender, EventArgs e)
         {
             if (textBoxDataSource.Text == "")
             {
@@ -46,7 +46,7 @@ namespace CarRentalApplication.Forms
                 return;
             }
 
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder
             {
                 DataSource = textBoxDataSource.Text,
                 UserID = textBoxUserID.Text,
@@ -54,13 +54,13 @@ namespace CarRentalApplication.Forms
                 InitialCatalog = textBoxInitialCatalog.Text
             };
 
-            ConnectionString = builder.ConnectionString;
+            ConnectionString = sqlConnectionStringBuilder.ConnectionString;
 
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void Cancel(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();

@@ -12,7 +12,7 @@ namespace CarRentalApplication.Forms
     {
         public Language ChosenLanguage { get; set; }
 
-        Dictionary<string, Language> availableLanguages = new Dictionary<string, Language>();
+        private Dictionary<string, Language> availableLanguages = new Dictionary<string, Language>();
 
         public FormLanguages()
         {
@@ -28,12 +28,12 @@ namespace CarRentalApplication.Forms
             var english = Language.FromCsvContents(Properties.Resources.English, '\\');
             ChosenLanguage = english;
 
-            LoadDefaultLanguage();
+            CreateDefaultLanguageFile();
             SetAvailableLanguagesDictionary();
             SetLanguagesPanel();
         }
 
-        void LoadDefaultLanguage()
+        private void CreateDefaultLanguageFile()
         {
             if (!Directory.Exists("Languages"))
             {
@@ -46,57 +46,59 @@ namespace CarRentalApplication.Forms
             }
         }
 
-        void SetLanguagesPanel()
+        private void SetLanguagesPanel()
         {
             panelLanguages.Controls.Clear();
 
-            int counterLanguages = 0;
+            var counterLanguages = 0;
 
-            foreach(string languageName in availableLanguages.Keys)
+            foreach(var languageName in availableLanguages.Keys)
             {
-                RadioButton radioButtonLanguage = new RadioButton();
-
+                var radioButtonLanguage = new RadioButton();
                 radioButtonLanguage.Text = languageName;
                 radioButtonLanguage.Location = new Point(10, counterLanguages++ * 20);
+
                 panelLanguages.Controls.Add(radioButtonLanguage);
             }
         }
 
-        void SetAvailableLanguagesDictionary()
+        private void SetAvailableLanguagesDictionary()
         {
             if (Directory.Exists("Languages"))
             {
                 availableLanguages = new Dictionary<string, Language>();
-                string[] languageFiles = Directory.GetFiles("Languages");
+                var languageFiles = Directory.GetFiles("Languages");
 
-                foreach (string languageFile in languageFiles)
+                foreach (var languageFile in languageFiles)
                 {
-                    if (Path.GetExtension(languageFile) == ".csv")
-                    {
-                        var languageName = Path.GetFileNameWithoutExtension(languageFile);
-                        var language = Language.FromCsvFile(languageFile, '\\');
+                    if (Path.GetExtension(languageFile) != ".csv")
+                        continue;
 
-                        availableLanguages[languageName] = language;
-                    }
+                    var languageName = Path.GetFileNameWithoutExtension(languageFile);
+                    var language = Language.FromCsvFile(languageFile, '\\');
+
+                    availableLanguages[languageName] = language;
                 }
             }
         }
 
         private void AddLanguage(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if ( !Directory.Exists("Languages"))
+                if (!Directory.Exists("Languages"))
                 {
                     Directory.CreateDirectory("Languages");
                 }
 
-                string languageFile = openFileDialog.FileName;
+                var languageFile = openFileDialog.FileName;
                 if (File.Exists(@"Languages\" + Path.GetFileName(languageFile)))
                 {
-                    MessageBox.Show( string.Format( "{0} language already added.", Path.GetFileNameWithoutExtension(languageFile) ) );
+                    var message = $"{Path.GetFileNameWithoutExtension(languageFile)} language already added.";
+                    MessageBox.Show(message);
+
                     return;
                 }
 
@@ -109,16 +111,16 @@ namespace CarRentalApplication.Forms
 
         private void RemoveLanguage(object sender, EventArgs e)
         {
-            bool wasLanguageSelected = false;
-            foreach (RadioButton languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
+            var wasLanguageSelected = false;
+            foreach (var languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
             {
                 if (languageRadioButton.Checked)
                 {
                     wasLanguageSelected = true;
 
-                    string languageName = languageRadioButton.Text;
-                    string action = string.Format("remove the {0} language", languageName);
-                    FormConfirmation formConfirmation = new FormConfirmation(action);
+                    var languageName = languageRadioButton.Text;
+                    var action = $"remove the {languageName} language";
+                    var formConfirmation = new FormConfirmation(action);
 
                     var result = formConfirmation.ShowDialog();
                     if (result == DialogResult.OK)
@@ -140,14 +142,14 @@ namespace CarRentalApplication.Forms
 
         private void ChooseLanguage(object sender, EventArgs e)
         {
-            bool wasLanguageSelected = false;
-            foreach (RadioButton languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
+            var wasLanguageSelected = false;
+            foreach (var languageRadioButton in panelLanguages.Controls.OfType<RadioButton>())
             {
                 if (languageRadioButton.Checked)
                 {
                     wasLanguageSelected = true;
 
-                    string languageName = languageRadioButton.Text;
+                    var languageName = languageRadioButton.Text;
                     ChosenLanguage = availableLanguages[languageName];
 
                     this.DialogResult = DialogResult.OK;

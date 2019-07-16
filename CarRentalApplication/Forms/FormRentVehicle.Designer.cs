@@ -105,7 +105,7 @@
             this.buttonCancel.TabIndex = 10;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.Cancel);
             // 
             // buttonRent
             // 
@@ -115,7 +115,7 @@
             this.buttonRent.TabIndex = 9;
             this.buttonRent.Text = "Rent";
             this.buttonRent.UseVisualStyleBackColor = true;
-            this.buttonRent.Click += new System.EventHandler(this.buttonRent_Click);
+            this.buttonRent.Click += new System.EventHandler(this.Rent);
             // 
             // FormRentVehicle
             // 

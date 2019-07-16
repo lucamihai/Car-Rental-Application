@@ -27,7 +27,7 @@ namespace CarRentalApplication.Forms
             buttonCancel.Text = Program.Language.Translate("Cancel");
         }
 
-        private void buttonAddVehicle_Click(object sender, EventArgs e)
+        private void AddVehicle(object sender, EventArgs e)
         {
             if (textBoxVehicleName.Text == "")
             {
@@ -35,8 +35,8 @@ namespace CarRentalApplication.Forms
                 return;
             }
 
-            short fuelPercentage = (short)numericUpDownFuelPercentage.Value;
-            short damagePercentage = (short)numericUpDownDamagePercentage.Value;
+            var fuelPercentage = (short)numericUpDownFuelPercentage.Value;
+            var damagePercentage = (short)numericUpDownDamagePercentage.Value;
 
             if (radioButtonSedan.Checked)
             {
@@ -57,7 +57,7 @@ namespace CarRentalApplication.Forms
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void Cancel(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();

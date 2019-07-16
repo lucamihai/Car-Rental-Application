@@ -114,7 +114,7 @@
             this.buttonConfirm.TabIndex = 8;
             this.buttonConfirm.Text = "Confirm";
             this.buttonConfirm.UseVisualStyleBackColor = true;
-            this.buttonConfirm.Click += new System.EventHandler(this.buttonConfirm_Click);
+            this.buttonConfirm.Click += new System.EventHandler(this.Confirm);
             // 
             // buttonCancel
             // 
@@ -124,7 +124,7 @@
             this.buttonCancel.TabIndex = 9;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.Cancel);
             // 
             // errorLabel
             // 
