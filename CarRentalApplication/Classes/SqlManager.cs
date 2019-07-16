@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Car_Rental_Application.User_Controls;
+using CarRentalApplication.User_Controls;
 
 namespace CarRentalApplication.Classes
 {

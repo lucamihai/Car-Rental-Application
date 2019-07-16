@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Car_Rental_Application.User_Controls;
 using CarRentalApplication.Classes;
+using CarRentalApplication.User_Controls;
 
 namespace CarRentalApplication.Forms
 {
@@ -31,7 +31,7 @@ namespace CarRentalApplication.Forms
         {
             if (textBoxVehicleName.Text == "")
             {
-                errorLabel.Text = ErrorMessages.VEHICLE_NAME_NOT_PROVIDED;
+                errorLabel.Text = ErrorMessages.VehicleNameNotProvided;
                 return;
             }
 

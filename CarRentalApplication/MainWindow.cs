@@ -5,28 +5,28 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Car_Rental_Application.User_Controls;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Forms;
 using CarRentalApplication.Logging;
 using CarRentalApplication.Translating;
+using CarRentalApplication.User_Controls;
 
 namespace CarRentalApplication
 {
     public partial class MainWindow : Form
     {
-        List <Rental> rentals;
-        List <Vehicle> vehicles;
+        private List <Rental> rentals;
+        private List <Vehicle> vehicles;
 
-        VehicleSorter vehicleSorter;
-        RentalSorter rentalSorter;
+        private readonly VehicleSorter vehicleSorter;
+        private readonly RentalSorter rentalSorter;
 
-        Logger returnedVehiclesLogManager;
+        private Logger returnedVehiclesLogManager;
 
-        SqlManager sqlManager;
+        private SqlManager sqlManager;
 
-        List<int> indexesOfSelectedVehicles = new List<int>();
-        List<int> indexesOfSelectedRentals = new List<int>();
+        private readonly List<int> indexesOfSelectedVehicles = new List<int>();
+        private readonly List<int> indexesOfSelectedRentals = new List<int>();
             
         public MainWindow()
         {
@@ -53,7 +53,7 @@ namespace CarRentalApplication
             IDManagement.InitializeIndexes();
         }
 
-        void InitializeSortOptionsForVehicles()
+        private void InitializeSortOptionsForVehicles()
         {
             sortVehicleSelectionComboBox.Items.Clear();
 
@@ -82,7 +82,7 @@ namespace CarRentalApplication
             sortVehicleSelectionComboBox.SelectedIndex = 0;
         }
 
-        void InitializeSortOptionsForRentals()
+        private void InitializeSortOptionsForRentals()
         {
             sortRentalSelectionComboBox.Items.Clear();
 
@@ -142,7 +142,7 @@ namespace CarRentalApplication
             PopulateVehiclesPanel();
         }
 
-        void AddRental(Rental rental)
+        private void AddRental(Rental rental)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
             rentals.Add(rental);
@@ -342,7 +342,7 @@ namespace CarRentalApplication
         {
             if (!File.Exists(returnedVehiclesLogManager.LogPath) || new FileInfo(returnedVehiclesLogManager.LogPath).Length == 0)
             {
-                errorLabel.Text = ErrorMessages.NO_LOG_CREATED;
+                errorLabel.Text = ErrorMessages.NoLogCreated;
                 timerClearErrors.Start();
 
                 return;
@@ -401,7 +401,7 @@ namespace CarRentalApplication
 
         #region Language changing
 
-        void UpdateLanguage(Language language)
+        private void UpdateLanguage(Language language)
         {
             Program.Language = language;
 
@@ -439,17 +439,17 @@ namespace CarRentalApplication
             ErrorMessages.UpdateLanguage(language);
         }
 
-        void UpdateLanguageForExistingVehicles(Language language)
+        private void UpdateLanguageForExistingVehicles(Language language)
         {
-            foreach (Vehicle vehicle in vehicles)
+            foreach (var vehicle in vehicles)
             {
                 vehicle.UpdateLanguage(language);
             }
         }
 
-        void UpdateLanguageForExistingRentals(Language language)
+        private void UpdateLanguageForExistingRentals(Language language)
         {
-            foreach (Rental rental in rentals)
+            foreach (var rental in rentals)
             {
                 rental.UpdateLanguage(language);
             }
@@ -492,7 +492,7 @@ namespace CarRentalApplication
         {
             if (vehicles.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NO_VEHICLES_TO_SELECT;
+                errorLabel.Text = ErrorMessages.NoVehiclesToSelect;
                 timerClearErrors.Start();
                 return;
             }
@@ -521,7 +521,7 @@ namespace CarRentalApplication
         {
             if (rentals.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NO_RENTALS_TO_SELECT;
+                errorLabel.Text = ErrorMessages.NoRentalsToSelect;
                 timerClearErrors.Start();
                 return;
             }
@@ -569,7 +569,7 @@ namespace CarRentalApplication
         {
             if (vehicles.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NO_VEHICLES_TO_REMOVE;
+                errorLabel.Text = ErrorMessages.NoVehiclesToRemove;
                 timerClearErrors.Stop();
                 timerClearErrors.Start();
 
@@ -630,7 +630,7 @@ namespace CarRentalApplication
 
             else
             {
-                errorLabel.Text = ErrorMessages.NO_VEHICLES_SELECTED;
+                errorLabel.Text = ErrorMessages.NoVehiclesSelected;
                 timerClearErrors.Stop();
                 timerClearErrors.Start();
             }
@@ -662,7 +662,7 @@ namespace CarRentalApplication
         {
             if (rentals.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NO_RENTALS_TO_REMOVE;
+                errorLabel.Text = ErrorMessages.NoRentalsToRemove;
                 timerClearErrors.Stop();
                 timerClearErrors.Start();
 
@@ -723,7 +723,7 @@ namespace CarRentalApplication
 
             else
             {
-                errorLabel.Text = ErrorMessages.NO_RENTALS_SELECTED;
+                errorLabel.Text = ErrorMessages.NoRentalsSelected;
                 timerClearErrors.Stop();
                 timerClearErrors.Start();
             }
@@ -859,21 +859,14 @@ namespace CarRentalApplication
 
         private void ClearErrorsTick(object sender, EventArgs e)
         {
-            errorLabel.Text = "";
+            errorLabel.Text = string.Empty;
             timerClearErrors.Stop();
         }
 
         private void ProgramDateTick(object sender, EventArgs e)
         {
-            DateTime currentTime = DateTime.Now;
-
-            string currentTimeString = "";
-            currentTimeString += currentTime.Day.ToString() + "/";
-            currentTimeString += currentTime.Month.ToString() + "/";
-            currentTimeString += currentTime.Year.ToString() + " ";
-            currentTimeString += currentTime.ToShortTimeString();
-
-            labelProgramDate.Text = currentTimeString;
+            var currentTime = DateTime.Now;
+            labelProgramDate.Text = $"{currentTime.Day}/{currentTime.Month}/{currentTime.Year} {currentTime.ToShortTimeString()}";
         }
 
         #endregion

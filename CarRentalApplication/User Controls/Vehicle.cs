@@ -2,11 +2,10 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using CarRentalApplication;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Translating;
 
-namespace Car_Rental_Application.User_Controls
+namespace CarRentalApplication.User_Controls
 {
     public partial class Vehicle : UserControl, IXmlSerializable, ICloneable
     {

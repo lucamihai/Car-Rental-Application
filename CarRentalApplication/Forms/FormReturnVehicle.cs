@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Car_Rental_Application.User_Controls;
+using CarRentalApplication.User_Controls;
 
 namespace CarRentalApplication.Forms
 {

@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CarRentalApplication.Classes;
-using CarRentalApplication.Translating;
+﻿using CarRentalApplication.Translating;
 
-namespace Car_Rental_Application.User_Controls
+namespace CarRentalApplication.User_Controls
 {
     public partial class Minivan : Vehicle
     {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Car_Rental_Application.User_Controls
+namespace CarRentalApplication.User_Controls
 {
     partial class Rental
     {
