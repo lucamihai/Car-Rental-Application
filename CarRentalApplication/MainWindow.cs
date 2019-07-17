@@ -671,24 +671,6 @@ namespace CarRentalApplication
 
         #region Rental removal
 
-        //TODO Remove this method
-        public void RemoveRentalView(RentalView rentalView, bool makeRentalIDAvailable = true, bool makeVehicleIDAvailable = true)
-        {
-            if (makeRentalIDAvailable)
-            {
-                IDManagement.MarkRentalIDAsAvailable(rentalView.Id);
-            }
-
-            if (makeVehicleIDAvailable)
-            {
-                IDManagement.MarkVehicleIDAsAvailable(rentalView.RentedVehicle.Id);
-            }
-
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            rentalViews.Remove(rentalView);
-            PopulateRentalsPanel();
-        }
-
         public void RemoveRental(Rental rental, bool makeRentalIDAvailable = true, bool makeVehicleIDAvailable = true)
         {
             if (makeRentalIDAvailable)
@@ -724,8 +706,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            string action = "remove the last rental";
-            FormConfirmation formConfirmation = new FormConfirmation(action);
+            var action = "remove the last rental";
+            var formConfirmation = new FormConfirmation(action);
 
             var result = formConfirmation.ShowDialog();
             if (result != DialogResult.OK)
@@ -733,21 +715,23 @@ namespace CarRentalApplication
                 return;
             }
 
-            RentalView lastRental = rentalViews[rentalViews.Count - 1];
-            IDManagement.MarkRentalIDAsAvailable(lastRental.Id);
+            var lastRentalView = rentalViews[rentalViews.Count - 1];
+            IDManagement.MarkRentalIDAsAvailable(lastRentalView.Id);
 
-            lastRental.Selected = false;
-            RemoveRentalView(lastRental);
+            lastRentalView.Selected = false;
+            RemoveRental(lastRentalView.Rental);
 
-            errorLabel.Text = "";
+            rentalViews.Remove(lastRentalView);
+
+            errorLabel.Text = string.Empty;
         }
 
         private void RemoveSelectedRentals(object sender, EventArgs e)
         {
             if (indexesOfSelectedRentals.Count > 0)
             {
-                string action = "remove the selected rentals";
-                FormConfirmation formConfirmation = new FormConfirmation(action);
+                var action = "remove the selected rentals";
+                var formConfirmation = new FormConfirmation(action);
 
                 var result = formConfirmation.ShowDialog();
                 if (result != DialogResult.OK)
@@ -755,21 +739,20 @@ namespace CarRentalApplication
                     return;
                 }
 
-                errorLabel.Text = "";
+                errorLabel.Text = string.Empty;
 
                 // Store the rentals to be removed in a temporary List
-                List<RentalView> rentalsToBeRemoved = new List<RentalView>();
-                foreach (int index in indexesOfSelectedRentals)
+                var rentalsToBeRemoved = new List<RentalView>();
+                foreach (var index in indexesOfSelectedRentals)
                 {
-                    short idToBeMarkedAsAvailable = rentalViews[index].Id;
-                    IDManagement.MarkRentalIDAsAvailable(idToBeMarkedAsAvailable);
                     rentalsToBeRemoved.Add(rentalViews.ElementAt(index));
                 }
 
                 // Remove the stored vehicles from the vehicles List
-                foreach (RentalView rental in rentalsToBeRemoved)
+                foreach (var rentalView in rentalsToBeRemoved)
                 {
-                    rentalViews.Remove(rental);
+                    RemoveRental(rentalView.Rental);
+                    rentalViews.Remove(rentalView);
                 }
 
                 PopulateRentalsPanel();
