@@ -40,7 +40,7 @@ namespace CarRentalApplication
             this.buttonRemoveSelectedAvailableCars = new System.Windows.Forms.Button();
             this.labelVehicles = new System.Windows.Forms.Label();
             this.buttonAddAvailableVehicle = new System.Windows.Forms.Button();
-            this.availableCarsElementsPanel = new System.Windows.Forms.Panel();
+            this.vehiclesPanel = new System.Windows.Forms.Panel();
             this.buttonRemoveLastAvailableVehicle = new System.Windows.Forms.Button();
             this.RentedCarsPanel = new System.Windows.Forms.Panel();
             this.buttonSelectAllRented = new System.Windows.Forms.Button();
@@ -79,7 +79,7 @@ namespace CarRentalApplication
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveSelectedAvailableCars);
             this.AvailableCarsPanel.Controls.Add(this.labelVehicles);
             this.AvailableCarsPanel.Controls.Add(this.buttonAddAvailableVehicle);
-            this.AvailableCarsPanel.Controls.Add(this.availableCarsElementsPanel);
+            this.AvailableCarsPanel.Controls.Add(this.vehiclesPanel);
             this.AvailableCarsPanel.Controls.Add(this.buttonRemoveLastAvailableVehicle);
             this.AvailableCarsPanel.Location = new System.Drawing.Point(32, 65);
             this.AvailableCarsPanel.Name = "AvailableCarsPanel";
@@ -145,14 +145,14 @@ namespace CarRentalApplication
             this.buttonAddAvailableVehicle.UseVisualStyleBackColor = true;
             this.buttonAddAvailableVehicle.Click += new System.EventHandler(this.AddVehicleForm);
             // 
-            // availableCarsElementsPanel
+            // vehiclesPanel
             // 
-            this.availableCarsElementsPanel.AutoScroll = true;
-            this.availableCarsElementsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.availableCarsElementsPanel.Location = new System.Drawing.Point(0, 97);
-            this.availableCarsElementsPanel.Name = "availableCarsElementsPanel";
-            this.availableCarsElementsPanel.Size = new System.Drawing.Size(570, 502);
-            this.availableCarsElementsPanel.TabIndex = 0;
+            this.vehiclesPanel.AutoScroll = true;
+            this.vehiclesPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.vehiclesPanel.Location = new System.Drawing.Point(0, 97);
+            this.vehiclesPanel.Name = "vehiclesPanel";
+            this.vehiclesPanel.Size = new System.Drawing.Size(570, 502);
+            this.vehiclesPanel.TabIndex = 0;
             // 
             // buttonRemoveLastAvailableVehicle
             // 
@@ -407,7 +407,7 @@ namespace CarRentalApplication
         private System.Windows.Forms.Label labelVehicles;
         private System.Windows.Forms.Label labelRentals;
         private System.Windows.Forms.Button buttonRemoveLastAvailableVehicle;
-        private System.Windows.Forms.Panel availableCarsElementsPanel;
+        private System.Windows.Forms.Panel vehiclesPanel;
         private System.Windows.Forms.Button buttonAddAvailableVehicle;
         private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
         private System.Windows.Forms.Panel rentedCarsElementsPanel;

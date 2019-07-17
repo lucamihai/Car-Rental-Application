@@ -143,7 +143,7 @@ namespace CarRentalApplication
 
         private void AddVehicleView(VehicleView vehicle)
         {
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            vehiclesPanel.VerticalScroll.Value = 0;
 
             vehicleViews.Add(vehicle);
             PopulateVehiclesPanel();
@@ -176,8 +176,7 @@ namespace CarRentalApplication
                 vehicle.Id = IDManagement.LowestAvailableVehicleID;
                 IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
 
-                var vehicleView = new VehicleView(formAddVehicle.Vehicle);
-                AddVehicleView(vehicleView);
+                PopulateVehiclesPanel();
             }
         }
 
@@ -214,9 +213,8 @@ namespace CarRentalApplication
                 returnedVehiclesLogManager.WriteToLog(orderDetails);
 
                 vehicles.Add(returnedVehicle);
+                PopulateVehiclesPanel();
 
-                var vehicleView = new VehicleView(returnedVehicle);
-                AddVehicleView(vehicleView);
                 RemoveRental(rental, true, false);
             }
         }
@@ -576,23 +574,15 @@ namespace CarRentalApplication
 
         #region Vehicle removal
 
-        private void RemoveVehicle(Vehicle vehicle, bool makeIDAvailable = true)
+        private void RemoveVehicle(Vehicle vehicle, bool makeIdAvailable = true)
         {
-            if (makeIDAvailable)
+            if (makeIdAvailable)
             {
                 IDManagement.MarkVehicleIDAsAvailable(vehicle.Id);
             }
 
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
             vehicles.Remove(vehicle);
-
-            var vehicleView = vehicleViews.FirstOrDefault(x => x.Vehicle == vehicle);
-
-            if (vehicleView != null)
-            {
-                vehicleViews.Remove(vehicleView);
-                PopulateVehiclesPanel();
-            }
+            PopulateVehiclesPanel();
         }
 
         private void RemoveLastVehicle(object sender, EventArgs e)
@@ -616,11 +606,8 @@ namespace CarRentalApplication
             }
 
             var lastVehicleView = vehicleViews[vehicleViews.Count - 1];
-
             lastVehicleView.Selected = false;
             RemoveVehicle(lastVehicleView.Vehicle);
-
-            vehicleViews.Remove(lastVehicleView);
 
             errorLabel.Text = string.Empty;
         }
@@ -651,7 +638,6 @@ namespace CarRentalApplication
                 foreach (var vehicleView in vehiclesToBeRemoved)
                 {
                     RemoveVehicle(vehicleView.Vehicle);
-                    vehicleViews.Remove(vehicleView);
                 }
 
                 PopulateVehiclesPanel();
@@ -775,14 +761,27 @@ namespace CarRentalApplication
 
         public void PopulateVehiclesPanel()
         {
-            availableCarsElementsPanel.Controls.Clear();
+            PopulateVehicleViewListBasedOnVehicles();
+
+            vehiclesPanel.Controls.Clear();
             short counter = 0;
 
-            foreach (VehicleView vehicle in vehicleViews)
+            foreach (var vehicleView in vehicleViews)
             {
-                vehicle.LinkToMainWindow(this);
-                availableCarsElementsPanel.Controls.Add(vehicle);
-                vehicle.Location = new Point(0, counter++ * 100);
+                vehicleView.LinkToMainWindow(this);
+                vehicleView.Location = new Point(0, counter++ * 100);
+                vehiclesPanel.Controls.Add(vehicleView);
+            }
+        }
+
+        private void PopulateVehicleViewListBasedOnVehicles()
+        {
+            vehicleViews.Clear();
+
+            foreach (var vehicle in vehicles)
+            {
+                var vehicleView = new VehicleView(vehicle);
+                vehicleViews.Add(vehicleView);
             }
         }
 
