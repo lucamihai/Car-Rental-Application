@@ -39,7 +39,7 @@ namespace CarRentalApplication.Forms
 
             if (textBoxOwnerPhoneNumber.Text == "")
             {
-                errorLabel.Text = ErrorMessages.OWNER_PHONE_NOT_PROVIDED;
+                errorLabel.Text = ErrorMessages.OwnerPhoneNotProvided;
                 return;
             }
 

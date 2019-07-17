@@ -12,7 +12,7 @@ namespace CarRentalApplication.Forms
         {
             InitializeComponent();
 
-            errorLabel.Text = "";
+            errorLabel.Text = string.Empty;
 
             labelDataSource.Text = Program.Language.Translate("Data source");
             labelUserID.Text = Program.Language.Translate("UserID");
@@ -22,27 +22,27 @@ namespace CarRentalApplication.Forms
 
         private void Confirm(object sender, EventArgs e)
         {
-            if (textBoxDataSource.Text == "")
+            if (string.IsNullOrEmpty(textBoxDataSource.Text))
             {
-                errorLabel.Text = ErrorMessages.DATA_SOURCE_NOT_PROVIDED;
+                errorLabel.Text = ErrorMessages.DataSourceNotProvided;
                 return;
             }
 
-            if (textBoxUserID.Text == "")
+            if (string.IsNullOrEmpty(textBoxUserID.Text))
             {
-                errorLabel.Text = ErrorMessages.USER_ID_NOT_PROVIDED;
+                errorLabel.Text = ErrorMessages.UserIdNotProvided;
                 return;
             }
 
-            if (textBoxPassword.Text == "")
+            if (string.IsNullOrEmpty(textBoxPassword.Text))
             {
-                errorLabel.Text = ErrorMessages.PASSWORD_NOT_PROVIDED;
+                errorLabel.Text = ErrorMessages.PasswordNotProvided;
                 return;
             }
 
-            if (textBoxInitialCatalog.Text == "")
+            if (string.IsNullOrEmpty(textBoxInitialCatalog.Text))
             {
-                errorLabel.Text = ErrorMessages.INITIAL_CATALOG_NOT_PROVIDED;
+                errorLabel.Text = ErrorMessages.InitialCatalogNotProvided;
                 return;
             }
 

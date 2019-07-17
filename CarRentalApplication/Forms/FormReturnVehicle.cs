@@ -43,7 +43,7 @@ namespace CarRentalApplication.Forms
                 ReturnedVehicle.FuelPercentage = fuelPercentageAtReturn;
                 ReturnedVehicle.DamagePercentage = damagePercentageAtReturn;
 
-                OrderDetails = "";
+                OrderDetails = string.Empty;
                 OrderDetails += ReturnedVehicle.Details;
                 OrderDetails += ". Was returned with ";
                 OrderDetails += ReturnedVehicle.FuelPercentage + "% fuel and ";

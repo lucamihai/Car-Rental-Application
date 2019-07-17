@@ -8,10 +8,10 @@ namespace CarRentalApplication.User_Controls
 {
     public partial class Rental : UserControl, IXmlSerializable
     {
-        MainWindow mainWindow;
-        Vehicle _Vehicle;
-        Person _Owner;
-        DateTime _ReturnDate;
+        private MainWindow mainWindow;
+        private Vehicle vehicle;
+        private Person owner;
+        private DateTime returnDate;
 
         public Rental()
         {
@@ -22,8 +22,8 @@ namespace CarRentalApplication.User_Controls
         {
             InitializeComponent();
 
-            ID = IDManagement.LowestAvailableRentalID;
-            IDManagement.MarkRentalIDAsUnavailable(ID);
+            Id = IDManagement.LowestAvailableRentalID;
+            IDManagement.MarkRentalIDAsUnavailable(Id);
 
             Vehicle = vehicle;
             Owner = owner;
@@ -36,8 +36,8 @@ namespace CarRentalApplication.User_Controls
         {
             InitializeComponent();
 
-            ID = rental.ID;
-            IDManagement.MarkRentalIDAsUnavailable(ID);
+            Id = rental.Id;
+            IDManagement.MarkRentalIDAsUnavailable(Id);
 
             Vehicle = rental.Vehicle;
             Owner = rental.Owner;
@@ -51,29 +51,26 @@ namespace CarRentalApplication.User_Controls
 
         public Vehicle Vehicle
         {
-            get
-            {
-                return _Vehicle;
-            }
+            get => vehicle;
             private set
             {
-                object vehicleClone = value.Clone();
-                string type = vehicleClone.GetType().Name;
+                var vehicleClone = value.Clone();
+                var type = vehicleClone.GetType().Name;
 
                 if (type == "Sedan")
                 {
-                    _Vehicle = (Sedan)vehicleClone;
+                    vehicle = (Sedan)vehicleClone;
                 }
                 
                 if (type == "Minivan")
                 {
-                    _Vehicle = (Minivan)vehicleClone;
+                    vehicle = (Minivan)vehicleClone;
                 }
 
-                if (_Vehicle != null)
+                if (vehicle != null)
                 {
-                    _Vehicle.InputsEnabled = false;
-                    panelVehicle.Controls.Add(_Vehicle);
+                    vehicle.InputsEnabled = false;
+                    panelVehicle.Controls.Add(vehicle);
                 }
                 
             }
@@ -83,8 +80,8 @@ namespace CarRentalApplication.User_Controls
         {
             get
             {
-                string details = "";
-                details += "Sedan, id " + ID + ", ";
+                var details = string.Empty;
+                details += "Sedan, id " + Id + ", ";
                 details += "has " + Vehicle.FuelPercentage + "% fuel, ";
                 details += "is " + Vehicle.DamagePercentage + " % damaged, ";
                 details += "owned by: " + Owner.Name + ", ";
@@ -97,19 +94,16 @@ namespace CarRentalApplication.User_Controls
 
         public bool Selected
         {
-            get
-            {
-                return checkboxSelect.Checked;
-            }
+            get => checkboxSelect.Checked;
             set
             {
                 checkboxSelect.Checked = value;
 
                 if (mainWindow != null)
                 {
-                    int rentalIndex = mainWindow.GetRentalIndex(this);
+                    var rentalIndex = mainWindow.GetRentalIndex(this);
 
-                    if (checkboxSelect.Checked == true)
+                    if (checkboxSelect.Checked)
                     {
                         
                         mainWindow.SelectRental(rentalIndex);
@@ -122,43 +116,34 @@ namespace CarRentalApplication.User_Controls
             }
         }
 
-        public short ID
+        public short Id
         {
-            protected set
+            get => Convert.ToInt16(labelIDValue.Text);
+            private set
             {
                 labelIDValue.Text = value.ToString();
                 IDManagement.MarkVehicleIDAsUnavailable(value);
-            }
-            get
-            {
-                return Convert.ToInt16(labelIDValue.Text);
             }
         }
 
         public Person Owner
         {
-            get
+            get => owner;
+            private set
             {
-                return _Owner;
-            }
-            protected set
-            {
-                _Owner = value;
-                labelOwnerNameValue.Text = _Owner.Name;
-                labelOwnerPhoneValue.Text = _Owner.PhoneNumber;
+                owner = value;
+                labelOwnerNameValue.Text = owner.Name;
+                labelOwnerPhoneValue.Text = owner.PhoneNumber;
             }
         }
 
         public DateTime ReturnDate
         {
-            get
+            get => returnDate;
+            private set
             {
-                return _ReturnDate;
-            }
-            protected set
-            {
-                _ReturnDate = value;
-                labelReturnDateValue.Text = _ReturnDate.ToShortDateString();
+                returnDate = value;
+                labelReturnDateValue.Text = returnDate.ToShortDateString();
             }
         }
 
@@ -189,9 +174,9 @@ namespace CarRentalApplication.User_Controls
 
         private void Select(object sender, EventArgs e)
         {
-            int rentalIndex = mainWindow.GetRentalIndex(this);
+            var rentalIndex = mainWindow.GetRentalIndex(this);
 
-            if (checkboxSelect.Checked == true)
+            if (checkboxSelect.Checked)
             {
                 mainWindow.SelectRental(rentalIndex);
             }
@@ -210,11 +195,11 @@ namespace CarRentalApplication.User_Controls
 
         public void WriteXml(System.Xml.XmlWriter xmlWriter)
         {
-            xmlWriter.WriteElementString("id", ID.ToString());
-            xmlWriter.WriteElementString("ownerName", Owner.Name.ToString());
-            xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber.ToString());
+            xmlWriter.WriteElementString("id", Id.ToString());
+            xmlWriter.WriteElementString("ownerName", Owner.Name);
+            xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber);
             xmlWriter.WriteElementString("returnDate", ReturnDate.ToShortDateString());
-            xmlWriter.WriteElementString("vehicleID", Vehicle.ID.ToString());
+            xmlWriter.WriteElementString("vehicleID", Vehicle.Id.ToString());
             xmlWriter.WriteElementString("vehicleName", Vehicle.VehicleName);
             xmlWriter.WriteElementString("vehicleType", Vehicle.GetType().Name);
             xmlWriter.WriteElementString("vehicleFuelPercentage", Vehicle.FuelPercentage.ToString());
@@ -224,35 +209,34 @@ namespace CarRentalApplication.User_Controls
         public void ReadXml(System.Xml.XmlReader xmlReader)
         {
             xmlReader.MoveToContent();
-            bool isEmptyElement = xmlReader.IsEmptyElement;
+            var isEmptyElement = xmlReader.IsEmptyElement;
             xmlReader.ReadStartElement();
 
             if (!isEmptyElement)
             {
-                int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
-                ID = (short)intID;
+                Id = Convert.ToInt16(xmlReader.ReadElementString("id"));
 
-                string ownerName = xmlReader.ReadElementString("ownerName");
-                string ownerPhone = xmlReader.ReadElementString("ownerPhone");
+                var ownerName = xmlReader.ReadElementString("ownerName");
+                var ownerPhone = xmlReader.ReadElementString("ownerPhone");
                 Owner = new Person(ownerName, ownerPhone);
 
-                string returnDateString = xmlReader.ReadElementString("returnDate");
+                var returnDateString = xmlReader.ReadElementString("returnDate");
                 ReturnDate = DateTime.Parse(returnDateString);
 
-                short vehicleID = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleID"));
-                string vehicleName = xmlReader.ReadElementString("vehicleName");
-                string vehicleType = xmlReader.ReadElementString("vehicleType");
-                short vehicleFuelPercentage = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleFuelPercentage"));
-                short vehicleDamagePercentage = (short)Convert.ToInt32(xmlReader.ReadElementString("vehicleDamagePercentage"));
+                var vehicleId = Convert.ToInt16(xmlReader.ReadElementString("vehicleID"));
+                var vehicleName = xmlReader.ReadElementString("vehicleName");
+                var vehicleType = xmlReader.ReadElementString("vehicleType");
+                var vehicleFuelPercentage = Convert.ToInt16(xmlReader.ReadElementString("vehicleFuelPercentage"));
+                var vehicleDamagePercentage = Convert.ToInt16(xmlReader.ReadElementString("vehicleDamagePercentage"));
 
                 if (vehicleType == "Sedan")
                 {
-                    Vehicle = new Sedan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    Vehicle = new Sedan(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                 }
 
                 if (vehicleType == "Minivan")
                 {
-                    Vehicle = new Minivan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    Vehicle = new Minivan(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                 }
 
                 xmlReader.ReadEndElement();

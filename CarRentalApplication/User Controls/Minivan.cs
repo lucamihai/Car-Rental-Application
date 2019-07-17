@@ -26,7 +26,7 @@ namespace CarRentalApplication.User_Controls
 
         public override void UpdateLanguage(Language language)
         {
-            labelID.Text = language.Translate("ID");
+            labelId.Text = language.Translate("ID");
             labelVehicleName.Text = language.Translate("Vehicle name");
             labelVehicleType.Text = language.Translate("Vehicle type");
             labelVehicleTypeValue.Text = language.Translate("Minivan");
@@ -40,7 +40,7 @@ namespace CarRentalApplication.User_Controls
 
         public override object Clone()
         {
-            return new Minivan(ID, VehicleName, FuelPercentage, DamagePercentage);
+            return new Minivan(Id, VehicleName, FuelPercentage, DamagePercentage);
         }
     }
 }

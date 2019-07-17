@@ -123,7 +123,7 @@ namespace CarRentalApplication.Classes
             sqlConnection.Open();
 
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", vehicle.ID);
+            myCommand.Parameters.AddWithValue("@id", vehicle.Id);
             myCommand.Parameters.AddWithValue("@type", vehicle.GetType().Name);
             myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
             myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
@@ -143,11 +143,11 @@ namespace CarRentalApplication.Classes
             sqlConnection.Open();
 
             SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", rental.ID);
+            myCommand.Parameters.AddWithValue("@id", rental.Id);
             myCommand.Parameters.AddWithValue("@owner_name", rental.Owner.Name);
             myCommand.Parameters.AddWithValue("@owner_phone_number", rental.Owner.PhoneNumber);
             myCommand.Parameters.AddWithValue("@return_date", rental.ReturnDate.ToShortDateString());
-            myCommand.Parameters.AddWithValue("@vehicle_id", rental.Vehicle.ID);
+            myCommand.Parameters.AddWithValue("@vehicle_id", rental.Vehicle.Id);
             myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
@@ -252,7 +252,7 @@ namespace CarRentalApplication.Classes
         {
             foreach (Vehicle vehicle in vehicles)
             {
-                if (vehicle.ID == vehicleID)
+                if (vehicle.Id == vehicleID)
                 {
                     return vehicle;
                 }

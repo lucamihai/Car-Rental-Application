@@ -22,14 +22,14 @@ namespace CarRentalApplication.Classes
 
         // ----- FormRentVehicle possible errors
         public static string OwnerNameNotProvided = Program.Language.Translate("Owner's name must be provided");
-        public static string OWNER_PHONE_NOT_PROVIDED = Program.Language.Translate("Owner's phone must be provided");
+        public static string OwnerPhoneNotProvided = Program.Language.Translate("Owner's phone must be provided");
         // -----
 
         // ----- FormSqlConnection possible errors
-        public static string DATA_SOURCE_NOT_PROVIDED = Program.Language.Translate("Data source must be provided");
-        public static string USER_ID_NOT_PROVIDED = Program.Language.Translate("UserID must be provided");
-        public static string PASSWORD_NOT_PROVIDED = Program.Language.Translate("Password must be provided");
-        public static string INITIAL_CATALOG_NOT_PROVIDED = Program.Language.Translate("Initial catalog must be provided");
+        public static string DataSourceNotProvided = Program.Language.Translate("Data source must be provided");
+        public static string UserIdNotProvided = Program.Language.Translate("UserID must be provided");
+        public static string PasswordNotProvided = Program.Language.Translate("Password must be provided");
+        public static string InitialCatalogNotProvided = Program.Language.Translate("Initial catalog must be provided");
         // -----
 
         public static void UpdateLanguage(Language language)
@@ -45,12 +45,12 @@ namespace CarRentalApplication.Classes
             VehicleNameNotProvided = language.Translate("Vehicle name must be provided");
 
             OwnerNameNotProvided = language.Translate("Owner's name must be provided");
-            OWNER_PHONE_NOT_PROVIDED = language.Translate("Owner's phone must be provided");
+            OwnerPhoneNotProvided = language.Translate("Owner's phone must be provided");
 
-            DATA_SOURCE_NOT_PROVIDED = language.Translate("Data source must be provided");
-            USER_ID_NOT_PROVIDED = language.Translate("UserID must be provided");
-            PASSWORD_NOT_PROVIDED = language.Translate("Password must be provided");
-            INITIAL_CATALOG_NOT_PROVIDED = language.Translate("Initial catalog must be provided");
+            DataSourceNotProvided = language.Translate("Data source must be provided");
+            UserIdNotProvided = language.Translate("UserID must be provided");
+            PasswordNotProvided = language.Translate("Password must be provided");
+            InitialCatalogNotProvided = language.Translate("Initial catalog must be provided");
         }
     }
 }

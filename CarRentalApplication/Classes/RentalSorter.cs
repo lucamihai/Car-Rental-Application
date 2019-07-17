@@ -8,12 +8,12 @@ namespace CarRentalApplication.Classes
     {
         public List<Rental> SortListByID(List<Rental> rentals)
         {
-            return rentals.OrderBy( vehicle => vehicle.ID ).ToList();
+            return rentals.OrderBy( vehicle => vehicle.Id ).ToList();
         }
 
         public List<Rental> SortListByVehicleID(List<Rental> rentals)
         {
-            return rentals.OrderBy(vehicle => vehicle.Vehicle.ID).ToList();
+            return rentals.OrderBy(vehicle => vehicle.Vehicle.Id).ToList();
         }
 
         public List<Rental> SortListByVehicleName(List<Rental> rentals)

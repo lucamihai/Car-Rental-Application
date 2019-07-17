@@ -13,7 +13,7 @@ namespace CarRentalApplication.Forms
         {
             InitializeComponent();
 
-            errorLabel.Text = "";
+            errorLabel.Text = string.Empty;
 
             labelVehicleName.Text = Program.Language.Translate("Vehicle name");
             labelVehicleType.Text = Program.Language.Translate("Vehicle type");
@@ -29,7 +29,7 @@ namespace CarRentalApplication.Forms
 
         private void AddVehicle(object sender, EventArgs e)
         {
-            if (textBoxVehicleName.Text == "")
+            if (string.IsNullOrEmpty(textBoxVehicleName.Text))
             {
                 errorLabel.Text = ErrorMessages.VehicleNameNotProvided;
                 return;
@@ -41,17 +41,17 @@ namespace CarRentalApplication.Forms
             if (radioButtonSedan.Checked)
             {
                 Vehicle = new Sedan(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
-                errorLabel.Text = "";
             }
 
             if (radioButtonMinivan.Checked)
             {
                 Vehicle = new Minivan(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
-                errorLabel.Text = "";
             }
 
             if (Vehicle != null)
             {
+                errorLabel.Text = string.Empty;
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

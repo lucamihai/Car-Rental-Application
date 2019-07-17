@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -9,12 +10,12 @@ namespace CarRentalApplication.User_Controls
 {
     public partial class Vehicle : UserControl, IXmlSerializable, ICloneable
     {
-        protected Label labelID, labelVehicleName, labelVehicleType, labelFuelPercentage, labelDamagePercentage;
-        protected Label labelIDValue, labelVehicleNameValue, labelVehicleTypeValue, labelFuelPercentageValue, labelDamagePercentageValue;
+        protected Label labelId, labelVehicleName, labelVehicleType, labelFuelPercentage, labelDamagePercentage;
+        protected Label labelIdValue, labelVehicleNameValue, labelVehicleTypeValue, labelFuelPercentageValue, labelDamagePercentageValue;
         protected CheckBox checkboxSelect;
         protected Button buttonRent;
 
-        protected MainWindow mainWindow;
+        private MainWindow mainWindow;
 
         public Vehicle()
         {
@@ -27,9 +28,8 @@ namespace CarRentalApplication.User_Controls
             InitializeComponent();
             PrepareComponents();
 
-            short id = IDManagement.LowestAvailableVehicleID;
-            ID = id;
-            IDManagement.MarkVehicleIDAsUnavailable(id);
+            Id = IDManagement.LowestAvailableVehicleID;
+            IDManagement.MarkVehicleIDAsUnavailable(Id);
 
             VehicleName = vehicleName;
             FuelPercentage = fuelPercent;
@@ -43,7 +43,7 @@ namespace CarRentalApplication.User_Controls
             InitializeComponent();
             PrepareComponents();
 
-            ID = id;
+            Id = id;
             IDManagement.MarkVehicleIDAsUnavailable(id);
 
             VehicleName = vehicleName;
@@ -58,8 +58,9 @@ namespace CarRentalApplication.User_Controls
             InitializeComponent();
             PrepareComponents();
 
-            ID = vehicle.ID;
-            IDManagement.MarkVehicleIDAsUnavailable(ID);
+            Id = vehicle.Id;
+            IDManagement.MarkVehicleIDAsUnavailable(Id);
+
             VehicleName = vehicle.VehicleName;
             FuelPercentage = vehicle.FuelPercentage;
             DamagePercentage = vehicle.DamagePercentage;
@@ -67,19 +68,20 @@ namespace CarRentalApplication.User_Controls
             UpdateLanguage(Program.Language);
         }
 
-        protected void PrepareComponents()
+        [ExcludeFromCodeCoverage]
+        private void PrepareComponents()
         {
-            labelID = new Label();
-            labelID.Text = Program.Language.Translate("ID");
-            labelID.Location = new Point(3, 18);
-            labelID.AutoSize = true;
-            labelID.Font = new Font(labelID.Font, FontStyle.Bold);
-            Controls.Add(labelID);
+            labelId = new Label();
+            labelId.Text = Program.Language.Translate("ID");
+            labelId.Location = new Point(3, 18);
+            labelId.AutoSize = true;
+            labelId.Font = new Font(labelId.Font, FontStyle.Bold);
+            Controls.Add(labelId);
 
-            labelIDValue = new Label();
-            labelIDValue.Location = new Point(3, 37);
-            labelIDValue.AutoSize = true;
-            Controls.Add(labelIDValue);
+            labelIdValue = new Label();
+            labelIdValue.Location = new Point(3, 37);
+            labelIdValue.AutoSize = true;
+            Controls.Add(labelIdValue);
 
             // -----
 
@@ -87,7 +89,7 @@ namespace CarRentalApplication.User_Controls
             labelVehicleName.Text = Program.Language.Translate("Vehicle name");
             labelVehicleName.Location = new Point(54, 18);
             labelVehicleName.AutoSize = true;
-            labelVehicleName.Font = new Font(labelID.Font, FontStyle.Bold);
+            labelVehicleName.Font = new Font(labelId.Font, FontStyle.Bold);
             Controls.Add(labelVehicleName);
 
             labelVehicleNameValue = new Label();
@@ -101,7 +103,7 @@ namespace CarRentalApplication.User_Controls
             labelVehicleType.Text = Program.Language.Translate("Vehicle type");
             labelVehicleType.Location = new Point(158, 18);
             labelVehicleType.AutoSize = true;
-            labelVehicleType.Font = new Font(labelID.Font, FontStyle.Bold);
+            labelVehicleType.Font = new Font(labelId.Font, FontStyle.Bold);
             Controls.Add(labelVehicleType);
 
             labelVehicleTypeValue = new Label();
@@ -115,7 +117,7 @@ namespace CarRentalApplication.User_Controls
             labelDamagePercentage.Text = Program.Language.Translate("Damage percentage");
             labelDamagePercentage.Location = new Point(255, 18);
             labelDamagePercentage.AutoSize = true;
-            labelDamagePercentage.Font = new Font(labelID.Font, FontStyle.Bold);
+            labelDamagePercentage.Font = new Font(labelId.Font, FontStyle.Bold);
             Controls.Add(labelDamagePercentage);
 
             labelDamagePercentageValue = new Label();
@@ -129,7 +131,7 @@ namespace CarRentalApplication.User_Controls
             labelFuelPercentage.Text = Program.Language.Translate("Fuel percentage");
             labelFuelPercentage.Location = new Point(389, 18);
             labelFuelPercentage.AutoSize = true;
-            labelFuelPercentage.Font = new Font(labelID.Font, FontStyle.Bold);
+            labelFuelPercentage.Font = new Font(labelId.Font, FontStyle.Bold);
             Controls.Add(labelFuelPercentage);
 
             labelFuelPercentageValue = new Label();
@@ -163,9 +165,9 @@ namespace CarRentalApplication.User_Controls
         {
             get
             {
-                string details = "";
+                var details = string.Empty;
                 details += "Sedan " + VehicleName + ", ";
-                details += "registered with the id " + ID.ToString() + ", ";
+                details += "registered with the id " + Id.ToString() + ", ";
                 details += "has " + FuelPercentage.ToString() + " % fuel and ";
                 details += "and is " + DamagePercentage.ToString() + " % damaged";
 
@@ -175,19 +177,16 @@ namespace CarRentalApplication.User_Controls
 
         public bool Selected
         {
-            get
-            {
-                return checkboxSelect.Checked;
-            }
+            get => checkboxSelect.Checked;
             set
             {
                 checkboxSelect.Checked = value;
 
                 if (mainWindow != null)
                 {
-                    int indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
+                    var indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
 
-                    if (checkboxSelect.Checked == true)
+                    if (checkboxSelect.Checked)
                     {
                         mainWindow.SelectVehicle(indexOfCurrentVehicle);
                     }
@@ -199,69 +198,40 @@ namespace CarRentalApplication.User_Controls
             }
         }
 
-        public short ID
+        public short Id
         {
-            get
+            get => Convert.ToInt16(labelIdValue.Text);
+            private set
             {
-                return Convert.ToInt16(labelIDValue.Text);
-            }
-            protected set
-            {
-                labelIDValue.Text = value.ToString();
+                labelIdValue.Text = value.ToString();
                 IDManagement.MarkVehicleIDAsUnavailable(value);
             }
         }
 
         public string VehicleName
         {
-            get
-            {
-                return labelVehicleNameValue.Text;
-            }
-            protected set
-            {
-                labelVehicleNameValue.Text = value;
-            }
+            get => labelVehicleNameValue.Text;
+            private set => labelVehicleNameValue.Text = value;
         }
 
         public short FuelPercentage
         {
-            get
-            {
-                return Convert.ToInt16(labelFuelPercentageValue.Text);
-            }
-            set
-            {
-                labelFuelPercentageValue.Text = value.ToString();
-            }
+            get => Convert.ToInt16(labelFuelPercentageValue.Text);
+            set => labelFuelPercentageValue.Text = value.ToString();
         }
 
         public short DamagePercentage
         {
-            get
-            {
-                return Convert.ToInt16(labelDamagePercentageValue.Text);
-            }
-            set
-            {
-                labelDamagePercentageValue.Text = value.ToString();
-            }
+            get => Convert.ToInt16(labelDamagePercentageValue.Text);
+            set => labelDamagePercentageValue.Text = value.ToString();
         }
 
         public bool InputsEnabled
         {
             set
             {
-                if (value == true)
-                {
-                    checkboxSelect.Visible = true;
-                    buttonRent.Visible = true;
-                }
-                else
-                {
-                    checkboxSelect.Visible = false;
-                    buttonRent.Visible = false;
-                }
+                checkboxSelect.Visible = value;
+                buttonRent.Visible = value;
             }
         }
 
@@ -278,7 +248,7 @@ namespace CarRentalApplication.User_Controls
         public void WriteXml(System.Xml.XmlWriter xmlWriter)
         {
             xmlWriter.WriteAttributeString("Name", GetType().Name);
-            xmlWriter.WriteElementString("id", ID.ToString());
+            xmlWriter.WriteElementString("id", Id.ToString());
             xmlWriter.WriteElementString("vehicleName", VehicleName);
             xmlWriter.WriteElementString("damagePercentage", DamagePercentage.ToString());
             xmlWriter.WriteElementString("fuelPercentage", FuelPercentage.ToString());
@@ -287,42 +257,30 @@ namespace CarRentalApplication.User_Controls
         public void ReadXml(System.Xml.XmlReader xmlReader)
         {
             xmlReader.MoveToContent();
-            string VehicleType = xmlReader.GetAttribute("Name");
-            Name = VehicleType;
+            var vehicleType = xmlReader.GetAttribute("Name");
+            Name = vehicleType;
 
-            bool isEmptyElement = xmlReader.IsEmptyElement;
+            var isEmptyElement = xmlReader.IsEmptyElement;
             xmlReader.ReadStartElement();
 
             if (!isEmptyElement)
             {
-                if (VehicleType == "Sedan")
+                if (vehicleType == "Sedan")
                 {
-                    int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
-                    ID = (short)intID;
-
+                    Id = Convert.ToInt16(xmlReader.ReadElementString("id"));
                     VehicleName = xmlReader.ReadElementString("vehicleName");
-
-                    int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercentage"));
-                    DamagePercentage = (short)intDamage;
-
-                    int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
-                    FuelPercentage = (short)intFuel;
+                    DamagePercentage = Convert.ToInt16(xmlReader.ReadElementString("damagePercentage"));
+                    FuelPercentage = Convert.ToInt16(xmlReader.ReadElementString("fuelPercentage"));
 
                     xmlReader.ReadEndElement();
                 }
 
-                if (VehicleType == "Minivan")
+                if (vehicleType == "Minivan")
                 {
-                    int intID = Convert.ToInt32(xmlReader.ReadElementString("id"));
-                    ID = (short)intID;
-
+                    Id = Convert.ToInt16(xmlReader.ReadElementString("id"));
                     VehicleName = xmlReader.ReadElementString("vehicleName");
-
-                    int intDamage = Convert.ToInt32(xmlReader.ReadElementString("damagePercentage"));
-                    DamagePercentage = (short)intDamage;
-
-                    int intFuel = Convert.ToInt32(xmlReader.ReadElementString("fuelPercentage"));
-                    FuelPercentage = (short)intFuel;
+                    DamagePercentage = Convert.ToInt16(xmlReader.ReadElementString("damagePercentage"));
+                    FuelPercentage = Convert.ToInt16(xmlReader.ReadElementString("fuelPercentage"));
 
                     xmlReader.ReadEndElement();
                 }
@@ -344,9 +302,9 @@ namespace CarRentalApplication.User_Controls
 
         private void Select(object sender, EventArgs e)
         {
-            int indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
+            var indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
 
-            if (checkboxSelect.Checked == true)
+            if (checkboxSelect.Checked)
             {
                 mainWindow.SelectVehicle(indexOfCurrentVehicle);
                 return;
@@ -357,7 +315,7 @@ namespace CarRentalApplication.User_Controls
 
         public virtual void UpdateLanguage(Language language)
         {
-            labelID.Text = language.Translate("ID");
+            labelId.Text = language.Translate("ID");
             labelVehicleName.Text = language.Translate("Vehicle name");
             labelVehicleType.Text = language.Translate("Vehicle type");
             labelVehicleTypeValue.Text = language.Translate(Name);
@@ -371,7 +329,7 @@ namespace CarRentalApplication.User_Controls
 
         public virtual object Clone()
         {
-            return new Vehicle(ID, VehicleName, FuelPercentage, DamagePercentage);
+            return new Vehicle(Id, VehicleName, FuelPercentage, DamagePercentage);
         }
     }
 }

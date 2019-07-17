@@ -138,7 +138,7 @@ namespace CarRentalApplication
         {
             availableCarsElementsPanel.VerticalScroll.Value = 0;
             vehicles.Add(vehicle);
-            IDManagement.MarkVehicleIDAsUnavailable(vehicle.ID);
+            IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
             PopulateVehiclesPanel();
         }
 
@@ -146,7 +146,7 @@ namespace CarRentalApplication
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
             rentals.Add(rental);
-            IDManagement.MarkRentalIDAsUnavailable(rental.ID);
+            IDManagement.MarkRentalIDAsUnavailable(rental.Id);
             PopulateRentalsPanel();
         }
 
@@ -557,7 +557,7 @@ namespace CarRentalApplication
         {
             if (makeIDAvailable)
             {
-                IDManagement.MarkVehicleIDAsAvailable(vehicle.ID);
+                IDManagement.MarkVehicleIDAsAvailable(vehicle.Id);
             }
 
             availableCarsElementsPanel.VerticalScroll.Value = 0;
@@ -586,7 +586,7 @@ namespace CarRentalApplication
             }
 
             Vehicle lastVehicle = vehicles[vehicles.Count - 1];
-            IDManagement.MarkVehicleIDAsAvailable(lastVehicle.ID);
+            IDManagement.MarkVehicleIDAsAvailable(lastVehicle.Id);
 
             lastVehicle.Selected = false;
             RemoveVehicle(lastVehicle);
@@ -613,7 +613,7 @@ namespace CarRentalApplication
                 List<Vehicle> vehiclesToBeRemoved = new List<Vehicle>();
                 foreach (int index in indexesOfSelectedVehicles)
                 {
-                    short idToBeMarkedAsAvailable = vehicles[index].ID;
+                    short idToBeMarkedAsAvailable = vehicles[index].Id;
                     IDManagement.MarkVehicleIDAsAvailable(idToBeMarkedAsAvailable);
                     vehiclesToBeRemoved.Add(vehicles.ElementAt(index));
                 }
@@ -645,12 +645,12 @@ namespace CarRentalApplication
         {
             if (makeRentalIDAvailable)
             {
-                IDManagement.MarkRentalIDAsAvailable(rental.ID);
+                IDManagement.MarkRentalIDAsAvailable(rental.Id);
             }
 
             if (makeVehicleIDAvailable)
             {
-                IDManagement.MarkVehicleIDAsAvailable(rental.Vehicle.ID);
+                IDManagement.MarkVehicleIDAsAvailable(rental.Vehicle.Id);
             }
 
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
@@ -679,7 +679,7 @@ namespace CarRentalApplication
             }
 
             Rental lastRental = rentals[rentals.Count - 1];
-            IDManagement.MarkRentalIDAsAvailable(lastRental.ID);
+            IDManagement.MarkRentalIDAsAvailable(lastRental.Id);
 
             lastRental.Selected = false;
             RemoveRental(lastRental);
@@ -706,7 +706,7 @@ namespace CarRentalApplication
                 List<Rental> rentalsToBeRemoved = new List<Rental>();
                 foreach (int index in indexesOfSelectedRentals)
                 {
-                    short idToBeMarkedAsAvailable = rentals[index].ID;
+                    short idToBeMarkedAsAvailable = rentals[index].Id;
                     IDManagement.MarkRentalIDAsAvailable(idToBeMarkedAsAvailable);
                     rentalsToBeRemoved.Add(rentals.ElementAt(index));
                 }
