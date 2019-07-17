@@ -31,9 +31,7 @@ namespace CarRentalApplication.EntityViews
             InitializeComponent();
             PrepareComponents();
 
-            Id = IDManagement.LowestAvailableVehicleID;
-            IDManagement.MarkVehicleIDAsUnavailable(Id);
-
+            Id = vehicle.Id;
             VehicleName = vehicle.Name;
             labelVehicleTypeValue.Text = vehicle.Type;
             FuelPercentage = vehicle.FuelPercentage;
@@ -53,7 +51,7 @@ namespace CarRentalApplication.EntityViews
             VehicleName = vehicleName;
             FuelPercentage = fuelPercent;
             DamagePercentage = damagePercent;
-            
+
             UpdateLanguage(Program.Language);
         }
 

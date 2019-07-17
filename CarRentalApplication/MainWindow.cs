@@ -170,7 +170,11 @@ namespace CarRentalApplication
             var result = formAddVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                vehicles.Add(formAddVehicle.Vehicle);
+                var vehicle = formAddVehicle.Vehicle;
+                vehicles.Add(vehicle);
+
+                vehicle.Id = IDManagement.LowestAvailableVehicleID;
+                IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
 
                 var vehicleView = new VehicleView(formAddVehicle.Vehicle);
                 AddVehicleView(vehicleView);
