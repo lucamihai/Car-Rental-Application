@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using CarRentalApplication.Classes;
+using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.EntityViews
@@ -21,6 +22,20 @@ namespace CarRentalApplication.EntityViews
         {
             InitializeComponent();
             PrepareComponents();
+        }
+
+        public VehicleView(Vehicle vehicle)
+        {
+            InitializeComponent();
+            PrepareComponents();
+
+            Id = IDManagement.LowestAvailableVehicleID;
+            IDManagement.MarkVehicleIDAsUnavailable(Id);
+
+            VehicleName = vehicle.Name;
+            labelVehicleTypeValue.Text = vehicle.Type;
+            FuelPercentage = vehicle.FuelPercentage;
+            DamagePercentage = vehicle.DamagePercentage;
         }
 
         public VehicleView(string vehicleName, short fuelPercent = 0, short damagePercent = 0)

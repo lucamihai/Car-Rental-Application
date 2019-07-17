@@ -46,10 +46,12 @@
   <ItemGroup>
     <Compile Include="Entities\Minivan.cs" />
     <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\Rental.cs" />
     <Compile Include="Entities\Sedan.cs" />
     <Compile Include="Entities\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\PersonValidator.cs" />
+    <Compile Include="Validators\RentalValidator.cs" />
     <Compile Include="Validators\VehicleValidator.cs" />
   </ItemGroup>
   <ItemGroup>

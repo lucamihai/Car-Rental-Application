@@ -40,6 +40,9 @@ namespace CarRentalApplication
 
             returnedVehiclesLogManager = new Logger("log.txt");
 
+            vehicles = new List<Vehicle>();
+            rentals = new List<Rental>();
+
             vehicleViews = new List<VehicleView>();
             rentalViews = new List<RentalView>();
 
@@ -158,13 +161,15 @@ namespace CarRentalApplication
 
         private void AddVehicleForm(object sender, EventArgs e)
         {
-            FormAddVehicle formAddVehicle = new FormAddVehicle();
+            var formAddVehicle = new FormAddVehicle();
 
             var result = formAddVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                VehicleView vehicleToBeAdded = formAddVehicle.Vehicle;
-                AddVehicle(vehicleToBeAdded);
+                vehicles.Add(formAddVehicle.Vehicle);
+
+                var vehicleView = new VehicleView(formAddVehicle.Vehicle);
+                AddVehicle(vehicleView);
             }
         }
 
