@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
+using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.EntityViews;
 using CarRentalApplication.Forms;
 using CarRentalApplication.Logging;
@@ -15,8 +16,11 @@ namespace CarRentalApplication
 {
     public partial class MainWindow : Form
     {
-        private List <RentalView> rentals;
-        private List <VehicleView> vehicles;
+        private List<Vehicle> vehicles;
+        private List<Rental> rentals;
+
+        private List<RentalView> rentalViews;
+        private List<VehicleView> vehicleViews;
 
         private readonly VehicleSorter vehicleSorter;
         private readonly RentalSorter rentalSorter;
@@ -36,8 +40,8 @@ namespace CarRentalApplication
 
             returnedVehiclesLogManager = new Logger("log.txt");
 
-            vehicles = new List<VehicleView>();
-            rentals = new List<RentalView>();
+            vehicleViews = new List<VehicleView>();
+            rentalViews = new List<RentalView>();
 
             vehicleSorter = new VehicleSorter();
             rentalSorter  = new RentalSorter();
@@ -126,18 +130,18 @@ namespace CarRentalApplication
 
         public int GetVehicleIndex(VehicleView vehicle)
         {
-            return vehicles.IndexOf(vehicle);
+            return vehicleViews.IndexOf(vehicle);
         }
 
         public int GetRentalIndex(RentalView rental)
         {
-            return rentals.IndexOf(rental);
+            return rentalViews.IndexOf(rental);
         }
 
         public void AddVehicle(VehicleView vehicle)
         {
             availableCarsElementsPanel.VerticalScroll.Value = 0;
-            vehicles.Add(vehicle);
+            vehicleViews.Add(vehicle);
             IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
             PopulateVehiclesPanel();
         }
@@ -145,7 +149,7 @@ namespace CarRentalApplication
         private void AddRental(RentalView rental)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            rentals.Add(rental);
+            rentalViews.Add(rental);
             IDManagement.MarkRentalIDAsUnavailable(rental.Id);
             PopulateRentalsPanel();
         }
@@ -247,12 +251,12 @@ namespace CarRentalApplication
                 return;
             }
 
-            vehicles = sqlManager.GetVehiclesFromDatabase();
-            rentals = sqlManager.GetRentalsFromDatabase(vehicles);
+            vehicleViews = sqlManager.GetVehiclesFromDatabase();
+            rentalViews = sqlManager.GetRentalsFromDatabase(vehicleViews);
 
-            foreach (RentalView rental in rentals)
+            foreach (RentalView rental in rentalViews)
             {
-                vehicles.Remove(rental.Vehicle);
+                vehicleViews.Remove(rental.Vehicle);
             }
         }
 
@@ -271,10 +275,10 @@ namespace CarRentalApplication
             sqlManager.ClearVehiclesFromDatabase();
             sqlManager.ClearRentalsFromDatabase();
 
-            foreach (VehicleView vehicle in vehicles)
+            foreach (VehicleView vehicle in vehicleViews)
                 sqlManager.SaveVehicleToDatabase(vehicle);
 
-            foreach (RentalView rental in rentals)
+            foreach (RentalView rental in rentalViews)
                 sqlManager.SaveRentalToDatabase(rental);
         }
 
@@ -294,8 +298,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            XmlManager.WriteVehiclesToXmlFile(vehicles, "vehicles.xml");
-            XmlManager.WriteRentalsToXmlFile(rentals, "rentals.xml");
+            XmlManager.WriteVehiclesToXmlFile(vehicleViews, "vehicles.xml");
+            XmlManager.WriteRentalsToXmlFile(rentalViews, "rentals.xml");
         }
 
         private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -310,8 +314,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            vehicles.Clear();
-            rentals.Clear();
+            vehicleViews.Clear();
+            rentalViews.Clear();
 
             List<VehicleView> importedVehicles = XmlManager.ReadVehiclesFromXmlFile("vehicles.xml");
             List<RentalView> importedRentals = XmlManager.ReadRentalsFromXmlFile("rentals.xml");
@@ -319,15 +323,15 @@ namespace CarRentalApplication
             foreach (VehicleView vehicle in importedVehicles)
             {
                 if (vehicle.Name == "Sedan")
-                    vehicles.Add(new SedanView(vehicle));
+                    vehicleViews.Add(new SedanView(vehicle));
 
                 if (vehicle.Name == "Minivan")
-                    vehicles.Add(new MinivanView(vehicle));
+                    vehicleViews.Add(new MinivanView(vehicle));
             }
 
             foreach (RentalView rental in importedRentals)
             {
-                rentals.Add(new RentalView(rental));
+                rentalViews.Add(new RentalView(rental));
             }
 
             PopulateVehiclesPanel();
@@ -441,7 +445,7 @@ namespace CarRentalApplication
 
         private void UpdateLanguageForExistingVehicles(Language language)
         {
-            foreach (var vehicle in vehicles)
+            foreach (var vehicle in vehicleViews)
             {
                 vehicle.UpdateLanguage(language);
             }
@@ -449,7 +453,7 @@ namespace CarRentalApplication
 
         private void UpdateLanguageForExistingRentals(Language language)
         {
-            foreach (var rental in rentals)
+            foreach (var rental in rentalViews)
             {
                 rental.UpdateLanguage(language);
             }
@@ -490,7 +494,7 @@ namespace CarRentalApplication
 
         private void SelectAllVehicles(object sender, EventArgs e)
         {
-            if (vehicles.Count < 1)
+            if (vehicleViews.Count < 1)
             {
                 errorLabel.Text = ErrorMessages.NoVehiclesToSelect;
                 timerClearErrors.Start();
@@ -498,7 +502,7 @@ namespace CarRentalApplication
             }
 
             bool areAllSelected = true;
-            foreach (VehicleView vehicle in vehicles)
+            foreach (VehicleView vehicle in vehicleViews)
             {
                 if (!vehicle.Selected)
                 {
@@ -510,7 +514,7 @@ namespace CarRentalApplication
             // If all vehicles are already selected, deselect them
             if (areAllSelected)
             {
-                foreach (VehicleView vehicle in vehicles)
+                foreach (VehicleView vehicle in vehicleViews)
                     vehicle.Selected = false;
             }
 
@@ -519,7 +523,7 @@ namespace CarRentalApplication
 
         private void buttonSelectAllRented_Click(object sender, EventArgs e)
         {
-            if (rentals.Count < 1)
+            if (rentalViews.Count < 1)
             {
                 errorLabel.Text = ErrorMessages.NoRentalsToSelect;
                 timerClearErrors.Start();
@@ -527,7 +531,7 @@ namespace CarRentalApplication
             }
 
             bool areAllSelected = true;
-            foreach (RentalView vehicle in rentals)
+            foreach (RentalView vehicle in rentalViews)
             {
                 if (!vehicle.Selected)
                 {
@@ -539,7 +543,7 @@ namespace CarRentalApplication
             // If all rentals are already selected, deselect them
             if (areAllSelected)
             {
-                foreach (RentalView rental in rentals)
+                foreach (RentalView rental in rentalViews)
                     rental.Selected = false;
             }
 
@@ -561,13 +565,13 @@ namespace CarRentalApplication
             }
 
             availableCarsElementsPanel.VerticalScroll.Value = 0;
-            vehicles.Remove(vehicle);
+            vehicleViews.Remove(vehicle);
             PopulateVehiclesPanel();
         }
 
         private void RemoveLastVehicle(object sender, EventArgs e)
         {
-            if (vehicles.Count < 1)
+            if (vehicleViews.Count < 1)
             {
                 errorLabel.Text = ErrorMessages.NoVehiclesToRemove;
                 timerClearErrors.Stop();
@@ -585,7 +589,7 @@ namespace CarRentalApplication
                 return;
             }
 
-            VehicleView lastVehicle = vehicles[vehicles.Count - 1];
+            VehicleView lastVehicle = vehicleViews[vehicleViews.Count - 1];
             IDManagement.MarkVehicleIDAsAvailable(lastVehicle.Id);
 
             lastVehicle.Selected = false;
@@ -613,15 +617,15 @@ namespace CarRentalApplication
                 List<VehicleView> vehiclesToBeRemoved = new List<VehicleView>();
                 foreach (int index in indexesOfSelectedVehicles)
                 {
-                    short idToBeMarkedAsAvailable = vehicles[index].Id;
+                    short idToBeMarkedAsAvailable = vehicleViews[index].Id;
                     IDManagement.MarkVehicleIDAsAvailable(idToBeMarkedAsAvailable);
-                    vehiclesToBeRemoved.Add(vehicles.ElementAt(index));
+                    vehiclesToBeRemoved.Add(vehicleViews.ElementAt(index));
                 }
 
                 // Remove the stored vehicles from the vehicles List
                 foreach (VehicleView vehicle in vehiclesToBeRemoved)
                 {
-                    vehicles.Remove(vehicle);
+                    vehicleViews.Remove(vehicle);
                 }
 
                 PopulateVehiclesPanel();
@@ -654,13 +658,13 @@ namespace CarRentalApplication
             }
 
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            rentals.Remove(rental);
+            rentalViews.Remove(rental);
             PopulateRentalsPanel();
         }
 
         private void RemoveLastRental(object sender, EventArgs e)
         {
-            if (rentals.Count < 1)
+            if (rentalViews.Count < 1)
             {
                 errorLabel.Text = ErrorMessages.NoRentalsToRemove;
                 timerClearErrors.Stop();
@@ -678,7 +682,7 @@ namespace CarRentalApplication
                 return;
             }
 
-            RentalView lastRental = rentals[rentals.Count - 1];
+            RentalView lastRental = rentalViews[rentalViews.Count - 1];
             IDManagement.MarkRentalIDAsAvailable(lastRental.Id);
 
             lastRental.Selected = false;
@@ -706,15 +710,15 @@ namespace CarRentalApplication
                 List<RentalView> rentalsToBeRemoved = new List<RentalView>();
                 foreach (int index in indexesOfSelectedRentals)
                 {
-                    short idToBeMarkedAsAvailable = rentals[index].Id;
+                    short idToBeMarkedAsAvailable = rentalViews[index].Id;
                     IDManagement.MarkRentalIDAsAvailable(idToBeMarkedAsAvailable);
-                    rentalsToBeRemoved.Add(rentals.ElementAt(index));
+                    rentalsToBeRemoved.Add(rentalViews.ElementAt(index));
                 }
 
                 // Remove the stored vehicles from the vehicles List
                 foreach (RentalView rental in rentalsToBeRemoved)
                 {
-                    rentals.Remove(rental);
+                    rentalViews.Remove(rental);
                 }
 
                 PopulateRentalsPanel();
@@ -740,7 +744,7 @@ namespace CarRentalApplication
             availableCarsElementsPanel.Controls.Clear();
             short counter = 0;
 
-            foreach (VehicleView vehicle in vehicles)
+            foreach (VehicleView vehicle in vehicleViews)
             {
                 vehicle.LinkToMainWindow(this);
                 availableCarsElementsPanel.Controls.Add(vehicle);
@@ -753,7 +757,7 @@ namespace CarRentalApplication
             rentedCarsElementsPanel.Controls.Clear();
             short counter = 0;
 
-            foreach (RentalView rental in rentals)
+            foreach (RentalView rental in rentalViews)
             {
                 rental.LinkToMainWindow(this);
                 rentedCarsElementsPanel.Controls.Add(rental);
@@ -773,27 +777,27 @@ namespace CarRentalApplication
 
             if (sortSelection == Constants.SORT_BY_ID)
             {
-                vehicles = vehicleSorter.SortListByID(vehicles);
+                vehicleViews = vehicleSorter.SortListByID(vehicleViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-                vehicles = vehicleSorter.SortListByName(vehicles);
+                vehicleViews = vehicleSorter.SortListByName(vehicleViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                vehicles = vehicleSorter.SortListByType(vehicles);
+                vehicleViews = vehicleSorter.SortListByType(vehicleViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
             {
-                vehicles = vehicleSorter.SortListByFuelPercent(vehicles);
+                vehicleViews = vehicleSorter.SortListByFuelPercent(vehicleViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
             {
-                vehicles = vehicleSorter.SortListByDamagePercent(vehicles);
+                vehicleViews = vehicleSorter.SortListByDamagePercent(vehicleViews);
             }
 
             PopulateVehiclesPanel();
@@ -806,47 +810,47 @@ namespace CarRentalApplication
 
             if (sortSelection == Constants.SORT_BY_ID)
             {
-                rentals = rentalSorter.SortListByID(rentals);
+                rentalViews = rentalSorter.SortListByID(rentalViews);
             } 
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
-                rentals = rentalSorter.SortListByVehicleID(rentals);
+                rentalViews = rentalSorter.SortListByVehicleID(rentalViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-                rentals = rentalSorter.SortListByVehicleName(rentals);
+                rentalViews = rentalSorter.SortListByVehicleName(rentalViews);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                rentals = rentalSorter.SortListByVehicleType(rentals);
+                rentalViews = rentalSorter.SortListByVehicleType(rentalViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
             {
-                rentals = rentalSorter.SortListByVehicleFuelPercentage(rentals);
+                rentalViews = rentalSorter.SortListByVehicleFuelPercentage(rentalViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
             {
-                rentals = rentalSorter.SortListByVehicleDamagePercentage(rentals);
+                rentalViews = rentalSorter.SortListByVehicleDamagePercentage(rentalViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_NAME)
             {
-                rentals = rentalSorter.SortListByOwnerName(rentals);
+                rentalViews = rentalSorter.SortListByOwnerName(rentalViews);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER)
             {
-                rentals = rentalSorter.SortListByOwnerPhoneNumber(rentals);
+                rentalViews = rentalSorter.SortListByOwnerPhoneNumber(rentalViews);
             }
             
             if (sortSelection == Constants.SORT_BY_VEHICLE_RETURN_DATE)
             {
-                rentals = rentalSorter.SortListByReturnDate(rentals);
+                rentalViews = rentalSorter.SortListByReturnDate(rentalViews);
             }
             
             PopulateRentalsPanel();
