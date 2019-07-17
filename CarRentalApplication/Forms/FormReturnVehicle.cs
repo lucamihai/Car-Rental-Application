@@ -37,18 +37,19 @@ namespace CarRentalApplication.Forms
                 var fuelPercentageAtReturn = (short)fuelPercentageNumericUpDown.Value;
                 var damagePercentageAtReturn = (short)damagePercentageNumericUpDown.Value;
 
-                ReturnedVehicle = rental.Vehicle;
-                ReturnedVehicle.InputsEnabled = true;
+                //TODO
+                //ReturnedVehicle = rental.RentedVehicle;
+                //ReturnedVehicle.InputsEnabled = true;
 
-                ReturnedVehicle.FuelPercentage = fuelPercentageAtReturn;
-                ReturnedVehicle.DamagePercentage = damagePercentageAtReturn;
+                //ReturnedVehicle.FuelPercentage = fuelPercentageAtReturn;
+                //ReturnedVehicle.DamagePercentage = damagePercentageAtReturn;
 
-                OrderDetails = string.Empty;
-                OrderDetails += ReturnedVehicle.Details;
-                OrderDetails += ". Was returned with ";
-                OrderDetails += ReturnedVehicle.FuelPercentage + "% fuel and ";
-                OrderDetails += ReturnedVehicle.DamagePercentage + "% damage, on ";
-                OrderDetails += returnDateDateTimePicker.Value.ToShortDateString();
+                //OrderDetails = string.Empty;
+                //OrderDetails += ReturnedVehicle.Details;
+                //OrderDetails += ". Was returned with ";
+                //OrderDetails += ReturnedVehicle.FuelPercentage + "% fuel and ";
+                //OrderDetails += ReturnedVehicle.DamagePercentage + "% damage, on ";
+                //OrderDetails += returnDateDateTimePicker.Value.ToShortDateString();
                 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

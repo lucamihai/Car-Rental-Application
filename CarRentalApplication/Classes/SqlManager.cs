@@ -136,7 +136,8 @@ namespace CarRentalApplication.Classes
 
         public void SaveRentalToDatabase(RentalView rental)
         {
-            SaveVehicleToDatabase(rental.Vehicle);
+            //TODO
+            //SaveVehicleToDatabase(rental.RentedVehicle);
 
             string query = "INSERT INTO rentals (id, owner_name, owner_phonenumber, return_date, vehicle_id)";
             query += " VALUES (@id, @owner_name, @owner_phone_number, @return_date, @vehicle_id)";
@@ -148,7 +149,7 @@ namespace CarRentalApplication.Classes
             myCommand.Parameters.AddWithValue("@owner_name", rental.Owner.Name);
             myCommand.Parameters.AddWithValue("@owner_phone_number", rental.Owner.PhoneNumber);
             myCommand.Parameters.AddWithValue("@return_date", rental.ReturnDate.ToShortDateString());
-            myCommand.Parameters.AddWithValue("@vehicle_id", rental.Vehicle.Id);
+            myCommand.Parameters.AddWithValue("@vehicle_id", rental.RentedVehicle.Id);
             myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
@@ -229,8 +230,9 @@ namespace CarRentalApplication.Classes
                     short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
                     VehicleView vehicle = new VehicleView(GetVehicleWithID(importedVehicles, vehicleID));
 
-                    RentalView importedRental = new RentalView(vehicle, owner, returnDate);
-                    importedRentals.Add(importedRental);
+                    //TODO
+                    //RentalView importedRental = new RentalView(vehicle, owner, returnDate);
+                    //importedRentals.Add(importedRental);
                 }
 
                 sqlDataReader.Close();

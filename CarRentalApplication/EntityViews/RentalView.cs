@@ -10,72 +10,33 @@ namespace CarRentalApplication.EntityViews
     public partial class RentalView : UserControl, IXmlSerializable
     {
         private MainWindow mainWindow;
-        private VehicleView vehicle;
+        private VehicleView rentedVehicleView;
         private Person owner;
         private DateTime returnDate;
+
+        public Vehicle RentedVehicle { get; private set; }
 
         public RentalView()
         {
             InitializeComponent();
         }
 
-        public RentalView(VehicleView vehicle, Person owner, DateTime returnDate)
+        public RentalView(Rental rental)
         {
             InitializeComponent();
 
             Id = IDManagement.LowestAvailableRentalID;
             IDManagement.MarkRentalIDAsUnavailable(Id);
 
-            Vehicle = vehicle;
-            Owner = owner;
-            ReturnDate = returnDate;
-
-            UpdateLanguage(Program.Language);
-        }
-
-        public RentalView(RentalView rental)
-        {
-            InitializeComponent();
-
-            Id = rental.Id;
-            IDManagement.MarkRentalIDAsUnavailable(Id);
-
-            Vehicle = rental.Vehicle;
+            RentedVehicle = rental.Vehicle;
             Owner = rental.Owner;
             ReturnDate = rental.ReturnDate;
 
-            UpdateLanguage(Program.Language);
+            rentedVehicleView = new VehicleView(RentedVehicle);
+            panelVehicle.Controls.Add(rentedVehicleView);
         }
-
 
         #region Properties
-
-        public VehicleView Vehicle
-        {
-            get => vehicle;
-            private set
-            {
-                var vehicleClone = value.Clone();
-                var type = vehicleClone.GetType().Name;
-
-                if (type == "Sedan")
-                {
-                    vehicle = (SedanView)vehicleClone;
-                }
-                
-                if (type == "Minivan")
-                {
-                    vehicle = (MinivanView)vehicleClone;
-                }
-
-                if (vehicle != null)
-                {
-                    vehicle.InputsEnabled = false;
-                    panelVehicle.Controls.Add(vehicle);
-                }
-                
-            }
-        }
 
         public string Details
         {
@@ -83,8 +44,8 @@ namespace CarRentalApplication.EntityViews
             {
                 var details = string.Empty;
                 details += "Sedan, id " + Id + ", ";
-                details += "has " + Vehicle.FuelPercentage + "% fuel, ";
-                details += "is " + Vehicle.DamagePercentage + " % damaged, ";
+                details += "has " + rentedVehicleView.FuelPercentage + "% fuel, ";
+                details += "is " + rentedVehicleView.DamagePercentage + " % damaged, ";
                 details += "owned by: " + Owner.Name + ", ";
                 details += "phone number: " + Owner.PhoneNumber + ", ";
                 details += "return date: " + ReturnDate.ToShortDateString();
@@ -165,7 +126,7 @@ namespace CarRentalApplication.EntityViews
             checkboxSelect.Text = language.Translate("Select");
             buttonReturn.Text = language.Translate("Return");
 
-            Vehicle.UpdateLanguage(language);
+            rentedVehicleView.UpdateLanguage(language);
         }
 
         private void Return(object sender, EventArgs e)
@@ -200,11 +161,11 @@ namespace CarRentalApplication.EntityViews
             xmlWriter.WriteElementString("ownerName", Owner.Name);
             xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber);
             xmlWriter.WriteElementString("returnDate", ReturnDate.ToShortDateString());
-            xmlWriter.WriteElementString("vehicleID", Vehicle.Id.ToString());
-            xmlWriter.WriteElementString("vehicleName", Vehicle.VehicleName);
-            xmlWriter.WriteElementString("vehicleType", Vehicle.GetType().Name);
-            xmlWriter.WriteElementString("vehicleFuelPercentage", Vehicle.FuelPercentage.ToString());
-            xmlWriter.WriteElementString("vehicleDamagePercentage", Vehicle.DamagePercentage.ToString());
+            xmlWriter.WriteElementString("vehicleID", rentedVehicleView.Id.ToString());
+            xmlWriter.WriteElementString("vehicleName", rentedVehicleView.VehicleName);
+            xmlWriter.WriteElementString("vehicleType", rentedVehicleView.GetType().Name);
+            xmlWriter.WriteElementString("vehicleFuelPercentage", rentedVehicleView.FuelPercentage.ToString());
+            xmlWriter.WriteElementString("vehicleDamagePercentage", rentedVehicleView.DamagePercentage.ToString());
         }
 
         public void ReadXml(System.Xml.XmlReader xmlReader)
@@ -232,12 +193,12 @@ namespace CarRentalApplication.EntityViews
 
                 if (vehicleType == "Sedan")
                 {
-                    Vehicle = new SedanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    rentedVehicleView = new SedanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                 }
 
                 if (vehicleType == "Minivan")
                 {
-                    Vehicle = new MinivanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    rentedVehicleView = new MinivanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                 }
 
                 xmlReader.ReadEndElement();

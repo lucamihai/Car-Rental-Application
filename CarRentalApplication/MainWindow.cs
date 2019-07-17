@@ -141,20 +141,24 @@ namespace CarRentalApplication
             return rentalViews.IndexOf(rental);
         }
 
-        public void AddVehicle(VehicleView vehicle)
+        private void AddVehicleView(VehicleView vehicle)
         {
             availableCarsElementsPanel.VerticalScroll.Value = 0;
+
             vehicleViews.Add(vehicle);
-            IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
             PopulateVehiclesPanel();
+
+            IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
         }
 
-        private void AddRental(RentalView rental)
+        private void AddRentalView(RentalView rental)
         {
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
+
             rentalViews.Add(rental);
-            IDManagement.MarkRentalIDAsUnavailable(rental.Id);
             PopulateRentalsPanel();
+
+            IDManagement.MarkRentalIDAsUnavailable(rental.Id);
         }
 
         #region Forms
@@ -169,19 +173,22 @@ namespace CarRentalApplication
                 vehicles.Add(formAddVehicle.Vehicle);
 
                 var vehicleView = new VehicleView(formAddVehicle.Vehicle);
-                AddVehicle(vehicleView);
+                AddVehicleView(vehicleView);
             }
         }
 
-        public void RentForm(VehicleView vehicle)
+        public void RentForm(Vehicle vehicle)
         {
-            FormRentVehicle formRentVehicle = new FormRentVehicle(vehicle);
+            var formRentVehicle = new FormRentVehicle(vehicle);
 
             var result = formRentVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                RentalView rental = formRentVehicle.Rental;
-                AddRental(rental);
+                rentals.Add(formRentVehicle.Rental);
+
+                var rentalView = new RentalView(formRentVehicle.Rental);
+                AddRentalView(rentalView);
+
                 RemoveVehicle(vehicle, false);
             }
         }
@@ -198,7 +205,7 @@ namespace CarRentalApplication
 
                 returnedVehiclesLogManager.WriteToLog(orderDetails);
 
-                AddVehicle(returnedVehicle);
+                AddVehicleView(returnedVehicle);
                 RemoveRental(rental, true, false);
             }
         }
@@ -261,7 +268,7 @@ namespace CarRentalApplication
 
             foreach (RentalView rental in rentalViews)
             {
-                vehicleViews.Remove(rental.Vehicle);
+                //vehicleViews.Remove(rental.Vehicleee);
             }
         }
 
@@ -336,7 +343,7 @@ namespace CarRentalApplication
 
             foreach (RentalView rental in importedRentals)
             {
-                rentalViews.Add(new RentalView(rental));
+                rentalViews.Add(rental);
             }
 
             PopulateVehiclesPanel();
@@ -562,7 +569,8 @@ namespace CarRentalApplication
 
         #region Vehicle removal
 
-        void RemoveVehicle(VehicleView vehicle, bool makeIDAvailable = true)
+        //TODO: Remove method
+        void RemoveVehicleView(VehicleView vehicle, bool makeIDAvailable = true)
         {
             if (makeIDAvailable)
             {
@@ -572,6 +580,25 @@ namespace CarRentalApplication
             availableCarsElementsPanel.VerticalScroll.Value = 0;
             vehicleViews.Remove(vehicle);
             PopulateVehiclesPanel();
+        }
+
+        void RemoveVehicle(Vehicle vehicle, bool makeIDAvailable = true)
+        {
+            if (makeIDAvailable)
+            {
+                IDManagement.MarkVehicleIDAsAvailable(vehicle.Id);
+            }
+
+            availableCarsElementsPanel.VerticalScroll.Value = 0;
+            vehicles.Remove(vehicle);
+
+            var vehicleView = vehicleViews.FirstOrDefault(x => x.Vehicle == vehicle);
+
+            if (vehicleView != null)
+            {
+                vehicleViews.Remove(vehicleView);
+                PopulateVehiclesPanel();
+            }
         }
 
         private void RemoveLastVehicle(object sender, EventArgs e)
@@ -598,7 +625,7 @@ namespace CarRentalApplication
             IDManagement.MarkVehicleIDAsAvailable(lastVehicle.Id);
 
             lastVehicle.Selected = false;
-            RemoveVehicle(lastVehicle);
+            RemoveVehicleView(lastVehicle);
 
             errorLabel.Text = "";
         }
@@ -659,7 +686,7 @@ namespace CarRentalApplication
 
             if (makeVehicleIDAvailable)
             {
-                IDManagement.MarkVehicleIDAsAvailable(rental.Vehicle.Id);
+                IDManagement.MarkVehicleIDAsAvailable(rental.RentedVehicle.Id);
             }
 
             rentedCarsElementsPanel.VerticalScroll.Value = 0;
@@ -815,12 +842,12 @@ namespace CarRentalApplication
 
             if (sortSelection == Constants.SORT_BY_ID)
             {
-                rentalViews = rentalSorter.SortListByID(rentalViews);
+                rentalViews = rentalSorter.SortListById(rentalViews);
             } 
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
-                rentalViews = rentalSorter.SortListByVehicleID(rentalViews);
+                rentalViews = rentalSorter.SortListByVehicleId(rentalViews);
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)

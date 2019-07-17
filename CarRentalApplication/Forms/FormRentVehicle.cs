@@ -2,25 +2,24 @@
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
-using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Forms
 {
     public partial class FormRentVehicle : Form
     {
-        public VehicleView Vehicle { get; set; }
-        public RentalView Rental { get; set; }
+        public Vehicle VehicleToBeRented { get; set; }
+        public Rental Rental { get; set; }
 
         public FormRentVehicle()
         {
             InitializeComponent();
         }
 
-        public FormRentVehicle(VehicleView vehicle)
+        public FormRentVehicle(Vehicle vehicle)
         {
             InitializeComponent();
 
-            Vehicle = vehicle;
+            VehicleToBeRented = vehicle;
 
             labelOwnerName.Text = Program.Language.Translate("Owner name");
             labelOwnerPhoneNumber.Text = Program.Language.Translate("Owner phone number");
@@ -32,13 +31,13 @@ namespace CarRentalApplication.Forms
 
         private void Rent(object sender, EventArgs e)
         {
-            if (textBoxOwnerName.Text == "")
+            if (string.IsNullOrEmpty(textBoxOwnerName.Text))
             {
                 errorLabel.Text = ErrorMessages.OwnerNameNotProvided;
                 return;
             }
 
-            if (textBoxOwnerPhoneNumber.Text == "")
+            if (string.IsNullOrEmpty(textBoxOwnerPhoneNumber.Text))
             {
                 errorLabel.Text = ErrorMessages.OwnerPhoneNotProvided;
                 return;
@@ -48,7 +47,12 @@ namespace CarRentalApplication.Forms
             var ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
             var owner = new Person(ownerName, ownerPhoneNumber);
 
-            Rental = new RentalView(Vehicle, owner, dateTimePickerReturnDate.Value);
+            Rental = new Rental
+            {
+                Vehicle = VehicleToBeRented,
+                Owner = owner,
+                ReturnDate = dateTimePickerReturnDate.Value
+            };
 
             this.DialogResult = Rental != null ? DialogResult.OK : DialogResult.Cancel;
             this.Close();

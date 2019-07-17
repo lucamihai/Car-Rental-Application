@@ -18,6 +18,8 @@ namespace CarRentalApplication.EntityViews
 
         private MainWindow mainWindow;
 
+        public Vehicle Vehicle { get; private set; }
+
         public VehicleView()
         {
             InitializeComponent();
@@ -36,6 +38,8 @@ namespace CarRentalApplication.EntityViews
             labelVehicleTypeValue.Text = vehicle.Type;
             FuelPercentage = vehicle.FuelPercentage;
             DamagePercentage = vehicle.DamagePercentage;
+
+            Vehicle = vehicle;
         }
 
         public VehicleView(string vehicleName, short fuelPercent = 0, short damagePercent = 0)
@@ -312,7 +316,7 @@ namespace CarRentalApplication.EntityViews
 
         private void Rent(object sender, EventArgs e)
         {
-            mainWindow.RentForm(this);
+            mainWindow.RentForm(this.Vehicle);
         }
 
         private void Select(object sender, EventArgs e)
