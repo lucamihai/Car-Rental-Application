@@ -15,6 +15,7 @@ namespace CarRentalApplication.EntityViews
         private DateTime returnDate;
 
         public Vehicle RentedVehicle { get; private set; }
+        public Rental Rental { get; private set; }
 
         public RentalView()
         {
@@ -25,14 +26,18 @@ namespace CarRentalApplication.EntityViews
         {
             InitializeComponent();
 
+
             Id = IDManagement.LowestAvailableRentalID;
             IDManagement.MarkRentalIDAsUnavailable(Id);
+
+            Rental = rental;
 
             RentedVehicle = rental.Vehicle;
             Owner = rental.Owner;
             ReturnDate = rental.ReturnDate;
 
             rentedVehicleView = new VehicleView(RentedVehicle);
+            rentedVehicleView.InputsEnabled = false;
             panelVehicle.Controls.Add(rentedVehicleView);
         }
 
@@ -131,7 +136,7 @@ namespace CarRentalApplication.EntityViews
 
         private void Return(object sender, EventArgs e)
         {
-            mainWindow.ReturnForm(this);
+            mainWindow.ReturnForm(this.Rental);
         }
 
         private void Select(object sender, EventArgs e)

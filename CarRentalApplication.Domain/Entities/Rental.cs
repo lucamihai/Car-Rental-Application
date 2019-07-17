@@ -10,7 +10,7 @@ namespace CarRentalApplication.Domain.Entities
     {
         private static readonly RentalValidator RentalValidator = new RentalValidator();
 
-        public int Id { get; set; }
+        public short Id { get; set; }
         public Vehicle Vehicle { get; set; }
         public Person Owner { get; set; }
         public DateTime ReturnDate { get; set; }

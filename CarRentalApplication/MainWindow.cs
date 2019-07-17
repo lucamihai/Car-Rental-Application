@@ -193,19 +193,22 @@ namespace CarRentalApplication
             }
         }
 
-        public void ReturnForm(RentalView rental)
+        public void ReturnForm(Rental rental)
         {
-            FormReturnVehicle formReturnVehicle = new FormReturnVehicle(rental);
+            var formReturnVehicle = new FormReturnVehicle(rental);
 
             var result = formReturnVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                VehicleView returnedVehicle = formReturnVehicle.ReturnedVehicle;
-                string orderDetails = formReturnVehicle.OrderDetails;
+                var returnedVehicle = formReturnVehicle.ReturnedVehicle;
+                var orderDetails = formReturnVehicle.OrderDetails;
 
                 returnedVehiclesLogManager.WriteToLog(orderDetails);
 
-                AddVehicleView(returnedVehicle);
+                vehicles.Add(returnedVehicle);
+
+                var vehicleView = new VehicleView(returnedVehicle);
+                AddVehicleView(vehicleView);
                 RemoveRental(rental, true, false);
             }
         }
@@ -673,7 +676,25 @@ namespace CarRentalApplication
 
         #region Rental removal
 
-        public void RemoveRental(RentalView rental, bool makeRentalIDAvailable = true, bool makeVehicleIDAvailable = true)
+        //TODO Remove this method
+        public void RemoveRentalView(RentalView rentalView, bool makeRentalIDAvailable = true, bool makeVehicleIDAvailable = true)
+        {
+            if (makeRentalIDAvailable)
+            {
+                IDManagement.MarkRentalIDAsAvailable(rentalView.Id);
+            }
+
+            if (makeVehicleIDAvailable)
+            {
+                IDManagement.MarkVehicleIDAsAvailable(rentalView.RentedVehicle.Id);
+            }
+
+            rentedCarsElementsPanel.VerticalScroll.Value = 0;
+            rentalViews.Remove(rentalView);
+            PopulateRentalsPanel();
+        }
+
+        public void RemoveRental(Rental rental, bool makeRentalIDAvailable = true, bool makeVehicleIDAvailable = true)
         {
             if (makeRentalIDAvailable)
             {
@@ -682,12 +703,19 @@ namespace CarRentalApplication
 
             if (makeVehicleIDAvailable)
             {
-                IDManagement.MarkVehicleIDAsAvailable(rental.RentedVehicle.Id);
+                IDManagement.MarkVehicleIDAsAvailable(rental.Vehicle.Id);
             }
 
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-            rentalViews.Remove(rental);
-            PopulateRentalsPanel();
+            rentals.Remove(rental);
+
+            var rentalView = rentalViews.FirstOrDefault(x => x.Rental == rental);
+
+            if (rentalView != null)
+            {
+                rentedCarsElementsPanel.VerticalScroll.Value = 0;
+                rentalViews.Remove(rentalView);
+                PopulateRentalsPanel();
+            }
         }
 
         private void RemoveLastRental(object sender, EventArgs e)
@@ -714,7 +742,7 @@ namespace CarRentalApplication
             IDManagement.MarkRentalIDAsAvailable(lastRental.Id);
 
             lastRental.Selected = false;
-            RemoveRental(lastRental);
+            RemoveRentalView(lastRental);
 
             errorLabel.Text = "";
         }

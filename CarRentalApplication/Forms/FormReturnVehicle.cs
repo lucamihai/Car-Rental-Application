@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
-using CarRentalApplication.EntityViews;
+using CarRentalApplication.Domain.Entities;
 
 namespace CarRentalApplication.Forms
 {
     public partial class FormReturnVehicle : Form
     {
-        private readonly RentalView rental;
+        private readonly Rental rental;
 
         public string OrderDetails { get; set; }
-        public VehicleView ReturnedVehicle { get; set; }
+        public Vehicle ReturnedVehicle { get; set; }
 
         public FormReturnVehicle()
         {
             InitializeComponent();
         }
 
-        public FormReturnVehicle(RentalView rental)
+        public FormReturnVehicle(Rental rental)
         {
             InitializeComponent();
             this.rental = rental;
@@ -37,20 +37,19 @@ namespace CarRentalApplication.Forms
                 var fuelPercentageAtReturn = (short)fuelPercentageNumericUpDown.Value;
                 var damagePercentageAtReturn = (short)damagePercentageNumericUpDown.Value;
 
+                ReturnedVehicle = rental.Vehicle;
+
+                ReturnedVehicle.FuelPercentage = fuelPercentageAtReturn;
+                ReturnedVehicle.DamagePercentage = damagePercentageAtReturn;
+
+                OrderDetails = string.Empty;
                 //TODO
-                //ReturnedVehicle = rental.RentedVehicle;
-                //ReturnedVehicle.InputsEnabled = true;
-
-                //ReturnedVehicle.FuelPercentage = fuelPercentageAtReturn;
-                //ReturnedVehicle.DamagePercentage = damagePercentageAtReturn;
-
-                //OrderDetails = string.Empty;
                 //OrderDetails += ReturnedVehicle.Details;
-                //OrderDetails += ". Was returned with ";
-                //OrderDetails += ReturnedVehicle.FuelPercentage + "% fuel and ";
-                //OrderDetails += ReturnedVehicle.DamagePercentage + "% damage, on ";
-                //OrderDetails += returnDateDateTimePicker.Value.ToShortDateString();
-                
+                OrderDetails += ". Was returned with ";
+                OrderDetails += ReturnedVehicle.FuelPercentage + "% fuel and ";
+                OrderDetails += ReturnedVehicle.DamagePercentage + "% damage, on ";
+                OrderDetails += returnDateDateTimePicker.Value.ToShortDateString();
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
