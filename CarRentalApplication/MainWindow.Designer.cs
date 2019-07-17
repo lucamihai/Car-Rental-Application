@@ -49,7 +49,7 @@ namespace CarRentalApplication
             this.labelRentals = new System.Windows.Forms.Label();
             this.buttonSortRentedVehicles = new System.Windows.Forms.Button();
             this.buttonRemoveLastRentedCar = new System.Windows.Forms.Button();
-            this.rentedCarsElementsPanel = new System.Windows.Forms.Panel();
+            this.rentalsPanel = new System.Windows.Forms.Panel();
             this.labelProgramDate = new System.Windows.Forms.Label();
             this.timerProgramDateUpdater = new System.Windows.Forms.Timer(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
@@ -172,7 +172,7 @@ namespace CarRentalApplication
             this.RentedCarsPanel.Controls.Add(this.labelRentals);
             this.RentedCarsPanel.Controls.Add(this.buttonSortRentedVehicles);
             this.RentedCarsPanel.Controls.Add(this.buttonRemoveLastRentedCar);
-            this.RentedCarsPanel.Controls.Add(this.rentedCarsElementsPanel);
+            this.RentedCarsPanel.Controls.Add(this.rentalsPanel);
             this.RentedCarsPanel.Location = new System.Drawing.Point(627, 65);
             this.RentedCarsPanel.Name = "RentedCarsPanel";
             this.RentedCarsPanel.Size = new System.Drawing.Size(725, 650);
@@ -237,14 +237,14 @@ namespace CarRentalApplication
             this.buttonRemoveLastRentedCar.UseVisualStyleBackColor = true;
             this.buttonRemoveLastRentedCar.Click += new System.EventHandler(this.RemoveLastRental);
             // 
-            // rentedCarsElementsPanel
+            // rentalsPanel
             // 
-            this.rentedCarsElementsPanel.AutoScroll = true;
-            this.rentedCarsElementsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.rentedCarsElementsPanel.Location = new System.Drawing.Point(0, 97);
-            this.rentedCarsElementsPanel.Name = "rentedCarsElementsPanel";
-            this.rentedCarsElementsPanel.Size = new System.Drawing.Size(722, 501);
-            this.rentedCarsElementsPanel.TabIndex = 1;
+            this.rentalsPanel.AutoScroll = true;
+            this.rentalsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.rentalsPanel.Location = new System.Drawing.Point(0, 97);
+            this.rentalsPanel.Name = "rentalsPanel";
+            this.rentalsPanel.Size = new System.Drawing.Size(722, 501);
+            this.rentalsPanel.TabIndex = 1;
             // 
             // labelProgramDate
             // 
@@ -410,7 +410,7 @@ namespace CarRentalApplication
         private System.Windows.Forms.Panel vehiclesPanel;
         private System.Windows.Forms.Button buttonAddAvailableVehicle;
         private System.Windows.Forms.Button buttonRemoveSelectedAvailableCars;
-        private System.Windows.Forms.Panel rentedCarsElementsPanel;
+        private System.Windows.Forms.Panel rentalsPanel;
         private System.Windows.Forms.Button buttonSortAvailableVehicles;
         private System.Windows.Forms.ComboBox sortVehicleSelectionComboBox;
         private System.Windows.Forms.ComboBox sortRentalSelectionComboBox;

@@ -141,26 +141,6 @@ namespace CarRentalApplication
             return rentalViews.IndexOf(rental);
         }
 
-        private void AddVehicleView(VehicleView vehicle)
-        {
-            vehiclesPanel.VerticalScroll.Value = 0;
-
-            vehicleViews.Add(vehicle);
-            PopulateVehiclesPanel();
-
-            IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
-        }
-
-        private void AddRentalView(RentalView rental)
-        {
-            rentedCarsElementsPanel.VerticalScroll.Value = 0;
-
-            rentalViews.Add(rental);
-            PopulateRentalsPanel();
-
-            IDManagement.MarkRentalIDAsUnavailable(rental.Id);
-        }
-
         #region Forms
 
         private void AddVehicleForm(object sender, EventArgs e)
@@ -193,8 +173,7 @@ namespace CarRentalApplication
                 rental.Id = IDManagement.LowestAvailableRentalID;
                 IDManagement.MarkRentalIDAsUnavailable(rental.Id);
 
-                var rentalView = new RentalView(formRentVehicle.Rental);
-                AddRentalView(rentalView);
+                PopulateRentalsPanel();
 
                 RemoveVehicle(vehicle, false);
             }
@@ -657,33 +636,25 @@ namespace CarRentalApplication
 
         #region Rental removal
 
-        public void RemoveRental(Rental rental, bool makeRentalIDAvailable = true, bool makeVehicleIDAvailable = true)
+        public void RemoveRental(Rental rental, bool makeRentalIdAvailable = true, bool makeVehicleIdAvailable = true)
         {
-            if (makeRentalIDAvailable)
+            if (makeRentalIdAvailable)
             {
                 IDManagement.MarkRentalIDAsAvailable(rental.Id);
             }
 
-            if (makeVehicleIDAvailable)
+            if (makeVehicleIdAvailable)
             {
                 IDManagement.MarkVehicleIDAsAvailable(rental.Vehicle.Id);
             }
 
             rentals.Remove(rental);
-
-            var rentalView = rentalViews.FirstOrDefault(x => x.Rental == rental);
-
-            if (rentalView != null)
-            {
-                rentedCarsElementsPanel.VerticalScroll.Value = 0;
-                rentalViews.Remove(rentalView);
-                PopulateRentalsPanel();
-            }
+            PopulateRentalsPanel();
         }
 
         private void RemoveLastRental(object sender, EventArgs e)
         {
-            if (rentalViews.Count < 1)
+            if (rentals.Count < 1)
             {
                 errorLabel.Text = ErrorMessages.NoRentalsToRemove;
                 timerClearErrors.Stop();
@@ -701,13 +672,10 @@ namespace CarRentalApplication
                 return;
             }
 
-            var lastRentalView = rentalViews[rentalViews.Count - 1];
-            IDManagement.MarkRentalIDAsAvailable(lastRentalView.Id);
+            var lastRental = rentals[rentals.Count - 1];
+            RemoveRental(lastRental);
 
-            lastRentalView.Selected = false;
-            RemoveRental(lastRentalView.Rental);
-
-            rentalViews.Remove(lastRentalView);
+            PopulateRentalsPanel();
 
             errorLabel.Text = string.Empty;
         }
@@ -738,7 +706,6 @@ namespace CarRentalApplication
                 foreach (var rentalView in rentalsToBeRemoved)
                 {
                     RemoveRental(rentalView.Rental);
-                    rentalViews.Remove(rentalView);
                 }
 
                 PopulateRentalsPanel();
@@ -787,14 +754,27 @@ namespace CarRentalApplication
 
         public void PopulateRentalsPanel()
         {
-            rentedCarsElementsPanel.Controls.Clear();
+            PopulateRentalViewListBasedOnRentals();
+
+            rentalsPanel.Controls.Clear();
             short counter = 0;
 
-            foreach (RentalView rental in rentalViews)
+            foreach (var rental in rentalViews)
             {
                 rental.LinkToMainWindow(this);
-                rentedCarsElementsPanel.Controls.Add(rental);
                 rental.Location = new Point(0, counter++ * 150);
+                rentalsPanel.Controls.Add(rental);
+            }
+        }
+
+        private void PopulateRentalViewListBasedOnRentals()
+        {
+            rentalViews.Clear();
+
+            foreach (var rental in rentals)
+            {
+                var rentalView = new RentalView(rental);
+                rentalViews.Add(rentalView);
             }
         }
 
