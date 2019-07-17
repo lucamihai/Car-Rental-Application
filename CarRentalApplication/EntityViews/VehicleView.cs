@@ -33,63 +33,8 @@ namespace CarRentalApplication.EntityViews
             buttonRent.Click += Rent;
         }
 
-        public VehicleView(string vehicleName, short fuelPercent = 0, short damagePercent = 0)
-        {
-            InitializeComponent();
-
-            Id = IDManagement.LowestAvailableVehicleID;
-            IDManagement.MarkVehicleIDAsUnavailable(Id);
-
-            VehicleName = vehicleName;
-            FuelPercentage = fuelPercent;
-            DamagePercentage = damagePercent;
-
-            UpdateLanguage(Program.Language);
-        }
-
-        public VehicleView(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0)
-        {
-            InitializeComponent();
-
-            Id = id;
-            IDManagement.MarkVehicleIDAsUnavailable(id);
-
-            VehicleName = vehicleName;
-            FuelPercentage = fuelPercent;
-            DamagePercentage = damagePercent;
-
-            UpdateLanguage(Program.Language);
-        }
-
-        public VehicleView(VehicleView vehicle)
-        {
-            InitializeComponent();
-
-            Id = vehicle.Id;
-            IDManagement.MarkVehicleIDAsUnavailable(Id);
-
-            VehicleName = vehicle.VehicleName;
-            FuelPercentage = vehicle.FuelPercentage;
-            DamagePercentage = vehicle.DamagePercentage;
-            
-            UpdateLanguage(Program.Language);
-        }
 
         #region Properties
-
-        public string Details
-        {
-            get
-            {
-                var details = string.Empty;
-                details += "Sedan " + VehicleName + ", ";
-                details += "registered with the id " + Id.ToString() + ", ";
-                details += "has " + FuelPercentage.ToString() + " % fuel and ";
-                details += "and is " + DamagePercentage.ToString() + " % damaged";
-
-                return details;
-            }
-        }
 
         public bool Selected
         {
@@ -190,5 +135,6 @@ namespace CarRentalApplication.EntityViews
 
             buttonRent.Text = language.Translate("Rent");
         }
+
     }
 }

@@ -220,19 +220,20 @@ namespace CarRentalApplication.Classes
 
                 while (sqlDataReader.Read())
                 {
-                    short ID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
-
-                    string ownerName = sqlDataReader["owner_name"].ToString();
-                    string ownerPhoneNumber = sqlDataReader["owner_phone_number"].ToString();
-                    Person owner = new Person(ownerName, ownerPhoneNumber);
-
-                    string returnDateString = sqlDataReader["return_date"].ToString();
-                    DateTime returnDate = DateTime.Parse(returnDateString);
-
-                    short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
-                    VehicleView vehicle = new VehicleView(GetVehicleWithID(importedVehicles, vehicleID));
-
                     //TODO
+                    //short ID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
+
+                    //string ownerName = sqlDataReader["owner_name"].ToString();
+                    //string ownerPhoneNumber = sqlDataReader["owner_phone_number"].ToString();
+                    //Person owner = new Person(ownerName, ownerPhoneNumber);
+
+                    //string returnDateString = sqlDataReader["return_date"].ToString();
+                    //DateTime returnDate = DateTime.Parse(returnDateString);
+
+                    //short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
+                    //VehicleView vehicle = new VehicleView(GetVehicleWithID(importedVehicles, vehicleID));
+
+
                     //RentalView importedRental = new RentalView(vehicle, owner, returnDate);
                     //importedRentals.Add(importedRental);
                 }

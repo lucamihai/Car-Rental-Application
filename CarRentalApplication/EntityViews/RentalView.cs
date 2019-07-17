@@ -39,22 +39,6 @@ namespace CarRentalApplication.EntityViews
 
         #region Properties
 
-        public string Details
-        {
-            get
-            {
-                var details = string.Empty;
-                details += "Sedan, id " + Id + ", ";
-                details += "has " + rentedVehicleView.FuelPercentage + "% fuel, ";
-                details += "is " + rentedVehicleView.DamagePercentage + " % damaged, ";
-                details += "owned by: " + Owner.Name + ", ";
-                details += "phone number: " + Owner.PhoneNumber + ", ";
-                details += "return date: " + ReturnDate.ToShortDateString();
-
-                return details;
-            }
-        }
-
         public bool Selected
         {
             get => checkboxSelect.Checked;
