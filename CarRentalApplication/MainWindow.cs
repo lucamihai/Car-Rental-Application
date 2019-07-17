@@ -334,11 +334,7 @@ namespace CarRentalApplication
 
             foreach (VehicleView vehicle in importedVehicles)
             {
-                if (vehicle.Name == "Sedan")
-                    vehicleViews.Add(new SedanView(vehicle));
-
-                if (vehicle.Name == "Minivan")
-                    vehicleViews.Add(new MinivanView(vehicle));
+                vehicleViews.Add(new VehicleView(vehicle));
             }
 
             foreach (RentalView rental in importedRentals)

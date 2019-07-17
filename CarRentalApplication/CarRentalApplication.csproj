@@ -98,23 +98,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EntityViews\MinivanView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="EntityViews\MinivanView.Designer.cs">
-      <DependentUpon>MinivanView.cs</DependentUpon>
-    </Compile>
     <Compile Include="EntityViews\RentalView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="EntityViews\RentalView.Designer.cs">
       <DependentUpon>RentalView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EntityViews\SedanView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="EntityViews\SedanView.Designer.cs">
-      <DependentUpon>SedanView.cs</DependentUpon>
     </Compile>
     <Compile Include="EntityViews\VehicleView.cs">
       <SubType>UserControl</SubType>
@@ -153,14 +141,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="EntityViews\MinivanView.resx">
-      <DependentUpon>MinivanView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EntityViews\RentalView.resx">
       <DependentUpon>RentalView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EntityViews\SedanView.resx">
-      <DependentUpon>SedanView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EntityViews\VehicleView.resx">
       <DependentUpon>VehicleView.cs</DependentUpon>

@@ -193,12 +193,26 @@ namespace CarRentalApplication.EntityViews
 
                 if (vehicleType == "Sedan")
                 {
-                    rentedVehicleView = new SedanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    var vehicle = new Sedan
+                    {
+                        Id = vehicleId,
+                        Name = vehicleName,
+                        FuelPercentage = vehicleFuelPercentage,
+                        DamagePercentage = vehicleDamagePercentage
+                    };
+                    rentedVehicleView = new VehicleView(vehicle);
                 }
 
                 if (vehicleType == "Minivan")
                 {
-                    rentedVehicleView = new MinivanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    var vehicle = new Minivan
+                    {
+                        Id = vehicleId,
+                        Name = vehicleName,
+                        FuelPercentage = vehicleFuelPercentage,
+                        DamagePercentage = vehicleDamagePercentage
+                    };
+                    rentedVehicleView = new VehicleView(vehicle);
                 }
 
                 xmlReader.ReadEndElement();

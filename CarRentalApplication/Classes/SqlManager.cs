@@ -177,14 +177,16 @@ namespace CarRentalApplication.Classes
 
                     if (vehicleType == "Sedan")
                     {
-                        SedanView sedan = new SedanView(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
-                        importedVehicles.Add(sedan);
+                        //TODO
+                        //SedanView sedan = new SedanView(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                        //importedVehicles.Add(sedan);
                     }
 
                     if (vehicleType == "Minivan")
                     {
-                        MinivanView minivan = new MinivanView(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
-                        importedVehicles.Add(minivan);
+                        //TODO
+                        //MinivanView minivan = new MinivanView(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                        //importedVehicles.Add(minivan);
                     }
                 }
 
