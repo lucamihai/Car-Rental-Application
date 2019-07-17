@@ -29,7 +29,7 @@ namespace CarRentalApplication
 
         private SqlManager sqlManager;
 
-        private readonly List<int> indexesOfSelectedVehicles = new List<int>();
+        private readonly List<int> indexesOfSelectedVehicleViews = new List<int>();
         private readonly List<int> indexesOfSelectedRentals = new List<int>();
 
         public MainWindow()
@@ -487,13 +487,13 @@ namespace CarRentalApplication
 
         public void SelectVehicle(int vehicleIndex)
         {
-            if (!indexesOfSelectedVehicles.Contains(vehicleIndex))
-                indexesOfSelectedVehicles.Add(vehicleIndex);
+            if (!indexesOfSelectedVehicleViews.Contains(vehicleIndex))
+                indexesOfSelectedVehicleViews.Add(vehicleIndex);
         }
 
         public void DeselectVehicle(int vehicleIndex)
         {
-            indexesOfSelectedVehicles.Remove(vehicleIndex);
+            indexesOfSelectedVehicleViews.Remove(vehicleIndex);
         }
 
         public void SelectRental(int rentalIndex)
@@ -576,20 +576,7 @@ namespace CarRentalApplication
 
         #region Vehicle removal
 
-        //TODO: Remove method
-        void RemoveVehicleView(VehicleView vehicle, bool makeIDAvailable = true)
-        {
-            if (makeIDAvailable)
-            {
-                IDManagement.MarkVehicleIDAsAvailable(vehicle.Id);
-            }
-
-            availableCarsElementsPanel.VerticalScroll.Value = 0;
-            vehicleViews.Remove(vehicle);
-            PopulateVehiclesPanel();
-        }
-
-        void RemoveVehicle(Vehicle vehicle, bool makeIDAvailable = true)
+        private void RemoveVehicle(Vehicle vehicle, bool makeIDAvailable = true)
         {
             if (makeIDAvailable)
             {
@@ -619,8 +606,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            string action = "remove the last vehicle";
-            FormConfirmation formConfirmation = new FormConfirmation(action);
+            var action = "remove the last vehicle";
+            var formConfirmation = new FormConfirmation(action);
 
             var result = formConfirmation.ShowDialog();
             if (result != DialogResult.OK)
@@ -628,21 +615,22 @@ namespace CarRentalApplication
                 return;
             }
 
-            VehicleView lastVehicle = vehicleViews[vehicleViews.Count - 1];
-            IDManagement.MarkVehicleIDAsAvailable(lastVehicle.Id);
+            var lastVehicleView = vehicleViews[vehicleViews.Count - 1];
 
-            lastVehicle.Selected = false;
-            RemoveVehicleView(lastVehicle);
+            lastVehicleView.Selected = false;
+            RemoveVehicle(lastVehicleView.Vehicle);
 
-            errorLabel.Text = "";
+            vehicleViews.Remove(lastVehicleView);
+
+            errorLabel.Text = string.Empty;
         }
 
         private void RemoveSelectedVehicles(object sender, EventArgs e)
         {
-            if (indexesOfSelectedVehicles.Count > 0)
+            if (indexesOfSelectedVehicleViews.Count > 0)
             {
-                string action = "remove the selected vehicles";
-                FormConfirmation formConfirmation = new FormConfirmation(action);
+                var action = "remove the selected vehicles";
+                var formConfirmation = new FormConfirmation(action);
 
                 var result = formConfirmation.ShowDialog();
                 if (result != DialogResult.OK)
@@ -650,25 +638,24 @@ namespace CarRentalApplication
                     return;
                 }
 
-                errorLabel.Text = "";
+                errorLabel.Text = string.Empty;
 
                 // Store the vehicles to be removed in a temporary List
-                List<VehicleView> vehiclesToBeRemoved = new List<VehicleView>();
-                foreach (int index in indexesOfSelectedVehicles)
+                var vehiclesToBeRemoved = new List<VehicleView>();
+                foreach (var index in indexesOfSelectedVehicleViews)
                 {
-                    short idToBeMarkedAsAvailable = vehicleViews[index].Id;
-                    IDManagement.MarkVehicleIDAsAvailable(idToBeMarkedAsAvailable);
                     vehiclesToBeRemoved.Add(vehicleViews.ElementAt(index));
                 }
 
                 // Remove the stored vehicles from the vehicles List
-                foreach (VehicleView vehicle in vehiclesToBeRemoved)
+                foreach (var vehicleView in vehiclesToBeRemoved)
                 {
-                    vehicleViews.Remove(vehicle);
+                    RemoveVehicle(vehicleView.Vehicle);
+                    vehicleViews.Remove(vehicleView);
                 }
 
                 PopulateVehiclesPanel();
-                indexesOfSelectedVehicles.Clear();
+                indexesOfSelectedVehicleViews.Clear();
             }
 
             else
