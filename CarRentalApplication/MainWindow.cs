@@ -10,6 +10,7 @@ using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.EntityViews;
 using CarRentalApplication.Forms;
 using CarRentalApplication.Logging;
+using CarRentalApplication.Saving;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication

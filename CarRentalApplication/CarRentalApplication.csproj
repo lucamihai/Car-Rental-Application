@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,7 +53,6 @@
     <Compile Include="Classes\SortSelectionItem.cs" />
     <Compile Include="Classes\SqlManager.cs" />
     <Compile Include="Classes\VehicleSorter.cs" />
-    <Compile Include="Classes\JsonManager.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,7 +146,6 @@
     <EmbeddedResource Include="EntityViews\VehicleView.resx">
       <DependentUpon>VehicleView.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -173,6 +168,10 @@
     <ProjectReference Include="..\CarRentalApplication.Logging\CarRentalApplication.Logging.csproj">
       <Project>{87dbdc9d-563c-4505-aaa9-f195e6c387a1}</Project>
       <Name>CarRentalApplication.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CarRentalApplication.Saving\CarRentalApplication.Saving.csproj">
+      <Project>{cff9307a-b259-4374-8ba7-8ac8850a8b10}</Project>
+      <Name>CarRentalApplication.Saving</Name>
     </ProjectReference>
     <ProjectReference Include="..\CarRentalApplication.Translating\CarRentalApplication.Translating.csproj">
       <Project>{a1c81ff3-4640-4015-af7d-c91649249b4b}</Project>
