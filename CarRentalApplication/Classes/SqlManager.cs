@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.User_Controls;
 
 namespace CarRentalApplication.Classes

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
+using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.User_Controls;
 
 namespace CarRentalApplication.Forms

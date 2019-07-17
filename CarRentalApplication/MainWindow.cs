@@ -27,13 +27,13 @@ namespace CarRentalApplication
 
         private readonly List<int> indexesOfSelectedVehicles = new List<int>();
         private readonly List<int> indexesOfSelectedRentals = new List<int>();
-            
+
         public MainWindow()
         {
             InitializeComponent();
 
             errorLabel.Text = "";
-            
+
             returnedVehiclesLogManager = new Logger("log.txt");
 
             vehicles = new List<Vehicle>();

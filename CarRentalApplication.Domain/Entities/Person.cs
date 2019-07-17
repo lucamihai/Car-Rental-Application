@@ -1,5 +1,8 @@
-﻿namespace CarRentalApplication.Classes
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CarRentalApplication.Domain.Entities
 {
+    [ExcludeFromCodeCoverage]
     public class Person
     {
         public Person(string name, string phoneNumber)

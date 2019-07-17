@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using CarRentalApplication.Classes;
+using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.User_Controls
