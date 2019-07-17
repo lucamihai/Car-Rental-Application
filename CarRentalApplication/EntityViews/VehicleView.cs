@@ -6,9 +6,9 @@ using System.Xml.Serialization;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Translating;
 
-namespace CarRentalApplication.User_Controls
+namespace CarRentalApplication.EntityViews
 {
-    public partial class Vehicle : UserControl, IXmlSerializable, ICloneable
+    public partial class VehicleView : UserControl, IXmlSerializable, ICloneable
     {
         protected Label labelId, labelVehicleName, labelVehicleType, labelFuelPercentage, labelDamagePercentage;
         protected Label labelIdValue, labelVehicleNameValue, labelVehicleTypeValue, labelFuelPercentageValue, labelDamagePercentageValue;
@@ -17,13 +17,13 @@ namespace CarRentalApplication.User_Controls
 
         private MainWindow mainWindow;
 
-        public Vehicle()
+        public VehicleView()
         {
             InitializeComponent();
             PrepareComponents();
         }
 
-        public Vehicle(string vehicleName, short fuelPercent = 0, short damagePercent = 0)
+        public VehicleView(string vehicleName, short fuelPercent = 0, short damagePercent = 0)
         {
             InitializeComponent();
             PrepareComponents();
@@ -38,7 +38,7 @@ namespace CarRentalApplication.User_Controls
             UpdateLanguage(Program.Language);
         }
 
-        public Vehicle(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0)
+        public VehicleView(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0)
         {
             InitializeComponent();
             PrepareComponents();
@@ -53,7 +53,7 @@ namespace CarRentalApplication.User_Controls
             UpdateLanguage(Program.Language);
         }
 
-        public Vehicle(Vehicle vehicle)
+        public VehicleView(VehicleView vehicle)
         {
             InitializeComponent();
             PrepareComponents();
@@ -329,7 +329,7 @@ namespace CarRentalApplication.User_Controls
 
         public virtual object Clone()
         {
-            return new Vehicle(Id, VehicleName, FuelPercentage, DamagePercentage);
+            return new VehicleView(Id, VehicleName, FuelPercentage, DamagePercentage);
         }
     }
 }

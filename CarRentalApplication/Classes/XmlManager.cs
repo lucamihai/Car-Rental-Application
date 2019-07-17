@@ -2,55 +2,55 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using CarRentalApplication.User_Controls;
+using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Classes
 {
     public static class XmlManager
     {
-        public static void WriteVehiclesToXmlFile(List<Vehicle> vehicles, string filePath)
+        public static void WriteVehiclesToXmlFile(List<VehicleView> vehicles, string filePath)
         {
             DeleteFileIfExists(filePath);
 
             using (var fileStream = File.OpenWrite(filePath))
             {
-                var xmlSerializer = new XmlSerializer(typeof(List<Vehicle>));
+                var xmlSerializer = new XmlSerializer(typeof(List<VehicleView>));
                 xmlSerializer.Serialize(fileStream, vehicles);
             }
         }
 
-        public static void WriteRentalsToXmlFile(List<Rental> rentals, string filePath)
+        public static void WriteRentalsToXmlFile(List<RentalView> rentals, string filePath)
         {
             DeleteFileIfExists(filePath);
 
             using (var fileStream = File.OpenWrite(filePath))
             {
-                var xmlSerializer = new XmlSerializer(typeof(List<Rental>));
+                var xmlSerializer = new XmlSerializer(typeof(List<RentalView>));
                 xmlSerializer.Serialize(fileStream, rentals);
             }
         }
 
-        public static List<Vehicle> ReadVehiclesFromXmlFile(string filePath)
+        public static List<VehicleView> ReadVehiclesFromXmlFile(string filePath)
         {
             ThrowIfFileDoesNotExist(filePath);
 
             using (var fileStream = File.OpenRead(filePath))
             {
-                var xmlSerializer = new XmlSerializer(typeof(List<Vehicle>));
-                var deserializedList = (List<Vehicle>)xmlSerializer.Deserialize(fileStream);
+                var xmlSerializer = new XmlSerializer(typeof(List<VehicleView>));
+                var deserializedList = (List<VehicleView>)xmlSerializer.Deserialize(fileStream);
 
                 return deserializedList;
             }
         }
 
-        public static List<Rental> ReadRentalsFromXmlFile(string filePath)
+        public static List<RentalView> ReadRentalsFromXmlFile(string filePath)
         {
             ThrowIfFileDoesNotExist(filePath);
 
             using (var fileStream = File.OpenRead(filePath))
             {
-                var xmlSerializer = new XmlSerializer(typeof(List<Rental>));
-                var deserializedList = (List<Rental>)xmlSerializer.Deserialize(fileStream);
+                var xmlSerializer = new XmlSerializer(typeof(List<RentalView>));
+                var deserializedList = (List<RentalView>)xmlSerializer.Deserialize(fileStream);
 
                 return deserializedList;
             }

@@ -1,32 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CarRentalApplication.User_Controls;
+using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Classes
 {
     public class VehicleSorter
     {
-        public List<Vehicle> SortListByID(List <Vehicle> vehicles)
+        public List<VehicleView> SortListByID(List <VehicleView> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.Id ).ToList();
         }
 
-        public List<Vehicle> SortListByName(List <Vehicle> vehicles)
+        public List<VehicleView> SortListByName(List <VehicleView> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.VehicleName ).ToList();
         }
 
-        public List<Vehicle> SortListByType(List <Vehicle> vehicles)
+        public List<VehicleView> SortListByType(List <VehicleView> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.GetType().ToString() ).ToList();
         }
 
-        public List<Vehicle> SortListByFuelPercent(List <Vehicle> vehicles)
+        public List<VehicleView> SortListByFuelPercent(List <VehicleView> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.FuelPercentage ).ToList();
         }
 
-        public List<Vehicle> SortListByDamagePercent(List <Vehicle> vehicles)
+        public List<VehicleView> SortListByDamagePercent(List <VehicleView> vehicles)
         {
             return vehicles.OrderBy( vehicle => vehicle.DamagePercentage ).ToList();
         }

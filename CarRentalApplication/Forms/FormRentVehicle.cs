@@ -2,21 +2,21 @@
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
-using CarRentalApplication.User_Controls;
+using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Forms
 {
     public partial class FormRentVehicle : Form
     {
-        public Vehicle Vehicle { get; set; }
-        public Rental Rental { get; set; }
+        public VehicleView Vehicle { get; set; }
+        public RentalView Rental { get; set; }
 
         public FormRentVehicle()
         {
             InitializeComponent();
         }
 
-        public FormRentVehicle(Vehicle vehicle)
+        public FormRentVehicle(VehicleView vehicle)
         {
             InitializeComponent();
 
@@ -48,7 +48,7 @@ namespace CarRentalApplication.Forms
             var ownerPhoneNumber = textBoxOwnerPhoneNumber.Text;
             var owner = new Person(ownerName, ownerPhoneNumber);
 
-            Rental = new Rental(Vehicle, owner, dateTimePickerReturnDate.Value);
+            Rental = new RentalView(Vehicle, owner, dateTimePickerReturnDate.Value);
 
             this.DialogResult = Rental != null ? DialogResult.OK : DialogResult.Cancel;
             this.Close();

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace CarRentalApplication.User_Controls
+namespace CarRentalApplication.EntityViews
 {
-    partial class Vehicle
+    partial class VehicleView
     {
         /// <summary> 
         /// Required designer variable.

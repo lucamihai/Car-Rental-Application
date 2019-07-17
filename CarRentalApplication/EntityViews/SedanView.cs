@@ -1,25 +1,25 @@
 ﻿using CarRentalApplication.Translating;
 
-namespace CarRentalApplication.User_Controls
+namespace CarRentalApplication.EntityViews
 {
-    public partial class Sedan : Vehicle
+    public partial class SedanView : VehicleView
     {
-        public Sedan()
+        public SedanView()
         {
             InitializeComponent();
         }
 
-        public Sedan(string vehicleName, short fuelPercent = 0, short damagePercent = 0) : base(vehicleName, fuelPercent, damagePercent)
+        public SedanView(string vehicleName, short fuelPercent = 0, short damagePercent = 0) : base(vehicleName, fuelPercent, damagePercent)
         {
             
         }
 
-        public Sedan(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0) : base(id, vehicleName, fuelPercent, damagePercent)
+        public SedanView(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0) : base(id, vehicleName, fuelPercent, damagePercent)
         {
 
         }
 
-        public Sedan(Vehicle vehicle) : base(vehicle)
+        public SedanView(VehicleView vehicle) : base(vehicle)
         {
             
         }
@@ -40,7 +40,7 @@ namespace CarRentalApplication.User_Controls
 
         public override object Clone()
         {
-            return new Sedan(Id, VehicleName, FuelPercentage, DamagePercentage);
+            return new SedanView(Id, VehicleName, FuelPercentage, DamagePercentage);
         }
     }
 }

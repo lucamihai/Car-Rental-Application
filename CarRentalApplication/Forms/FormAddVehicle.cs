@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
-using CarRentalApplication.User_Controls;
+using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Forms
 {
     public partial class FormAddVehicle : Form
     {
-        public Vehicle Vehicle { get; set; }
+        public VehicleView Vehicle { get; set; }
 
         public FormAddVehicle()
         {
@@ -40,12 +40,12 @@ namespace CarRentalApplication.Forms
 
             if (radioButtonSedan.Checked)
             {
-                Vehicle = new Sedan(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
+                Vehicle = new SedanView(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
             }
 
             if (radioButtonMinivan.Checked)
             {
-                Vehicle = new Minivan(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
+                Vehicle = new MinivanView(textBoxVehicleName.Text, fuelPercentage, damagePercentage);
             }
 
             if (Vehicle != null)

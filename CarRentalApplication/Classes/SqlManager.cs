@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using CarRentalApplication.Domain.Entities;
-using CarRentalApplication.User_Controls;
+using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Classes
 {
@@ -116,7 +116,7 @@ namespace CarRentalApplication.Classes
             sqlConnection.Close();
         }
 
-        public void SaveVehicleToDatabase(Vehicle vehicle)
+        public void SaveVehicleToDatabase(VehicleView vehicle)
         {
             string query = "INSERT INTO vehicles (id, type, name, fuel_percentage, damage_percentage)";
             query += " VALUES (@id, @name, @type, @fuel, @damage)";
@@ -134,7 +134,7 @@ namespace CarRentalApplication.Classes
             sqlConnection.Close();
         }
 
-        public void SaveRentalToDatabase(Rental rental)
+        public void SaveRentalToDatabase(RentalView rental)
         {
             SaveVehicleToDatabase(rental.Vehicle);
 
@@ -154,9 +154,9 @@ namespace CarRentalApplication.Classes
             sqlConnection.Close();
         }
 
-        public List<Vehicle> GetVehiclesFromDatabase()
+        public List<VehicleView> GetVehiclesFromDatabase()
         {
-            List<Vehicle> importedVehicles = new List<Vehicle>();
+            List<VehicleView> importedVehicles = new List<VehicleView>();
 
             string sqlQuery = "SELECT id, type, name, fuel_percentage, damage_percentage FROM vehicles";
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
@@ -176,13 +176,13 @@ namespace CarRentalApplication.Classes
 
                     if (vehicleType == "Sedan")
                     {
-                        Sedan sedan = new Sedan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                        SedanView sedan = new SedanView(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                         importedVehicles.Add(sedan);
                     }
 
                     if (vehicleType == "Minivan")
                     {
-                        Minivan minivan = new Minivan(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                        MinivanView minivan = new MinivanView(vehicleID, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                         importedVehicles.Add(minivan);
                     }
                 }
@@ -203,9 +203,9 @@ namespace CarRentalApplication.Classes
             return importedVehicles;
         }
 
-        public List<Rental> GetRentalsFromDatabase(List<Vehicle> importedVehicles)
+        public List<RentalView> GetRentalsFromDatabase(List<VehicleView> importedVehicles)
         {
-            List<Rental> importedRentals = new List<Rental>();
+            List<RentalView> importedRentals = new List<RentalView>();
 
             string sqlQuery = "SELECT id, owner_name, owner_phone_number, return_date, vehicle_id FROM rentals";
             SqlCommand sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
@@ -227,9 +227,9 @@ namespace CarRentalApplication.Classes
                     DateTime returnDate = DateTime.Parse(returnDateString);
 
                     short vehicleID = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
-                    Vehicle vehicle = new Vehicle(GetVehicleWithID(importedVehicles, vehicleID));
+                    VehicleView vehicle = new VehicleView(GetVehicleWithID(importedVehicles, vehicleID));
 
-                    Rental importedRental = new Rental(vehicle, owner, returnDate);
+                    RentalView importedRental = new RentalView(vehicle, owner, returnDate);
                     importedRentals.Add(importedRental);
                 }
 
@@ -249,9 +249,9 @@ namespace CarRentalApplication.Classes
             return importedRentals;
         }
 
-        Vehicle GetVehicleWithID(List<Vehicle> vehicles, short vehicleID)
+        VehicleView GetVehicleWithID(List<VehicleView> vehicles, short vehicleID)
         {
-            foreach (Vehicle vehicle in vehicles)
+            foreach (VehicleView vehicle in vehicles)
             {
                 if (vehicle.Id == vehicleID)
                 {

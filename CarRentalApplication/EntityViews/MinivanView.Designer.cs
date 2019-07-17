@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace CarRentalApplication.User_Controls
+namespace CarRentalApplication.EntityViews
 {
-    partial class Sedan
+    partial class MinivanView
     {
         /// <summary> 
         /// Required designer variable.
@@ -34,12 +34,12 @@ namespace CarRentalApplication.User_Controls
         {
             this.SuspendLayout();
             // 
-            // Sedan
+            // Minivan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Name = "Sedan";
+            this.Name = "Minivan";
             this.Size = new System.Drawing.Size(550, 75);
             this.ResumeLayout(false);
 

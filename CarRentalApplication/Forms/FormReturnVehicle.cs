@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
-using CarRentalApplication.User_Controls;
+using CarRentalApplication.EntityViews;
 
 namespace CarRentalApplication.Forms
 {
     public partial class FormReturnVehicle : Form
     {
-        private readonly Rental rental;
+        private readonly RentalView rental;
 
         public string OrderDetails { get; set; }
-        public Vehicle ReturnedVehicle { get; set; }
+        public VehicleView ReturnedVehicle { get; set; }
 
         public FormReturnVehicle()
         {
             InitializeComponent();
         }
 
-        public FormReturnVehicle(Rental rental)
+        public FormReturnVehicle(RentalView rental)
         {
             InitializeComponent();
             this.rental = rental;

@@ -5,21 +5,21 @@ using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
-namespace CarRentalApplication.User_Controls
+namespace CarRentalApplication.EntityViews
 {
-    public partial class Rental : UserControl, IXmlSerializable
+    public partial class RentalView : UserControl, IXmlSerializable
     {
         private MainWindow mainWindow;
-        private Vehicle vehicle;
+        private VehicleView vehicle;
         private Person owner;
         private DateTime returnDate;
 
-        public Rental()
+        public RentalView()
         {
             InitializeComponent();
         }
 
-        public Rental(Vehicle vehicle, Person owner, DateTime returnDate)
+        public RentalView(VehicleView vehicle, Person owner, DateTime returnDate)
         {
             InitializeComponent();
 
@@ -33,7 +33,7 @@ namespace CarRentalApplication.User_Controls
             UpdateLanguage(Program.Language);
         }
 
-        public Rental(Rental rental)
+        public RentalView(RentalView rental)
         {
             InitializeComponent();
 
@@ -50,7 +50,7 @@ namespace CarRentalApplication.User_Controls
 
         #region Properties
 
-        public Vehicle Vehicle
+        public VehicleView Vehicle
         {
             get => vehicle;
             private set
@@ -60,12 +60,12 @@ namespace CarRentalApplication.User_Controls
 
                 if (type == "Sedan")
                 {
-                    vehicle = (Sedan)vehicleClone;
+                    vehicle = (SedanView)vehicleClone;
                 }
                 
                 if (type == "Minivan")
                 {
-                    vehicle = (Minivan)vehicleClone;
+                    vehicle = (MinivanView)vehicleClone;
                 }
 
                 if (vehicle != null)
@@ -232,12 +232,12 @@ namespace CarRentalApplication.User_Controls
 
                 if (vehicleType == "Sedan")
                 {
-                    Vehicle = new Sedan(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    Vehicle = new SedanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                 }
 
                 if (vehicleType == "Minivan")
                 {
-                    Vehicle = new Minivan(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
+                    Vehicle = new MinivanView(vehicleId, vehicleName, vehicleFuelPercentage, vehicleDamagePercentage);
                 }
 
                 xmlReader.ReadEndElement();
