@@ -288,11 +288,11 @@ namespace CarRentalApplication
 
         #region Local file
 
-        private void saveToLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToLocalFile(object sender, EventArgs e)
         {
-            string action = "save vehicles and rentals to local file";
-            string consequence = "existing local file will be deleted";
-            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+            var action = "save vehicles and rentals to local file";
+            var consequence = "existing local file will be deleted";
+            var formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
             if (result != DialogResult.OK)
@@ -300,15 +300,15 @@ namespace CarRentalApplication
                 return;
             }
 
-            XmlManager.WriteVehiclesToXmlFile(vehicleViews, "vehicles.xml");
-            XmlManager.WriteRentalsToXmlFile(rentalViews, "rentals.xml");
+            JsonManager.WriteVehiclesToJsonFile(vehicles, "vehicles.json");
+            JsonManager.WriteRentalsToJsonFile(rentals, "rentals.json");
         }
 
-        private void loadFromLocalFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadFromLocalFile(object sender, EventArgs e)
         {
-            string action = "load vehicles and rentals from local file";
-            string consequence = "existing vehicles and rentals in the program will be removed";
-            FormConfirmation formConfirmation = new FormConfirmation(action, consequence);
+            var action = "load vehicles and rentals from local file";
+            var consequence = "existing vehicles and rentals in the program will be removed";
+            var formConfirmation = new FormConfirmation(action, consequence);
 
             var result = formConfirmation.ShowDialog();
             if (result != DialogResult.OK)
@@ -316,24 +316,30 @@ namespace CarRentalApplication
                 return;
             }
 
-            vehicleViews.Clear();
-            rentalViews.Clear();
+            vehicles.Clear();
+            rentals.Clear();
 
-            List<VehicleView> importedVehicles = XmlManager.ReadVehiclesFromXmlFile("vehicles.xml");
-            List<RentalView> importedRentals = XmlManager.ReadRentalsFromXmlFile("rentals.xml");
+            var importedVehicles = JsonManager.ReadVehiclesFromJsonFile("vehicles.json");
+            var importedRentals = JsonManager.ReadRentalsFromJsonFile("rentals.json");
 
-            foreach (VehicleView vehicle in importedVehicles)
-            {
-                vehicleViews.Add(new VehicleView(vehicle));
-            }
-
-            foreach (RentalView rental in importedRentals)
-            {
-                rentalViews.Add(rental);
-            }
+            vehicles.AddRange(importedVehicles);
+            rentals.AddRange(importedRentals);
 
             PopulateVehiclesPanel();
             PopulateRentalsPanel();
+
+            IDManagement.InitializeIndexes();
+
+            foreach (var vehicle in vehicles)
+            {
+                IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
+            }
+
+            foreach (var rental in rentals)
+            {
+                IDManagement.MarkRentalIDAsUnavailable(rental.Id);
+                IDManagement.MarkVehicleIDAsUnavailable(rental.Vehicle.Id);
+            }
         }
 
         #endregion

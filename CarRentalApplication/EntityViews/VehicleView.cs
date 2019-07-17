@@ -2,14 +2,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.EntityViews
 {
-    public partial class VehicleView : UserControl, IXmlSerializable, ICloneable
+    public partial class VehicleView : UserControl, ICloneable
     {
         protected Label labelId, labelVehicleName, labelVehicleType, labelFuelPercentage, labelDamagePercentage;
         protected Label labelIdValue, labelVehicleNameValue, labelVehicleTypeValue, labelFuelPercentageValue, labelDamagePercentageValue;
@@ -249,58 +248,6 @@ namespace CarRentalApplication.EntityViews
             {
                 checkboxSelect.Visible = value;
                 buttonRent.Visible = value;
-            }
-        }
-
-        #endregion
-
-
-        #region IXmlSerializable methods
-
-        public System.Xml.Schema.XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void WriteXml(System.Xml.XmlWriter xmlWriter)
-        {
-            xmlWriter.WriteAttributeString("Name", GetType().Name);
-            xmlWriter.WriteElementString("id", Id.ToString());
-            xmlWriter.WriteElementString("vehicleName", VehicleName);
-            xmlWriter.WriteElementString("damagePercentage", DamagePercentage.ToString());
-            xmlWriter.WriteElementString("fuelPercentage", FuelPercentage.ToString());
-        }
-
-        public void ReadXml(System.Xml.XmlReader xmlReader)
-        {
-            xmlReader.MoveToContent();
-            var vehicleType = xmlReader.GetAttribute("Name");
-            Name = vehicleType;
-
-            var isEmptyElement = xmlReader.IsEmptyElement;
-            xmlReader.ReadStartElement();
-
-            if (!isEmptyElement)
-            {
-                if (vehicleType == "Sedan")
-                {
-                    Id = Convert.ToInt16(xmlReader.ReadElementString("id"));
-                    VehicleName = xmlReader.ReadElementString("vehicleName");
-                    DamagePercentage = Convert.ToInt16(xmlReader.ReadElementString("damagePercentage"));
-                    FuelPercentage = Convert.ToInt16(xmlReader.ReadElementString("fuelPercentage"));
-
-                    xmlReader.ReadEndElement();
-                }
-
-                if (vehicleType == "Minivan")
-                {
-                    Id = Convert.ToInt16(xmlReader.ReadElementString("id"));
-                    VehicleName = xmlReader.ReadElementString("vehicleName");
-                    DamagePercentage = Convert.ToInt16(xmlReader.ReadElementString("damagePercentage"));
-                    FuelPercentage = Convert.ToInt16(xmlReader.ReadElementString("fuelPercentage"));
-
-                    xmlReader.ReadEndElement();
-                }
             }
         }
 

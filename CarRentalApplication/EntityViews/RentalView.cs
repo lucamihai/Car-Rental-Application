@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.EntityViews
 {
-    public partial class RentalView : UserControl, IXmlSerializable
+    public partial class RentalView : UserControl
     {
         private MainWindow mainWindow;
         private VehicleView rentedVehicleView;
@@ -33,7 +32,7 @@ namespace CarRentalApplication.EntityViews
             Owner = rental.Owner;
             ReturnDate = rental.ReturnDate;
 
-            rentedVehicleView = new VehicleView(RentedVehicle);
+            var rentedVehicleView = new VehicleView(RentedVehicle);
             rentedVehicleView.InputsEnabled = false;
             panelVehicle.Controls.Add(rentedVehicleView);
         }
@@ -149,78 +148,5 @@ namespace CarRentalApplication.EntityViews
                 mainWindow.DeselectRental(rentalIndex);
             }
         }
-
-        #region IXmlSerializable methods
-
-        public System.Xml.Schema.XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void WriteXml(System.Xml.XmlWriter xmlWriter)
-        {
-            xmlWriter.WriteElementString("id", Id.ToString());
-            xmlWriter.WriteElementString("ownerName", Owner.Name);
-            xmlWriter.WriteElementString("ownerPhone", Owner.PhoneNumber);
-            xmlWriter.WriteElementString("returnDate", ReturnDate.ToShortDateString());
-            xmlWriter.WriteElementString("vehicleID", rentedVehicleView.Id.ToString());
-            xmlWriter.WriteElementString("vehicleName", rentedVehicleView.VehicleName);
-            xmlWriter.WriteElementString("vehicleType", rentedVehicleView.GetType().Name);
-            xmlWriter.WriteElementString("vehicleFuelPercentage", rentedVehicleView.FuelPercentage.ToString());
-            xmlWriter.WriteElementString("vehicleDamagePercentage", rentedVehicleView.DamagePercentage.ToString());
-        }
-
-        public void ReadXml(System.Xml.XmlReader xmlReader)
-        {
-            xmlReader.MoveToContent();
-            var isEmptyElement = xmlReader.IsEmptyElement;
-            xmlReader.ReadStartElement();
-
-            if (!isEmptyElement)
-            {
-                Id = Convert.ToInt16(xmlReader.ReadElementString("id"));
-
-                var ownerName = xmlReader.ReadElementString("ownerName");
-                var ownerPhone = xmlReader.ReadElementString("ownerPhone");
-                Owner = new Person(ownerName, ownerPhone);
-
-                var returnDateString = xmlReader.ReadElementString("returnDate");
-                ReturnDate = DateTime.Parse(returnDateString);
-
-                var vehicleId = Convert.ToInt16(xmlReader.ReadElementString("vehicleID"));
-                var vehicleName = xmlReader.ReadElementString("vehicleName");
-                var vehicleType = xmlReader.ReadElementString("vehicleType");
-                var vehicleFuelPercentage = Convert.ToInt16(xmlReader.ReadElementString("vehicleFuelPercentage"));
-                var vehicleDamagePercentage = Convert.ToInt16(xmlReader.ReadElementString("vehicleDamagePercentage"));
-
-                if (vehicleType == "Sedan")
-                {
-                    var vehicle = new Sedan
-                    {
-                        Id = vehicleId,
-                        Name = vehicleName,
-                        FuelPercentage = vehicleFuelPercentage,
-                        DamagePercentage = vehicleDamagePercentage
-                    };
-                    rentedVehicleView = new VehicleView(vehicle);
-                }
-
-                if (vehicleType == "Minivan")
-                {
-                    var vehicle = new Minivan
-                    {
-                        Id = vehicleId,
-                        Name = vehicleName,
-                        FuelPercentage = vehicleFuelPercentage,
-                        DamagePercentage = vehicleDamagePercentage
-                    };
-                    rentedVehicleView = new VehicleView(vehicle);
-                }
-
-                xmlReader.ReadEndElement();
-            }
-        }
-
-        #endregion
     }
 }

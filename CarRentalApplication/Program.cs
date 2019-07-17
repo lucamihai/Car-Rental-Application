@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication
 {
+    [ExcludeFromCodeCoverage]
     internal static class Program
     {
         public static Language Language { get; set; } = Language.FromCsvContents(Properties.Resources.English, '\\');

@@ -323,14 +323,14 @@ namespace CarRentalApplication
             this.loadFromLocalFileToolStripMenuItem.Name = "loadFromLocalFileToolStripMenuItem";
             this.loadFromLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.loadFromLocalFileToolStripMenuItem.Text = "Load from local file";
-            this.loadFromLocalFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromLocalFileToolStripMenuItem_Click);
+            this.loadFromLocalFileToolStripMenuItem.Click += new System.EventHandler(this.LoadFromLocalFile);
             // 
             // saveToLocalFileToolStripMenuItem
             // 
             this.saveToLocalFileToolStripMenuItem.Name = "saveToLocalFileToolStripMenuItem";
             this.saveToLocalFileToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveToLocalFileToolStripMenuItem.Text = "Save to local file";
-            this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.saveToLocalFileToolStripMenuItem_Click);
+            this.saveToLocalFileToolStripMenuItem.Click += new System.EventHandler(this.SaveToLocalFile);
             // 
             // orderLogsToolStripMenuItem
             // 
