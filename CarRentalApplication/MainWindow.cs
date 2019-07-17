@@ -176,6 +176,7 @@ namespace CarRentalApplication
                 PopulateRentalsPanel();
 
                 RemoveVehicle(vehicle, false);
+                PopulateVehiclesPanel();
             }
         }
 
@@ -195,6 +196,7 @@ namespace CarRentalApplication
                 PopulateVehiclesPanel();
 
                 RemoveRental(rental, true, false);
+                PopulateRentalsPanel();
             }
         }
 
@@ -561,7 +563,6 @@ namespace CarRentalApplication
             }
 
             vehicles.Remove(vehicle);
-            PopulateVehiclesPanel();
         }
 
         private void RemoveLastVehicle(object sender, EventArgs e)
@@ -587,6 +588,8 @@ namespace CarRentalApplication
             var lastVehicleView = vehicleViews[vehicleViews.Count - 1];
             lastVehicleView.Selected = false;
             RemoveVehicle(lastVehicleView.Vehicle);
+
+            PopulateVehiclesPanel();
 
             errorLabel.Text = string.Empty;
         }
