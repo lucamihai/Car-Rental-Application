@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
@@ -8,13 +6,8 @@ using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.EntityViews
 {
-    public partial class VehicleView : UserControl, ICloneable
+    public partial class VehicleView : UserControl
     {
-        protected Label labelId, labelVehicleName, labelVehicleType, labelFuelPercentage, labelDamagePercentage;
-        protected Label labelIdValue, labelVehicleNameValue, labelVehicleTypeValue, labelFuelPercentageValue, labelDamagePercentageValue;
-        protected CheckBox checkboxSelect;
-        protected Button buttonRent;
-
         private MainWindow mainWindow;
 
         public Vehicle Vehicle { get; private set; }
@@ -22,13 +15,11 @@ namespace CarRentalApplication.EntityViews
         public VehicleView()
         {
             InitializeComponent();
-            PrepareComponents();
         }
 
         public VehicleView(Vehicle vehicle)
         {
             InitializeComponent();
-            PrepareComponents();
 
             Id = vehicle.Id;
             VehicleName = vehicle.Name;
@@ -37,12 +28,14 @@ namespace CarRentalApplication.EntityViews
             DamagePercentage = vehicle.DamagePercentage;
 
             Vehicle = vehicle;
+
+            checkboxSelect.Click += Select;
+            buttonRent.Click += Rent;
         }
 
         public VehicleView(string vehicleName, short fuelPercent = 0, short damagePercent = 0)
         {
             InitializeComponent();
-            PrepareComponents();
 
             Id = IDManagement.LowestAvailableVehicleID;
             IDManagement.MarkVehicleIDAsUnavailable(Id);
@@ -57,7 +50,6 @@ namespace CarRentalApplication.EntityViews
         public VehicleView(short id, string vehicleName, short fuelPercent = 0, short damagePercent = 0)
         {
             InitializeComponent();
-            PrepareComponents();
 
             Id = id;
             IDManagement.MarkVehicleIDAsUnavailable(id);
@@ -72,7 +64,6 @@ namespace CarRentalApplication.EntityViews
         public VehicleView(VehicleView vehicle)
         {
             InitializeComponent();
-            PrepareComponents();
 
             Id = vehicle.Id;
             IDManagement.MarkVehicleIDAsUnavailable(Id);
@@ -83,97 +74,6 @@ namespace CarRentalApplication.EntityViews
             
             UpdateLanguage(Program.Language);
         }
-
-        [ExcludeFromCodeCoverage]
-        private void PrepareComponents()
-        {
-            labelId = new Label();
-            labelId.Text = Program.Language.Translate("ID");
-            labelId.Location = new Point(3, 18);
-            labelId.AutoSize = true;
-            labelId.Font = new Font(labelId.Font, FontStyle.Bold);
-            Controls.Add(labelId);
-
-            labelIdValue = new Label();
-            labelIdValue.Location = new Point(3, 37);
-            labelIdValue.AutoSize = true;
-            Controls.Add(labelIdValue);
-
-            // -----
-
-            labelVehicleName = new Label();
-            labelVehicleName.Text = Program.Language.Translate("Vehicle name");
-            labelVehicleName.Location = new Point(54, 18);
-            labelVehicleName.AutoSize = true;
-            labelVehicleName.Font = new Font(labelId.Font, FontStyle.Bold);
-            Controls.Add(labelVehicleName);
-
-            labelVehicleNameValue = new Label();
-            labelVehicleNameValue.Location = new Point(54, 37);
-            labelVehicleNameValue.AutoSize = true;
-            Controls.Add(labelVehicleNameValue);
-
-            // -----
-
-            labelVehicleType = new Label();
-            labelVehicleType.Text = Program.Language.Translate("Vehicle type");
-            labelVehicleType.Location = new Point(158, 18);
-            labelVehicleType.AutoSize = true;
-            labelVehicleType.Font = new Font(labelId.Font, FontStyle.Bold);
-            Controls.Add(labelVehicleType);
-
-            labelVehicleTypeValue = new Label();
-            labelVehicleTypeValue.Location = new Point(158, 37);
-            labelVehicleTypeValue.AutoSize = true;
-            Controls.Add(labelVehicleTypeValue);
-
-            // -----
-
-            labelDamagePercentage = new Label();
-            labelDamagePercentage.Text = Program.Language.Translate("Damage percentage");
-            labelDamagePercentage.Location = new Point(255, 18);
-            labelDamagePercentage.AutoSize = true;
-            labelDamagePercentage.Font = new Font(labelId.Font, FontStyle.Bold);
-            Controls.Add(labelDamagePercentage);
-
-            labelDamagePercentageValue = new Label();
-            labelDamagePercentageValue.Location = new Point(255, 37);
-            labelDamagePercentageValue.AutoSize = true;
-            Controls.Add(labelDamagePercentageValue);
-
-            // -----
-
-            labelFuelPercentage = new Label();
-            labelFuelPercentage.Text = Program.Language.Translate("Fuel percentage");
-            labelFuelPercentage.Location = new Point(389, 18);
-            labelFuelPercentage.AutoSize = true;
-            labelFuelPercentage.Font = new Font(labelId.Font, FontStyle.Bold);
-            Controls.Add(labelFuelPercentage);
-
-            labelFuelPercentageValue = new Label();
-            labelFuelPercentageValue.Location = new Point(389, 37);
-            labelFuelPercentageValue.AutoSize = true;
-            Controls.Add(labelFuelPercentageValue);
-
-            // -----
-
-            checkboxSelect = new CheckBox();
-            checkboxSelect.Text = Program.Language.Translate("Select");
-            checkboxSelect.Location = new Point(487, 20);
-            checkboxSelect.AutoSize = true;
-            checkboxSelect.Click += Select;
-            Controls.Add(checkboxSelect);
-
-            // -----
-
-            buttonRent = new Button();
-            buttonRent.Text = Program.Language.Translate("Rent");
-            buttonRent.Location = new Point(472, 49);
-            buttonRent.AutoSize = true;
-            buttonRent.Click += Rent;
-            Controls.Add(buttonRent);
-        }
-
 
         #region Properties
 
@@ -259,11 +159,6 @@ namespace CarRentalApplication.EntityViews
             this.mainWindow = mainWindow;
         }
 
-        private void Rent(object sender, EventArgs e)
-        {
-            mainWindow.RentForm(this.Vehicle);
-        }
-
         private void Select(object sender, EventArgs e)
         {
             var indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
@@ -275,6 +170,11 @@ namespace CarRentalApplication.EntityViews
             }
 
             mainWindow.DeselectVehicle(indexOfCurrentVehicle);
+        }
+
+        private void Rent(object sender, EventArgs e)
+        {
+            mainWindow.RentForm(this.Vehicle);
         }
 
         public virtual void UpdateLanguage(Language language)
@@ -289,11 +189,6 @@ namespace CarRentalApplication.EntityViews
             checkboxSelect.Text = language.Translate("Select");
 
             buttonRent.Text = language.Translate("Rent");
-        }
-
-        public virtual object Clone()
-        {
-            return new VehicleView(Id, VehicleName, FuelPercentage, DamagePercentage);
         }
     }
 }
