@@ -26,12 +26,9 @@ namespace CarRentalApplication.EntityViews
         {
             InitializeComponent();
 
-
-            Id = IDManagement.LowestAvailableRentalID;
-            IDManagement.MarkRentalIDAsUnavailable(Id);
-
             Rental = rental;
 
+            Id = rental.Id;
             RentedVehicle = rental.Vehicle;
             Owner = rental.Owner;
             ReturnDate = rental.ReturnDate;

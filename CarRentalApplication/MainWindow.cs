@@ -188,7 +188,11 @@ namespace CarRentalApplication
             var result = formRentVehicle.ShowDialog();
             if (result == DialogResult.OK)
             {
-                rentals.Add(formRentVehicle.Rental);
+                var rental = formRentVehicle.Rental;
+                rentals.Add(rental);
+
+                rental.Id = IDManagement.LowestAvailableRentalID;
+                IDManagement.MarkRentalIDAsUnavailable(rental.Id);
 
                 var rentalView = new RentalView(formRentVehicle.Rental);
                 AddRentalView(rentalView);
