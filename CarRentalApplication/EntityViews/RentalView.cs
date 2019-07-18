@@ -32,7 +32,7 @@ namespace CarRentalApplication.EntityViews
             Owner = rental.Owner;
             ReturnDate = rental.ReturnDate;
 
-            var rentedVehicleView = new VehicleView(RentedVehicle);
+            rentedVehicleView = new VehicleView(RentedVehicle);
             rentedVehicleView.InputsEnabled = false;
             panelVehicle.Controls.Add(rentedVehicleView);
         }

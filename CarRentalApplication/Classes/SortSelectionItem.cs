@@ -1,16 +1,18 @@
-﻿namespace CarRentalApplication.Classes
+﻿using CarRentalApplication.Enums;
+
+namespace CarRentalApplication.Classes
 {
     public class SortSelectionItem
     {
-        public SortSelectionItem(string name, int value)
+        public SortSelectionItem(string name, SortOptions sortOptions)
         {
             Name = name;
-            Value = value;
+            SortOptions = sortOptions;
         }
 
         public string Name { get; private set; }
 
-        public int Value { get; private set; }
+        public SortOptions SortOptions { get; private set; }
 
         public override string ToString()
         {

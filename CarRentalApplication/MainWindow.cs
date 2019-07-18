@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.EntityViews;
+using CarRentalApplication.Enums;
 using CarRentalApplication.Forms;
 using CarRentalApplication.Logging;
 using CarRentalApplication.Saving;
@@ -59,23 +60,19 @@ namespace CarRentalApplication
         {
             sortVehicleSelectionComboBox.Items.Clear();
 
-            string textID   = Program.Language.Translate("ID");
-            string textName = Program.Language.Translate("Name");
-            string textType = Program.Language.Translate("Type");
+            var textId = Program.Language.Translate("ID");
+            var textName = Program.Language.Translate("Name");
+            var textType = Program.Language.Translate("Type");
+            var textFuelPercentage   = Program.Language.Translate("Fuel percentage");
+            var textDamagePercentage = Program.Language.Translate("Damage percentage");
 
-            string textFuelPercentage   = Program.Language.Translate("Fuel percentage");
-            string textDamagePercentage = Program.Language.Translate("Damage percentage");
+            var selectionId   = new SortSelectionItem(textId, SortOptions.ByVehicleId);
+            var selectionName = new SortSelectionItem(textName, SortOptions.ByVehicleName);
+            var selectionType = new SortSelectionItem(textType, SortOptions.ByVehicleType);
+            var selectionFuelPercentage   = new SortSelectionItem(textFuelPercentage, SortOptions.ByVehicleFuelPercentage);
+            var selectionDamagePercentage = new SortSelectionItem(textDamagePercentage, SortOptions.ByVehicleDamagePercentage);
 
-
-            SortSelectionItem selectionID   = new SortSelectionItem(textID, Constants.SORT_BY_ID);
-            SortSelectionItem selectionName = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
-            SortSelectionItem selectionType = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
-
-            SortSelectionItem selectionFuelPercentage   = new SortSelectionItem(textFuelPercentage, Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE);
-            SortSelectionItem selectionDamagePercentage = new SortSelectionItem(textDamagePercentage, Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE);
-
-
-            sortVehicleSelectionComboBox.Items.Add(selectionID);
+            sortVehicleSelectionComboBox.Items.Add(selectionId);
             sortVehicleSelectionComboBox.Items.Add(selectionName);
             sortVehicleSelectionComboBox.Items.Add(selectionType);
             sortVehicleSelectionComboBox.Items.Add(selectionFuelPercentage);
@@ -88,37 +85,32 @@ namespace CarRentalApplication
         {
             sortRentalSelectionComboBox.Items.Clear();
 
-            string textID        = Program.Language.Translate("ID");
-            string textVehicleID = Program.Language.Translate("Vehicle ID");
-            string textName      = Program.Language.Translate("Vehicle name");
-            string textType      = Program.Language.Translate("Vehicle type");
-            string textFuel      = Program.Language.Translate("Vehicle fuel percentage");
-            string textDamage    = Program.Language.Translate("Vehicle damage percentage");
+            var textId = Program.Language.Translate("ID");
+            var textVehicleId = Program.Language.Translate("Vehicle ID");
+            var textVehicleName = Program.Language.Translate("Vehicle name");
+            var textVehicleType = Program.Language.Translate("Vehicle type");
+            var textVehicleFuelPercentage = Program.Language.Translate("Vehicle fuel percentage");
+            var textVehicleDamagePercentage = Program.Language.Translate("Vehicle damage percentage");
+            var textOwnerName  = Program.Language.Translate("Owner name");
+            var textOwnerPhone = Program.Language.Translate("Owner phone");
+            var textReturnDate = Program.Language.Translate("Return date");
 
-            string textOwnerName  = Program.Language.Translate("Owner name");
-            string textOwnerPhone = Program.Language.Translate("Owner phone");
-            string textReturnDate = Program.Language.Translate("Return date");
+            var selectionId = new SortSelectionItem(textId, SortOptions.ByRentalId);
+            var selectionVehicleId = new SortSelectionItem(textVehicleId, SortOptions.ByVehicleId);
+            var selectionVehicleName = new SortSelectionItem(textVehicleName, SortOptions.ByVehicleName);
+            var selectionVehicleType = new SortSelectionItem(textVehicleType, SortOptions.ByVehicleType);
+            var selectionVehicleFuelPercentage = new SortSelectionItem(textVehicleFuelPercentage, SortOptions.ByVehicleFuelPercentage);
+            var selectionVehicleDamagePercentage = new SortSelectionItem(textVehicleDamagePercentage, SortOptions.ByVehicleDamagePercentage);
+            var selectionOwnerName = new SortSelectionItem(textOwnerName, SortOptions.ByOwnerName);
+            var selectionOwnerPhone = new SortSelectionItem(textOwnerPhone, SortOptions.ByOwnerPhoneNumber);
+            var selectionReturnDate = new SortSelectionItem(textReturnDate, SortOptions.ByReturnDate);
 
-
-            SortSelectionItem selectionID        = new SortSelectionItem(textID, Constants.SORT_BY_ID);
-            SortSelectionItem selectionVehicleID = new SortSelectionItem(textVehicleID, Constants.SORT_BY_VEHICLE_ID);
-            SortSelectionItem selectionName      = new SortSelectionItem(textName, Constants.SORT_BY_VEHICLE_NAME);
-            SortSelectionItem selectionType      = new SortSelectionItem(textType, Constants.SORT_BY_VEHICLE_TYPE);
-            SortSelectionItem selectionFuel      = new SortSelectionItem(textFuel, Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE);
-            SortSelectionItem selectionDamage    = new SortSelectionItem(textDamage, Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE);
-
-            SortSelectionItem selectionOwnerName  = new SortSelectionItem(textOwnerName, Constants.SORT_BY_VEHICLE_OWNER_NAME);
-            SortSelectionItem selectionOwnerPhone = new SortSelectionItem(textOwnerPhone, Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER);
-            SortSelectionItem selectionReturnDate = new SortSelectionItem(textReturnDate, Constants.SORT_BY_VEHICLE_RETURN_DATE);
-
-
-            sortRentalSelectionComboBox.Items.Add(selectionID);
-            sortRentalSelectionComboBox.Items.Add(selectionVehicleID);
-            sortRentalSelectionComboBox.Items.Add(selectionName);
-            sortRentalSelectionComboBox.Items.Add(selectionType);
-            sortRentalSelectionComboBox.Items.Add(selectionFuel);
-            sortRentalSelectionComboBox.Items.Add(selectionDamage);
-
+            sortRentalSelectionComboBox.Items.Add(selectionId);
+            sortRentalSelectionComboBox.Items.Add(selectionVehicleId);
+            sortRentalSelectionComboBox.Items.Add(selectionVehicleName);
+            sortRentalSelectionComboBox.Items.Add(selectionVehicleType);
+            sortRentalSelectionComboBox.Items.Add(selectionVehicleFuelPercentage);
+            sortRentalSelectionComboBox.Items.Add(selectionVehicleDamagePercentage);
             sortRentalSelectionComboBox.Items.Add(selectionOwnerName);
             sortRentalSelectionComboBox.Items.Add(selectionOwnerPhone);
             sortRentalSelectionComboBox.Items.Add(selectionReturnDate);
@@ -789,82 +781,81 @@ namespace CarRentalApplication
 
         private void SortAvailableVehicles(object sender, EventArgs e)
         {
-            var sortSelection = ((SortSelectionItem)sortVehicleSelectionComboBox.SelectedItem).Value;
+            var sortSelection = ((SortSelectionItem)sortVehicleSelectionComboBox.SelectedItem).SortOptions;
 
-            if (sortSelection == Constants.SORT_BY_ID)
+            if (sortSelection == SortOptions.ByVehicleId)
             {
                 vehicles = vehicles.OrderBy(x => x.Id).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
+            if (sortSelection == SortOptions.ByVehicleName)
             {
                 vehicles = vehicles.OrderBy(x => x.Name).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
+            if (sortSelection == SortOptions.ByVehicleType)
             {
                 vehicles = vehicles.OrderBy(x => x.Type).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
+            if (sortSelection == SortOptions.ByVehicleFuelPercentage)
             {
                 vehicles = vehicles.OrderBy(x => x.FuelPercentage).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
+            if (sortSelection == SortOptions.ByVehicleDamagePercentage)
             {
                 vehicles = vehicles.OrderBy(x => x.DamagePercentage).ToList();
             }
 
             PopulateVehiclesPanel();
-
         }
 
         private void SortRentedVehicles(object sender, EventArgs e)
         {
-            var sortSelection = ((SortSelectionItem)sortRentalSelectionComboBox.SelectedItem).Value;
+            var sortSelection = ((SortSelectionItem)sortRentalSelectionComboBox.SelectedItem).SortOptions;
 
-            if (sortSelection == Constants.SORT_BY_ID)
+            if (sortSelection == SortOptions.ByRentalId)
             {
                 rentals = rentals.OrderBy(x => x.Id).ToList();
-            } 
+            }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
+            if (sortSelection == SortOptions.ByVehicleId)
             {
                 rentals = rentals.OrderBy(x => x.Vehicle.Id).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
+            if (sortSelection == SortOptions.ByVehicleId)
             {
                 rentals = rentals.OrderBy(x => x.Vehicle.Name).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
+            if (sortSelection == SortOptions.ByVehicleType)
             {
                 rentals = rentals.OrderBy(x => x.Vehicle.Type).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
+            if (sortSelection == SortOptions.ByVehicleFuelPercentage)
             {
                 rentals = rentals.OrderBy(x => x.Vehicle.FuelPercentage).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
+            if (sortSelection == SortOptions.ByVehicleDamagePercentage)
             {
                 rentals = rentals.OrderBy(x => x.Vehicle.DamagePercentage).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_NAME)
+            if (sortSelection == SortOptions.ByOwnerName)
             {
                 rentals = rentals.OrderBy(x => x.Owner.Name).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER)
+            if (sortSelection == SortOptions.ByOwnerPhoneNumber)
             {
                 rentals = rentals.OrderBy(x => x.Owner.PhoneNumber).ToList();
             }
 
-            if (sortSelection == Constants.SORT_BY_VEHICLE_RETURN_DATE)
+            if (sortSelection == SortOptions.ByReturnDate)
             {
                 rentals = rentals.OrderBy(x => x.ReturnDate).ToList();
             }

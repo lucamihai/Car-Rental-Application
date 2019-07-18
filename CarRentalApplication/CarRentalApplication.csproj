@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
     <Compile Include="Classes\SqlManager.cs" />
+    <Compile Include="Enums\SortOptions.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
