@@ -23,9 +23,6 @@ namespace CarRentalApplication
         private List<RentalView> rentalViews;
         private List<VehicleView> vehicleViews;
 
-        private readonly VehicleSorter vehicleSorter;
-        private readonly RentalSorter rentalSorter;
-
         private Logger returnedVehiclesLogManager;
 
         private SqlManager sqlManager;
@@ -46,9 +43,6 @@ namespace CarRentalApplication
 
             vehicleViews = new List<VehicleView>();
             rentalViews = new List<RentalView>();
-
-            vehicleSorter = new VehicleSorter();
-            rentalSorter  = new RentalSorter();
 
             saveToDatabaseToolStripMenuItem.Available = false;
             loadFromDatabaseToolStripMenuItem.Available = false;
@@ -792,90 +786,89 @@ namespace CarRentalApplication
 
 
         #region Sorting
-        
+
         private void SortAvailableVehicles(object sender, EventArgs e)
         {
-            
-            int sortSelection = ((SortSelectionItem)sortVehicleSelectionComboBox.SelectedItem).Value;
+            var sortSelection = ((SortSelectionItem)sortVehicleSelectionComboBox.SelectedItem).Value;
 
             if (sortSelection == Constants.SORT_BY_ID)
             {
-                vehicleViews = vehicleSorter.SortListByID(vehicleViews);
+                vehicles = vehicles.OrderBy(x => x.Id).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-                vehicleViews = vehicleSorter.SortListByName(vehicleViews);
+                vehicles = vehicles.OrderBy(x => x.Name).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                vehicleViews = vehicleSorter.SortListByType(vehicleViews);
+                vehicles = vehicles.OrderBy(x => x.Type).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
             {
-                vehicleViews = vehicleSorter.SortListByFuelPercent(vehicleViews);
+                vehicles = vehicles.OrderBy(x => x.FuelPercentage).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
             {
-                vehicleViews = vehicleSorter.SortListByDamagePercent(vehicleViews);
+                vehicles = vehicles.OrderBy(x => x.DamagePercentage).ToList();
             }
 
             PopulateVehiclesPanel();
-            
+
         }
 
         private void SortRentedVehicles(object sender, EventArgs e)
         {
-            int sortSelection = ((SortSelectionItem)sortRentalSelectionComboBox.SelectedItem).Value;
+            var sortSelection = ((SortSelectionItem)sortRentalSelectionComboBox.SelectedItem).Value;
 
             if (sortSelection == Constants.SORT_BY_ID)
             {
-                rentalViews = rentalSorter.SortListById(rentalViews);
+                rentals = rentals.OrderBy(x => x.Id).ToList();
             } 
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_ID)
             {
-                rentalViews = rentalSorter.SortListByVehicleId(rentalViews);
+                rentals = rentals.OrderBy(x => x.Vehicle.Id).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_NAME)
             {
-                rentalViews = rentalSorter.SortListByVehicleName(rentalViews);
+                rentals = rentals.OrderBy(x => x.Vehicle.Name).ToList();
             }
-            
+
             if (sortSelection == Constants.SORT_BY_VEHICLE_TYPE)
             {
-                rentalViews = rentalSorter.SortListByVehicleType(rentalViews);
+                rentals = rentals.OrderBy(x => x.Vehicle.Type).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_FUEL_PERCENTAGE)
             {
-                rentalViews = rentalSorter.SortListByVehicleFuelPercentage(rentalViews);
+                rentals = rentals.OrderBy(x => x.Vehicle.FuelPercentage).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_DAMAGE_PERCENTAGE)
             {
-                rentalViews = rentalSorter.SortListByVehicleDamagePercentage(rentalViews);
+                rentals = rentals.OrderBy(x => x.Vehicle.DamagePercentage).ToList();
             }
 
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_NAME)
             {
-                rentalViews = rentalSorter.SortListByOwnerName(rentalViews);
+                rentals = rentals.OrderBy(x => x.Owner.Name).ToList();
             }
-            
+
             if (sortSelection == Constants.SORT_BY_VEHICLE_OWNER_PHONE_NUMBER)
             {
-                rentalViews = rentalSorter.SortListByOwnerPhoneNumber(rentalViews);
+                rentals = rentals.OrderBy(x => x.Owner.PhoneNumber).ToList();
             }
-            
+
             if (sortSelection == Constants.SORT_BY_VEHICLE_RETURN_DATE)
             {
-                rentalViews = rentalSorter.SortListByReturnDate(rentalViews);
+                rentals = rentals.OrderBy(x => x.ReturnDate).ToList();
             }
-            
+
             PopulateRentalsPanel();
         }
 

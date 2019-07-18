@@ -49,10 +49,8 @@
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\IDManagement.cs" />
-    <Compile Include="Classes\RentalSorter.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />
     <Compile Include="Classes\SqlManager.cs" />
-    <Compile Include="Classes\VehicleSorter.cs" />
     <Compile Include="Forms\FormAddVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +175,9 @@
       <Project>{a1c81ff3-4640-4015-af7d-c91649249b4b}</Project>
       <Name>CarRentalApplication.Translating</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sorters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
