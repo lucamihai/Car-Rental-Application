@@ -214,7 +214,7 @@ namespace CarRentalApplication
 
             if (sqlManager != null)
             {
-                var isConnected = sqlManager.ConnectionIsSuccesful();
+                var isConnected = sqlManager.ConnectionIsSuccessful();
                 if (isConnected)
                 {
                     saveToDatabaseToolStripMenuItem.Available = true;
@@ -241,8 +241,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            vehicleViews = sqlManager.GetVehiclesFromDatabase();
-            rentalViews = sqlManager.GetRentalsFromDatabase(vehicleViews);
+            vehicles = sqlManager.GetVehiclesFromDatabase();
+            rentals = sqlManager.GetRentalsFromDatabase();
 
             foreach (var rental in rentalViews)
             {
@@ -265,10 +265,10 @@ namespace CarRentalApplication
             sqlManager.ClearVehiclesFromDatabase();
             sqlManager.ClearRentalsFromDatabase();
 
-            foreach (var vehicle in vehicleViews)
+            foreach (var vehicle in vehicles)
                 sqlManager.SaveVehicleToDatabase(vehicle);
 
-            foreach (var rental in rentalViews)
+            foreach (var rental in rentals)
                 sqlManager.SaveRentalToDatabase(rental);
         }
 
