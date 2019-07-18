@@ -244,10 +244,10 @@ namespace CarRentalApplication
             vehicles = sqlManager.GetVehiclesFromDatabase();
             rentals = sqlManager.GetRentalsFromDatabase();
 
-            foreach (var rental in rentalViews)
-            {
-                //vehicleViews.Remove(rental.Vehicleee);
-            }
+            ClearVehiclesFromVehicleListThatAreFoundInRentalList();
+
+            PopulateVehiclesPanel();
+            PopulateRentalsPanel();
         }
 
         private void SaveToDatabase(object sender, EventArgs e)
@@ -265,11 +265,20 @@ namespace CarRentalApplication
             sqlManager.ClearVehiclesFromDatabase();
             sqlManager.ClearRentalsFromDatabase();
 
-            foreach (var vehicle in vehicles)
-                sqlManager.SaveVehicleToDatabase(vehicle);
+            sqlManager.SaveVehiclesToDatabase(vehicles);
+            sqlManager.SaveRentalsToDatabase(rentals);
+        }
 
+        private void ClearVehiclesFromVehicleListThatAreFoundInRentalList()
+        {
             foreach (var rental in rentals)
-                sqlManager.SaveRentalToDatabase(rental);
+            {
+                var rentedVehicle = rental.Vehicle;
+                var vehicleFromList = vehicles.FirstOrDefault(x => x.Id == rentedVehicle.Id);
+
+                if (vehicleFromList != null)
+                    vehicles.Remove(vehicleFromList);
+            }
         }
 
         #endregion

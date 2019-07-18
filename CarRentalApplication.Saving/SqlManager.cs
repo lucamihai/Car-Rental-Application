@@ -8,7 +8,8 @@ namespace CarRentalApplication.Saving
 {
     public class SqlManager
     {
-        private SqlConnection _sqlConnection
+        private SqlConnection sqlConnection;
+        private SqlConnection SqlConnection
         {
             set
             {
@@ -20,24 +21,10 @@ namespace CarRentalApplication.Saving
                 }
             }
         }
-        private SqlConnection sqlConnection;
 
         public SqlManager(string connectionString)
         {
-            _sqlConnection = new SqlConnection(connectionString);
-        }
-
-        public SqlManager(string dataSource, string userID, string password, string initialCatalog)
-        {
-            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder
-            {
-                DataSource = dataSource,
-                UserID = userID,
-                Password = password,
-                InitialCatalog = initialCatalog
-            };
-
-            _sqlConnection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString);
+            SqlConnection = new SqlConnection(connectionString);
         }
 
         public bool ConnectionIsSuccessful()
@@ -50,48 +37,10 @@ namespace CarRentalApplication.Saving
                 return true;
             }
 
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
-
-        }
-
-        private void CreateTablesIfNotExisting()
-        {
-            CreateTableVehicleIfNotExists();
-            CreateTableRentalIfNotExists();
-        }
-
-        private void CreateTableVehicleIfNotExists()
-        {
-            var query =
-                @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='vehicles' AND xtype='U')
-                    CREATE TABLE vehicles(
-                        id int NOT NULL,
-                        name VARCHAR(64) NOT NULL,
-                        type VARCHAR(25),
-                        fuel_percentage int,
-                        damage_percentage int
-                    )
-                GO";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            sqlCommand.ExecuteNonQuery();
-        }
-
-        private void CreateTableRentalIfNotExists()
-        {
-            var query =
-                @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='rentals' AND xtype='U')
-                    CREATE TABLE rentals(
-                        id int NOT NULL,
-                        owner_name VARCHAR(64) NOT NULL,
-                        owner_phone_number VARCHAR(20),
-                        vehicle_id int
-                    )
-                GO";
-            var sqlCommand = new SqlCommand(query, sqlConnection);
-            sqlCommand.ExecuteNonQuery();
         }
 
         public void ClearVehiclesFromDatabase()
@@ -116,9 +65,25 @@ namespace CarRentalApplication.Saving
             sqlConnection.Close();
         }
 
-        public void SaveVehicleToDatabase(Vehicle vehicle)
+        public void SaveVehiclesToDatabase(List<Vehicle> vehicles)
         {
-            var query = "INSERT INTO vehicles (id, type, name, fuel_percentage, damage_percentage)";
+            foreach (var vehicle in vehicles)
+            {
+                SaveVehicleToDatabase(vehicle);
+            }
+        }
+
+        public void SaveRentalsToDatabase(List<Rental> rentals)
+        {
+            foreach (var rental in rentals)
+            {
+                SaveRentalToDatabase(rental);
+            }
+        }
+
+        private void SaveVehicleToDatabase(Vehicle vehicle)
+        {
+            var query = "INSERT INTO vehicles (id, name, type, fuel_percentage, damage_percentage)";
             query += " VALUES (@id, @name, @type, @fuel, @damage)";
 
             sqlConnection.Open();
@@ -134,11 +99,11 @@ namespace CarRentalApplication.Saving
             sqlConnection.Close();
         }
 
-        public void SaveRentalToDatabase(Rental rental)
+        private void SaveRentalToDatabase(Rental rental)
         {
             SaveVehicleToDatabase(rental.Vehicle);
 
-            var query = "INSERT INTO rentals (id, owner_name, owner_phonenumber, return_date, vehicle_id)";
+            var query = "INSERT INTO rentals (id, owner_name, owner_phone_number, return_date, vehicle_id)";
             query += " VALUES (@id, @owner_name, @owner_phone_number, @return_date, @vehicle_id)";
 
             sqlConnection.Open();
@@ -168,11 +133,12 @@ namespace CarRentalApplication.Saving
 
                 while (sqlDataReader.Read())
                 {
-                    var vehicleId = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
-                    var vehicleType = (VehicleType)sqlDataReader["type"];
+                    var vehicleId = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("id"));
                     var vehicleName = sqlDataReader["name"].ToString();
-                    var vehicleFuelPercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel_percentage"));
-                    var vehicleDamagePercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage_percentage"));
+                    var vehicleFuelPercentage = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("fuel_percentage"));
+                    var vehicleDamagePercentage = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("damage_percentage"));
+
+                    Enum.TryParse<VehicleType>(sqlDataReader["type"].ToString(), out var vehicleType);
 
                     var importedVehicle = new Vehicle
                     {
@@ -216,7 +182,7 @@ namespace CarRentalApplication.Saving
 
                 while (sqlDataReader.Read())
                 {
-                    var id = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("id"));
+                    var id = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("id"));
 
                     var ownerName = sqlDataReader["owner_name"].ToString();
                     var ownerPhoneNumber = sqlDataReader["owner_phone_number"].ToString();
@@ -225,17 +191,23 @@ namespace CarRentalApplication.Saving
                     var returnDateString = sqlDataReader["return_date"].ToString();
                     var returnDate = DateTime.Parse(returnDateString);
 
-                    var vehicleId = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("vehicle_id"));
-                    var vehicle = GetVehicleById(vehicleId);
+                    var vehicleId = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("vehicle_id"));
 
                     var importedRental = new Rental
                     {
                         Id = id,
                         Owner = owner,
                         ReturnDate = returnDate,
-                        Vehicle = vehicle
+                        Vehicle = new Vehicle { Id = vehicleId }
                     };
                     importedRentals.Add(importedRental);
+                }
+
+                sqlDataReader.Close();
+
+                foreach (var importedRental in importedRentals)
+                {
+                    importedRental.Vehicle = GetVehicleById(importedRental.Vehicle.Id);
                 }
 
                 sqlDataReader.Close();
@@ -254,12 +226,59 @@ namespace CarRentalApplication.Saving
             return importedRentals;
         }
 
-        private Vehicle GetVehicleById(short id)
+        private void CreateTablesIfNotExisting()
         {
-            var sqlQuery = "SELECT id, owner_name, owner_phone_number, return_date, vehicle_id FROM rentals";
-            var sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
+            CreateTableVehicleIfNotExists();
+            CreateTableRentalIfNotExists();
+        }
+
+        private void CreateTableVehicleIfNotExists()
+        {
+            var query =
+                @"
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='vehicles' AND xtype='U')
+    CREATE TABLE vehicles(
+        id int NOT NULL,
+        name VARCHAR(64) NOT NULL,
+        type VARCHAR(25),
+        fuel_percentage int,
+        damage_percentage int
+)";
 
             sqlConnection.Open();
+
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            sqlCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        private void CreateTableRentalIfNotExists()
+        {
+            var query =
+                @"
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='rentals' AND xtype='U')
+    CREATE TABLE rentals(
+        id int NOT NULL,
+        owner_name VARCHAR(64) NOT NULL,
+        owner_phone_number VARCHAR(20),
+        return_date datetime NOT NULL,
+        vehicle_id int
+    )";
+
+            sqlConnection.Open();
+
+            var sqlCommand = new SqlCommand(query, sqlConnection);
+            sqlCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+        }
+
+        private Vehicle GetVehicleById(short vehicleId)
+        {
+            var sqlQuery = $"SELECT id, type, name, fuel_percentage, damage_percentage FROM vehicles WHERE id = {vehicleId}";
+            var sqlCommand = new SqlCommand(sqlQuery, sqlConnection);
+
             var sqlDataReader = sqlCommand.ExecuteReader();
 
             if (!sqlDataReader.Read())
@@ -267,13 +286,15 @@ namespace CarRentalApplication.Saving
                 throw new InvalidOperationException();
             }
 
-            var vehicleType = (VehicleType)sqlDataReader["type"];
             var vehicleName = sqlDataReader["name"].ToString();
-            var vehicleFuelPercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("fuel_percentage"));
-            var vehicleDamagePercentage = sqlDataReader.GetInt16(sqlDataReader.GetOrdinal("damage_percentage"));
+            var vehicleFuelPercentage = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("fuel_percentage"));
+            var vehicleDamagePercentage = (short)sqlDataReader.GetInt32(sqlDataReader.GetOrdinal("damage_percentage"));
+
+            Enum.TryParse<VehicleType>(sqlDataReader["type"].ToString(), out var vehicleType);
 
             var vehicle = new Vehicle
             {
+                Id = vehicleId,
                 Name = vehicleName,
                 Type = vehicleType,
                 FuelPercentage = vehicleFuelPercentage,
