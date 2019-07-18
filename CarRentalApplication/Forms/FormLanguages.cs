@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using CarRentalApplication.Translating;
 
 namespace CarRentalApplication.Forms
 {
+    [ExcludeFromCodeCoverage]
     public partial class FormLanguages : Form
     {
         public Language ChosenLanguage { get; set; }

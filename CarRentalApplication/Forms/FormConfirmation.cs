@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 
 namespace CarRentalApplication.Forms
 {
+    [ExcludeFromCodeCoverage]
     public partial class FormConfirmation : Form
     {
         public FormConfirmation(string action = null, string consequence = null)

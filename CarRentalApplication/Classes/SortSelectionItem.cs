@@ -1,7 +1,9 @@
-﻿using CarRentalApplication.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using CarRentalApplication.Enums;
 
 namespace CarRentalApplication.Classes
 {
+    [ExcludeFromCodeCoverage]
     public class SortSelectionItem
     {
         public SortSelectionItem(string name, SortOptions sortOptions)

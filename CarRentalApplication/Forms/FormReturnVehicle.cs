@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 using CarRentalApplication.Domain.Entities;
 
@@ -8,16 +9,16 @@ namespace CarRentalApplication.Forms
     {
         private readonly Rental rental;
 
+        [ExcludeFromCodeCoverage]
         public string OrderDetails { get; set; }
-        public Vehicle ReturnedVehicle { get; set; }
 
-        public FormReturnVehicle()
-        {
-            InitializeComponent();
-        }
+        [ExcludeFromCodeCoverage]
+        public Vehicle ReturnedVehicle { get; set; }
 
         public FormReturnVehicle(Rental rental)
         {
+            ValidateRental(rental);
+
             InitializeComponent();
             this.rental = rental;
 
@@ -30,6 +31,17 @@ namespace CarRentalApplication.Forms
             buttonCancel.Text = Program.Language.Translate("Cancel");
         }
 
+        private void ValidateRental(Rental rental)
+        {
+            if (rental == null)
+            {
+                throw new ArgumentNullException($"{nameof(rental)} must be provided");
+            }
+
+            rental.ValidateAndThrow();
+        }
+
+        [ExcludeFromCodeCoverage]
         private void ReturnFromRent(object sender, EventArgs e)
         {
             if (rental != null)
@@ -55,6 +67,7 @@ namespace CarRentalApplication.Forms
             }
         }
 
+        [ExcludeFromCodeCoverage]
         private void Cancel(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;

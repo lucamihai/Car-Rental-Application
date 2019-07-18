@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
 
 namespace CarRentalApplication.Forms
 {
+    [ExcludeFromCodeCoverage]
     public partial class FormSqlConnection : Form
     {
         public string ConnectionString { get; private set; }
+
         public FormSqlConnection()
         {
             InitializeComponent();

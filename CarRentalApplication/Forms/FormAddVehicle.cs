@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
@@ -6,6 +7,7 @@ using CarRentalApplication.Domain.Enums;
 
 namespace CarRentalApplication.Forms
 {
+    [ExcludeFromCodeCoverage]
     public partial class FormAddVehicle : Form
     {
         public Vehicle Vehicle { get; set; }
