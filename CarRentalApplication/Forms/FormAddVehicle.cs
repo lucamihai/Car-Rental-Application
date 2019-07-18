@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
-using CarRentalApplication.EntityViews;
+using CarRentalApplication.Domain.Enums;
 
 namespace CarRentalApplication.Forms
 {
@@ -39,24 +39,21 @@ namespace CarRentalApplication.Forms
             var fuelPercentage = (short)numericUpDownFuelPercentage.Value;
             var damagePercentage = (short)numericUpDownDamagePercentage.Value;
 
+            Vehicle = new Vehicle
+            {
+                Name = textBoxVehicleName.Text,
+                FuelPercentage = fuelPercentage,
+                DamagePercentage = damagePercentage
+            };
+
             if (radioButtonSedan.Checked)
             {
-                Vehicle = new Sedan
-                {
-                    Name = textBoxVehicleName.Text,
-                    FuelPercentage = fuelPercentage,
-                    DamagePercentage = damagePercentage
-                };
+                Vehicle.Type = VehicleType.Sedan;
             }
 
             if (radioButtonMinivan.Checked)
             {
-                Vehicle = new Minivan
-                {
-                    Name = textBoxVehicleName.Text,
-                    FuelPercentage = fuelPercentage,
-                    DamagePercentage = damagePercentage
-                };
+                Vehicle.Type = VehicleType.Minivan;
             }
 
             if (Vehicle != null)

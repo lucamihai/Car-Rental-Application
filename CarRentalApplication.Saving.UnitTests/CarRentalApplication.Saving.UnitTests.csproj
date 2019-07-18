@@ -53,8 +53,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="DomainEntities.cs" />
     <Compile Include="JsonManagerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,6 +67,10 @@
     <ProjectReference Include="..\CarRentalApplication.Saving\CarRentalApplication.Saving.csproj">
       <Project>{cff9307a-b259-4374-8ba7-8ac8850a8b10}</Project>
       <Name>CarRentalApplication.Saving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CarRentalApplication.UnitTests.Common\CarRentalApplication.UnitTests.Common.csproj">
+      <Project>{197451db-e9f6-4435-bca9-45559eb89e3a}</Project>
+      <Name>CarRentalApplication.UnitTests.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

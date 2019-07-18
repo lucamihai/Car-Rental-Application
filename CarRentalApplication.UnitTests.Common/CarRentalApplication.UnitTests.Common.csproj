@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{05FD1730-F7C8-4E77-AD7B-3B0672ADB7F3}</ProjectGuid>
+    <ProjectGuid>{197451DB-E9F6-4435-BCA9-45559EB89E3A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CarRentalApplication.Domain</RootNamespace>
-    <AssemblyName>CarRentalApplication.Domain</AssemblyName>
+    <RootNamespace>CarRentalApplication.UnitTests.Common</RootNamespace>
+    <AssemblyName>CarRentalApplication.UnitTests.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.8.4.0\lib\net45\FluentValidation.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,17 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Person.cs" />
-    <Compile Include="Entities\Rental.cs" />
-    <Compile Include="Entities\Vehicle.cs" />
-    <Compile Include="Enums\VehicleType.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="DomainEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\PersonValidator.cs" />
-    <Compile Include="Validators\RentalValidator.cs" />
-    <Compile Include="Validators\VehicleValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\CarRentalApplication.Domain\CarRentalApplication.Domain.csproj">
+      <Project>{05fd1730-f7c8-4e77-ad7b-3b0672adb7f3}</Project>
+      <Name>CarRentalApplication.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

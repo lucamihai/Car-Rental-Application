@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using CarRentalApplication.Domain.Entities;
+using CarRentalApplication.Domain.Enums;
 using FluentValidation;
 
 namespace CarRentalApplication.Domain.Validators
@@ -24,19 +25,19 @@ namespace CarRentalApplication.Domain.Validators
         private void ValidateType()
         {
             RuleFor(x => x.Type)
-                .NotEmpty();
+                .NotEqual(VehicleType.Undefined);
         }
 
         private void ValidateFuelPercentage()
         {
             RuleFor(x => x.FuelPercentage)
-                .ExclusiveBetween((short) 0, (short) 100);
+                .InclusiveBetween((short) 0, (short) 100);
         }
 
         private void ValidateDamagePercentage()
         {
             RuleFor(x => x.DamagePercentage)
-                .ExclusiveBetween((short)0, (short)100);
+                .InclusiveBetween((short)0, (short)100);
         }
     }
 }

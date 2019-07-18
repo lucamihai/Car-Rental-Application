@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using CarRentalApplication.UnitTests.Common;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -29,7 +30,7 @@ namespace CarRentalApplication.Saving.UnitTests
 
             Assert.IsTrue(File.Exists(jsonVehiclesFilePath));
         }
-        
+
         [TestMethod]
         public void WriteVehiclesToJsonFileWillOverwriteExistingFile()
         {

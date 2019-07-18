@@ -123,18 +123,19 @@ namespace CarRentalApplication.Classes
 
             sqlConnection.Open();
 
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", vehicle.Id);
-            myCommand.Parameters.AddWithValue("@type", vehicle.GetType().Name);
-            myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
-            myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
-            myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
-            myCommand.ExecuteNonQuery();
+            //TODO
+            //SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            //myCommand.Parameters.AddWithValue("@id", vehicle.Id);
+            //myCommand.Parameters.AddWithValue("@type", vehicle.GetType().Name);
+            //myCommand.Parameters.AddWithValue("@name", vehicle.VehicleName);
+            //myCommand.Parameters.AddWithValue("@fuel", vehicle.FuelPercentage);
+            //myCommand.Parameters.AddWithValue("@damage", vehicle.DamagePercentage);
+            //myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
         }
 
-        public void SaveRentalToDatabase(RentalView rental)
+        public void SaveRentalToDatabase(RentalView rentalView)
         {
             //TODO
             //SaveVehicleToDatabase(rental.RentedVehicle);
@@ -144,13 +145,14 @@ namespace CarRentalApplication.Classes
 
             sqlConnection.Open();
 
-            SqlCommand myCommand = new SqlCommand(query, sqlConnection);
-            myCommand.Parameters.AddWithValue("@id", rental.Id);
-            myCommand.Parameters.AddWithValue("@owner_name", rental.Owner.Name);
-            myCommand.Parameters.AddWithValue("@owner_phone_number", rental.Owner.PhoneNumber);
-            myCommand.Parameters.AddWithValue("@return_date", rental.ReturnDate.ToShortDateString());
-            myCommand.Parameters.AddWithValue("@vehicle_id", rental.RentedVehicle.Id);
-            myCommand.ExecuteNonQuery();
+            //TODO
+            //SqlCommand myCommand = new SqlCommand(query, sqlConnection);
+            //myCommand.Parameters.AddWithValue("@id", rentalView.Id);
+            //myCommand.Parameters.AddWithValue("@owner_name", rentalView.Owner.Name);
+            //myCommand.Parameters.AddWithValue("@owner_phone_number", rentalView.Owner.PhoneNumber);
+            //myCommand.Parameters.AddWithValue("@return_date", rentalView.ReturnDate.ToShortDateString());
+            //myCommand.Parameters.AddWithValue("@vehicle_id", rentalView.Rental.Vehicle.Id);
+            //myCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
         }
@@ -258,10 +260,11 @@ namespace CarRentalApplication.Classes
         {
             foreach (VehicleView vehicle in vehicles)
             {
-                if (vehicle.Id == vehicleID)
-                {
-                    return vehicle;
-                }
+                //TODO
+                //if (vehicle.Id == vehicleID)
+                //{
+                //    return vehicle;
+                //}
             }
 
             throw new Exception();

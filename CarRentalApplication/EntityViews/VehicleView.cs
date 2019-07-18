@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
-using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
@@ -10,22 +10,19 @@ namespace CarRentalApplication.EntityViews
     {
         private MainWindow mainWindow;
 
-        public Vehicle Vehicle { get; private set; }
-
-        public VehicleView()
-        {
-            InitializeComponent();
-        }
+        public Vehicle Vehicle { get; }
 
         public VehicleView(Vehicle vehicle)
         {
+            ValidateVehicle(vehicle);
+
             InitializeComponent();
 
-            Id = vehicle.Id;
-            VehicleName = vehicle.Name;
-            labelVehicleTypeValue.Text = vehicle.Type;
-            FuelPercentage = vehicle.FuelPercentage;
-            DamagePercentage = vehicle.DamagePercentage;
+            labelIdValue.Text = vehicle.Id.ToString();
+            labelVehicleNameValue.Text = vehicle.Name;
+            labelVehicleTypeValue.Text = vehicle.Type.ToString();
+            labelFuelPercentageValue.Text = vehicle.FuelPercentage.ToString();
+            labelDamagePercentageValue.Text = vehicle.DamagePercentage.ToString();
 
             Vehicle = vehicle;
 
@@ -33,9 +30,17 @@ namespace CarRentalApplication.EntityViews
             buttonRent.Click += Rent;
         }
 
+        private void ValidateVehicle(Vehicle vehicle)
+        {
+            if (vehicle == null)
+            {
+                throw new ArgumentNullException($"{nameof(vehicle)} must be provided");
+            }
 
-        #region Properties
+            vehicle.ValidateAndThrow();
+        }
 
+        [ExcludeFromCodeCoverage]
         public bool Selected
         {
             get => checkboxSelect.Checked;
@@ -59,34 +64,7 @@ namespace CarRentalApplication.EntityViews
             }
         }
 
-        public short Id
-        {
-            get => Convert.ToInt16(labelIdValue.Text);
-            private set
-            {
-                labelIdValue.Text = value.ToString();
-                IDManagement.MarkVehicleIDAsUnavailable(value);
-            }
-        }
-
-        public string VehicleName
-        {
-            get => labelVehicleNameValue.Text;
-            private set => labelVehicleNameValue.Text = value;
-        }
-
-        public short FuelPercentage
-        {
-            get => Convert.ToInt16(labelFuelPercentageValue.Text);
-            set => labelFuelPercentageValue.Text = value.ToString();
-        }
-
-        public short DamagePercentage
-        {
-            get => Convert.ToInt16(labelDamagePercentageValue.Text);
-            set => labelDamagePercentageValue.Text = value.ToString();
-        }
-
+        [ExcludeFromCodeCoverage]
         public bool InputsEnabled
         {
             set
@@ -96,14 +74,13 @@ namespace CarRentalApplication.EntityViews
             }
         }
 
-        #endregion
-
-
+        [ExcludeFromCodeCoverage]
         public void LinkToMainWindow(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
         }
 
+        [ExcludeFromCodeCoverage]
         private void Select(object sender, EventArgs e)
         {
             var indexOfCurrentVehicle = mainWindow.GetVehicleIndex(this);
@@ -117,12 +94,14 @@ namespace CarRentalApplication.EntityViews
             mainWindow.DeselectVehicle(indexOfCurrentVehicle);
         }
 
+        [ExcludeFromCodeCoverage]
         private void Rent(object sender, EventArgs e)
         {
             mainWindow.RentForm(this.Vehicle);
         }
 
-        public virtual void UpdateLanguage(Language language)
+        [ExcludeFromCodeCoverage]
+        public void UpdateLanguage(Language language)
         {
             labelId.Text = language.Translate("ID");
             labelVehicleName.Text = language.Translate("Vehicle name");
@@ -135,6 +114,5 @@ namespace CarRentalApplication.EntityViews
 
             buttonRent.Text = language.Translate("Rent");
         }
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
-using CarRentalApplication.Classes;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Translating;
 
@@ -9,36 +9,39 @@ namespace CarRentalApplication.EntityViews
     public partial class RentalView : UserControl
     {
         private MainWindow mainWindow;
-        private VehicleView rentedVehicleView;
-        private Person owner;
-        private DateTime returnDate;
+        private readonly VehicleView rentedVehicleView;
 
-        public Vehicle RentedVehicle { get; private set; }
-        public Rental Rental { get; private set; }
-
-        public RentalView()
-        {
-            InitializeComponent();
-        }
+        public Rental Rental { get; }
 
         public RentalView(Rental rental)
         {
+            ValidateRental(rental);
+
             InitializeComponent();
 
             Rental = rental;
 
-            Id = rental.Id;
-            RentedVehicle = rental.Vehicle;
-            Owner = rental.Owner;
-            ReturnDate = rental.ReturnDate;
+            labelIDValue.Text = rental.Id.ToString();
+            labelOwnerNameValue.Text = rental.Owner.Name;
+            labelOwnerPhoneValue.Text = rental.Owner.PhoneNumber;
+            labelReturnDateValue.Text = rental.ReturnDate.ToShortDateString();
 
-            rentedVehicleView = new VehicleView(RentedVehicle);
+            rentedVehicleView = new VehicleView(Rental.Vehicle);
             rentedVehicleView.InputsEnabled = false;
             panelVehicle.Controls.Add(rentedVehicleView);
         }
 
-        #region Properties
+        private void ValidateRental(Rental rental)
+        {
+            if (rental == null)
+            {
+                throw new ArgumentNullException($"{nameof(rental)} must be provided");
+            }
 
+            rental.ValidateAndThrow();
+        }
+
+        [ExcludeFromCodeCoverage]
         public bool Selected
         {
             get => checkboxSelect.Checked;
@@ -52,7 +55,6 @@ namespace CarRentalApplication.EntityViews
 
                     if (checkboxSelect.Checked)
                     {
-                        
                         mainWindow.SelectRental(rentalIndex);
                     }
                     else
@@ -63,44 +65,13 @@ namespace CarRentalApplication.EntityViews
             }
         }
 
-        public short Id
-        {
-            get => Convert.ToInt16(labelIDValue.Text);
-            private set
-            {
-                labelIDValue.Text = value.ToString();
-                IDManagement.MarkVehicleIDAsUnavailable(value);
-            }
-        }
-
-        public Person Owner
-        {
-            get => owner;
-            private set
-            {
-                owner = value;
-                labelOwnerNameValue.Text = owner.Name;
-                labelOwnerPhoneValue.Text = owner.PhoneNumber;
-            }
-        }
-
-        public DateTime ReturnDate
-        {
-            get => returnDate;
-            private set
-            {
-                returnDate = value;
-                labelReturnDateValue.Text = returnDate.ToShortDateString();
-            }
-        }
-
-        #endregion
-
+        [ExcludeFromCodeCoverage]
         public void LinkToMainWindow(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
         }
 
+        [ExcludeFromCodeCoverage]
         public void UpdateLanguage(Language language)
         {
             labelID.Text = language.Translate("ID");
@@ -114,11 +85,13 @@ namespace CarRentalApplication.EntityViews
             rentedVehicleView.UpdateLanguage(language);
         }
 
+        [ExcludeFromCodeCoverage]
         private void Return(object sender, EventArgs e)
         {
             mainWindow.ReturnForm(this.Rental);
         }
 
+        [ExcludeFromCodeCoverage]
         private void Select(object sender, EventArgs e)
         {
             var rentalIndex = mainWindow.GetRentalIndex(this);

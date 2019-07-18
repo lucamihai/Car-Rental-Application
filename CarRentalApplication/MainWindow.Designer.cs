@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace CarRentalApplication
+﻿namespace CarRentalApplication
 {
     partial class MainWindow
     {
@@ -13,7 +11,6 @@ namespace CarRentalApplication
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        [ExcludeFromCodeCoverage]
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -29,7 +26,6 @@ namespace CarRentalApplication
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        [ExcludeFromCodeCoverage]
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -94,7 +90,7 @@ namespace CarRentalApplication
             this.buttonSelectAllAvailable.TabIndex = 10;
             this.buttonSelectAllAvailable.Text = "Select All";
             this.buttonSelectAllAvailable.UseVisualStyleBackColor = true;
-            this.buttonSelectAllAvailable.Click += new System.EventHandler(this.SelectAllVehicles);
+            this.buttonSelectAllAvailable.Click += new System.EventHandler(this.SelectAllVehicleViews);
             // 
             // sortVehicleSelectionComboBox
             // 
@@ -186,7 +182,7 @@ namespace CarRentalApplication
             this.buttonSelectAllRented.TabIndex = 11;
             this.buttonSelectAllRented.Text = "Select All";
             this.buttonSelectAllRented.UseVisualStyleBackColor = true;
-            this.buttonSelectAllRented.Click += new System.EventHandler(this.buttonSelectAllRented_Click);
+            this.buttonSelectAllRented.Click += new System.EventHandler(this.SelectAllRentalViews);
             // 
             // buttonRemoveSelectedRentedCars
             // 
@@ -293,21 +289,21 @@ namespace CarRentalApplication
             this.loadFromDatabaseToolStripMenuItem.Name = "loadFromDatabaseToolStripMenuItem";
             this.loadFromDatabaseToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.loadFromDatabaseToolStripMenuItem.Text = "Load from database";
-            this.loadFromDatabaseToolStripMenuItem.Click += new System.EventHandler(this.loadFromDatabaseToolStripMenuItem_Click);
+            this.loadFromDatabaseToolStripMenuItem.Click += new System.EventHandler(this.LoadFromDatabase);
             // 
             // saveToDatabaseToolStripMenuItem
             // 
             this.saveToDatabaseToolStripMenuItem.Name = "saveToDatabaseToolStripMenuItem";
             this.saveToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.saveToDatabaseToolStripMenuItem.Text = "Save to database";
-            this.saveToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.saveToDatabaseToolStripMenuItem_Click);
+            this.saveToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.SaveToDatabase);
             // 
             // connectToDatabaseToolStripMenuItem
             // 
             this.connectToDatabaseToolStripMenuItem.Name = "connectToDatabaseToolStripMenuItem";
             this.connectToDatabaseToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.connectToDatabaseToolStripMenuItem.Text = "Connect to database";
-            this.connectToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.connectToDatabaseToolStripMenuItem_Click);
+            this.connectToDatabaseToolStripMenuItem.Click += new System.EventHandler(this.ConnectToDatabase);
             // 
             // localFileToolStripMenuItem
             // 
@@ -346,21 +342,21 @@ namespace CarRentalApplication
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenLog);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteLog);
             // 
             // languageToolStripMenuItem
             // 
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             this.languageToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.languageToolStripMenuItem.Text = "Language";
-            this.languageToolStripMenuItem.Click += new System.EventHandler(this.languageToolStripMenuItem_Click);
+            this.languageToolStripMenuItem.Click += new System.EventHandler(this.LanguageMenu);
             // 
             // mainMenuStrip
             // 
