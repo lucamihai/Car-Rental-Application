@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E8D7C7BE-9B02-4B10-81E2-418C9F72CF29}</ProjectGuid>
+    <ProjectGuid>{F5065E09-7F2B-4AAF-8364-C99356D93EC8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CarRentalApplication.Saving.UnitTests</RootNamespace>
-    <AssemblyName>CarRentalApplication.Saving.UnitTests</AssemblyName>
+    <RootNamespace>CarRentalApplication.FileSaving.UnitTests</RootNamespace>
+    <AssemblyName>CarRentalApplication.FileSaving.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -64,9 +64,9 @@
       <Project>{05fd1730-f7c8-4e77-ad7b-3b0672adb7f3}</Project>
       <Name>CarRentalApplication.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CarRentalApplication.Saving\CarRentalApplication.Saving.csproj">
-      <Project>{cff9307a-b259-4374-8ba7-8ac8850a8b10}</Project>
-      <Name>CarRentalApplication.Saving</Name>
+    <ProjectReference Include="..\CarRentalApplication.FileSaving\CarRentalApplication.FileSaving.csproj">
+      <Project>{200ee4be-d104-4a33-ae30-68b35eed0d0c}</Project>
+      <Name>CarRentalApplication.FileSaving</Name>
     </ProjectReference>
     <ProjectReference Include="..\CarRentalApplication.UnitTests.Common\CarRentalApplication.UnitTests.Common.csproj">
       <Project>{197451db-e9f6-4435-bca9-45559eb89e3a}</Project>

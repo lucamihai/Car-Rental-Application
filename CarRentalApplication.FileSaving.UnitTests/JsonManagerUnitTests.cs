@@ -5,7 +5,7 @@ using CarRentalApplication.UnitTests.Common;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CarRentalApplication.Saving.UnitTests
+namespace CarRentalApplication.FileSaving.UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]

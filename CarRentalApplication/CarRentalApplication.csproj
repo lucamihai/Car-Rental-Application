@@ -158,17 +158,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CarRentalApplication.Database\CarRentalApplication.Database.csproj">
+      <Project>{1a944713-e72e-4091-8867-1f9e53c0f4e7}</Project>
+      <Name>CarRentalApplication.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CarRentalApplication.Domain\CarRentalApplication.Domain.csproj">
       <Project>{05fd1730-f7c8-4e77-ad7b-3b0672adb7f3}</Project>
       <Name>CarRentalApplication.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CarRentalApplication.FileSaving\CarRentalApplication.FileSaving.csproj">
+      <Project>{200ee4be-d104-4a33-ae30-68b35eed0d0c}</Project>
+      <Name>CarRentalApplication.FileSaving</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CarRentalApplication.Logging\CarRentalApplication.Logging.csproj">
       <Project>{87dbdc9d-563c-4505-aaa9-f195e6c387a1}</Project>
       <Name>CarRentalApplication.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CarRentalApplication.Saving\CarRentalApplication.Saving.csproj">
-      <Project>{cff9307a-b259-4374-8ba7-8ac8850a8b10}</Project>
-      <Name>CarRentalApplication.Saving</Name>
     </ProjectReference>
     <ProjectReference Include="..\CarRentalApplication.Translating\CarRentalApplication.Translating.csproj">
       <Project>{a1c81ff3-4640-4015-af7d-c91649249b4b}</Project>

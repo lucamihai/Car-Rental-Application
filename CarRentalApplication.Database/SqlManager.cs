@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using CarRentalApplication.Domain.Entities;
 using CarRentalApplication.Domain.Enums;
 
-namespace CarRentalApplication.Saving
+namespace CarRentalApplication.Database
 {
     public class SqlManager
     {

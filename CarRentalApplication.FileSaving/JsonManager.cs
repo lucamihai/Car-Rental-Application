@@ -4,7 +4,7 @@ using System.IO;
 using CarRentalApplication.Domain.Entities;
 using Newtonsoft.Json;
 
-namespace CarRentalApplication.Saving
+namespace CarRentalApplication.FileSaving
 {
     public static class JsonManager
     {
