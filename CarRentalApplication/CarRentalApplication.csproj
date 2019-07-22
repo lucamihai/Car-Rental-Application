@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ActionMessages.cs" />
+    <Compile Include="Classes\ConsequenceMessages.cs" />
     <Compile Include="Classes\ErrorMessages.cs" />
     <Compile Include="Classes\IDManagement.cs" />
     <Compile Include="Classes\SortSelectionItem.cs" />

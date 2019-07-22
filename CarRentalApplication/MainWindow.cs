@@ -226,11 +226,26 @@ namespace CarRentalApplication
             }
         }
 
+        private void SaveToDatabase(object sender, EventArgs e)
+        {
+            var formConfirmation = new FormConfirmation(ActionMessages.SaveToDatabase, ConsequenceMessages.SaveToDatabase);
+            var result = formConfirmation.ShowDialog();
+
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            sqlManager.ClearVehiclesFromDatabase();
+            sqlManager.ClearRentalsFromDatabase();
+
+            sqlManager.SaveVehiclesToDatabase(vehicles);
+            sqlManager.SaveRentalsToDatabase(rentals);
+        }
+
         private void LoadFromDatabase(object sender, EventArgs e)
         {
-            var action = "load vehicles from the database";
-            var consequence = "existing vehicles and rentals in the program will be removed";
-            var formConfirmation = new FormConfirmation(action, consequence);
+            var formConfirmation = new FormConfirmation(ActionMessages.LoadFromDatabase, ConsequenceMessages.LoadFromDatabase);
             var result = formConfirmation.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -245,25 +260,6 @@ namespace CarRentalApplication
 
             PopulateVehiclesPanel();
             PopulateRentalsPanel();
-        }
-
-        private void SaveToDatabase(object sender, EventArgs e)
-        {
-            var action = "save vehicles to the database";
-            var consequence = "existing vehicles and rentals in the database will be removed";
-            var formConfirmation = new FormConfirmation(action, consequence);
-            var result = formConfirmation.ShowDialog();
-
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-
-            sqlManager.ClearVehiclesFromDatabase();
-            sqlManager.ClearRentalsFromDatabase();
-
-            sqlManager.SaveVehiclesToDatabase(vehicles);
-            sqlManager.SaveRentalsToDatabase(rentals);
         }
 
         private void ClearVehiclesFromVehicleListThatAreFoundInRentalList()
@@ -284,9 +280,7 @@ namespace CarRentalApplication
 
         private void SaveToLocalFile(object sender, EventArgs e)
         {
-            var action = "save vehicles and rentals to local file";
-            var consequence = "existing local file will be deleted";
-            var formConfirmation = new FormConfirmation(action, consequence);
+            var formConfirmation = new FormConfirmation(ActionMessages.SaveToLocalFile, ConsequenceMessages.SaveToLocalFile);
             var result = formConfirmation.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -300,9 +294,7 @@ namespace CarRentalApplication
 
         private void LoadFromLocalFile(object sender, EventArgs e)
         {
-            var action = "load vehicles and rentals from local file";
-            var consequence = "existing vehicles and rentals in the program will be removed";
-            var formConfirmation = new FormConfirmation(action, consequence);
+            var formConfirmation = new FormConfirmation(ActionMessages.LoadFromLocalFile, ConsequenceMessages.LoadFromLocalFile);
             var result = formConfirmation.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -359,8 +351,7 @@ namespace CarRentalApplication
                 return;
             }
 
-            var action = "delete the existing log";
-            var formConfirmation = new FormConfirmation(action);
+            var formConfirmation = new FormConfirmation(ActionMessages.DeleteExistingLog);
             var result = formConfirmation.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -565,8 +556,7 @@ namespace CarRentalApplication
                 return;
             }
 
-            var action = "remove the last vehicle";
-            var formConfirmation = new FormConfirmation(action);
+            var formConfirmation = new FormConfirmation(ActionMessages.RemoveLastVehicle);
             var result = formConfirmation.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -587,8 +577,7 @@ namespace CarRentalApplication
         {
             if (indexesOfSelectedVehicleViews.Count > 0)
             {
-                var action = "remove the selected vehicles";
-                var formConfirmation = new FormConfirmation(action);
+                var formConfirmation = new FormConfirmation(ActionMessages.RemoveSelectedVehicles);
                 var result = formConfirmation.ShowDialog();
 
                 if (result != DialogResult.OK)
@@ -641,8 +630,7 @@ namespace CarRentalApplication
                 return;
             }
 
-            var action = "remove the last rental";
-            var formConfirmation = new FormConfirmation(action);
+            var formConfirmation = new FormConfirmation(ActionMessages.RemoveLastRental);
             var result = formConfirmation.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -662,8 +650,7 @@ namespace CarRentalApplication
         {
             if (indexesOfSelectedRentals.Count > 0)
             {
-                var action = "remove the selected rentals";
-                var formConfirmation = new FormConfirmation(action);
+                var formConfirmation = new FormConfirmation(ActionMessages.RemoveSelectedRentals);
                 var result = formConfirmation.ShowDialog();
 
                 if (result != DialogResult.OK)
