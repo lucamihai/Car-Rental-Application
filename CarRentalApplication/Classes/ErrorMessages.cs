@@ -14,6 +14,7 @@ namespace CarRentalApplication.Classes
         public static string NoRentalsToRemove = Program.Language.Translate("There are no rentals to remove");
         public static string NoRentalsSelected = Program.Language.Translate("No rentals have been selected");
         public static string NoLogCreated = Program.Language.Translate("Log file doesn't exist");
+        public static string CouldNotConnectToDatabase = Program.Language.Translate("Couldn't connect to database");
         // -----
 
         // ----- FormAddVehicle possible errors
