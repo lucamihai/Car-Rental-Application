@@ -37,8 +37,8 @@ namespace CarRentalApplication
         public MainWindow()
         {
             InitializeComponent();
-
-            errorLabel.Text = string.Empty;
+            IDManagement.InitializeIndexes();
+            ClearErrorMessageLabel();
 
             returnedVehiclesLogManager = new Logger("log.txt");
 
@@ -55,8 +55,6 @@ namespace CarRentalApplication
             InitializeSortOptionsForRentals();
 
             timerProgramDateUpdater.Start();
-
-            IDManagement.InitializeIndexes();
         }
 
         private void InitializeSortOptionsForVehicles()
@@ -223,8 +221,7 @@ namespace CarRentalApplication
                 }
                 else
                 {
-                    errorLabel.Text = ErrorMessages.CouldNotConnectToDatabase;
-                    timerClearErrors.Start();
+                    DisplayErrorMessageForAPeriodOfTime(ErrorMessages.CouldNotConnectToDatabase);
                 }
             }
         }
@@ -347,13 +344,11 @@ namespace CarRentalApplication
         {
             if (!File.Exists(returnedVehiclesLogManager.LogPath) || new FileInfo(returnedVehiclesLogManager.LogPath).Length == 0)
             {
-                errorLabel.Text = ErrorMessages.NoLogCreated;
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoLogCreated);
                 return;
             }
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
             Process.Start(returnedVehiclesLogManager.LogPath);
         }
 
@@ -438,8 +433,6 @@ namespace CarRentalApplication
 
             InitializeSortOptionsForVehicles();
             InitializeSortOptionsForRentals();
-
-            ErrorMessages.UpdateLanguage(language);
         }
 
         private void UpdateLanguageForExistingVehicleViews(Language language)
@@ -495,9 +488,7 @@ namespace CarRentalApplication
         {
             if (vehicleViews.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoVehiclesToSelect;
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoVehiclesToSelect);
                 return;
             }
 
@@ -518,16 +509,14 @@ namespace CarRentalApplication
                     vehicleView.Selected = false;
             }
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         private void SelectAllRentalViews(object sender, EventArgs e)
         {
             if (rentalViews.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoRentalsToSelect;
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoRentalsToSelect);
                 return;
             }
 
@@ -548,7 +537,7 @@ namespace CarRentalApplication
                     rentalView.Selected = false;
             }
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         #endregion
@@ -572,10 +561,7 @@ namespace CarRentalApplication
         {
             if (vehicleViews.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoVehiclesToRemove;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoVehiclesToRemove);
                 return;
             }
 
@@ -594,7 +580,7 @@ namespace CarRentalApplication
 
             PopulateVehiclesPanel();
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         private void RemoveSelectedVehicles(object sender, EventArgs e)
@@ -610,7 +596,7 @@ namespace CarRentalApplication
                     return;
                 }
 
-                errorLabel.Text = string.Empty;
+                ClearErrorMessageLabel();
 
                 foreach (var index in indexesOfSelectedVehicleViews)
                 {
@@ -623,9 +609,7 @@ namespace CarRentalApplication
 
             else
             {
-                errorLabel.Text = ErrorMessages.NoVehiclesSelected;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoVehiclesSelected);
             }
         }
 
@@ -647,17 +631,13 @@ namespace CarRentalApplication
             }
 
             rentals.Remove(rental);
-            PopulateRentalsPanel();
         }
 
         private void RemoveLastRental(object sender, EventArgs e)
         {
             if (rentals.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoRentalsToRemove;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoRentalsToRemove);
                 return;
             }
 
@@ -675,7 +655,7 @@ namespace CarRentalApplication
 
             PopulateRentalsPanel();
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         private void RemoveSelectedRentals(object sender, EventArgs e)
@@ -691,7 +671,7 @@ namespace CarRentalApplication
                     return;
                 }
 
-                errorLabel.Text = string.Empty;
+                ClearErrorMessageLabel();
 
                 foreach (var index in indexesOfSelectedRentals)
                 {
@@ -704,9 +684,7 @@ namespace CarRentalApplication
 
             else
             {
-                errorLabel.Text = ErrorMessages.NoRentalsSelected;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoRentalsSelected);
             }
         }
 
@@ -863,7 +841,7 @@ namespace CarRentalApplication
 
         private void ClearErrorsTick(object sender, EventArgs e)
         {
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
             timerClearErrors.Stop();
         }
 
@@ -874,5 +852,18 @@ namespace CarRentalApplication
         }
 
         #endregion
+
+        private void DisplayErrorMessageForAPeriodOfTime(string message)
+        {
+            errorLabel.Text = message;
+
+            timerClearErrors.Stop();
+            timerClearErrors.Start();
+        }
+
+        private void ClearErrorMessageLabel()
+        {
+            errorLabel.Text = string.Empty;
+        }
     }
 }
