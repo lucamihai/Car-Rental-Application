@@ -24,8 +24,8 @@ namespace CarRentalApplication
         private List<Vehicle> vehicles;
         private List<Rental> rentals;
 
-        private List<RentalView> rentalViews;
-        private List<VehicleView> vehicleViews;
+        private readonly List<RentalView> rentalViews;
+        private readonly List<VehicleView> vehicleViews;
 
         private Logger returnedVehiclesLogManager;
 
@@ -37,8 +37,8 @@ namespace CarRentalApplication
         public MainWindow()
         {
             InitializeComponent();
-
-            errorLabel.Text = string.Empty;
+            IDManagement.InitializeIndexes();
+            ClearErrorMessageLabel();
 
             returnedVehiclesLogManager = new Logger("log.txt");
 
@@ -55,8 +55,6 @@ namespace CarRentalApplication
             InitializeSortOptionsForRentals();
 
             timerProgramDateUpdater.Start();
-
-            IDManagement.InitializeIndexes();
         }
 
         private void InitializeSortOptionsForVehicles()
@@ -136,70 +134,70 @@ namespace CarRentalApplication
         private void AddVehicleForm(object sender, EventArgs e)
         {
             var formAddVehicle = new FormAddVehicle();
-
             var result = formAddVehicle.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                var vehicle = formAddVehicle.Vehicle;
-                vehicles.Add(vehicle);
 
-                vehicle.Id = IDManagement.LowestAvailableVehicleID;
-                IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
+            if (result != DialogResult.OK)
+                return;
 
-                PopulateVehiclesPanel();
-            }
+            var vehicle = formAddVehicle.Vehicle;
+            vehicles.Add(vehicle);
+
+            vehicle.Id = IDManagement.LowestAvailableVehicleID;
+            IDManagement.MarkVehicleIDAsUnavailable(vehicle.Id);
+
+            PopulateVehiclesPanel();
         }
 
         public void RentForm(Vehicle vehicle)
         {
             var formRentVehicle = new FormRentVehicle(vehicle);
-
             var result = formRentVehicle.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                var rental = formRentVehicle.Rental;
-                rentals.Add(rental);
 
-                rental.Id = IDManagement.LowestAvailableRentalID;
-                IDManagement.MarkRentalIDAsUnavailable(rental.Id);
+            if (result != DialogResult.OK)
+                return;
 
-                PopulateRentalsPanel();
+            var rental = formRentVehicle.Rental;
+            rentals.Add(rental);
 
-                RemoveVehicle(vehicle, false);
-                PopulateVehiclesPanel();
-            }
+            rental.Id = IDManagement.LowestAvailableRentalID;
+            IDManagement.MarkRentalIDAsUnavailable(rental.Id);
+
+            PopulateRentalsPanel();
+
+            RemoveVehicle(vehicle, false);
+            PopulateVehiclesPanel();
         }
 
         public void ReturnForm(Rental rental)
         {
             var formReturnVehicle = new FormReturnVehicle(rental);
-
             var result = formReturnVehicle.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                var returnedVehicle = formReturnVehicle.ReturnedVehicle;
-                var orderDetails = formReturnVehicle.OrderDetails;
 
-                returnedVehiclesLogManager.WriteToLog(orderDetails);
+            if (result != DialogResult.OK)
+                return;
 
-                vehicles.Add(returnedVehicle);
-                PopulateVehiclesPanel();
+            var returnedVehicle = formReturnVehicle.ReturnedVehicle;
+            var orderDetails = formReturnVehicle.OrderDetails;
 
-                RemoveRental(rental, true, false);
-                PopulateRentalsPanel();
-            }
+            returnedVehiclesLogManager.WriteToLog(orderDetails);
+
+            vehicles.Add(returnedVehicle);
+            PopulateVehiclesPanel();
+
+            RemoveRental(rental, true, false);
+            PopulateRentalsPanel();
         }
 
         public void SqlConnectionForm()
         {
-            FormSqlConnection formSqlConnection = new FormSqlConnection();
-
+            var formSqlConnection = new FormSqlConnection();
             var result = formSqlConnection.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                MessageBox.Show(formSqlConnection.ConnectionString);
-                sqlManager = new SqlManager(formSqlConnection.ConnectionString);
-            }
+
+            if (result != DialogResult.OK)
+                return;
+
+            MessageBox.Show(formSqlConnection.ConnectionString);
+            sqlManager = new SqlManager(formSqlConnection.ConnectionString);
         }
 
         #endregion
@@ -215,8 +213,7 @@ namespace CarRentalApplication
 
             if (sqlManager != null)
             {
-                var isConnected = sqlManager.ConnectionIsSuccessful();
-                if (isConnected)
+                if (sqlManager.ConnectionIsSuccessful())
                 {
                     saveToDatabaseToolStripMenuItem.Available = true;
                     loadFromDatabaseToolStripMenuItem.Available = true;
@@ -224,19 +221,33 @@ namespace CarRentalApplication
                 }
                 else
                 {
-                    errorLabel.Text = "Couldn't connect to database";
-                    timerClearErrors.Start();
+                    DisplayErrorMessageForAPeriodOfTime(ErrorMessages.CouldNotConnectToDatabase);
                 }
             }
         }
 
+        private void SaveToDatabase(object sender, EventArgs e)
+        {
+            var formConfirmation = new FormConfirmation(ActionMessages.SaveToDatabase, ConsequenceMessages.SaveToDatabase);
+            var result = formConfirmation.ShowDialog();
+
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            sqlManager.ClearVehiclesFromDatabase();
+            sqlManager.ClearRentalsFromDatabase();
+
+            sqlManager.SaveVehiclesToDatabase(vehicles);
+            sqlManager.SaveRentalsToDatabase(rentals);
+        }
+
         private void LoadFromDatabase(object sender, EventArgs e)
         {
-            var action = "load vehicles from the database";
-            var consequence = "existing vehicles and rentals in the program will be removed";
-            var formConfirmation = new FormConfirmation(action, consequence);
-
+            var formConfirmation = new FormConfirmation(ActionMessages.LoadFromDatabase, ConsequenceMessages.LoadFromDatabase);
             var result = formConfirmation.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 return;
@@ -249,25 +260,6 @@ namespace CarRentalApplication
 
             PopulateVehiclesPanel();
             PopulateRentalsPanel();
-        }
-
-        private void SaveToDatabase(object sender, EventArgs e)
-        {
-            var action = "save vehicles to the database";
-            var consequence = "existing vehicles and rentals in the database will be removed";
-            var formConfirmation = new FormConfirmation(action, consequence);
-
-            var result = formConfirmation.ShowDialog();
-            if (result != DialogResult.OK)
-            {
-                return;
-            }
-
-            sqlManager.ClearVehiclesFromDatabase();
-            sqlManager.ClearRentalsFromDatabase();
-
-            sqlManager.SaveVehiclesToDatabase(vehicles);
-            sqlManager.SaveRentalsToDatabase(rentals);
         }
 
         private void ClearVehiclesFromVehicleListThatAreFoundInRentalList()
@@ -288,11 +280,9 @@ namespace CarRentalApplication
 
         private void SaveToLocalFile(object sender, EventArgs e)
         {
-            var action = "save vehicles and rentals to local file";
-            var consequence = "existing local file will be deleted";
-            var formConfirmation = new FormConfirmation(action, consequence);
-
+            var formConfirmation = new FormConfirmation(ActionMessages.SaveToLocalFile, ConsequenceMessages.SaveToLocalFile);
             var result = formConfirmation.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 return;
@@ -304,11 +294,9 @@ namespace CarRentalApplication
 
         private void LoadFromLocalFile(object sender, EventArgs e)
         {
-            var action = "load vehicles and rentals from local file";
-            var consequence = "existing vehicles and rentals in the program will be removed";
-            var formConfirmation = new FormConfirmation(action, consequence);
-
+            var formConfirmation = new FormConfirmation(ActionMessages.LoadFromLocalFile, ConsequenceMessages.LoadFromLocalFile);
             var result = formConfirmation.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 return;
@@ -344,22 +332,18 @@ namespace CarRentalApplication
 
         #region Order logs
 
-        [ExcludeFromCodeCoverage]
         private void OpenLog(object sender, EventArgs e)
         {
             if (!File.Exists(returnedVehiclesLogManager.LogPath) || new FileInfo(returnedVehiclesLogManager.LogPath).Length == 0)
             {
-                errorLabel.Text = ErrorMessages.NoLogCreated;
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoLogCreated);
                 return;
             }
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
             Process.Start(returnedVehiclesLogManager.LogPath);
         }
 
-        [ExcludeFromCodeCoverage]
         private void DeleteLog(object sender, EventArgs e)
         {
             if (!File.Exists(returnedVehiclesLogManager.LogPath) || new FileInfo(returnedVehiclesLogManager.LogPath).Length == 0)
@@ -367,10 +351,9 @@ namespace CarRentalApplication
                 return;
             }
 
-            var action = "delete the existing log";
-            var formConfirmation = new FormConfirmation(action);
-
+            var formConfirmation = new FormConfirmation(ActionMessages.DeleteExistingLog);
             var result = formConfirmation.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 return;
@@ -392,13 +375,12 @@ namespace CarRentalApplication
         private void LanguageMenu(object sender, EventArgs e)
         {
             var formLanguages = new FormLanguages();
-
             var result = formLanguages.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                UpdateLanguage(formLanguages.ChosenLanguage);
-                Program.Language = formLanguages.ChosenLanguage;
-            }
+
+            if (result != DialogResult.OK)
+                return;
+
+            UpdateLanguage(formLanguages.ChosenLanguage);
         }
 
         #endregion
@@ -437,28 +419,26 @@ namespace CarRentalApplication
             deleteToolStripMenuItem.Text = language.Translate("Delete");
             languageToolStripMenuItem.Text = language.Translate("Language");
 
-            UpdateLanguageForExistingVehicles(language);
-            UpdateLanguageForExistingRentals(language);
+            UpdateLanguageForExistingVehicleViews(language);
+            UpdateLanguageForExistingRentalViews(language);
 
             InitializeSortOptionsForVehicles();
             InitializeSortOptionsForRentals();
-
-            ErrorMessages.UpdateLanguage(language);
         }
 
-        private void UpdateLanguageForExistingVehicles(Language language)
+        private void UpdateLanguageForExistingVehicleViews(Language language)
         {
-            foreach (var vehicle in vehicleViews)
+            foreach (var vehicleView in vehicleViews)
             {
-                vehicle.UpdateLanguage(language);
+                vehicleView.UpdateLanguage(language);
             }
         }
 
-        private void UpdateLanguageForExistingRentals(Language language)
+        private void UpdateLanguageForExistingRentalViews(Language language)
         {
-            foreach (var rental in rentalViews)
+            foreach (var rentalView in rentalViews)
             {
-                rental.UpdateLanguage(language);
+                rentalView.UpdateLanguage(language);
             }
         }
 
@@ -499,9 +479,7 @@ namespace CarRentalApplication
         {
             if (vehicleViews.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoVehiclesToSelect;
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoVehiclesToSelect);
                 return;
             }
 
@@ -522,15 +500,14 @@ namespace CarRentalApplication
                     vehicleView.Selected = false;
             }
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         private void SelectAllRentalViews(object sender, EventArgs e)
         {
             if (rentalViews.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoRentalsToSelect;
-                timerClearErrors.Start();
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoRentalsToSelect);
                 return;
             }
 
@@ -541,16 +518,17 @@ namespace CarRentalApplication
                 {
                     areAllSelected = false;
                 }
+
                 rentalView.Selected = true;
             }
 
             if (areAllSelected)
             {
-                foreach (var rental in rentalViews)
-                    rental.Selected = false;
+                foreach (var rentalView in rentalViews)
+                    rentalView.Selected = false;
             }
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         #endregion
@@ -574,17 +552,13 @@ namespace CarRentalApplication
         {
             if (vehicleViews.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoVehiclesToRemove;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoVehiclesToRemove);
                 return;
             }
 
-            var action = "remove the last vehicle";
-            var formConfirmation = new FormConfirmation(action);
-
+            var formConfirmation = new FormConfirmation(ActionMessages.RemoveLastVehicle);
             var result = formConfirmation.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 return;
@@ -596,35 +570,26 @@ namespace CarRentalApplication
 
             PopulateVehiclesPanel();
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         private void RemoveSelectedVehicles(object sender, EventArgs e)
         {
             if (indexesOfSelectedVehicleViews.Count > 0)
             {
-                var action = "remove the selected vehicles";
-                var formConfirmation = new FormConfirmation(action);
-
+                var formConfirmation = new FormConfirmation(ActionMessages.RemoveSelectedVehicles);
                 var result = formConfirmation.ShowDialog();
+
                 if (result != DialogResult.OK)
                 {
                     return;
                 }
 
-                errorLabel.Text = string.Empty;
+                ClearErrorMessageLabel();
 
-                // Store the vehicles to be removed in a temporary List
-                var vehiclesToBeRemoved = new List<VehicleView>();
                 foreach (var index in indexesOfSelectedVehicleViews)
                 {
-                    vehiclesToBeRemoved.Add(vehicleViews.ElementAt(index));
-                }
-
-                // Remove the stored vehicles from the vehicles List
-                foreach (var vehicleView in vehiclesToBeRemoved)
-                {
-                    RemoveVehicle(vehicleView.Vehicle);
+                    RemoveVehicle(vehicleViews[index].Vehicle);
                 }
 
                 PopulateVehiclesPanel();
@@ -633,9 +598,7 @@ namespace CarRentalApplication
 
             else
             {
-                errorLabel.Text = ErrorMessages.NoVehiclesSelected;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoVehiclesSelected);
             }
         }
 
@@ -657,24 +620,19 @@ namespace CarRentalApplication
             }
 
             rentals.Remove(rental);
-            PopulateRentalsPanel();
         }
 
         private void RemoveLastRental(object sender, EventArgs e)
         {
             if (rentals.Count < 1)
             {
-                errorLabel.Text = ErrorMessages.NoRentalsToRemove;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
-
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoRentalsToRemove);
                 return;
             }
 
-            var action = "remove the last rental";
-            var formConfirmation = new FormConfirmation(action);
-
+            var formConfirmation = new FormConfirmation(ActionMessages.RemoveLastRental);
             var result = formConfirmation.ShowDialog();
+
             if (result != DialogResult.OK)
             {
                 return;
@@ -685,35 +643,26 @@ namespace CarRentalApplication
 
             PopulateRentalsPanel();
 
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
         }
 
         private void RemoveSelectedRentals(object sender, EventArgs e)
         {
             if (indexesOfSelectedRentals.Count > 0)
             {
-                var action = "remove the selected rentals";
-                var formConfirmation = new FormConfirmation(action);
-
+                var formConfirmation = new FormConfirmation(ActionMessages.RemoveSelectedRentals);
                 var result = formConfirmation.ShowDialog();
+
                 if (result != DialogResult.OK)
                 {
                     return;
                 }
 
-                errorLabel.Text = string.Empty;
+                ClearErrorMessageLabel();
 
-                // Store the rentals to be removed in a temporary List
-                var rentalsToBeRemoved = new List<RentalView>();
                 foreach (var index in indexesOfSelectedRentals)
                 {
-                    rentalsToBeRemoved.Add(rentalViews.ElementAt(index));
-                }
-
-                // Remove the stored vehicles from the vehicles List
-                foreach (var rentalView in rentalsToBeRemoved)
-                {
-                    RemoveRental(rentalView.Rental);
+                    RemoveRental(rentalViews[index].Rental);
                 }
 
                 PopulateRentalsPanel();
@@ -722,9 +671,7 @@ namespace CarRentalApplication
 
             else
             {
-                errorLabel.Text = ErrorMessages.NoRentalsSelected;
-                timerClearErrors.Stop();
-                timerClearErrors.Start();
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.NoRentalsSelected);
             }
         }
 
@@ -881,7 +828,7 @@ namespace CarRentalApplication
 
         private void ClearErrorsTick(object sender, EventArgs e)
         {
-            errorLabel.Text = string.Empty;
+            ClearErrorMessageLabel();
             timerClearErrors.Stop();
         }
 
@@ -892,5 +839,18 @@ namespace CarRentalApplication
         }
 
         #endregion
+
+        private void DisplayErrorMessageForAPeriodOfTime(string message)
+        {
+            errorLabel.Text = message;
+
+            timerClearErrors.Stop();
+            timerClearErrors.Start();
+        }
+
+        private void ClearErrorMessageLabel()
+        {
+            errorLabel.Text = string.Empty;
+        }
     }
 }
