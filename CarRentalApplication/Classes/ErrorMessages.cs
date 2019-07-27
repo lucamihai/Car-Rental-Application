@@ -30,6 +30,8 @@ namespace CarRentalApplication.Classes
         public static string UserIdNotProvided => Program.Language.Translate("UserID must be provided");
         public static string PasswordNotProvided => Program.Language.Translate("Password must be provided");
         public static string InitialCatalogNotProvided => Program.Language.Translate("Initial catalog must be provided");
+        public static string ConnectionStringNotProvided => Program.Language.Translate("Connection string must be provided");
+
         // -----
     }
 }
