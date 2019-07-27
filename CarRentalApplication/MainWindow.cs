@@ -198,6 +198,9 @@ namespace CarRentalApplication
 
             MessageBox.Show(formSqlConnection.ConnectionString);
             sqlManager = new SqlManager(formSqlConnection.ConnectionString);
+
+            var carRentalContext = new CarRentalContext(formSqlConnection.ConnectionString);
+            var ceva = carRentalContext.Vehicles.ToList();
         }
 
         #endregion

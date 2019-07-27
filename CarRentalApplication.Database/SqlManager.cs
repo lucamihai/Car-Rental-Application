@@ -236,11 +236,12 @@ namespace CarRentalApplication.Database
         {
             var query =
                 @"
+DROP TABLE vehicles;
 IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='vehicles' AND xtype='U')
     CREATE TABLE vehicles(
         id int NOT NULL,
         name VARCHAR(64) NOT NULL,
-        type VARCHAR(25),
+        type_id int NOT NULL,
         fuel_percentage int,
         damage_percentage int
 )";

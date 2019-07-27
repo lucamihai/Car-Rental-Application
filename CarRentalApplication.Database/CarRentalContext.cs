@@ -7,5 +7,7 @@ namespace CarRentalApplication.Database
     {
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Rental> Rentals { get; set; }
+
+        public CarRentalContext(string connectionString) : base(connectionString) { }
     }
 }
