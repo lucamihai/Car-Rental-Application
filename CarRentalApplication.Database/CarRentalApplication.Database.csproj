@@ -51,8 +51,8 @@
     <Compile Include="CarRentalContext.cs" />
     <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarRentalApplication.Domain\CarRentalApplication.Domain.csproj">

@@ -5,8 +5,9 @@ namespace CarRentalApplication.Database
 {
     public class CarRentalContext : DbContext
     {
-        public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<Rental> Rentals { get; set; }
+        //TODO: Remove virtual keywords from methods, and create interface for class (required for mocking)
+        public virtual IDbSet<Vehicle> Vehicles { get; set; }
+        public virtual IDbSet<Rental> Rentals { get; set; }
 
         public CarRentalContext(string connectionString) : base(connectionString) { }
     }

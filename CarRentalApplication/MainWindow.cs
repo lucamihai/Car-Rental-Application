@@ -14,6 +14,8 @@ using CarRentalApplication.Enums;
 using CarRentalApplication.FileSaving;
 using CarRentalApplication.Forms;
 using CarRentalApplication.Logging;
+using CarRentalApplication.Repositories;
+using CarRentalApplication.Repositories.Mappers;
 using CarRentalApplication.Translating;
 
 namespace CarRentalApplication
@@ -29,10 +31,11 @@ namespace CarRentalApplication
 
         private Logger returnedVehiclesLogManager;
 
-        private SqlManager sqlManager;
-
         private readonly List<int> indexesOfSelectedVehicleViews = new List<int>();
         private readonly List<int> indexesOfSelectedRentals = new List<int>();
+
+        private VehicleRepository vehicleRepository;
+        private RentalRepository rentalRepository;
 
         public MainWindow()
         {
@@ -197,10 +200,24 @@ namespace CarRentalApplication
                 return;
 
             MessageBox.Show(formSqlConnection.ConnectionString);
-            sqlManager = new SqlManager(formSqlConnection.ConnectionString);
 
             var carRentalContext = new CarRentalContext(formSqlConnection.ConnectionString);
-            var ceva = carRentalContext.Vehicles.ToList();
+
+            if (!carRentalContext.Database.Exists())
+            {
+                DisplayErrorMessageForAPeriodOfTime(ErrorMessages.CouldNotConnectToDatabase);
+                return;
+            }
+
+            saveToDatabaseToolStripMenuItem.Available = true;
+            loadFromDatabaseToolStripMenuItem.Available = true;
+            connectToDatabaseToolStripMenuItem.Available = false;
+
+            var vehicleMapper = new VehicleMapper();
+            var rentalMapper = new RentalMapper(vehicleMapper);
+
+            vehicleRepository = new VehicleRepository(carRentalContext, vehicleMapper);
+            rentalRepository = new RentalRepository(carRentalContext, rentalMapper);
         }
 
         #endregion
@@ -213,20 +230,6 @@ namespace CarRentalApplication
         private void ConnectToDatabase(object sender, EventArgs e)
         {
             SqlConnectionForm();
-
-            if (sqlManager != null)
-            {
-                if (sqlManager.ConnectionIsSuccessful())
-                {
-                    saveToDatabaseToolStripMenuItem.Available = true;
-                    loadFromDatabaseToolStripMenuItem.Available = true;
-                    connectToDatabaseToolStripMenuItem.Available = false;
-                }
-                else
-                {
-                    DisplayErrorMessageForAPeriodOfTime(ErrorMessages.CouldNotConnectToDatabase);
-                }
-            }
         }
 
         private void SaveToDatabase(object sender, EventArgs e)
@@ -239,11 +242,22 @@ namespace CarRentalApplication
                 return;
             }
 
-            sqlManager.ClearVehiclesFromDatabase();
-            sqlManager.ClearRentalsFromDatabase();
+            var vehiclesFromDatabase = vehicleRepository.GetVehicles();
+            var rentalsFromDatabase = rentalRepository.GetRentals();
 
-            sqlManager.SaveVehiclesToDatabase(vehicles);
-            sqlManager.SaveRentalsToDatabase(rentals);
+
+            foreach (var vehicle in vehicles)
+            {
+                vehicleRepository.AddVehicle(vehicle);
+            }
+
+            foreach (var rental in rentals)
+            {
+                rentalRepository.AddRental(rental);
+            }
+
+            //sqlManager.SaveVehiclesToDatabase(vehicles);
+            //sqlManager.SaveRentalsToDatabase(rentals);
         }
 
         private void LoadFromDatabase(object sender, EventArgs e)
@@ -256,8 +270,8 @@ namespace CarRentalApplication
                 return;
             }
 
-            vehicles = sqlManager.GetVehiclesFromDatabase();
-            rentals = sqlManager.GetRentalsFromDatabase();
+            //vehicles = sqlManager.GetVehiclesFromDatabase();
+            //rentals = sqlManager.GetRentalsFromDatabase();
 
             ClearVehiclesFromVehicleListThatAreFoundInRentalList();
 

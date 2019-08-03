@@ -41,6 +41,15 @@ namespace CarRentalApplication.Repositories
             CarRentalContext.SaveChanges();
         }
 
+        public void DeleteRental(Rental rental)
+        {
+            ValidateRental(rental);
+
+            var databaseRental = rentalMapper.GetModelRentalFromDomainRental(rental);
+            CarRentalContext.Rentals.Remove(databaseRental);
+            CarRentalContext.SaveChanges();
+        }
+
         private void ValidateRental(Rental rental)
         {
             if (rental == null)

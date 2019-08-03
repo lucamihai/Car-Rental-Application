@@ -1,7 +1,9 @@
-﻿using CarRentalApplication.Domain.Entities;
+﻿using System;
+using CarRentalApplication.Domain.Entities;
 
 namespace CarRentalApplication.Repositories.Mappers
 {
+    //TODO: Remove virtual keywords from methods, and create interface for class (required for mocking)
     public class RentalMapper
     {
         private readonly VehicleMapper vehicleMapper;
@@ -11,8 +13,13 @@ namespace CarRentalApplication.Repositories.Mappers
             this.vehicleMapper = vehicleMapper;
         }
 
-        public Rental GetDomainRentalFromModelRental(Database.Models.Rental rental)
+        public virtual Rental GetDomainRentalFromModelRental(Database.Models.Rental rental)
         {
+            if (rental == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             return new Rental
             {
                 Id = (short)rental.Id,
@@ -22,12 +29,18 @@ namespace CarRentalApplication.Repositories.Mappers
             };
         }
 
-        public Database.Models.Rental GetModelRentalFromDomainRental(Rental rental)
+        public virtual Database.Models.Rental GetModelRentalFromDomainRental(Rental rental)
         {
+            if (rental == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             return new Database.Models.Rental
             {
                 Id = rental.Id,
                 VehicleId = rental.Vehicle.Id,
+                Vehicle = vehicleMapper.GetModelVehicleFromDomainVehicle(rental.Vehicle),
                 OwnerName = rental.Owner.Name,
                 OwnerPhone = rental.Owner.PhoneNumber,
                 ReturnDate = rental.ReturnDate

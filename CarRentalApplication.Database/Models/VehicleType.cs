@@ -3,14 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRentalApplication.Database.Models
 {
-    [Table("vehicle_types")]
+    [Table("VehicleTypes")]
     public class VehicleType
     {
-        [Column("id")]
         [Key]
         public int Id { get; set; }
-
-        [Column("name")]
         public string Name { get; set; }
     }
 }

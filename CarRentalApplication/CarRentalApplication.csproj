@@ -184,6 +184,10 @@
       <Project>{87dbdc9d-563c-4505-aaa9-f195e6c387a1}</Project>
       <Name>CarRentalApplication.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CarRentalApplication.Repositories\CarRentalApplication.Repositories.csproj">
+      <Project>{88275252-b8f7-4be7-a8ea-9ecd9108e590}</Project>
+      <Name>CarRentalApplication.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CarRentalApplication.Translating\CarRentalApplication.Translating.csproj">
       <Project>{a1c81ff3-4640-4015-af7d-c91649249b4b}</Project>
       <Name>CarRentalApplication.Translating</Name>
